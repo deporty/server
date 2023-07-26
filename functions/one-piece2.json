@@ -1,0 +1,190 @@
+{
+  "id": "gOFKwZR2ZEmapWmFXVFo",
+  "name": "Marchagas Torneo XXXII",
+  "flayer": "/tournaments/gOFKwZR2ZEmapWmFXVFo/preview.png",
+  "category": "B1",
+  "reward": [
+    2000000,
+    1500000
+  ],
+  "status": "in progress",
+  "description": "Compite, mejora, gana. El torneo se realizará en las canchas de Marchagas, un torneo dominical que no te puedes perder.",
+  "inscription": 200000,
+  "startsDate": "",
+  "fixture": {
+    "stages": [
+      {
+        "groups": [
+          {
+            "matches": [],
+            "teams": [
+              {
+                "name": "Cucos F.C.",
+                "id": "ghgnWGJjSe4mjLBo7MXL",
+                "athem": "",
+                "members": [
+                  {
+                    "role": "Espadachin",
+                    "player": {
+                      "alias": "",
+                      "document": "75098816",
+                      "number": "",
+                      "name": "Oswaldo",
+                      "role": "",
+                      "phone": "",
+                      "email": "",
+                      "last-name": "Torres Montoya",
+                      "image": "",
+                      "id": "16MdJPBcA8VXXjzbpE3h"
+                    }
+                  },
+                  {
+                    "role": "Jirafa",
+                    "player": {
+                      "last-name": "Orozco Guarin",
+                      "phone": "",
+                      "email": "",
+                      "alias": "",
+                      "image": "",
+                      "role": "",
+                      "name": "Victor Hugo",
+                      "document": "16076018",
+                      "number": "",
+                      "id": "1PfbvmDwyeMgeONARGxA"
+                    }
+                  }
+                ],
+                "shield": "teams/ghgnWGJjSe4mjLBo7MXL/brand/shield.png",
+                "agent": ""
+              }
+            ],
+            "label": "B",
+            "index": 0
+          }
+        ],
+        "order": 0,
+        "id": "Rmk4KKcG6XZeePGjbVf3"
+      }
+    ]
+  },
+  "registeredTeams": [
+    {
+      "enrollmentDate": "2022-07-26T01:59:49.000Z",
+      "members": [
+        {
+          "role": "",
+          "player": {
+            "email": "",
+            "phone": "",
+            "document": "75098816",
+            "alias": "",
+            "image": "",
+            "number": "",
+            "name": "Oswaldo",
+            "role": "",
+            "last-name": "Torres Montoya",
+            "id": "16MdJPBcA8VXXjzbpE3h"
+          }
+        }
+      ],
+      "team": {
+        "name": "TU CEL ACCESORIOS",
+        "id": "0YdP72BUeApEckNbSGIW",
+        "athem": "",
+        "members": [
+          {
+            "role": "",
+            "player": {
+              "role": "",
+              "email": "",
+              "phone": "",
+              "last-name": "Torres Montoya",
+              "alias": "",
+              "name": "Oswaldo",
+              "document": "75098816",
+              "image": "",
+              "number": "",
+              "id": "16MdJPBcA8VXXjzbpE3h"
+            }
+          }
+        ],
+        "shield": "",
+        "agent": ""
+      }
+    },
+    {
+      "enrollmentDate": "2022-07-26T02:21:01.000Z",
+      "members": [
+        {
+          "role": "Espadachin",
+          "player": {
+            "image": "",
+            "number": "",
+            "alias": "",
+            "phone": "",
+            "name": "Oswaldo",
+            "document": "75098816",
+            "last-name": "Torres Montoya",
+            "email": "",
+            "role": "",
+            "id": "16MdJPBcA8VXXjzbpE3h"
+          }
+        },
+        {
+          "role": "Jirafa",
+          "player": {
+            "document": "16076018",
+            "phone": "",
+            "number": "",
+            "email": "",
+            "last-name": "Orozco Guarin",
+            "image": "",
+            "name": "Victor Hugo",
+            "alias": "",
+            "role": "",
+            "id": "1PfbvmDwyeMgeONARGxA"
+          }
+        }
+      ],
+      "team": {
+        "name": "Cucos F.C.",
+        "id": "ghgnWGJjSe4mjLBo7MXL",
+        "athem": "",
+        "members": [
+          {
+            "role": "Espadachin",
+            "player": {
+              "image": "",
+              "email": "",
+              "number": "",
+              "alias": "",
+              "name": "Oswaldo",
+              "last-name": "Torres Montoya",
+              "document": "75098816",
+              "phone": "",
+              "role": "",
+              "id": "16MdJPBcA8VXXjzbpE3h"
+            }
+          },
+          {
+            "role": "Jirafa",
+            "player": {
+              "number": "",
+              "phone": "",
+              "name": "Victor Hugo",
+              "last-name": "Orozco Guarin",
+              "email": "",
+              "image": "",
+              "document": "16076018",
+              "role": "",
+              "alias": "",
+              "id": "1PfbvmDwyeMgeONARGxA"
+            }
+          }
+        ],
+        "shield": "teams/ghgnWGJjSe4mjLBo7MXL/brand/shield.png",
+        "agent": ""
+      }
+    }
+  ]
+}

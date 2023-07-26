@@ -1,0 +1,60 @@
+{
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watchAll ",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "serve:full": "npm run build && firebase emulators:start ",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "deploy-cloud": "cross-env GOOGLE_APPLICATION_CREDENTIALS=./service-account.json firebase --project=[Project-ID] deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "dist/index.js",
+  "dependencies": {
+    "@deporty-org/entities": "^0.12.2",
+    "@deporty-org/utilities": "1.0.4",
+    "@google-cloud/logging": "^10.3.1",
+    "@types/axios": "^0.14.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "firebase": "^8.10.1",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^4.4.0",
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "logger": "0.0.1",
+    "mime-types": "^2.1.35",
+    "moment": "^2.29.3",
+    "pdfmake": "^0.2.6",
+    "qr-image": "^3.2.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "~6.6.0",
+    "simple-node-logger": "^21.8.12"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.1",
+    "@types/qr-image": "^3.2.5",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^0.2.0",
+    "jest": "^28.1.1",
+    "nodemon": "^2.0.16",
+    "ts-jest": "^28.0.4",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.5.4"
+  },
+  "private": true
+}

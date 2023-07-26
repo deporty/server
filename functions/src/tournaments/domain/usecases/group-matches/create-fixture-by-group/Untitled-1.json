@@ -1,0 +1,794 @@
+[
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "PACHOTRUCK F.C",
+            "id": "50VGBkVyW6IAHdLvq4dc",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TU CEL ACCESORIOS",
+            "id": "0YdP72BUeApEckNbSGIW",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MERCAPLAZA ALTA SUIZA",
+            "id": "P2EPsiKoK9qWoDwe0leT",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "EL COMBO",
+            "id": "b98EdTaUvPSkAUbZfMZK",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "TALLER DE PLANOS",
+            "id": "ru0jcbexbDVD5hiXljBn",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "POLLOS DEL CAMPO",
+            "id": "qGLQQKnLz4LfJVH7x4Jq",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "MISCELANIA Y LICORERA JUANIS",
+            "id": "pgzhAqH1L9Eqtd6cEibB",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "LOS AMIGOS",
+            "id": "fvns8fcf2SmuGkknwJBx",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "AUTOMATICAS",
+            "id": "50tMWhW4gV4QTBCWyxqS",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "SOLDACERO INDUSTRIAL",
+            "id": "smKns2HJCPuw7h5CkfGo",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    },
+    {
+        "teamA": {
+            "name": "YONETBA-STORE",
+            "id": "VvhspKV1WTiNZO7VvAS4",
+            "shield": ""
+        },
+        "teamB": {
+            "name": "LOS RUSOS",
+            "id": "PhZWNNLhy9VrOHDXsVCD",
+            "shield": ""
+        }
+    }
+]

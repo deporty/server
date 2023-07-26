@@ -1,0 +1,122 @@
+{
+  "id": "gOFKwZR2ZEmapWmFXVFo",
+  "name": "Marchagas Torneo XXXII",
+  "flayer": "/tournaments/gOFKwZR2ZEmapWmFXVFo/preview.png",
+  "category": "B1",
+  "reward": [
+    2000000,
+    1500000
+  ],
+  "status": "in progress",
+  "description": "Compite, mejora, gana. El torneo se realizará en las canchas de Marchagas, un torneo dominical que no te puedes perder.",
+  "inscription": 200000,
+  "registered-teams": [
+    {
+      "enrollment-date": "2022-07-26T01:59:49.000Z",
+      "members": [
+        {
+          "role": "",
+          "player": {
+            "_firestore": {
+              "projectId": "deporty-dev"
+            },
+            "_path": {
+              "segments": [
+                "players",
+                "16MdJPBcA8VXXjzbpE3h"
+              ]
+            },
+            "_converter": {}
+          }
+        }
+      ],
+      "team": {
+        "_firestore": {
+          "projectId": "deporty-dev"
+        },
+        "_path": {
+          "segments": [
+            "teams",
+            "0YdP72BUeApEckNbSGIW"
+          ]
+        },
+        "_converter": {}
+      }
+    },
+    {
+      "enrollment-date": "2022-07-26T02:21:01.000Z",
+      "members": [
+        {
+          "role": "Espadachin",
+          "player": {
+            "_firestore": {
+              "projectId": "deporty-dev"
+            },
+            "_path": {
+              "segments": [
+                "players",
+                "16MdJPBcA8VXXjzbpE3h"
+              ]
+            },
+            "_converter": {}
+          }
+        },
+        {
+          "role": "Jirafa",
+          "player": {
+            "_firestore": {
+              "projectId": "deporty-dev"
+            },
+            "_path": {
+              "segments": [
+                "players",
+                "1PfbvmDwyeMgeONARGxA"
+              ]
+            },
+            "_converter": {}
+          }
+        }
+      ],
+      "team": {
+        "_firestore": {
+          "projectId": "deporty-dev"
+        },
+        "_path": {
+          "segments": [
+            "teams",
+            "ghgnWGJjSe4mjLBo7MXL"
+          ]
+        },
+        "_converter": {}
+      }
+    }
+  ],
+  "fixture": {
+    "fixture-stages": [
+      {
+        "order": 0,
+        "groups": [
+          {
+            "label": "B",
+            "matches": [],
+            "teams": [
+              {
+                "_firestore": {
+                  "projectId": "deporty-dev"
+                },
+                "_path": {
+                  "segments": [
+                    "teams",
+                    "ghgnWGJjSe4mjLBo7MXL"
+                  ]
+                },
+                "_converter": {}
+              }
+            ]
+          }
+        ],
+        "id": "Rmk4KKcG6XZeePGjbVf3"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "instance": {
+    "tournamentContract": {
+      "dataSource": {
+        "db": {
+          "projectId": "deporty-dev"
+        },
+        "_entity": "tournaments"
+      },
+      "tournamentMapper": {
+        "registeredTeamMapper": {
+          "teamMapper": {
+            "memberMapper": {
+              "playerMapper": {
+                "db": {
+                  "projectId": "deporty-dev"
+                }
+              }
+            },
+            "db": {
+              "projectId": "deporty-dev"
+            }
+          },
+          "memberMapper": {
+            "playerMapper": {
+              "db": {
+                "projectId": "deporty-dev"
+              }
+            }
+          }
+        },
+        "fixtureMapper": {
+          "fixtureStageMapper": {
+            "groupMapper": {
+              "matchMapper": {
+                "scoreMapper": {},
+                "teamMapper": {
+                  "memberMapper": {
+                    "playerMapper": {
+                      "db": {
+                        "projectId": "deporty-dev"
+                      }
+                    }
+                  },
+                  "db": {
+                    "projectId": "deporty-dev"
+                  }
+                },
+                "stadisticsMapper": {
+                  "playerMapper": {
+                    "db": {
+                      "projectId": "deporty-dev"
+                    }
+                  }
+                },
+                "playerFormMapper": {
+                  "playerMapper": {
+                    "db": {
+                      "projectId": "deporty-dev"
+                    }
+                  }
+                }
+              },
+              "teamMapper": {
+                "memberMapper": {
+                  "playerMapper": {
+                    "db": {
+                      "projectId": "deporty-dev"
+                    }
+                  }
+                },
+                "db": {
+                  "projectId": "deporty-dev"
+                }
+              }
+            }
+          }
+        },
+        "organizationMapper": {
+          "db": {
+            "projectId": "deporty-dev"
+          }
+        },
+        "financialStatementsMapper": {}
+      }
+    }
+  },
+  "status": "resolved"
+}

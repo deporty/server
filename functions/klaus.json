@@ -1,0 +1,178 @@
+{
+  "id": "gOFKwZR2ZEmapWmFXVFo",
+  "name": "Marchagas Torneo XXXII",
+  "flayer": "/tournaments/gOFKwZR2ZEmapWmFXVFo/preview.png",
+  "category": "B1",
+  "reward": [
+    2000000,
+    1500000
+  ],
+  "status": "in progress",
+  "description": "Compite, mejora, gana. El torneo se realizará en las canchas de Marchagas, un torneo dominical que no te puedes perder.",
+  "inscription": 200000,
+  "startsDate": "",
+  "fixture": {
+    "stages": [
+      {
+        "groups": [
+          {
+            "matches": [
+              {
+                "teamA": {
+                  "name": "PACHOTRUCK F.C",
+                  "id": "50VGBkVyW6IAHdLvq4dc",
+                  "shield": ""
+                },
+                "teamB": {
+                  "name": "TU CEL ACCESORIOS",
+                  "id": "0YdP72BUeApEckNbSGIW",
+                  "shield": ""
+                },
+                "playerForm": {
+                  "teamA": [],
+                  "teamB": []
+                },
+                "stadistics": {
+                  "teamA": {},
+                  "teamB": {}
+                }
+              },
+              {
+                "teamA": {
+                  "name": "PACHOTRUCK F.C",
+                  "id": "50VGBkVyW6IAHdLvq4dc",
+                  "shield": ""
+                },
+                "teamB": {
+                  "name": "MERCAPLAZA ALTA SUIZA",
+                  "id": "P2EPsiKoK9qWoDwe0leT",
+                  "shield": ""
+                },
+                "playerForm": {
+                  "teamA": [],
+                  "teamB": []
+                },
+                "stadistics": {
+                  "teamA": {},
+                  "teamB": {}
+                }
+              },
+              {
+                "teamA": {
+                  "name": "PACHOTRUCK F.C",
+                  "id": "50VGBkVyW6IAHdLvq4dc",
+                  "shield": ""
+                },
+                "teamB": {
+                  "name": "EL COMBO",
+                  "id": "b98EdTaUvPSkAUbZfMZK",
+                  "shield": ""
+                },
+                "playerForm": {
+                  "teamA": [],
+                  "teamB": []
+                },
+                "stadistics": {
+                  "teamA": {},
+                  "teamB": {}
+                }
+              },
+              {
+                "teamA": {
+                  "name": "TU CEL ACCESORIOS",
+                  "id": "0YdP72BUeApEckNbSGIW",
+                  "shield": ""
+                },
+                "teamB": {
+                  "name": "MERCAPLAZA ALTA SUIZA",
+                  "id": "P2EPsiKoK9qWoDwe0leT",
+                  "shield": ""
+                },
+                "playerForm": {
+                  "teamA": [],
+                  "teamB": []
+                },
+                "stadistics": {
+                  "teamA": {},
+                  "teamB": {}
+                }
+              },
+              {
+                "teamA": {
+                  "name": "TU CEL ACCESORIOS",
+                  "id": "0YdP72BUeApEckNbSGIW",
+                  "shield": ""
+                },
+                "teamB": {
+                  "name": "EL COMBO",
+                  "id": "b98EdTaUvPSkAUbZfMZK",
+                  "shield": ""
+                },
+                "playerForm": {
+                  "teamA": [],
+                  "teamB": []
+                },
+                "stadistics": {
+                  "teamA": {},
+                  "teamB": {}
+                }
+              },
+              {
+                "teamA": {
+                  "name": "MERCAPLAZA ALTA SUIZA",
+                  "id": "P2EPsiKoK9qWoDwe0leT",
+                  "shield": ""
+                },
+                "teamB": {
+                  "name": "EL COMBO",
+                  "id": "b98EdTaUvPSkAUbZfMZK",
+                  "shield": ""
+                },
+                "playerForm": {
+                  "teamA": [],
+                  "teamB": []
+                },
+                "stadistics": {
+                  "teamA": {},
+                  "teamB": {}
+                }
+              }
+            ],
+            "teams": [
+              {
+                "name": "PACHOTRUCK F.C",
+                "id": "50VGBkVyW6IAHdLvq4dc",
+                "shield": ""
+              },
+              {
+                "name": "TU CEL ACCESORIOS",
+                "id": "0YdP72BUeApEckNbSGIW",
+                "shield": ""
+              },
+              {
+                "name": "MERCAPLAZA ALTA SUIZA",
+                "id": "P2EPsiKoK9qWoDwe0leT",
+                "shield": ""
+              },
+              {
+                "name": "EL COMBO",
+                "id": "b98EdTaUvPSkAUbZfMZK",
+                "shield": ""
+              }
+            ],
+            "label": "A",
+            "index": 0
+          }
+        ],
+        "order": 0,
+        "id": "HCOXOaIxEsfQrVLEJrk7"
+      }
+    ]
+  },
+  "registeredTeams": [
+    {
+      "id": "9LBW8LbyeV8pZ60Axr0u",
+      "shield": ""
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "indexes": [
+
+    {
+      "collectionGroup": "tournaments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "`organization-id`",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "tournaments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "`organization-id`",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "`tournament-layout-id`",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "status",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "fixture-stages",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "`order`",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "`tournament-id`",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+
+  ],
+  "fieldOverrides": []
+}
