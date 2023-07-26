@@ -48,9 +48,6 @@ jobs:
           cat src/teams/infrastructure/teams.constants.ts
           cat src/tournaments/infrastructure/tournaments.constants.ts
           cat src/users/infrastructure/users.constants.ts
-
-
-
       # - name: RUN TEST
       #   run: |
       #     cd server/functions
@@ -68,21 +65,16 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: service-account.json
         run: |
-
-           
           echo "${{secrets.FIREBASE_ENV_CONFIG}}" > service-account.json
           echo "${{secrets.FIREBASE_ENV_CONFIG}}" > functions/src/environments/env.ts
-
           firebase use dev --token "${{secrets.FIREBASE_TOKEN}}"
           firebase deploy --only functions --token "${{secrets.FIREBASE_TOKEN}}" --force 
       - name: DEPLOY INDEXES DEV
         env:
           GOOGLE_APPLICATION_CREDENTIALS: service-account.json
         run: |
-
           echo "${{secrets.FIREBASE_ENV_CONFIG}}" > service-account.json
           echo "${{secrets.FIREBASE_ENV_CONFIG}}" > functions/src/environments/env.ts
-
           firebase use dev --token "${{secrets.FIREBASE_TOKEN}}"
           firebase deploy --token "${{secrets.FIREBASE_TOKEN}}" --force --only firestore:indexes
 
