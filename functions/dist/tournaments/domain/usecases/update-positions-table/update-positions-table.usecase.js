@@ -2,16 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdatePositionTableUsecase = void 0;
 const rxjs_1 = require("rxjs");
+const operators_1 = require("rxjs/operators");
 const usecase_1 = require("../../../../core/usecase");
+const crespo_1 = require("./crespo");
 const tie_breaking_handlers_1 = require("./tie-breaking-handlers");
 const update_positions_table_helpers_1 = require("./update-positions-table.helpers");
-const operators_1 = require("rxjs/operators");
 class UpdatePositionTableUsecase extends usecase_1.Usecase {
     constructor(getAnyMatchByTeamIdsUsecase) {
         super();
         this.getAnyMatchByTeamIdsUsecase = getAnyMatchByTeamIdsUsecase;
     }
     call(param) {
+        console.log(param);
         const teamIds = param.availableTeams || [];
         const tieBreakingOrder = param.tieBreakingOrder;
         const positionsTable = param.positionsTable || {
@@ -44,30 +46,30 @@ class UpdatePositionTableUsecase extends usecase_1.Usecase {
                     wasByRandom: false,
                 });
             }
-            (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, 'fairPlay', failPlayStadistics.teamA);
-            (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, 'playedMatches', 1);
-            (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, 'fairPlay', failPlayStadistics.teamB);
-            (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, 'playedMatches', 1);
+            (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, "fairPlay", failPlayStadistics.teamA);
+            (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, "playedMatches", 1);
+            (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, "fairPlay", failPlayStadistics.teamB);
+            (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, "playedMatches", 1);
             if (match.score) {
                 this.setGoalStadistics(teamIds, table, teamAId, match, teamBId);
             }
             const winnerTeam = (0, tie_breaking_handlers_1.getWinnerTeam)(match);
             if (winnerTeam !== undefined) {
                 if (winnerTeam) {
-                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, winnerTeam.winner, table, 'points', param.pointsConfiguration.wonMatchPoints);
-                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, winnerTeam.winner, table, 'wonMatches', 1);
-                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, winnerTeam.winner, table, 'points', param.pointsConfiguration.lostMatchPoints);
-                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, winnerTeam.loser, table, 'lostMatches', 1);
+                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, winnerTeam.winner, table, "points", param.pointsConfiguration.wonMatchPoints);
+                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, winnerTeam.winner, table, "wonMatches", 1);
+                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, winnerTeam.winner, table, "points", param.pointsConfiguration.lostMatchPoints);
+                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, winnerTeam.loser, table, "lostMatches", 1);
                 }
                 else if (winnerTeam === null) {
-                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, 'tiedMatches', 1);
-                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, 'points', param.pointsConfiguration.tieMatchPoints);
-                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, 'tiedMatches', 1);
-                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, 'points', param.pointsConfiguration.tieMatchPoints);
+                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, "tiedMatches", 1);
+                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, "points", param.pointsConfiguration.tieMatchPoints);
+                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, "tiedMatches", 1);
+                    (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, "points", param.pointsConfiguration.tieMatchPoints);
                 }
             }
             console.log();
-            console.log('Original table: ', table);
+            console.log("Original table: ", table);
             console.log();
             const calculatedTable = (0, update_positions_table_helpers_1.calculateGoalsAgainsPerMatch)(table);
             const groupedTable = this.orderByPoints(calculatedTable);
@@ -83,19 +85,26 @@ class UpdatePositionTableUsecase extends usecase_1.Usecase {
     }
     resolveTies(groupedTable, tieBreakingOrder, param) {
         const response = [];
+        const temp = [];
+        console.log("Grouped tables: ", groupedTable);
         for (const group of groupedTable) {
-            console.log('...');
-            console.log(JSON.stringify(group, null, 2));
-            console.log('...');
+            const len = group.length;
+            console.log("------------------------");
+            console.log("Group Lenght: ", len);
+            console.log(group);
+            console.log("------------------------");
+            const $orderedTable = (0, crespo_1.quicksort)(group, tieBreakingOrder, group.length, param, this.getAnyMatchByTeamIdsUsecase);
+            temp.push($orderedTable);
         }
-        for (const group of groupedTable) {
-            // const len = group.length;
-            const orderedTable = group.sort((prev, next) => {
-                return this.order(prev, next, tieBreakingOrder, 0, param);
-            });
-            response.push(...orderedTable);
+        if (temp.length == 0) {
+            return (0, rxjs_1.of)(response);
         }
-        return (0, rxjs_1.of)(response);
+        return (0, rxjs_1.zip)(...temp).pipe((0, operators_1.map)((data) => {
+            return data.reduce((acc, prev) => {
+                acc.push(...prev);
+                return acc;
+            }, []);
+        }));
     }
     getFairPlayerStadisticFromMatchByTeam(match, negativePointsPerCard) {
         const yellowCardScale = negativePointsPerCard.yellowCardsNegativePoints;
@@ -114,72 +123,35 @@ class UpdatePositionTableUsecase extends usecase_1.Usecase {
                 }
             }
         };
-        fn(match, response, 'teamA');
-        fn(match, response, 'teamB');
+        fn(match, response, "teamA");
+        fn(match, response, "teamB");
         return response;
     }
     orderByPoints(table) {
-        const groupedTable = [];
-        let prevPoints = null;
-        let group = [];
+        const groupedTable = {};
         for (const item of table) {
-            if (prevPoints === null) {
-                prevPoints = item.stadistics.points;
+            const points = item.stadistics.points.toString();
+            if (!groupedTable[points]) {
+                groupedTable[points] = [];
             }
-            if (item.stadistics.points === prevPoints) {
-                group.push(item);
-            }
-            else {
-                groupedTable.push([...group]);
-                group = [item];
-            }
+            groupedTable[points].push(item);
         }
-        groupedTable.push([...group]);
-        return groupedTable.sort((a, b) => {
-            const a0 = a[0];
-            const b0 = b[0];
-            return -1 * (a0.stadistics.points - b0.stadistics.points);
-        });
-    }
-    order(a, b, order, index, param) {
-        if (index === order.length) {
-            const randomNumber = Math.random();
-            if (randomNumber > 0.5) {
-                return -1;
-            }
-            else {
-                return 1;
-            }
+        const keys = Object.keys(groupedTable)
+            .map((x) => parseInt(x))
+            .sort((a, b) => b - a);
+        const res = [];
+        for (const k of keys) {
+            res.push(groupedTable[k.toString()]);
         }
-        const currentOrder = order[index];
-        if (tie_breaking_handlers_1.BASIC_TIE_BREAKING_ORDER_MAP[currentOrder]) {
-            const config = tie_breaking_handlers_1.BASIC_TIE_BREAKING_ORDER_MAP[currentOrder];
-            const property = config.property;
-            const operator = config.operator;
-            const result = operator(a.stadistics[property], b.stadistics[property]);
-            if (result === 0) {
-                return this.order(a, b, order, index + 1, param);
-            }
-            else {
-                return result;
-            }
-        }
-        else {
-            const config = tie_breaking_handlers_1.ADVANCED_TIE_BREAKING_ORDER_MAP[currentOrder];
-            const operator = config.operator;
-            if (currentOrder == 'WB2') {
-                operator(this.getAnyMatchByTeamIdsUsecase, a.teamId, b.teamId, param.meta);
-            }
-            return 0;
-        }
+        return res;
     }
     setGoalStadistics(teamIds, table, teamAId, match, teamBId) {
-        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, 'goalsAgainst', match.score.teamB);
-        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, 'goalsInFavor', match.score.teamA);
-        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, 'goalsDifference', match.score.teamA - match.score.teamB);
-        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, 'goalsAgainst', match.score.teamA);
-        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, 'goalsInFavor', match.score.teamB);
-        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, 'goalsDifference', match.score.teamB - match.score.teamA);
+        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, "goalsAgainst", match.score.teamB);
+        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, "goalsInFavor", match.score.teamA);
+        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamAId, table, "goalsDifference", match.score.teamA - match.score.teamB);
+        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, "goalsAgainst", match.score.teamA);
+        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, "goalsInFavor", match.score.teamB);
+        (0, update_positions_table_helpers_1.setStadistic)(teamIds, teamBId, table, "goalsDifference", match.score.teamB - match.score.teamA);
     }
 }
 exports.UpdatePositionTableUsecase = UpdatePositionTableUsecase;

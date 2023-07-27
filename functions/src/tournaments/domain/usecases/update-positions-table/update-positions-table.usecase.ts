@@ -1,33 +1,26 @@
-import { Id } from '@deporty-org/entities';
+import { Id } from "@deporty-org/entities";
+import {
+  NegativePointsPerCard,
+  PointsConfiguration,
+  TieBreakingOrder,
+} from "@deporty-org/entities/organizations";
 import {
   FlatPointsStadistics,
   MatchEntity,
   PositionsTable,
-} from '@deporty-org/entities/tournaments';
-import { Observable, of } from 'rxjs';
-import { Usecase } from '../../../../core/usecase';
-import {
-  AdvancedTieBreakingOrderEnum,
-  BasicTieBreakingOrderEnum,
-  NegativePointsPerCard,
-  PointsConfiguration,
-  TieBreakingOrder,
-} from '@deporty-org/entities/organizations';
-import {
-  BasicTieBreakingOrderConfig,
-  BASIC_TIE_BREAKING_ORDER_MAP,
-  AdvancedTieBreakingOrderConfig,
-  getWinnerTeam,
-  ADVANCED_TIE_BREAKING_ORDER_MAP,
-} from './tie-breaking-handlers';
-import { GetAnyMatchByTeamIdsUsecase } from '../groups/get-any-match-by-team-ids/get-any-match-by-team-ids.usecase';
+} from "@deporty-org/entities/tournaments";
+import { Observable, of, zip } from "rxjs";
+import { map } from "rxjs/operators";
+import { Usecase } from "../../../../core/usecase";
+import { GetAnyMatchByTeamIdsUsecase } from "../groups/get-any-match-by-team-ids/get-any-match-by-team-ids.usecase";
+import { quicksort } from "./crespo";
+import { getWinnerTeam } from "./tie-breaking-handlers";
 import {
   Table,
   calculateGoalsAgainsPerMatch,
   generateEmptyStadistics,
   setStadistic,
-} from './update-positions-table.helpers';
-import { map } from 'rxjs/operators';
+} from "./update-positions-table.helpers";
 
 export interface Params {
   match: MatchEntity;
@@ -49,6 +42,8 @@ export class UpdatePositionTableUsecase extends Usecase<
   }
 
   call(param: Params): Observable<PositionsTable> {
+    console.log(param);
+
     const teamIds = param.availableTeams || [];
     const tieBreakingOrder: TieBreakingOrder[] = param.tieBreakingOrder;
 
@@ -94,18 +89,18 @@ export class UpdatePositionTableUsecase extends Usecase<
         teamIds,
         teamAId,
         table,
-        'fairPlay',
+        "fairPlay",
         failPlayStadistics.teamA
       );
-      setStadistic(teamIds, teamAId, table, 'playedMatches', 1);
+      setStadistic(teamIds, teamAId, table, "playedMatches", 1);
       setStadistic(
         teamIds,
         teamBId,
         table,
-        'fairPlay',
+        "fairPlay",
         failPlayStadistics.teamB
       );
-      setStadistic(teamIds, teamBId, table, 'playedMatches', 1);
+      setStadistic(teamIds, teamBId, table, "playedMatches", 1);
 
       if (match.score) {
         this.setGoalStadistics(teamIds, table, teamAId, match, teamBId);
@@ -119,40 +114,40 @@ export class UpdatePositionTableUsecase extends Usecase<
             teamIds,
             winnerTeam.winner,
             table,
-            'points',
+            "points",
             param.pointsConfiguration.wonMatchPoints
           );
-          setStadistic(teamIds, winnerTeam.winner, table, 'wonMatches', 1);
+          setStadistic(teamIds, winnerTeam.winner, table, "wonMatches", 1);
           setStadistic(
             teamIds,
             winnerTeam.winner,
             table,
-            'points',
+            "points",
             param.pointsConfiguration.lostMatchPoints
           );
-          setStadistic(teamIds, winnerTeam.loser, table, 'lostMatches', 1);
+          setStadistic(teamIds, winnerTeam.loser, table, "lostMatches", 1);
         } else if (winnerTeam === null) {
-          setStadistic(teamIds, teamAId, table, 'tiedMatches', 1);
+          setStadistic(teamIds, teamAId, table, "tiedMatches", 1);
           setStadistic(
             teamIds,
             teamAId,
             table,
-            'points',
+            "points",
             param.pointsConfiguration.tieMatchPoints
           );
-          setStadistic(teamIds, teamBId, table, 'tiedMatches', 1);
+          setStadistic(teamIds, teamBId, table, "tiedMatches", 1);
           setStadistic(
             teamIds,
             teamBId,
             table,
-            'points',
+            "points",
             param.pointsConfiguration.tieMatchPoints
           );
         }
       }
 
       console.log();
-      console.log('Original table: ', table);
+      console.log("Original table: ", table);
       console.log();
 
       const calculatedTable = calculateGoalsAgainsPerMatch(table);
@@ -187,19 +182,39 @@ export class UpdatePositionTableUsecase extends Usecase<
   ): Observable<Table> {
     const response: Table = [];
 
+    const temp = [];
+
+    console.log("Grouped tables: ", groupedTable);
+
     for (const group of groupedTable) {
-      console.log('...');
-      console.log(JSON.stringify(group, null, 2));
-      console.log('...');
+      const len = group.length;
+      console.log("------------------------");
+
+      console.log("Group Lenght: ", len);
+      console.log(group);
+      console.log("------------------------");
+
+      const $orderedTable = quicksort(
+        group,
+        tieBreakingOrder,
+        group.length,
+        param,
+        this.getAnyMatchByTeamIdsUsecase
+      );
+      temp.push($orderedTable);
     }
-    for (const group of groupedTable) {
-      // const len = group.length;
-      const orderedTable = group.sort((prev, next) => {
-        return this.order(prev, next, tieBreakingOrder, 0, param);
-      });
-      response.push(...orderedTable);
+    if (temp.length == 0) {
+      return of(response);
     }
-    return of(response);
+
+    return zip(...temp).pipe(
+      map((data) => {
+        return data.reduce((acc, prev) => {
+          acc.push(...prev);
+          return acc;
+        }, []);
+      })
+    );
   }
 
   private getFairPlayerStadisticFromMatchByTeam(
@@ -215,7 +230,7 @@ export class UpdatePositionTableUsecase extends Usecase<
     const fn = (
       match: MatchEntity,
       response: { teamA: number; teamB: number },
-      key: 'teamA' | 'teamB'
+      key: "teamA" | "teamB"
     ) => {
       if (match.stadistics && match.stadistics[key]) {
         for (const stadistic of (match.stadistics as any)[key]) {
@@ -226,97 +241,33 @@ export class UpdatePositionTableUsecase extends Usecase<
         }
       }
     };
-    fn(match, response, 'teamA');
-    fn(match, response, 'teamB');
+    fn(match, response, "teamA");
+    fn(match, response, "teamB");
     return response;
   }
 
   private orderByPoints(table: Table) {
-    const groupedTable = [];
-    let prevPoints = null;
-    let group: Table = [];
+    const groupedTable: any = {};
     for (const item of table) {
-      if (prevPoints === null) {
-        prevPoints = item.stadistics.points;
+      const points = item.stadistics.points.toString();
+
+      if (!groupedTable[points]) {
+        groupedTable[points] = [];
       }
 
-      if (item.stadistics.points === prevPoints) {
-        group.push(item);
-      } else {
-        groupedTable.push([...group]);
-        group = [item];
-      }
+      groupedTable[points].push(item);
     }
-    groupedTable.push([...group]);
-    return groupedTable.sort((a, b) => {
-      const a0 = a[0];
-      const b0 = b[0];
-      return -1 * (a0.stadistics.points - b0.stadistics.points);
-    });
-  }
 
-  private order(
-    a: {
-      teamId: string;
-      stadistics: FlatPointsStadistics;
-      wasByRandom: boolean;
-    },
-    b: {
-      teamId: string;
-      stadistics: FlatPointsStadistics;
-      wasByRandom: boolean;
-    },
-    order: TieBreakingOrder[],
-    index: number,
-    param: any
-  ): number {
-    if (index === order.length) {
-      const randomNumber = Math.random();
+    const keys = Object.keys(groupedTable)
+      .map((x) => parseInt(x))
+      .sort((a, b) => b - a);
 
-      if (randomNumber > 0.5) {
-        return -1;
-      } else {
-        return 1;
-      }
+    const res = [];
+    for (const k of keys) {
+      res.push(groupedTable[k.toString()]);
     }
-    const currentOrder = order[index];
 
-    if (
-      BASIC_TIE_BREAKING_ORDER_MAP[currentOrder as BasicTieBreakingOrderEnum]
-    ) {
-      const config: BasicTieBreakingOrderConfig =
-        BASIC_TIE_BREAKING_ORDER_MAP[currentOrder as BasicTieBreakingOrderEnum];
-
-      const property = config.property;
-      const operator = config.operator;
-      const result = operator(
-        (a.stadistics as any)[property],
-        (b.stadistics as any)[property]
-      );
-      if (result === 0) {
-        return this.order(a, b, order, index + 1, param);
-      } else {
-        return result;
-      }
-    } else {
-      const config: AdvancedTieBreakingOrderConfig =
-        ADVANCED_TIE_BREAKING_ORDER_MAP[
-          currentOrder as AdvancedTieBreakingOrderEnum
-        ];
-
-      const operator = config.operator;
-
-      if (currentOrder == 'WB2') {
-        operator(
-          this.getAnyMatchByTeamIdsUsecase,
-          a.teamId,
-          b.teamId,
-          param.meta
-        );
-      }
-
-      return 0;
-    }
+    return res
   }
 
   private setGoalStadistics(
@@ -327,23 +278,23 @@ export class UpdatePositionTableUsecase extends Usecase<
     match: MatchEntity,
     teamBId: string
   ) {
-    setStadistic(teamIds, teamAId, table, 'goalsAgainst', match.score!.teamB);
-    setStadistic(teamIds, teamAId, table, 'goalsInFavor', match.score!.teamA);
+    setStadistic(teamIds, teamAId, table, "goalsAgainst", match.score!.teamB);
+    setStadistic(teamIds, teamAId, table, "goalsInFavor", match.score!.teamA);
     setStadistic(
       teamIds,
       teamAId,
       table,
-      'goalsDifference',
+      "goalsDifference",
       match.score!.teamA - match.score!.teamB
     );
 
-    setStadistic(teamIds, teamBId, table, 'goalsAgainst', match.score!.teamA);
-    setStadistic(teamIds, teamBId, table, 'goalsInFavor', match.score!.teamB);
+    setStadistic(teamIds, teamBId, table, "goalsAgainst", match.score!.teamA);
+    setStadistic(teamIds, teamBId, table, "goalsInFavor", match.score!.teamB);
     setStadistic(
       teamIds,
       teamBId,
       table,
-      'goalsDifference',
+      "goalsDifference",
       match.score!.teamB - match.score!.teamA
     );
   }

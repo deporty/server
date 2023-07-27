@@ -4,49 +4,49 @@ exports.getWinnerTeam = exports.ADVANCED_TIE_BREAKING_ORDER_MAP = exports.BASIC_
 const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
 function preferMajor(a, b) {
-    return a < b ? 1 : a > b ? -1 : 0;
+    return a < b ? (0, rxjs_1.of)(1) : a > b ? (0, rxjs_1.of)(-1) : (0, rxjs_1.of)(0);
 }
 exports.preferMajor = preferMajor;
 function preferMinor(a, b) {
-    return a > b ? 1 : a < b ? -1 : 0;
+    return a > b ? (0, rxjs_1.of)(1) : a < b ? (0, rxjs_1.of)(-1) : (0, rxjs_1.of)(0);
 }
 exports.preferMinor = preferMinor;
 exports.BASIC_TIE_BREAKING_ORDER_MAP = {
     GA: {
         operator: preferMinor,
-        property: 'goalsAgainst',
+        property: "goalsAgainst",
     },
     GAPM: {
         operator: preferMinor,
-        property: 'goalsAgainstPerMatch',
+        property: "goalsAgainstPerMatch",
     },
     GD: {
         operator: preferMajor,
-        property: 'goalsDifference',
+        property: "goalsDifference",
     },
     GIF: {
         operator: preferMajor,
-        property: 'goalsInFavor',
+        property: "goalsInFavor",
     },
     FP: {
         operator: preferMinor,
-        property: 'fairPlay',
+        property: "fairPlay",
     },
     LM: {
         operator: preferMinor,
-        property: 'lostMatches',
+        property: "lostMatches",
     },
     PM: {
         operator: preferMinor,
-        property: 'playedMatches',
+        property: "playedMatches",
     },
     TM: {
         operator: preferMajor,
-        property: 'tiedMatches',
+        property: "tiedMatches",
     },
     WM: {
         operator: preferMajor,
-        property: 'wonMatches',
+        property: "wonMatches",
     },
 };
 exports.ADVANCED_TIE_BREAKING_ORDER_MAP = {
@@ -54,18 +54,30 @@ exports.ADVANCED_TIE_BREAKING_ORDER_MAP = {
         operator: () => {
             return (0, rxjs_1.of)(0);
         },
+        condition: (groupLength) => {
+            return true;
+        },
     },
     BPGT: {
         operator: () => {
             return (0, rxjs_1.of)(0);
+        },
+        condition: (groupLength) => {
+            return true;
         },
     },
     IP: {
         operator: () => {
             return (0, rxjs_1.of)(0);
         },
+        condition: (groupLength) => {
+            return true;
+        },
     },
     WB2: {
+        condition: (groupLength) => {
+            return groupLength == 2;
+        },
         operator: (getAnyMatchByTeamIdsUsecase, teamAId, teamBId, meta) => {
             return getAnyMatchByTeamIdsUsecase
                 .call({
