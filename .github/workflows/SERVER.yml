@@ -111,12 +111,12 @@ jobs:
       - name: CONFIG PDN VARIABLES
         run: |
           cd functions
-          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-app\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/authorization/infrastructure/authorization.constants.ts
-          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-app\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/locations/infrastructure/locations.constants.ts
-          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-app\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/organizations/infrastructure/organizations.constants.ts
-          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-app\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/teams/infrastructure/teams.constants.ts
-          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-app\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/tournaments/infrastructure/tournaments.constants.ts
-          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-app\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/users/infrastructure/users.constants.ts
+          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/authorization/infrastructure/authorization.constants.ts
+          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/locations/infrastructure/locations.constants.ts
+          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/organizations/infrastructure/organizations.constants.ts
+          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/teams/infrastructure/teams.constants.ts
+          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/tournaments/infrastructure/tournaments.constants.ts
+          sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/users/infrastructure/users.constants.ts
           echo "________"
           cat src/authorization/infrastructure/authorization.constants.ts
           cat src/locations/infrastructure/locations.constants.ts
