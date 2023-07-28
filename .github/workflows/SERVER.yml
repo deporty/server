@@ -83,7 +83,8 @@ jobs:
 
   BUILD_AND_DEPLOY_PDN:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: pdn
+    needs: [BUILD_AND_DEPLOY_DEV]
     steps:
       - name: CHECKOUT 
         uses: actions/checkout@v2
