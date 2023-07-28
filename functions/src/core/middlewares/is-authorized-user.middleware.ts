@@ -20,8 +20,6 @@ export class IsAuthorizedUserMiddleware {
             if (isAuthorized) {
               next();
             } else {
-              console.log('No permitido : ', identifier);
-
               response
                 .json({
                   meta: {

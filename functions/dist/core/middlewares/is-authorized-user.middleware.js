@@ -18,7 +18,6 @@ class IsAuthorizedUserMiddleware {
                             next();
                         }
                         else {
-                            console.log('No permitido : ', identifier);
                             response
                                 .json({
                                 meta: {

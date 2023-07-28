@@ -12,19 +12,18 @@ class IsKeyPresentMiddleware {
             if (this.flag) {
                 const key = (_a = request.header('Authorization')) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
                 if (key) {
-                    const isValid = await this.usecase(key).toPromise();
-                    if (isValid) {
-                        next();
-                    }
-                    else {
-                        response
-                            .json({
-                            meta: {
-                                code: 'AUTHORIZATION:ERROR',
-                            },
-                        })
-                            .status(401);
-                    }
+                    // const isValid = await this.usecase(key).toPromise();
+                    next();
+                    // if (isValid) {
+                    // } else {
+                    //   response
+                    //     .json({
+                    //       meta: {
+                    //         code: 'AUTHORIZATION:ERROR',
+                    //       },
+                    //     } as IBaseResponse<void>)
+                    //     .status(401);
+                    // }
                 }
                 else {
                     response

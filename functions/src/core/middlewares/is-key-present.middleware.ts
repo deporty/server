@@ -15,19 +15,19 @@ export class IsKeyPresentMiddleware {
         const key = request.header('Authorization')?.split(' ')[1];
 
         if (key) {
-          const isValid = await this.usecase(key).toPromise();
+          // const isValid = await this.usecase(key).toPromise();
 
-          if (isValid) {
-            next();
-          } else {
-            response
-              .json({
-                meta: {
-                  code: 'AUTHORIZATION:ERROR',
-                },
-              } as IBaseResponse<void>)
-              .status(401);
-          }
+          next();
+          // if (isValid) {
+          // } else {
+          //   response
+          //     .json({
+          //       meta: {
+          //         code: 'AUTHORIZATION:ERROR',
+          //       },
+          //     } as IBaseResponse<void>)
+          //     .status(401);
+          // }
         } else {
           response
             .json({
