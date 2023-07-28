@@ -799,7 +799,6 @@ export class TournamentsModulesConfig {
       kind: CreateTournamentUsecase,
       dependencies: [
         'TournamentContract',
-        'TournamentLayoutContract',
         'OrganizationContract',
         'FileAdapter',
         'GetTournamentsByUniqueAttributesUsecase',

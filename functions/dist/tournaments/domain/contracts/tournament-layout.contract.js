@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TournamentLayoutContract = void 0;
-class TournamentLayoutContract {
+exports.OrganizationContract = void 0;
+class OrganizationContract {
 }
-exports.TournamentLayoutContract = TournamentLayoutContract;
+exports.OrganizationContract = OrganizationContract;

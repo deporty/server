@@ -14,6 +14,7 @@ const get_members_by_team_usecase_1 = require("./domain/usecases/get-members-by-
 const get_sport_by_id_usecase_1 = require("./domain/usecases/get-sport-by-id/get-sport-by-id.usecase");
 const get_team_by_id_usecase_1 = require("./domain/usecases/get-team-by-id/get-team-by-id.usecase");
 const get_team_by_name_usecase_1 = require("./domain/usecases/get-team-by-name/get-team-by-name.usecase");
+const get_teams_by_advanced_filters_usecase_1 = require("./domain/usecases/get-teams-by-advanced-filters/get-teams-by-advanced-filters.usecase");
 const get_teams_by_filters_usecase_1 = require("./domain/usecases/get-teams-by-filters/get-teams-by-filters.usecase");
 const get_teams_usecase_1 = require("./domain/usecases/get-teams/get-teams.usecase");
 const member_mapper_1 = require("./infrastructure/member.mapper");
@@ -85,6 +86,12 @@ class TeamsModulesConfig {
         container.add({
             id: 'GetTeamByNameUsecase',
             kind: get_team_by_name_usecase_1.GetTeamByNameUsecase,
+            dependencies: ['TeamContract'],
+            strategy: 'singleton',
+        });
+        container.add({
+            id: 'GetTeamByAdvancedFiltersUsecase',
+            kind: get_teams_by_advanced_filters_usecase_1.GetTeamByAdvancedFiltersUsecase,
             dependencies: ['TeamContract'],
             strategy: 'singleton',
         });

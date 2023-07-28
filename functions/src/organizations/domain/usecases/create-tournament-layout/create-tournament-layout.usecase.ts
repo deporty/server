@@ -28,6 +28,8 @@ export class CreateTournamentLayoutUsecase extends Usecase<
     tournamentLayout: TournamentLayoutEntity
   ): Observable<TournamentLayoutEntity> {
     const prevFlayer = tournamentLayout.flayer;
+    console.log("El mago: ", tournamentLayout);
+
     tournamentLayout.flayer = undefined;
     return this.tournamentLayoutContract
       .filter(
@@ -46,6 +48,7 @@ export class CreateTournamentLayoutUsecase extends Usecase<
           if (prevTournamentLayout.length > 0) {
             return throwError(new TournamentLayoutAlreadyExistsError());
           }
+
 
           if (!!prevFlayer) {
             const validations = {
@@ -105,6 +108,7 @@ export class CreateTournamentLayoutUsecase extends Usecase<
               })
             );
           } else {
+            
             return this.tournamentLayoutContract
               .save(
                 {

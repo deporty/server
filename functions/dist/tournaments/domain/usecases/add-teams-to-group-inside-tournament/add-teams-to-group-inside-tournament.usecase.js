@@ -7,8 +7,8 @@ const usecase_1 = require("../../../../core/usecase");
 class TeamAreNotRegisteredError extends Error {
     constructor(teamIds) {
         super();
-        this.name = 'TeamAreNotRegisteredError';
-        this.message = `The following teams are not registerd in the tournament: ${teamIds.join(', ')} `;
+        this.name = "TeamAreNotRegisteredError";
+        this.message = `The following teams are not registerd in the tournament: ${teamIds.join(", ")} `;
         this.data = teamIds;
     }
 }
@@ -17,7 +17,7 @@ class TeamAreRegisteredInOtherGroupError extends Error {
     constructor(data) {
         super();
         this.data = data;
-        this.name = 'TeamAreRegisteredInOtherGroupError';
+        this.name = "TeamAreRegisteredInOtherGroupError";
         this.message = `There are teams wich are registered in other groups`;
     }
 }
@@ -26,7 +26,7 @@ class ThereAreTeamRegisteredPreviuslyError extends Error {
     constructor(data) {
         super();
         this.data = data;
-        this.name = 'ThereAreTeamRegisteredPreviuslyError';
+        this.name = "ThereAreTeamRegisteredPreviuslyError";
         this.message = `There are teams wich are registered in the same group`;
     }
 }
@@ -57,16 +57,18 @@ class AddTeamsToGroupInsideTournamentUsecase extends usecase_1.Usecase {
         return (0, rxjs_1.of)(currentGroup);
     }
     call(param) {
+        console.log("Gonorrea ", param);
         return this.getRegisteredTeamsByTournamentIdUsecase
             .call(param.tournamentId)
             .pipe((0, operators_1.mergeMap)((registeredTeams) => {
+            console.log("Registered teams: ", registeredTeams);
             const noRegisteredTeams = [];
             for (const tid of param.teamIds) {
                 const registeredTeam = registeredTeams.find((x) => x.teamId == tid);
                 if (!registeredTeam) {
                     noRegisteredTeams.push(tid);
                 }
-                else if (registeredTeam.status === 'pre-registered') {
+                else if (registeredTeam.status === "pre-registered") {
                     noRegisteredTeams.push(tid);
                 }
             }
@@ -97,6 +99,7 @@ class AddTeamsToGroupInsideTournamentUsecase extends usecase_1.Usecase {
                     return (0, rxjs_1.throwError)(new ThereAreTeamRegisteredPreviuslyError(prevTeams));
                 }
                 currentGroup.teamIds.push(...teamsToAdd);
+                console.log("Vieja malparida ", currentGroup.teamIds);
                 return this.groupContract
                     .update({
                     fixtureStageId: param.fixtureStageId,

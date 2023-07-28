@@ -8,14 +8,16 @@ class RegisteredTeamMapper extends mapper_1.Mapper {
         super();
         this.memberMapper = memberMapper;
         this.attributesMapper = {
-            tournamentId: { name: 'tournament-id' },
-            id: { name: 'id' },
+            tournamentId: { name: "tournament-id" },
+            id: { name: "id" },
             enrollmentDate: {
-                name: 'enrollment-date',
-                from: (date) => (date ? (0, rxjs_1.of)(date.toDate()) : (0, rxjs_1.of)(undefined)),
+                name: "enrollment-date",
+                from: (date) => {
+                    return date ? (0, rxjs_1.of)(date.toDate()) : (0, rxjs_1.of)(undefined);
+                },
             },
             members: {
-                name: 'members',
+                name: "members",
                 from: (members) => {
                     return members.length > 0
                         ? (0, rxjs_1.zip)(...members.map((element) => {
@@ -31,8 +33,8 @@ class RegisteredTeamMapper extends mapper_1.Mapper {
                         : [];
                 },
             },
-            teamId: { name: 'team-id' },
-            status: { name: 'status' },
+            teamId: { name: "team-id" },
+            status: { name: "status" },
         };
     }
 }

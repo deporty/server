@@ -17,6 +17,7 @@ import { GetMemberByIdUsecase } from '../domain/usecases/get-member-by-id/get-me
 import { GetSportByIdUsecase } from '../domain/usecases/get-sport-by-id/get-sport-by-id.usecase';
 import { CreateTeamUsecase } from '../domain/usecases/create-team/create-team.usecase';
 import { JWT_SECRET } from './teams.constants';
+import { GetTeamByAdvancedFiltersUsecase } from '../domain/usecases/get-teams-by-advanced-filters/get-teams-by-advanced-filters.usecase';
 
 
 export class TeamController extends BaseController {
@@ -109,6 +110,31 @@ export class TeamController extends BaseController {
       this.handlerController<GetTeamByFiltersUsecase, any>(
         container,
         'GetTeamByFiltersUsecase',
+        response,
+        config,
+        undefined,
+        params
+      );
+    });
+    app.post(`/advanced-filter`, (request: Request, response: Response) => {
+      const params = request.body;
+
+      console.log("Tania ", params);
+      
+
+      const config: IMessagesConfiguration = {
+        exceptions: {},
+        identifier: this.identifier,
+        errorCodes: {},
+        successCode: 'GET:SUCCESS',
+        extraData: {
+          entitiesName: 'teams',
+        },
+      };
+
+      this.handlerController<GetTeamByAdvancedFiltersUsecase, any>(
+        container,
+        'GetTeamByAdvancedFiltersUsecase',
         response,
         config,
         undefined,

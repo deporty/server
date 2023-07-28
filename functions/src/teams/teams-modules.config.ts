@@ -12,6 +12,7 @@ import { GetMembersByTeamUsecase } from './domain/usecases/get-members-by-team/g
 import { GetSportByIdUsecase } from './domain/usecases/get-sport-by-id/get-sport-by-id.usecase';
 import { GetTeamByIdUsecase } from './domain/usecases/get-team-by-id/get-team-by-id.usecase';
 import { GetTeamByNameUsecase } from './domain/usecases/get-team-by-name/get-team-by-name.usecase';
+import { GetTeamByAdvancedFiltersUsecase } from './domain/usecases/get-teams-by-advanced-filters/get-teams-by-advanced-filters.usecase';
 import { GetTeamByFiltersUsecase } from './domain/usecases/get-teams-by-filters/get-teams-by-filters.usecase';
 import { GetTeamsUsecase } from './domain/usecases/get-teams/get-teams.usecase';
 import { MemberMapper } from './infrastructure/member.mapper';
@@ -93,6 +94,12 @@ export class TeamsModulesConfig {
     container.add({
       id: 'GetTeamByNameUsecase',
       kind: GetTeamByNameUsecase,
+      dependencies: ['TeamContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetTeamByAdvancedFiltersUsecase',
+      kind: GetTeamByAdvancedFiltersUsecase,
       dependencies: ['TeamContract'],
       strategy: 'singleton',
     });

@@ -9,48 +9,48 @@ const usecase_1 = require("../../../../core/usecase");
 class TournamentLayoutNotFoundError extends Error {
     constructor() {
         super(`The tournament layout was not found.`);
-        this.name = 'TournamentLayoutNotFoundError';
+        this.name = "TournamentLayoutNotFoundError";
     }
 }
 exports.TournamentLayoutNotFoundError = TournamentLayoutNotFoundError;
 class OrganizationNotFoundError extends Error {
     constructor() {
         super(`The organization was not found.`);
-        this.name = 'OrganizationNotFoundError';
+        this.name = "OrganizationNotFoundError";
     }
 }
 exports.OrganizationNotFoundError = OrganizationNotFoundError;
 class TournamentAlreadyExistsError extends Error {
     constructor(properties) {
         super();
-        this.name = 'TournamentAlreadyExistsError';
-        this.message = `The tournament with these properties already exists: ${properties.join(', ')} `;
+        this.name = "TournamentAlreadyExistsError";
+        this.message = `The tournament with these properties already exists: ${properties.join(", ")} `;
     }
 }
 exports.TournamentAlreadyExistsError = TournamentAlreadyExistsError;
 class CreateTournamentUsecase extends usecase_1.Usecase {
-    constructor(tournamentContract, tournamentLayoutContract, organizationContract, fileAdapter, getTournamentsByUniqueAttributesUsecase) {
+    constructor(tournamentContract, organizationContract, fileAdapter, getTournamentsByUniqueAttributesUsecase) {
         super();
         this.tournamentContract = tournamentContract;
-        this.tournamentLayoutContract = tournamentLayoutContract;
         this.organizationContract = organizationContract;
         this.fileAdapter = fileAdapter;
         this.getTournamentsByUniqueAttributesUsecase = getTournamentsByUniqueAttributesUsecase;
     }
     call(tournament) {
+        console.log("Tribu ", tournament);
         const requiredAttributes = [
-            'category',
-            'organizationId',
-            'tournamentLayoutId',
-            'version',
+            "category",
+            "organizationId",
+            "tournamentLayoutId",
+            "version",
         ];
         for (const att of requiredAttributes) {
             if (!tournament[att]) {
                 return (0, rxjs_1.throwError)(new exceptions_1.EmptyAttributeError(att));
             }
         }
-        return this.tournamentLayoutContract
-            .getById({ organizationId: tournament.organizationId }, tournament.tournamentLayoutId)
+        return this.organizationContract
+            .getTournamentLayoutByIdUsecase(tournament.organizationId, tournament.tournamentLayoutId)
             .pipe((0, operators_1.mergeMap)((tournamentLayout) => {
             if (!tournamentLayout) {
                 return (0, rxjs_1.throwError)(new TournamentLayoutNotFoundError());
@@ -68,19 +68,19 @@ class CreateTournamentUsecase extends usecase_1.Usecase {
                 return this.getTournamentsByUniqueAttributesUsecase.call(tournament);
             }), (0, operators_1.mergeMap)((existingTournaments) => {
                 if (existingTournaments.length > 0) {
-                    const availables = existingTournaments.filter((x) => x.status !== 'deleted');
+                    const availables = existingTournaments.filter((x) => x.status !== "deleted");
                     if (availables.length > 0) {
                         return (0, rxjs_1.throwError)(new TournamentAlreadyExistsError([
-                            'category',
-                            'edition',
-                            'organizationId',
-                            'tournamentLayoutId',
-                            'version',
+                            "category",
+                            "edition",
+                            "organizationId",
+                            "tournamentLayoutId",
+                            "version",
                         ]));
                     }
                 }
                 if (!tournament.status) {
-                    tournament.status = 'draft';
+                    tournament.status = "draft";
                 }
                 const prevFlayer = tournament.flayer;
                 tournament.flayer = undefined;

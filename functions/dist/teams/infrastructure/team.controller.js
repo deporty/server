@@ -58,6 +58,20 @@ class TeamController extends controller_1.BaseController {
             };
             this.handlerController(container, 'GetTeamByFiltersUsecase', response, config, undefined, params);
         });
+        app.post(`/advanced-filter`, (request, response) => {
+            const params = request.body;
+            console.log("Tania ", params);
+            const config = {
+                exceptions: {},
+                identifier: this.identifier,
+                errorCodes: {},
+                successCode: 'GET:SUCCESS',
+                extraData: {
+                    entitiesName: 'teams',
+                },
+            };
+            this.handlerController(container, 'GetTeamByAdvancedFiltersUsecase', response, config, undefined, params);
+        });
         app.get(`/name/:name`, (request, response) => {
             const name = request.params.name;
             const config = {

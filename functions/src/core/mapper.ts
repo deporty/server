@@ -3,10 +3,10 @@ import {
   DocumentReference,
   DocumentSnapshot,
   Timestamp,
-} from 'firebase-admin/firestore';
-import { from, Observable, of, zip } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { getDateFromSeconds } from './helpers';
+} from "firebase-admin/firestore";
+import { from, Observable, of, zip } from "rxjs";
+import { map, mergeMap } from "rxjs/operators";
+import { getDateFromSeconds } from "./helpers";
 
 export abstract class Mapper<T> {
   attributesMapper: {
@@ -34,7 +34,6 @@ export abstract class Mapper<T> {
 
       const value: string = config.name;
       const key: string = keys[index];
-
 
       let mappedValue = undefined;
       if (config.from) {
@@ -117,9 +116,9 @@ export abstract class Mapper<T> {
       } else if (Array.isArray(entry[1])) {
         this.mapArrayReferences(entry, populatedAttributes);
       } else if (
-        typeof entry[1] === 'number' ||
-        typeof entry[1] === 'string' ||
-        typeof entry[1] === 'boolean'
+        typeof entry[1] === "number" ||
+        typeof entry[1] === "string" ||
+        typeof entry[1] === "boolean"
       ) {
         this.mapPrimitiveReferences(populatedAttributes, entry);
       } else if (entry[1] instanceof Object) {
@@ -136,7 +135,7 @@ export abstract class Mapper<T> {
         const modifiedAttributes: any = data[1];
 
         for (const attr of modifiedAttributes) {
-          originalObj[attr['attribute']] = attr['value'];
+          originalObj[attr["attribute"]] = attr["value"];
         }
         return originalObj;
       })
@@ -151,11 +150,18 @@ export abstract class Mapper<T> {
       const config = values[index];
       const value: string = values[index].name;
       const key: string = keys[index];
-      let mappedValue =
-        (obj as any)[key] === undefined ? config.default : (obj as any)[key];
 
-      if (config.to && mappedValue !== undefined) {
-        mappedValue = config.to((obj as any)[key]);
+      let mappedValue = undefined;
+
+      if ((obj as any)[key] === undefined) {
+        if (config.default !== undefined) {
+          mappedValue = config.default;
+        }
+      } else {
+        mappedValue = (obj as any)[key];
+        if (config.to ) {
+          mappedValue = config.to((obj as any)[key]);
+        }
       }
 
       if (mappedValue !== undefined) {
@@ -173,9 +179,9 @@ export abstract class Mapper<T> {
       } else if (entry[1] instanceof Timestamp) {
         arrayProperties.push(of(getDateFromSeconds(element)));
       } else if (
-        typeof element === 'number' ||
-        typeof element === 'string' ||
-        typeof element === 'boolean'
+        typeof element === "number" ||
+        typeof element === "string" ||
+        typeof element === "boolean"
       ) {
         arrayProperties.push(of(element));
       } else if (element instanceof Object) {

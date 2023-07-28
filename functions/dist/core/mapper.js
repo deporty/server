@@ -93,9 +93,9 @@ class Mapper {
             else if (Array.isArray(entry[1])) {
                 this.mapArrayReferences(entry, populatedAttributes);
             }
-            else if (typeof entry[1] === 'number' ||
-                typeof entry[1] === 'string' ||
-                typeof entry[1] === 'boolean') {
+            else if (typeof entry[1] === "number" ||
+                typeof entry[1] === "string" ||
+                typeof entry[1] === "boolean") {
                 this.mapPrimitiveReferences(populatedAttributes, entry);
             }
             else if (entry[1] instanceof Object) {
@@ -108,7 +108,7 @@ class Mapper {
             const originalObj = data[0];
             const modifiedAttributes = data[1];
             for (const attr of modifiedAttributes) {
-                originalObj[attr['attribute']] = attr['value'];
+                originalObj[attr["attribute"]] = attr["value"];
             }
             return originalObj;
         }));
@@ -121,9 +121,17 @@ class Mapper {
             const config = values[index];
             const value = values[index].name;
             const key = keys[index];
-            let mappedValue = obj[key] === undefined ? config.default : obj[key];
-            if (config.to && mappedValue !== undefined) {
-                mappedValue = config.to(obj[key]);
+            let mappedValue = undefined;
+            if (obj[key] === undefined) {
+                if (config.default !== undefined) {
+                    mappedValue = config.default;
+                }
+            }
+            else {
+                mappedValue = obj[key];
+                if (config.to) {
+                    mappedValue = config.to(obj[key]);
+                }
             }
             if (mappedValue !== undefined) {
                 result[value] = mappedValue;
@@ -140,9 +148,9 @@ class Mapper {
             else if (entry[1] instanceof firestore_1.Timestamp) {
                 arrayProperties.push((0, rxjs_1.of)((0, helpers_1.getDateFromSeconds)(element)));
             }
-            else if (typeof element === 'number' ||
-                typeof element === 'string' ||
-                typeof element === 'boolean') {
+            else if (typeof element === "number" ||
+                typeof element === "string" ||
+                typeof element === "boolean") {
                 arrayProperties.push((0, rxjs_1.of)(element));
             }
             else if (element instanceof Object) {

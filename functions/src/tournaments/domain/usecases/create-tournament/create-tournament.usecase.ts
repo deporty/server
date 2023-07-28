@@ -1,37 +1,36 @@
-import { TournamentEntity } from '@deporty-org/entities';
+import { TournamentEntity } from "@deporty-org/entities";
 import {
   OrganizationEntity,
   TournamentLayoutEntity,
-} from '@deporty-org/entities/organizations';
-import { getImageExtension, validateImage } from '@deporty-org/utilities';
-import { Observable, from, of, throwError } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { EmptyAttributeError } from '../../../../core/exceptions';
-import { FileAdapter } from '../../../../core/file/file.adapter';
-import { Usecase } from '../../../../core/usecase';
-import { TournamentLayoutContract } from '../../../../organizations/domain/contracts/tournament-layout.contract';
-import { OrganizationContract } from '../../contracts/organization.contract';
-import { TournamentContract } from '../../contracts/tournament.contract';
-import { GetTournamentsByUniqueAttributesUsecase } from '../exists-tournament/exists-tournament.usecase';
+} from "@deporty-org/entities/organizations";
+import { getImageExtension, validateImage } from "@deporty-org/utilities";
+import { Observable, from, of, throwError } from "rxjs";
+import { map, mergeMap } from "rxjs/operators";
+import { EmptyAttributeError } from "../../../../core/exceptions";
+import { FileAdapter } from "../../../../core/file/file.adapter";
+import { Usecase } from "../../../../core/usecase";
+import { OrganizationContract } from "../../contracts/organization.contract";
+import { TournamentContract } from "../../contracts/tournament.contract";
+import { GetTournamentsByUniqueAttributesUsecase } from "../exists-tournament/exists-tournament.usecase";
 
 export class TournamentLayoutNotFoundError extends Error {
   constructor() {
     super(`The tournament layout was not found.`);
-    this.name = 'TournamentLayoutNotFoundError';
+    this.name = "TournamentLayoutNotFoundError";
   }
 }
 export class OrganizationNotFoundError extends Error {
   constructor() {
     super(`The organization was not found.`);
-    this.name = 'OrganizationNotFoundError';
+    this.name = "OrganizationNotFoundError";
   }
 }
 export class TournamentAlreadyExistsError extends Error {
   constructor(properties: string[]) {
     super();
-    this.name = 'TournamentAlreadyExistsError';
+    this.name = "TournamentAlreadyExistsError";
     this.message = `The tournament with these properties already exists: ${properties.join(
-      ', '
+      ", "
     )} `;
   }
 }
@@ -42,7 +41,6 @@ export class CreateTournamentUsecase extends Usecase<
 > {
   constructor(
     private tournamentContract: TournamentContract,
-    private tournamentLayoutContract: TournamentLayoutContract,
     private organizationContract: OrganizationContract,
     private fileAdapter: FileAdapter,
     private getTournamentsByUniqueAttributesUsecase: GetTournamentsByUniqueAttributesUsecase
@@ -51,11 +49,13 @@ export class CreateTournamentUsecase extends Usecase<
   }
 
   call(tournament: TournamentEntity): Observable<TournamentEntity> {
+    console.log("Tribu ", tournament);
+
     const requiredAttributes = [
-      'category',
-      'organizationId',
-      'tournamentLayoutId',
-      'version',
+      "category",
+      "organizationId",
+      "tournamentLayoutId",
+      "version",
     ];
 
     for (const att of requiredAttributes) {
@@ -64,9 +64,9 @@ export class CreateTournamentUsecase extends Usecase<
       }
     }
 
-    return this.tournamentLayoutContract
-      .getById(
-        { organizationId: tournament.organizationId },
+    return this.organizationContract
+      .getTournamentLayoutByIdUsecase(
+        tournament.organizationId,
         tournament.tournamentLayoutId
       )
       .pipe(
@@ -95,22 +95,22 @@ export class CreateTournamentUsecase extends Usecase<
               mergeMap((existingTournaments: TournamentEntity[]) => {
                 if (existingTournaments.length > 0) {
                   const availables = existingTournaments.filter(
-                    (x) => x.status !== 'deleted'
+                    (x) => x.status !== "deleted"
                   );
                   if (availables.length > 0) {
                     return throwError(
                       new TournamentAlreadyExistsError([
-                        'category',
-                        'edition',
-                        'organizationId',
-                        'tournamentLayoutId',
-                        'version',
+                        "category",
+                        "edition",
+                        "organizationId",
+                        "tournamentLayoutId",
+                        "version",
                       ])
                     );
                   }
                 }
                 if (!tournament.status) {
-                  tournament.status = 'draft';
+                  tournament.status = "draft";
                 }
 
                 const prevFlayer = tournament.flayer;

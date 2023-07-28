@@ -5,7 +5,7 @@ import { mergeMap } from 'rxjs/operators';
 import { Usecase } from '../../../../core/usecase';
 import { RegisteredTeamsContract } from '../../contracts/registered-teams.contract';
 import { Filters } from '../../../../core/helpers';
-import { TeamContract } from '../../../../teams/domain/contracts/team.contract';
+import { TeamContract } from '../../contracts/team.contract';
 
 export interface Params {
   tournamentId: Id;
@@ -56,7 +56,7 @@ export class GetPosibleTeamsToAddUsecase extends Usecase<Params, TeamEntity[]> {
               value: params.name,
             };
           }
-          return this.teamContract.filter(filters);
+          return this.teamContract.getTeamByFullFilters(filters);
         })
       );
     return $tournament;

@@ -749,7 +749,6 @@ class TournamentsModulesConfig {
             kind: create_tournament_usecase_1.CreateTournamentUsecase,
             dependencies: [
                 'TournamentContract',
-                'TournamentLayoutContract',
                 'OrganizationContract',
                 'FileAdapter',
                 'GetTournamentsByUniqueAttributesUsecase',

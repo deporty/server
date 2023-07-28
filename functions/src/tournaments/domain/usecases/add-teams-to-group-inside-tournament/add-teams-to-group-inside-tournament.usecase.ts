@@ -1,21 +1,21 @@
-import { GroupEntity, Id } from '@deporty-org/entities';
-import { RegisteredTeamEntity } from '@deporty-org/entities/tournaments/registered-teams.entity';
-import { Observable, of, throwError } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { Usecase } from '../../../../core/usecase';
-import { GroupContract } from '../../contracts/group.contract';
-import { GetRegisteredTeamsByTournamentIdUsecase } from '../registered-team/get-registered-teams-by-tournaments/get-registered-teams-by-tournaments.usecase';
-import { GetGroupsByFixtureStageUsecase } from '../groups/get-groups-by-fixture-stage/get-groups-by-fixture-stage.usecase';
-import { CompleteGroupMatchesUsecase } from '../group-matches/complete-group-matches/complete-group-matches.usecase';
+import { GroupEntity, Id } from "@deporty-org/entities";
+import { RegisteredTeamEntity } from "@deporty-org/entities/tournaments/registered-teams.entity";
+import { Observable, of, throwError } from "rxjs";
+import { map, mergeMap } from "rxjs/operators";
+import { Usecase } from "../../../../core/usecase";
+import { GroupContract } from "../../contracts/group.contract";
+import { GetRegisteredTeamsByTournamentIdUsecase } from "../registered-team/get-registered-teams-by-tournaments/get-registered-teams-by-tournaments.usecase";
+import { GetGroupsByFixtureStageUsecase } from "../groups/get-groups-by-fixture-stage/get-groups-by-fixture-stage.usecase";
+import { CompleteGroupMatchesUsecase } from "../group-matches/complete-group-matches/complete-group-matches.usecase";
 
 export class TeamAreNotRegisteredError extends Error {
   data: Id[];
 
   constructor(teamIds: Id[]) {
     super();
-    this.name = 'TeamAreNotRegisteredError';
+    this.name = "TeamAreNotRegisteredError";
     this.message = `The following teams are not registerd in the tournament: ${teamIds.join(
-      ', '
+      ", "
     )} `;
     this.data = teamIds;
   }
@@ -24,7 +24,7 @@ export class TeamAreNotRegisteredError extends Error {
 export class TeamAreRegisteredInOtherGroupError extends Error {
   constructor(public data: any) {
     super();
-    this.name = 'TeamAreRegisteredInOtherGroupError';
+    this.name = "TeamAreRegisteredInOtherGroupError";
     this.message = `There are teams wich are registered in other groups`;
   }
 }
@@ -32,7 +32,7 @@ export class TeamAreRegisteredInOtherGroupError extends Error {
 export class ThereAreTeamRegisteredPreviuslyError extends Error {
   constructor(public data: Id[]) {
     super();
-    this.name = 'ThereAreTeamRegisteredPreviuslyError';
+    this.name = "ThereAreTeamRegisteredPreviuslyError";
     this.message = `There are teams wich are registered in the same group`;
   }
 }
@@ -82,16 +82,20 @@ export class AddTeamsToGroupInsideTournamentUsecase extends Usecase<
     return of(currentGroup);
   }
   call(param: Param): Observable<GroupEntity> {
+    console.log("Gonorrea ", param);
+    
     return this.getRegisteredTeamsByTournamentIdUsecase
       .call(param.tournamentId)
       .pipe(
         mergeMap((registeredTeams: RegisteredTeamEntity[]) => {
+          console.log("Registered teams: ", registeredTeams);
+          
           const noRegisteredTeams = [];
           for (const tid of param.teamIds) {
             const registeredTeam = registeredTeams.find((x) => x.teamId == tid);
             if (!registeredTeam) {
               noRegisteredTeams.push(tid);
-            } else if (registeredTeam.status === 'pre-registered') {
+            } else if (registeredTeam.status === "pre-registered") {
               noRegisteredTeams.push(tid);
             }
           }
@@ -127,6 +131,9 @@ export class AddTeamsToGroupInsideTournamentUsecase extends Usecase<
                   );
                 }
                 currentGroup.teamIds.push(...teamsToAdd);
+
+                console.log("Vieja malparida ", currentGroup.teamIds);
+
                 return this.groupContract
                   .update(
                     {

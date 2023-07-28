@@ -40,7 +40,7 @@ class GetPosibleTeamsToAddUsecase extends usecase_1.Usecase {
                     value: params.name,
                 };
             }
-            return this.teamContract.filter(filters);
+            return this.teamContract.getTeamByFullFilters(filters);
         }));
         return $tournament;
     }
