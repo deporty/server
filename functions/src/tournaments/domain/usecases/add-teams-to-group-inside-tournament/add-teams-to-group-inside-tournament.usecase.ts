@@ -88,8 +88,6 @@ export class AddTeamsToGroupInsideTournamentUsecase extends Usecase<
       .call(param.tournamentId)
       .pipe(
         mergeMap((registeredTeams: RegisteredTeamEntity[]) => {
-          console.log("Registered teams: ", registeredTeams);
-          
           const noRegisteredTeams = [];
           for (const tid of param.teamIds) {
             const registeredTeam = registeredTeams.find((x) => x.teamId == tid);
@@ -131,8 +129,6 @@ export class AddTeamsToGroupInsideTournamentUsecase extends Usecase<
                   );
                 }
                 currentGroup.teamIds.push(...teamsToAdd);
-
-                console.log("Vieja malparida ", currentGroup.teamIds);
 
                 return this.groupContract
                   .update(

@@ -119,8 +119,6 @@ export class TeamController extends BaseController {
     app.post(`/advanced-filter`, (request: Request, response: Response) => {
       const params = request.body;
 
-      console.log("Tania ", params);
-      
 
       const config: IMessagesConfiguration = {
         exceptions: {},

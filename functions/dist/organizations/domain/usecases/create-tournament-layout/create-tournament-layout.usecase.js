@@ -21,7 +21,6 @@ class CreateTournamentLayoutUsecase extends usecase_1.Usecase {
     }
     call(tournamentLayout) {
         const prevFlayer = tournamentLayout.flayer;
-        console.log("El mago: ", tournamentLayout);
         tournamentLayout.flayer = undefined;
         return this.tournamentLayoutContract
             .filter({

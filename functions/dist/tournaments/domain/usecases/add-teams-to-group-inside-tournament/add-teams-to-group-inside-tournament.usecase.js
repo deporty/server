@@ -61,7 +61,6 @@ class AddTeamsToGroupInsideTournamentUsecase extends usecase_1.Usecase {
         return this.getRegisteredTeamsByTournamentIdUsecase
             .call(param.tournamentId)
             .pipe((0, operators_1.mergeMap)((registeredTeams) => {
-            console.log("Registered teams: ", registeredTeams);
             const noRegisteredTeams = [];
             for (const tid of param.teamIds) {
                 const registeredTeam = registeredTeams.find((x) => x.teamId == tid);
@@ -99,7 +98,6 @@ class AddTeamsToGroupInsideTournamentUsecase extends usecase_1.Usecase {
                     return (0, rxjs_1.throwError)(new ThereAreTeamRegisteredPreviuslyError(prevTeams));
                 }
                 currentGroup.teamIds.push(...teamsToAdd);
-                console.log("Vieja malparida ", currentGroup.teamIds);
                 return this.groupContract
                     .update({
                     fixtureStageId: param.fixtureStageId,

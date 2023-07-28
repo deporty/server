@@ -60,7 +60,6 @@ class TeamController extends controller_1.BaseController {
         });
         app.post(`/advanced-filter`, (request, response) => {
             const params = request.body;
-            console.log("Tania ", params);
             const config = {
                 exceptions: {},
                 identifier: this.identifier,

@@ -49,7 +49,6 @@ export class CreateTournamentUsecase extends Usecase<
   }
 
   call(tournament: TournamentEntity): Observable<TournamentEntity> {
-    console.log("Tribu ", tournament);
 
     const requiredAttributes = [
       "category",

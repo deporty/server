@@ -37,7 +37,6 @@ class CreateTournamentUsecase extends usecase_1.Usecase {
         this.getTournamentsByUniqueAttributesUsecase = getTournamentsByUniqueAttributesUsecase;
     }
     call(tournament) {
-        console.log("Tribu ", tournament);
         const requiredAttributes = [
             "category",
             "organizationId",

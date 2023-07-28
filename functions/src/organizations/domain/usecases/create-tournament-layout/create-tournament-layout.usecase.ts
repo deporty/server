@@ -28,7 +28,6 @@ export class CreateTournamentLayoutUsecase extends Usecase<
     tournamentLayout: TournamentLayoutEntity
   ): Observable<TournamentLayoutEntity> {
     const prevFlayer = tournamentLayout.flayer;
-    console.log("El mago: ", tournamentLayout);
 
     tournamentLayout.flayer = undefined;
     return this.tournamentLayoutContract
