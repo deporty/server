@@ -6,6 +6,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { UserEntity } from '@deporty-org/entities';
 import { sign } from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../infrastructure/authorization.constants';
+import moment = require('moment');
 
 export class GetTokenUsecase extends Usecase<string, string> {
   constructor(
@@ -26,6 +27,7 @@ export class GetTokenUsecase extends Usecase<string, string> {
         const payload = {
           user,
           resources,
+          exp: moment().add(1,'hour').unix(),
         };
         const token = sign(payload, JWT_SECRET);
         return token;

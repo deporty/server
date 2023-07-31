@@ -6,6 +6,7 @@ const usecase_1 = require("../../../../core/usecase");
 const operators_1 = require("rxjs/operators");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const authorization_constants_1 = require("../../../infrastructure/authorization.constants");
+const moment = require("moment");
 class GetTokenUsecase extends usecase_1.Usecase {
     constructor(getAllowedResourcesByRoleIdsUsecase, userContract) {
         super();
@@ -19,6 +20,7 @@ class GetTokenUsecase extends usecase_1.Usecase {
             const payload = {
                 user,
                 resources,
+                exp: moment().add(1, 'hour').unix(),
             };
             const token = (0, jsonwebtoken_1.sign)(payload, authorization_constants_1.JWT_SECRET);
             return token;
