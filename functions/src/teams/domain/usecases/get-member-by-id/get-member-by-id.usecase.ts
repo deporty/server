@@ -1,19 +1,19 @@
-import { Id, UserEntity } from '@deporty-org/entities';
+import { Id, UserEntity } from "@deporty-org/entities";
 import {
   MemberDescriptionType,
   MemberEntity,
-} from '@deporty-org/entities/teams/teams.model';
-import { Observable, of, throwError } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { Usecase } from '../../../../core/usecase';
-import { MemberContract } from '../../contracts/member.contract';
-import { UserContract } from '../../contracts/user.constract';
+} from "@deporty-org/entities/teams";
+import { Observable, of, throwError } from "rxjs";
+import { map, mergeMap } from "rxjs/operators";
+import { Usecase } from "../../../../core/usecase";
+import { MemberContract } from "../../contracts/member.contract";
+import { UserContract } from "../../contracts/user.constract";
 
 export class MemberDoesNotExistException extends Error {
   constructor() {
     super();
     this.message = `The member does not exists.`;
-    this.name = 'MemberDoesNotExistException';
+    this.name = "MemberDoesNotExistException";
   }
 }
 

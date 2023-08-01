@@ -8,7 +8,7 @@ class MemberDoesNotExistException extends Error {
     constructor() {
         super();
         this.message = `The member does not exists.`;
-        this.name = 'MemberDoesNotExistException';
+        this.name = "MemberDoesNotExistException";
     }
 }
 exports.MemberDoesNotExistException = MemberDoesNotExistException;

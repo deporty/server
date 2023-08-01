@@ -1,14 +1,13 @@
-import { UserEntity } from '@deporty-org/entities';
+import { UserEntity } from "@deporty-org/entities";
 import {
   MemberDescriptionType,
-  MemberEntity
-} from '@deporty-org/entities/teams/teams.model';
-import { Observable, of, zip } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { Usecase } from '../../../../core/usecase';
-import { MemberContract } from '../../contracts/member.contract';
-import { UserContract } from '../../contracts/user.constract';
-
+  MemberEntity,
+} from "@deporty-org/entities/teams";
+import { Observable, of, zip } from "rxjs";
+import { map, mergeMap } from "rxjs/operators";
+import { Usecase } from "../../../../core/usecase";
+import { MemberContract } from "../../contracts/member.contract";
+import { UserContract } from "../../contracts/user.constract";
 
 export class GetMembersByTeamUsecase extends Usecase<
   string,
@@ -28,7 +27,7 @@ export class GetMembersByTeamUsecase extends Usecase<
         },
         {
           teamId: {
-            operator: '==',
+            operator: "==",
             value: teamId,
           },
         }
@@ -36,12 +35,14 @@ export class GetMembersByTeamUsecase extends Usecase<
       .pipe(
         mergeMap((members: Array<MemberEntity>) => {
           const $members = members.map((member: MemberEntity) => {
-            return this.userContract.getUserInformationById(member.userId!).pipe(
-              map((user: UserEntity | undefined) => ({
-                member,
-                user,
-              }))
-            );
+            return this.userContract
+              .getUserInformationById(member.userId!)
+              .pipe(
+                map((user: UserEntity | undefined) => ({
+                  member,
+                  user,
+                }))
+              );
           });
           return $members.length > 0 ? zip(...$members) : of([]);
         }),

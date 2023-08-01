@@ -1,6 +1,6 @@
 import { Id } from '@deporty-org/entities';
 import {
-  IMatchStatusType,
+  MatchStatusType,
   IntergroupMatchEntity,
 } from '@deporty-org/entities/tournaments';
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { IntergroupMatchContract } from '../../../contracts/intergroup-match.con
 
 export interface Param {
   fixtureStageId: Id;
-  states: IMatchStatusType[];
+  states: MatchStatusType[];
   tournamentId: Id;
 }
 

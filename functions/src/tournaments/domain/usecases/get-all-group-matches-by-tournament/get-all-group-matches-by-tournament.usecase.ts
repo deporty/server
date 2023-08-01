@@ -1,7 +1,7 @@
 import {
   FixtureStageEntity,
   GroupEntity,
-  IMatchStatusType,
+  MatchStatusType,
   MatchEntity,
 } from '@deporty-org/entities/tournaments';
 import { Observable, of, zip } from 'rxjs';
@@ -14,7 +14,7 @@ import { Id } from '@deporty-org/entities';
 
 export interface Param {
   tournamentId: Id;
-  status: IMatchStatusType[];
+  status: MatchStatusType[];
 }
 export class GetAllGroupMatchesByTournamentUsecase extends Usecase<
   Param,
@@ -74,7 +74,7 @@ export class GetAllGroupMatchesByTournamentUsecase extends Usecase<
   private getGroupMatches(
     groups: GroupEntity[],
     tournamentId: string,
-    status: IMatchStatusType[]
+    status: MatchStatusType[]
   ): Observable<MatchEntity[]> {
     return groups.length > 0
       ? zip(

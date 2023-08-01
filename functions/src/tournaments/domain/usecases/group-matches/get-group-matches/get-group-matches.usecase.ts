@@ -1,4 +1,4 @@
-import { IMatchStatusType, Id, MatchEntity } from '@deporty-org/entities';
+import { MatchStatusType, Id, MatchEntity } from '@deporty-org/entities';
 import { Observable } from 'rxjs';
 import { Usecase } from '../../../../../core/usecase';
 import { MatchContract } from '../../../contracts/match.contract';
@@ -7,7 +7,7 @@ import { Filters } from '../../../../../core/helpers';
 export interface Param {
   fixtureStageId: Id;
   groupId: Id;
-  states: IMatchStatusType[];
+  states: MatchStatusType[];
   tournamentId: Id;
 }
 

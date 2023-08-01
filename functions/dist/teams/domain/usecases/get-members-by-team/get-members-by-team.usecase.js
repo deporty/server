@@ -16,13 +16,15 @@ class GetMembersByTeamUsecase extends usecase_1.Usecase {
             teamId,
         }, {
             teamId: {
-                operator: '==',
+                operator: "==",
                 value: teamId,
             },
         })
             .pipe((0, operators_1.mergeMap)((members) => {
             const $members = members.map((member) => {
-                return this.userContract.getUserInformationById(member.userId).pipe((0, operators_1.map)((user) => ({
+                return this.userContract
+                    .getUserInformationById(member.userId)
+                    .pipe((0, operators_1.map)((user) => ({
                     member,
                     user,
                 })));
