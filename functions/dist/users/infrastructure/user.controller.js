@@ -58,6 +58,19 @@ class UserController extends controller_1.BaseController {
             };
             this.handlerController(container, 'GetUsersByFiltersUsecase', response, config, undefined, query);
         });
+        app.get(`/ids`, (request, response) => {
+            const ids = request.query.ids;
+            const config = {
+                exceptions: {},
+                identifier: this.identifier,
+                errorCodes: {},
+                successCode: {
+                    code: 'GET-BY-IDS:SUCCESS',
+                    message: 'The users were found.',
+                },
+            };
+            this.handlerController(container, 'GetUsersByIdsUsecase', response, config, undefined, ids);
+        });
         app.get(`/:id`, (request, response) => {
             const id = request.params.id;
             const config = {
@@ -73,7 +86,7 @@ class UserController extends controller_1.BaseController {
                     message: 'The user was founded',
                 },
             };
-            this.handlerController(container, 'GetUserInformationByIdUsecase', response, config, undefined, id);
+            this.handlerController(container, 'GetUserByIdUsecase', response, config, undefined, id);
         });
         app.get(`/`, (request, response) => {
             const query = request.query;

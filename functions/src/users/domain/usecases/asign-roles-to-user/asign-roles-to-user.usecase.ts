@@ -6,7 +6,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { Usecase } from '../../../../core/usecase';
 import { AuthorizationContract } from '../../contracts/authorization.contract';
 import { UserContract } from '../../contracts/user.contract';
-import { GetUserInformationByIdUsecase } from '../get-user-information-by-id.usecase';
+import { GetUserByIdUsecase } from '../get-user-by-id/get-user-by-id.usecase';
 
 export interface RoleUserAggregate {
   rolesIds: string[];
@@ -17,7 +17,7 @@ export class AsignRolesToUserUsecase extends Usecase<
   UserEntity
 > {
   constructor(
-    private getUserInformationByIdUsecase: GetUserInformationByIdUsecase,
+    private getUserByIdUsecase: GetUserByIdUsecase,
     private authorizationContract: AuthorizationContract,
     private userContract: UserContract
   ) {
@@ -25,7 +25,7 @@ export class AsignRolesToUserUsecase extends Usecase<
   }
 
   call(params: RoleUserAggregate): Observable<UserEntity> {
-    return this.getUserInformationByIdUsecase.call(params.userId).pipe(
+    return this.getUserByIdUsecase.call(params.userId).pipe(
       mergeMap((user: UserEntity) => {
         const $roles = !!params.rolesIds.length
           ? zip(

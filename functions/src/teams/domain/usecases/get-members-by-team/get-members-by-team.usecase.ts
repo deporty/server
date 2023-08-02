@@ -1,6 +1,6 @@
 import { UserEntity } from '@deporty-org/entities';
 import { MemberDescriptionType, MemberEntity } from '@deporty-org/entities/teams';
-import { Observable, of, zip } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { Usecase } from '../../../../core/usecase';
 import { MemberContract } from '../../contracts/member.contract';
@@ -26,29 +26,36 @@ export class GetMembersByTeamUsecase extends Usecase<string, Array<MemberDescrip
       )
       .pipe(
         mergeMap((members: Array<MemberEntity>) => {
-          console.log('Member length: ', members.length);
-
-          const $members = members.map((member: MemberEntity) => {
-            return this.userContract.getUserInformationById(member.userId!).pipe(
-              map((user: UserEntity | undefined) => ({
-                member,
-                user,
-              }))
-            );
+          const userIds = members.map((member: MemberEntity) => {
+            return member.userId;
           });
-          return $members.length > 0 ? zip(...$members) : of([]);
-        }),
-        map(
-          (
-            data: Array<{
-              member: MemberEntity;
-              user: UserEntity | undefined;
-            }>
-          ) => {
-            const filtered = data.filter((x) => !!x.user);
-            return filtered as Array<MemberDescriptionType>;
-          }
-        )
+          return this.userContract.getUsersByIds(userIds).pipe(
+            map((users: UserEntity[]) => {
+              const response: MemberDescriptionType[] = [];
+              for (const user of users) {
+                const member = members.find((member) => member.userId === user.id);
+                if (member) {
+                  response.push({
+                    member,
+                    user,
+                  });
+                }
+              }
+              return response;
+            })
+          );
+        })
+        // map(
+        //   (
+        //     data: Array<{
+        //       member: MemberEntity;
+        //       user: UserEntity | undefined;
+        //     }>
+        //   ) => {
+        //     const filtered = data.filter((x) => !!x.user);
+        //     return filtered as Array<MemberDescriptionType>;
+        //   }
+        // )
       );
   }
 }

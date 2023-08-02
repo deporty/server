@@ -29,5 +29,31 @@ class UserRepository extends user_constract_1.UserContract {
             });
         });
     }
+    getUsersByIds(userIds) {
+        return new rxjs_1.Observable((observer) => {
+            axios_1.default
+                .get(`${teams_constants_1.USERS_SERVER}/ids`, {
+                headers: {
+                    Authorization: `Bearer ${teams_constants_1.BEARER_TOKEN}`,
+                },
+                params: {
+                    ids: userIds,
+                },
+            })
+                .then((response) => {
+                const data = response.data;
+                if (data.meta.code === 'USER:GET-BY-IDS:SUCCESS') {
+                    observer.next(data.data);
+                }
+                else {
+                    observer.error();
+                }
+                observer.complete();
+            })
+                .catch((error) => {
+                observer.error(error);
+            });
+        });
+    }
 }
 exports.UserRepository = UserRepository;

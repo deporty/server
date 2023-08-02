@@ -11,11 +11,36 @@ export class UserRepository extends UserContract {
           headers: {
             Authorization: `Bearer ${BEARER_TOKEN}`,
           },
-  
         })
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<UserEntity>;
           if (data.meta.code === 'USER:GET-BY-ID:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  getUsersByIds(userIds: string[]): Observable<UserEntity[]> {
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<UserEntity[]>>(`${USERS_SERVER}/ids`, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+          params: {
+            ids: userIds,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<UserEntity[]>;
+          if (data.meta.code === 'USER:GET-BY-IDS:SUCCESS') {
             observer.next(data.data);
           } else {
             observer.error();

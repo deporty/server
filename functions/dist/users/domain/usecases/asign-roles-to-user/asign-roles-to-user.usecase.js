@@ -5,14 +5,14 @@ const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
 const usecase_1 = require("../../../../core/usecase");
 class AsignRolesToUserUsecase extends usecase_1.Usecase {
-    constructor(getUserInformationByIdUsecase, authorizationContract, userContract) {
+    constructor(getUserByIdUsecase, authorizationContract, userContract) {
         super();
-        this.getUserInformationByIdUsecase = getUserInformationByIdUsecase;
+        this.getUserByIdUsecase = getUserByIdUsecase;
         this.authorizationContract = authorizationContract;
         this.userContract = userContract;
     }
     call(params) {
-        return this.getUserInformationByIdUsecase.call(params.userId).pipe((0, operators_1.mergeMap)((user) => {
+        return this.getUserByIdUsecase.call(params.userId).pipe((0, operators_1.mergeMap)((user) => {
             const $roles = !!params.rolesIds.length
                 ? (0, rxjs_1.zip)(...params.rolesIds.map((x) => this.authorizationContract.getRoleById(x)))
                 : (0, rxjs_1.of)([]);
