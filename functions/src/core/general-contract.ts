@@ -1,12 +1,5 @@
 import { Id } from '@deporty-org/entities';
-import {
-  CollectionReference,
-  DocumentData,
-  DocumentReference,
-  Firestore,
-  Query,
-  QuerySnapshot,
-} from 'firebase-admin/firestore';
+import { CollectionReference, DocumentData, DocumentReference, Firestore, Query, QuerySnapshot } from 'firebase-admin/firestore';
 import { from, Observable, of, zip } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { filterWizard } from './filter-query-manager';
@@ -18,10 +11,7 @@ export interface RouteParam {
   id?: string;
 }
 export abstract class GeneralContract<AccessParams, Entity> {
-  constructor(
-    protected datasource: Firestore,
-    protected mapper: Mapper<Entity>
-  ) {}
+  constructor(protected datasource: Firestore, protected mapper: Mapper<Entity>) {}
 
   innerSave(accessParams: Array<RouteParam>, entity: Entity) {
     const route = this.getRouteToColl(this.datasource, accessParams);
@@ -33,10 +23,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
     );
   }
 
-  innerUpdate(
-    accessParams: Array<RouteParam>,
-    entity: Entity
-  ): Observable<void> {
+  innerUpdate(accessParams: Array<RouteParam>, entity: Entity): Observable<void> {
     return new Observable((observer) => {
       const docReference = this.getRouteToDoc(this.datasource, accessParams);
 
@@ -53,10 +40,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
   }
 
   abstract delete(accessParams: AccessParams, id: Id): Observable<void>;
-  abstract filter(
-    accessParams: AccessParams,
-    filter: Filters
-  ): Observable<Array<Entity>>;
+  abstract filter(accessParams: AccessParams, filter: Filters): Observable<Array<Entity>>;
   abstract get(
     accessParams: AccessParams,
     pagination?: {
@@ -64,10 +48,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
       pageSize: number;
     }
   ): Observable<Entity[]>;
-  abstract getById(
-    accessParams: AccessParams,
-    id: Id
-  ): Observable<Entity | undefined>;
+  abstract getById(accessParams: AccessParams, id: Id): Observable<Entity | undefined>;
   abstract save(accessParams: AccessParams, entity: Entity): Observable<string>;
   abstract update(accessParams: AccessParams, entity: Entity): Observable<void>;
 
@@ -101,9 +82,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
 
     if (!!pagination) {
       if (pagination.pageNumber != 0) {
-        query = query
-          .orderBy('id')
-          .limit((pagination.pageNumber + 1) * pagination.pageSize);
+        query = query.orderBy('id').limit((pagination.pageNumber + 1) * pagination.pageSize);
 
         return from(query.get())
           .pipe(
@@ -120,9 +99,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
             }),
             map((last: Entity | undefined) => {
               if (last) {
-                query = query
-                  .startAfter((last as any).id)
-                  .limit(pagination.pageSize);
+                query = query.startAfter((last as any).id).limit(pagination.pageSize);
               }
               return query;
             }),
@@ -157,7 +134,9 @@ export abstract class GeneralContract<AccessParams, Entity> {
         );
       }
     }
+
     const computedFilters = filterWizard(query, filters, this.mapper);
+
     query = computedFilters.query;
     let $query = from(query.get()).pipe(
       map((items: QuerySnapshot<DocumentData>) => {
@@ -188,9 +167,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
     });
   }
 
-  protected innerGetById(
-    accessParams: Array<RouteParam>
-  ): Observable<Entity | undefined> {
+  protected innerGetById(accessParams: Array<RouteParam>): Observable<Entity | undefined> {
     const route = this.getRouteToDoc(this.datasource, accessParams);
 
     if (!route) {
@@ -208,10 +185,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
     );
   }
 
-  private getRouteToColl(
-    db: Firestore,
-    params: Array<RouteParam>
-  ): CollectionReference<DocumentData> {
+  private getRouteToColl(db: Firestore, params: Array<RouteParam>): CollectionReference<DocumentData> {
     let query: any = db;
     for (let i = 0; i < params.length - 1; i++) {
       const param = params[i];
@@ -221,10 +195,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
     return query as CollectionReference<DocumentData>;
   }
 
-  private getRouteToDoc(
-    db: Firestore,
-    params: Array<RouteParam>
-  ): DocumentReference<DocumentData> | null {
+  private getRouteToDoc(db: Firestore, params: Array<RouteParam>): DocumentReference<DocumentData> | null {
     if (Object.keys(params).length === 0) {
       return null;
     }
@@ -242,9 +213,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
       return items.length > 0
         ? zip(
             ...items.map((item) => {
-              return this.mapper
-                .fromJson(item)
-                .pipe(filter((item) => !!item)) as Observable<Entity>;
+              return this.mapper.fromJson(item).pipe(filter((item) => !!item)) as Observable<Entity>;
             })
           ).pipe(
             map((items) => {

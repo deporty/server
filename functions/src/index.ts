@@ -112,7 +112,6 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
 
 //------------------------
 
-
 const authorizationApp = AuthorizationFunction(GENERAL_DEPENDENCIES_CONTAINER);
 // const playerConfig = PlayerFunction(GENERAL_DEPENDENCIES_CONTAINER);
 const tournamentApp = TournamentFunction(GENERAL_DEPENDENCIES_CONTAINER);
@@ -126,7 +125,13 @@ const invoicesConfig = InvoicesFunction(GENERAL_DEPENDENCIES_CONTAINER);
 
 exports.authorization = functions.https.onRequest(authorizationApp);
 exports.tournaments = functions.https.onRequest(tournamentApp);
-exports.teams = functions.https.onRequest(teamApp);
+exports.teams = functions
+  .runWith({
+    timeoutSeconds: 400,
+    memory: '2GB',
+  })
+
+  .https.onRequest(teamApp);
 exports.users = functions.https.onRequest(usersApp);
 exports.organizations = functions.https.onRequest(organizationsApp);
 exports.locations = functions.https.onRequest(locationsApp);

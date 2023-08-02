@@ -1,11 +1,8 @@
-import {
-  AdvancedTieBreakingOrderEnum,
-  BasicTieBreakingOrderEnum,
-} from "@deporty-org/entities/organizations";
-import { Observable, of } from "rxjs";
-import { GetAnyMatchByTeamIdsUsecase } from "../groups/get-any-match-by-team-ids/get-any-match-by-team-ids.usecase";
-import { Id, MatchEntity } from "@deporty-org/entities";
-import { map } from "rxjs/operators";
+import { AdvancedTieBreakingOrderEnum, BasicTieBreakingOrderEnum } from '@deporty-org/entities/organizations';
+import { Observable, of } from 'rxjs';
+import { GetAnyMatchByTeamIdsUsecase } from '../groups/get-any-match-by-team-ids/get-any-match-by-team-ids.usecase';
+import { Id, MatchEntity } from '@deporty-org/entities';
+import { map } from 'rxjs/operators';
 
 export interface BasicTieBreakingOrderConfig {
   operator: (a: number, b: number) => Observable<0 | 1 | -1>;
@@ -13,8 +10,8 @@ export interface BasicTieBreakingOrderConfig {
 }
 
 export interface AdvancedTieBreakingOrderConfig {
-  operator: (...params: any) => Observable<0 | 1 | -1>;
   condition: (groupLength: number) => boolean;
+  operator: (...params: any) => Observable<0 | 1 | -1>;
 }
 
 export function preferMajor(a: number, b: number): Observable<0 | 1 | -1> {
@@ -30,40 +27,40 @@ export const BASIC_TIE_BREAKING_ORDER_MAP: {
 } = {
   GA: {
     operator: preferMinor,
-    property: "goalsAgainst",
+    property: 'goalsAgainst',
   },
   GAPM: {
     operator: preferMinor,
-    property: "goalsAgainstPerMatch",
+    property: 'goalsAgainstPerMatch',
   },
   GD: {
     operator: preferMajor,
-    property: "goalsDifference",
+    property: 'goalsDifference',
   },
   GIF: {
     operator: preferMajor,
-    property: "goalsInFavor",
+    property: 'goalsInFavor',
   },
   FP: {
     operator: preferMinor,
-    property: "fairPlay",
+    property: 'fairPlay',
   },
   LM: {
     operator: preferMinor,
-    property: "lostMatches",
+    property: 'lostMatches',
   },
   PM: {
     operator: preferMinor,
-    property: "playedMatches",
+    property: 'playedMatches',
   },
 
   TM: {
     operator: preferMajor,
-    property: "tiedMatches",
+    property: 'tiedMatches',
   },
   WM: {
     operator: preferMajor,
-    property: "wonMatches",
+    property: 'wonMatches',
   },
 };
 
@@ -98,12 +95,7 @@ export const ADVANCED_TIE_BREAKING_ORDER_MAP: {
     condition: (groupLength: number) => {
       return groupLength == 2;
     },
-    operator: (
-      getAnyMatchByTeamIdsUsecase: GetAnyMatchByTeamIdsUsecase,
-      teamAId: Id,
-      teamBId: Id,
-      meta
-    ) => {
+    operator: (getAnyMatchByTeamIdsUsecase: GetAnyMatchByTeamIdsUsecase, teamAId: Id, teamBId: Id, meta) => {
       return getAnyMatchByTeamIdsUsecase
         .call({
           fixtureStageId: meta.fixtureStageId,
@@ -114,9 +106,17 @@ export const ADVANCED_TIE_BREAKING_ORDER_MAP: {
         })
         .pipe(
           map((match: MatchEntity | undefined) => {
-            if (!match) return 0;
+            if (!match) {
+              return 0;
+            }
+            if (match.status != 'completed') {
+              return 0;
+            }
             const result = getWinnerTeam(match);
-            if (!result) return 0;
+
+            if (!result) {
+              return 0;
+            }
             return result.winner === match.teamAId ? 1 : -1;
           })
         );

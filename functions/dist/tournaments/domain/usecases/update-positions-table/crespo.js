@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.quicksort = exports._order = void 0;
+exports.quicksort = exports.orderRecursively = void 0;
 const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
 const tie_breaking_handlers_1 = require("./tie-breaking-handlers");
-function _order(a, b, order, index, param, getAnyMatchByTeamIdsUsecase, setLength) {
-    if (index === order.length) {
+function orderRecursively(a, b, order, index, param, getAnyMatchByTeamIdsUsecase, setLength) {
+    if (index == order.length) {
         const randomNumber = Math.random();
         if (randomNumber > 0.5) {
             return (0, rxjs_1.of)(-1);
@@ -22,7 +22,7 @@ function _order(a, b, order, index, param, getAnyMatchByTeamIdsUsecase, setLengt
         const result = operator(a.stadistics[property], b.stadistics[property]);
         result.pipe((0, operators_1.mergeMap)((resultNumber) => {
             if (resultNumber === 0) {
-                return _order(a, b, order, index + 1, param, getAnyMatchByTeamIdsUsecase, setLength);
+                return orderRecursively(a, b, order, index + 1, param, getAnyMatchByTeamIdsUsecase, setLength);
             }
             else {
                 return (0, rxjs_1.of)(resultNumber);
@@ -34,7 +34,7 @@ function _order(a, b, order, index, param, getAnyMatchByTeamIdsUsecase, setLengt
         const config = tie_breaking_handlers_1.ADVANCED_TIE_BREAKING_ORDER_MAP[currentOrder];
         const operator = config.operator;
         let result;
-        if (currentOrder == "WB2") {
+        if (currentOrder == 'WB2') {
             if (setLength != 2) {
                 result = (0, rxjs_1.of)(0);
             }
@@ -46,8 +46,8 @@ function _order(a, b, order, index, param, getAnyMatchByTeamIdsUsecase, setLengt
             result = operator();
         }
         result.pipe((0, operators_1.mergeMap)((resultNumber) => {
-            if (resultNumber === 0) {
-                return _order(a, b, order, index + 1, param, getAnyMatchByTeamIdsUsecase, setLength);
+            if (resultNumber == 0) {
+                return orderRecursively(a, b, order, index + 1, param, getAnyMatchByTeamIdsUsecase, setLength);
             }
             else {
                 return (0, rxjs_1.of)(resultNumber);
@@ -56,17 +56,17 @@ function _order(a, b, order, index, param, getAnyMatchByTeamIdsUsecase, setLengt
         return result;
     }
 }
-exports._order = _order;
-function quicksort(arr, tieBreakingOrder, setLength, param, getAnyMatchByTeamIdsUsecase) {
-    if (arr.length <= 1) {
-        return (0, rxjs_1.of)(arr); // Ya está ordenado (caso base)
+exports.orderRecursively = orderRecursively;
+function quicksort(collection, tieBreakingOrder, setLength, param, getAnyMatchByTeamIdsUsecase) {
+    if (collection.length <= 1) {
+        return (0, rxjs_1.of)(collection); // Ya está ordenado (caso base)
     }
-    const pivot = arr[0]; // Tomamos el primer elemento como pivote
+    const pivot = collection[0]; // Tomamos el primer elemento como pivote
     // Separamos los elementos en los arreglos left y right
     const consolidated = [];
-    for (let i = 1; i < arr.length; i++) {
-        const result = _order(arr[i], pivot, tieBreakingOrder, 0, param, getAnyMatchByTeamIdsUsecase, setLength);
-        const res = (0, rxjs_1.zip)(result, (0, rxjs_1.of)(arr[i]));
+    for (let i = 1; i < collection.length; i++) {
+        const result = orderRecursively(collection[i], pivot, tieBreakingOrder, 0, param, getAnyMatchByTeamIdsUsecase, setLength);
+        const res = (0, rxjs_1.zip)(result, (0, rxjs_1.of)(collection[i]));
         consolidated.push(res);
     }
     return (0, rxjs_1.zip)(...consolidated).pipe((0, operators_1.mergeMap)((result) => {

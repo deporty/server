@@ -13,28 +13,28 @@ class GetMatchByTeamIdsUsecase extends usecase_1.Usecase {
         const $matchA = this.matchContract.filter({
             tournamentId: param.tournamentId,
             fixtureStageId: param.fixtureStageId,
-            groupId: param.groupId
+            groupId: param.groupId,
         }, {
             teamAId: {
-                operator: '=',
+                operator: '==',
                 value: param.teamAId,
             },
             teamBId: {
-                operator: '=',
+                operator: '==',
                 value: param.teamBId,
             },
         });
         const $matchB = this.matchContract.filter({
             tournamentId: param.tournamentId,
             fixtureStageId: param.fixtureStageId,
-            groupId: param.groupId
+            groupId: param.groupId,
         }, {
             teamBId: {
-                operator: '=',
+                operator: '==',
                 value: param.teamAId,
             },
             teamAId: {
-                operator: '=',
+                operator: '==',
                 value: param.teamBId,
             },
         });

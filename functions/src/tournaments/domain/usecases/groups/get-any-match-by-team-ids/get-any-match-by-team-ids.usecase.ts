@@ -6,11 +6,11 @@ import { GetMatchByTeamIdsUsecase } from '../../group-matches/get-match-by-team-
 import { GetIntergroupMatchByTeamIdsUsecase } from '../../intergroup-matches/get-intergroup-match-by-team-ids/get-intergroup-match-by-team-ids.usecase';
 
 export interface Param {
-  tournamentId: Id;
   fixtureStageId: Id;
   groupId: Id;
   teamAId: Id;
   teamBId: Id;
+  tournamentId: Id;
 }
 
 export class GetAnyMatchByTeamIdsUsecase extends Usecase<
@@ -23,6 +23,7 @@ export class GetAnyMatchByTeamIdsUsecase extends Usecase<
   ) {
     super();
   }
+
   call(param: Param): Observable<MatchEntity | undefined> {
     const $groupMatches = this.getMatchByTeamIdsUsecase.call(param);
     const $intergroupMatches =

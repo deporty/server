@@ -1,49 +1,29 @@
-import { Id } from "@deporty-org/entities";
-import {
-  NegativePointsPerCard,
-  PointsConfiguration,
-  TieBreakingOrder,
-} from "@deporty-org/entities/organizations";
-import {
-  FlatPointsStadistics,
-  MatchEntity,
-  PositionsTable,
-} from "@deporty-org/entities/tournaments";
-import { Observable, of, zip } from "rxjs";
-import { map } from "rxjs/operators";
-import { Usecase } from "../../../../core/usecase";
-import { GetAnyMatchByTeamIdsUsecase } from "../groups/get-any-match-by-team-ids/get-any-match-by-team-ids.usecase";
-import { quicksort } from "./crespo";
-import { getWinnerTeam } from "./tie-breaking-handlers";
-import {
-  Table,
-  calculateGoalsAgainsPerMatch,
-  generateEmptyStadistics,
-  setStadistic,
-} from "./update-positions-table.helpers";
+import { Id } from '@deporty-org/entities';
+import { NegativePointsPerCard, PointsConfiguration, TieBreakingOrder } from '@deporty-org/entities/organizations';
+import { FlatPointsStadistics, MatchEntity, PositionsTable } from '@deporty-org/entities/tournaments';
+import { Observable, of, zip } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Usecase } from '../../../../core/usecase';
+import { GetAnyMatchByTeamIdsUsecase } from '../groups/get-any-match-by-team-ids/get-any-match-by-team-ids.usecase';
+import { quicksort } from './crespo';
+import { getWinnerTeam } from './tie-breaking-handlers';
+import { Table, calculateGoalsAgainsPerMatch, generateEmptyStadistics, setStadistic } from './update-positions-table.helpers';
 
 export interface Params {
-  match: MatchEntity;
   availableTeams: Id[];
-  tieBreakingOrder: TieBreakingOrder[];
+  match: MatchEntity;
+  meta: any;
   negativePointsPerCard: NegativePointsPerCard;
   pointsConfiguration: PointsConfiguration;
   positionsTable?: PositionsTable;
-  meta: any;
+  tieBreakingOrder: TieBreakingOrder[];
 }
-export class UpdatePositionTableUsecase extends Usecase<
-  Params,
-  PositionsTable
-> {
-  constructor(
-    private getAnyMatchByTeamIdsUsecase: GetAnyMatchByTeamIdsUsecase
-  ) {
+export class UpdatePositionTableUsecase extends Usecase<Params, PositionsTable> {
+  constructor(private getAnyMatchByTeamIdsUsecase: GetAnyMatchByTeamIdsUsecase) {
     super();
   }
 
   call(param: Params): Observable<PositionsTable> {
-    console.log(param);
-
     const teamIds = param.availableTeams || [];
     const tieBreakingOrder: TieBreakingOrder[] = param.tieBreakingOrder;
 
@@ -62,10 +42,7 @@ export class UpdatePositionTableUsecase extends Usecase<
       const teamAIdFlag = teamIds.includes(teamAId);
       const teamBIdFlag = teamIds.includes(teamBId);
 
-      const failPlayStadistics = this.getFairPlayerStadisticFromMatchByTeam(
-        match,
-        param.negativePointsPerCard
-      );
+      const failPlayStadistics = this.getFairPlayerStadisticFromMatchByTeam(match, param.negativePointsPerCard);
 
       const existsA = table.find((x) => x.teamId === teamAId);
       const existsB = table.find((x) => x.teamId === teamBId);
@@ -85,22 +62,10 @@ export class UpdatePositionTableUsecase extends Usecase<
         });
       }
 
-      setStadistic(
-        teamIds,
-        teamAId,
-        table,
-        "fairPlay",
-        failPlayStadistics.teamA
-      );
-      setStadistic(teamIds, teamAId, table, "playedMatches", 1);
-      setStadistic(
-        teamIds,
-        teamBId,
-        table,
-        "fairPlay",
-        failPlayStadistics.teamB
-      );
-      setStadistic(teamIds, teamBId, table, "playedMatches", 1);
+      setStadistic(teamIds, teamAId, table, 'fairPlay', failPlayStadistics.teamA);
+      setStadistic(teamIds, teamAId, table, 'playedMatches', 1);
+      setStadistic(teamIds, teamBId, table, 'fairPlay', failPlayStadistics.teamB);
+      setStadistic(teamIds, teamBId, table, 'playedMatches', 1);
 
       if (match.score) {
         this.setGoalStadistics(teamIds, table, teamAId, match, teamBId);
@@ -110,54 +75,22 @@ export class UpdatePositionTableUsecase extends Usecase<
 
       if (winnerTeam !== undefined) {
         if (winnerTeam) {
-          setStadistic(
-            teamIds,
-            winnerTeam.winner,
-            table,
-            "points",
-            param.pointsConfiguration.wonMatchPoints
-          );
-          setStadistic(teamIds, winnerTeam.winner, table, "wonMatches", 1);
-          setStadistic(
-            teamIds,
-            winnerTeam.winner,
-            table,
-            "points",
-            param.pointsConfiguration.lostMatchPoints
-          );
-          setStadistic(teamIds, winnerTeam.loser, table, "lostMatches", 1);
+          setStadistic(teamIds, winnerTeam.winner, table, 'points', param.pointsConfiguration.wonMatchPoints);
+          setStadistic(teamIds, winnerTeam.winner, table, 'wonMatches', 1);
+          setStadistic(teamIds, winnerTeam.winner, table, 'points', param.pointsConfiguration.lostMatchPoints);
+          setStadistic(teamIds, winnerTeam.loser, table, 'lostMatches', 1);
         } else if (winnerTeam === null) {
-          setStadistic(teamIds, teamAId, table, "tiedMatches", 1);
-          setStadistic(
-            teamIds,
-            teamAId,
-            table,
-            "points",
-            param.pointsConfiguration.tieMatchPoints
-          );
-          setStadistic(teamIds, teamBId, table, "tiedMatches", 1);
-          setStadistic(
-            teamIds,
-            teamBId,
-            table,
-            "points",
-            param.pointsConfiguration.tieMatchPoints
-          );
+          setStadistic(teamIds, teamAId, table, 'tiedMatches', 1);
+          setStadistic(teamIds, teamAId, table, 'points', param.pointsConfiguration.tieMatchPoints);
+          setStadistic(teamIds, teamBId, table, 'tiedMatches', 1);
+          setStadistic(teamIds, teamBId, table, 'points', param.pointsConfiguration.tieMatchPoints);
         }
       }
-
-      console.log();
-      console.log("Original table: ", table);
-      console.log();
 
       const calculatedTable = calculateGoalsAgainsPerMatch(table);
       const groupedTable = this.orderByPoints(calculatedTable);
 
-      const response = this.resolveTies(
-        groupedTable,
-        tieBreakingOrder,
-        param
-      ).pipe(
+      const response = this.resolveTies(groupedTable, tieBreakingOrder, param).pipe(
         map((table: Table) => {
           return {
             analizedMatches,
@@ -171,78 +104,22 @@ export class UpdatePositionTableUsecase extends Usecase<
     return of(positionsTable);
   }
 
-  private resolveTies(
-    groupedTable: {
-      teamId: string;
-      stadistics: FlatPointsStadistics;
-      wasByRandom: boolean;
-    }[][],
-    tieBreakingOrder: TieBreakingOrder[],
-    param: Params
-  ): Observable<Table> {
-    const response: Table = [];
-
-    const temp = [];
-
-    console.log("Grouped tables: ", groupedTable);
-
-    for (const group of groupedTable) {
-      const len = group.length;
-      console.log("------------------------");
-
-      console.log("Group Lenght: ", len);
-      console.log(group);
-      console.log("------------------------");
-
-      const $orderedTable = quicksort(
-        group,
-        tieBreakingOrder,
-        group.length,
-        param,
-        this.getAnyMatchByTeamIdsUsecase
-      );
-      temp.push($orderedTable);
-    }
-    if (temp.length == 0) {
-      return of(response);
-    }
-
-    return zip(...temp).pipe(
-      map((data) => {
-        return data.reduce((acc, prev) => {
-          acc.push(...prev);
-          return acc;
-        }, []);
-      })
-    );
-  }
-
-  private getFairPlayerStadisticFromMatchByTeam(
-    match: MatchEntity,
-    negativePointsPerCard: NegativePointsPerCard
-  ) {
+  private getFairPlayerStadisticFromMatchByTeam(match: MatchEntity, negativePointsPerCard: NegativePointsPerCard) {
     const yellowCardScale = negativePointsPerCard.yellowCardsNegativePoints;
     const redCardScale = negativePointsPerCard.redCardsNegativePoints;
     const response = {
       teamA: 0,
       teamB: 0,
     };
-    const fn = (
-      match: MatchEntity,
-      response: { teamA: number; teamB: number },
-      key: "teamA" | "teamB"
-    ) => {
+    const fn = (match: MatchEntity, response: { teamA: number; teamB: number }, key: 'teamA' | 'teamB') => {
       if (match.stadistics && match.stadistics[key]) {
         for (const stadistic of (match.stadistics as any)[key]) {
-          response[key] =
-            response[key] +
-            stadistic.totalYellowCards * yellowCardScale +
-            stadistic.totalRedCards * redCardScale;
+          response[key] = response[key] + stadistic.totalYellowCards * yellowCardScale + stadistic.totalRedCards * redCardScale;
         }
       }
     };
-    fn(match, response, "teamA");
-    fn(match, response, "teamB");
+    fn(match, response, 'teamA');
+    fn(match, response, 'teamB');
     return response;
   }
 
@@ -267,7 +144,38 @@ export class UpdatePositionTableUsecase extends Usecase<
       res.push(groupedTable[k.toString()]);
     }
 
-    return res
+    return res;
+  }
+
+  private resolveTies(
+    groupedTable: {
+      teamId: string;
+      stadistics: FlatPointsStadistics;
+      wasByRandom: boolean;
+    }[][],
+    tieBreakingOrder: TieBreakingOrder[],
+    param: Params
+  ): Observable<Table> {
+    const response: Table = [];
+
+    const temp = [];
+
+    for (const group of groupedTable) {
+      const $orderedTable = quicksort(group, tieBreakingOrder, group.length, param, this.getAnyMatchByTeamIdsUsecase);
+      temp.push($orderedTable);
+    }
+    if (temp.length == 0) {
+      return of(response);
+    }
+
+    return zip(...temp).pipe(
+      map((data) => {
+        return data.reduce((acc, prev) => {
+          acc.push(...prev);
+          return acc;
+        }, []);
+      })
+    );
   }
 
   private setGoalStadistics(
@@ -278,24 +186,12 @@ export class UpdatePositionTableUsecase extends Usecase<
     match: MatchEntity,
     teamBId: string
   ) {
-    setStadistic(teamIds, teamAId, table, "goalsAgainst", match.score!.teamB);
-    setStadistic(teamIds, teamAId, table, "goalsInFavor", match.score!.teamA);
-    setStadistic(
-      teamIds,
-      teamAId,
-      table,
-      "goalsDifference",
-      match.score!.teamA - match.score!.teamB
-    );
+    setStadistic(teamIds, teamAId, table, 'goalsAgainst', match.score!.teamB);
+    setStadistic(teamIds, teamAId, table, 'goalsInFavor', match.score!.teamA);
+    setStadistic(teamIds, teamAId, table, 'goalsDifference', match.score!.teamA - match.score!.teamB);
 
-    setStadistic(teamIds, teamBId, table, "goalsAgainst", match.score!.teamA);
-    setStadistic(teamIds, teamBId, table, "goalsInFavor", match.score!.teamB);
-    setStadistic(
-      teamIds,
-      teamBId,
-      table,
-      "goalsDifference",
-      match.score!.teamB - match.score!.teamA
-    );
+    setStadistic(teamIds, teamBId, table, 'goalsAgainst', match.score!.teamA);
+    setStadistic(teamIds, teamBId, table, 'goalsInFavor', match.score!.teamB);
+    setStadistic(teamIds, teamBId, table, 'goalsDifference', match.score!.teamB - match.score!.teamA);
   }
 }

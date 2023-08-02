@@ -14,39 +14,39 @@ exports.preferMinor = preferMinor;
 exports.BASIC_TIE_BREAKING_ORDER_MAP = {
     GA: {
         operator: preferMinor,
-        property: "goalsAgainst",
+        property: 'goalsAgainst',
     },
     GAPM: {
         operator: preferMinor,
-        property: "goalsAgainstPerMatch",
+        property: 'goalsAgainstPerMatch',
     },
     GD: {
         operator: preferMajor,
-        property: "goalsDifference",
+        property: 'goalsDifference',
     },
     GIF: {
         operator: preferMajor,
-        property: "goalsInFavor",
+        property: 'goalsInFavor',
     },
     FP: {
         operator: preferMinor,
-        property: "fairPlay",
+        property: 'fairPlay',
     },
     LM: {
         operator: preferMinor,
-        property: "lostMatches",
+        property: 'lostMatches',
     },
     PM: {
         operator: preferMinor,
-        property: "playedMatches",
+        property: 'playedMatches',
     },
     TM: {
         operator: preferMajor,
-        property: "tiedMatches",
+        property: 'tiedMatches',
     },
     WM: {
         operator: preferMajor,
-        property: "wonMatches",
+        property: 'wonMatches',
     },
 };
 exports.ADVANCED_TIE_BREAKING_ORDER_MAP = {
@@ -88,11 +88,16 @@ exports.ADVANCED_TIE_BREAKING_ORDER_MAP = {
                 tournamentId: meta.tournamentId,
             })
                 .pipe((0, operators_1.map)((match) => {
-                if (!match)
+                if (!match) {
                     return 0;
+                }
+                if (match.status != 'completed') {
+                    return 0;
+                }
                 const result = getWinnerTeam(match);
-                if (!result)
+                if (!result) {
                     return 0;
+                }
                 return result.winner === match.teamAId ? 1 : -1;
             }));
         },

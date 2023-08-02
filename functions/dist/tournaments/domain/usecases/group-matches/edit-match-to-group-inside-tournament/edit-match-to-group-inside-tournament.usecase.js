@@ -10,7 +10,7 @@ class MatchIsCompletedError extends Error {
     constructor() {
         super();
         this.message = `The Match is completed`;
-        this.name = 'MatchIsCompletedError';
+        this.name = "MatchIsCompletedError";
     }
 }
 exports.MatchIsCompletedError = MatchIsCompletedError;
@@ -35,7 +35,7 @@ class EditMatchInsideGroupUsecase extends usecase_1.Usecase {
             tournamentId: param.tournamentId,
         });
         return (0, rxjs_1.zip)($match, $tournamentId).pipe((0, operators_1.mergeMap)(([prevMatch, tournament]) => {
-            if (prevMatch.status !== 'completed') {
+            if (prevMatch.status !== "completed") {
                 const $tournamentLayout = this.organizationContract.getTournamentLayoutByIdUsecase(tournament.organizationId, tournament.tournamentLayoutId);
                 const $group = this.getGroupByIdUsecase.call({
                     fixtureStageId: param.fixtureStageId,
@@ -43,22 +43,28 @@ class EditMatchInsideGroupUsecase extends usecase_1.Usecase {
                     tournamentId: param.tournamentId,
                 });
                 return (0, rxjs_1.zip)(this.edit(param), $tournamentLayout, $group).pipe((0, operators_1.mergeMap)(([match, tournamentLayout, group]) => {
-                    const config = tournamentLayout.fixtureStagesConfiguration || organizations_1.DEFAULT_FIXTURE_STAGES_CONFIGURATION;
-                    return (0, rxjs_1.zip)((0, rxjs_1.of)(match), (0, rxjs_1.of)(group), match.status === 'completed' ? this.updatePositionTableUsecase.call({
-                        availableTeams: group.teamIds,
-                        match,
-                        positionsTable: group.positionsTable,
-                        tieBreakingOrder: config.tieBreakingOrder,
-                        negativePointsPerCard: config.negativePointsPerCard,
-                        pointsConfiguration: config.pointsConfiguration,
-                        meta: {
-                            tournamentId: param.tournamentId,
-                            fixtureStageId: param.fixtureStageId,
-                            groupId: param.groupId,
-                        }
-                    }) : (0, rxjs_1.of)(group.positionsTable));
+                    const config = tournamentLayout.fixtureStagesConfiguration ||
+                        organizations_1.DEFAULT_FIXTURE_STAGES_CONFIGURATION;
+                    return (0, rxjs_1.zip)((0, rxjs_1.of)(match), (0, rxjs_1.of)(group), match.status === "completed"
+                        ? this.updatePositionTableUsecase.call({
+                            availableTeams: group.teamIds,
+                            match,
+                            positionsTable: group.positionsTable,
+                            tieBreakingOrder: config.tieBreakingOrder,
+                            negativePointsPerCard: config.negativePointsPerCard,
+                            pointsConfiguration: config.pointsConfiguration,
+                            meta: {
+                                tournamentId: param.tournamentId,
+                                fixtureStageId: param.fixtureStageId,
+                                groupId: param.groupId,
+                            },
+                        })
+                        : (0, rxjs_1.of)(group.positionsTable));
                 }), (0, operators_1.mergeMap)(([match, group, positionsTable]) => {
                     const newGroup = Object.assign(Object.assign({}, group), { positionsTable });
+                    console.log("------------------///////////--------------");
+                    console.log(newGroup);
+                    console.log("------------------////////////--------------");
                     return (0, rxjs_1.zip)((0, rxjs_1.of)(match), (0, rxjs_1.of)(positionsTable), this.updateGroupUsecase.call({
                         fixtureStageId: param.fixtureStageId,
                         group: newGroup,
@@ -77,9 +83,9 @@ class EditMatchInsideGroupUsecase extends usecase_1.Usecase {
         const captainBSignaturePath = `${prefixSignaturePath}/captainBSignature.jpg`;
         const judgeSignaturePath = `${prefixSignaturePath}/judgeSignature.jpg`;
         const signatures = [
-            (0, helpers_1.convertToImage)(param.match['captainASignature'], captainASignaturePath, this.fileAdapter),
-            (0, helpers_1.convertToImage)(param.match['captainBSignature'], captainBSignaturePath, this.fileAdapter),
-            (0, helpers_1.convertToImage)(param.match['judgeSignature'], judgeSignaturePath, this.fileAdapter),
+            (0, helpers_1.convertToImage)(param.match["captainASignature"], captainASignaturePath, this.fileAdapter),
+            (0, helpers_1.convertToImage)(param.match["captainBSignature"], captainBSignaturePath, this.fileAdapter),
+            (0, helpers_1.convertToImage)(param.match["judgeSignature"], judgeSignaturePath, this.fileAdapter),
         ];
         return (0, rxjs_1.zip)(...signatures).pipe((0, operators_1.mergeMap)((data) => {
             param.match.captainASignature = data[0];

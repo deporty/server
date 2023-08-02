@@ -544,9 +544,24 @@ class TournamentsModulesConfig {
         //   strategy: 'singleton',
         // });
         container.add({
+            id: 'GetIntergroupMatchByTeamIdsUsecase',
+            kind: get_intergroup_match_by_team_ids_usecase_1.GetIntergroupMatchByTeamIdsUsecase,
+            dependencies: ['IntergroupMatchContract'],
+            strategy: 'singleton',
+        });
+        container.add({
+            id: 'GetAnyMatchByTeamIdsUsecase',
+            kind: get_any_match_by_team_ids_usecase_1.GetAnyMatchByTeamIdsUsecase,
+            dependencies: [
+                'GetMatchByTeamIdsUsecase',
+                'GetIntergroupMatchByTeamIdsUsecase',
+            ],
+            strategy: 'singleton',
+        });
+        container.add({
             id: 'UpdatePositionTableUsecase',
             kind: update_positions_table_usecase_1.UpdatePositionTableUsecase,
-            dependencies: [],
+            dependencies: ['GetAnyMatchByTeamIdsUsecase'],
             strategy: 'singleton',
         });
         container.add({
@@ -648,12 +663,6 @@ class TournamentsModulesConfig {
             dependencies: ['IntergroupMatchContract'],
             strategy: 'singleton',
         });
-        container.add({
-            id: 'GetIntergroupMatchByTeamIdsUsecase',
-            kind: get_intergroup_match_by_team_ids_usecase_1.GetIntergroupMatchByTeamIdsUsecase,
-            dependencies: ['IntergroupMatchContract'],
-            strategy: 'singleton',
-        });
         // container.add({
         //   id: 'GetFullIntergroupMatchesUsecase',
         //   kind: GetFullIntergroupMatchesUsecase,
@@ -696,15 +705,6 @@ class TournamentsModulesConfig {
                 'GetPositionsTableUsecase',
                 'GetIntergroupMatchesUsecase',
                 'GetGroupByIdUsecase',
-            ],
-            strategy: 'singleton',
-        });
-        container.add({
-            id: 'GetAnyMatchByTeamIdsUsecase',
-            kind: get_any_match_by_team_ids_usecase_1.GetAnyMatchByTeamIdsUsecase,
-            dependencies: [
-                'GetMatchByTeamIdsUsecase',
-                'GetIntergroupMatchByTeamIdsUsecase',
             ],
             strategy: 'singleton',
         });

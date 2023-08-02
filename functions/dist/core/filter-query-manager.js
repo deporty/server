@@ -13,7 +13,7 @@ function permissiveEqualOperator(key, value) {
             source.subscribe({
                 next: (items) => {
                     suscriber.next(items.filter((item) => {
-                        return (item[key].toUpperCase() === value.toUpperCase());
+                        return item[key].toUpperCase() === value.toUpperCase();
                     }));
                 },
                 error: () => suscriber.error(),
@@ -29,9 +29,7 @@ function containsOperator(key, value) {
             source.subscribe({
                 next: (items) => {
                     suscriber.next(items.filter((item) => {
-                        return item[key]
-                            .toUpperCase()
-                            .includes(value.toUpperCase());
+                        return item[key].toUpperCase().includes(value.toUpperCase());
                     }));
                 },
                 error: () => suscriber.error(),
@@ -63,7 +61,12 @@ function filterWizard(query, filters, mapper) {
     function _map(key, config, query) {
         let transformKey = key;
         if (!!mapper) {
-            transformKey = mapper.attributesMapper[key].name;
+            if (!mapper.attributesMapper[key]) {
+                console.log('Propiedad no mapeada: ', key);
+            }
+            else {
+                transformKey = mapper.attributesMapper[key].name;
+            }
         }
         if (helpers_1.CustomFilterOperators.indexOf(config.operator) == -1) {
             query = query.where(transformKey, config.operator, config.value);

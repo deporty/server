@@ -585,10 +585,26 @@ export class TournamentsModulesConfig {
     //   ],
     //   strategy: 'singleton',
     // });
+
+    container.add({
+      id: 'GetIntergroupMatchByTeamIdsUsecase',
+      kind: GetIntergroupMatchByTeamIdsUsecase,
+      dependencies: ['IntergroupMatchContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetAnyMatchByTeamIdsUsecase',
+      kind: GetAnyMatchByTeamIdsUsecase,
+      dependencies: [
+        'GetMatchByTeamIdsUsecase',
+        'GetIntergroupMatchByTeamIdsUsecase',
+      ],
+      strategy: 'singleton',
+    });
     container.add({
       id: 'UpdatePositionTableUsecase',
       kind: UpdatePositionTableUsecase,
-      dependencies: [],
+      dependencies: ['GetAnyMatchByTeamIdsUsecase'],
       strategy: 'singleton',
     });
     container.add({
@@ -696,12 +712,7 @@ export class TournamentsModulesConfig {
       dependencies: ['IntergroupMatchContract'],
       strategy: 'singleton',
     });
-    container.add({
-      id: 'GetIntergroupMatchByTeamIdsUsecase',
-      kind: GetIntergroupMatchByTeamIdsUsecase,
-      dependencies: ['IntergroupMatchContract'],
-      strategy: 'singleton',
-    });
+
     // container.add({
     //   id: 'GetFullIntergroupMatchesUsecase',
     //   kind: GetFullIntergroupMatchesUsecase,
@@ -748,15 +759,7 @@ export class TournamentsModulesConfig {
       ],
       strategy: 'singleton',
     });
-    container.add({
-      id: 'GetAnyMatchByTeamIdsUsecase',
-      kind: GetAnyMatchByTeamIdsUsecase,
-      dependencies: [
-        'GetMatchByTeamIdsUsecase',
-        'GetIntergroupMatchByTeamIdsUsecase',
-      ],
-      strategy: 'singleton',
-    });
+   
     // container.add({
     //   id: 'GetPositionsTableByStageUsecase',
     //   kind: GetPositionsTableByStageUsecase,

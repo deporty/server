@@ -1,34 +1,22 @@
 import { DocumentData, Query } from 'firebase-admin/firestore';
 import { Observable } from 'rxjs';
-import {
-  CustomFilterOperators,
-  Filters,
-  FirebaseFilterOperators,
-} from './helpers';
+import { CustomFilterOperators, Filters, FirebaseFilterOperators } from './helpers';
 import { Mapper } from './mapper';
 
 const operatorsHandlerMapper: {
-  [index: string]: (
-    key: string,
-    value: string
-  ) => (source: Observable<any>) => Observable<any>;
+  [index: string]: (key: string, value: string) => (source: Observable<any>) => Observable<any>;
 } = {
   '=': permissiveEqualOperator,
   contains: containsOperator,
 };
-export function permissiveEqualOperator<T>(
-  key: string,
-  value: string
-): (source: Observable<T>) => Observable<T> {
+export function permissiveEqualOperator<T>(key: string, value: string): (source: Observable<T>) => Observable<T> {
   return (source: Observable<T>) => {
     return new Observable((suscriber) => {
       source.subscribe({
         next: (items: T) => {
           suscriber.next(
             (items as unknown as Array<any>).filter((item) => {
-              return (
-                (item[key] as string).toUpperCase() === value.toUpperCase()
-              );
+              return (item[key] as string).toUpperCase() === value.toUpperCase();
             }) as unknown as T
           );
         },
@@ -39,19 +27,14 @@ export function permissiveEqualOperator<T>(
   };
 }
 
-export function containsOperator<T>(
-  key: string,
-  value: string
-): (source: Observable<T>) => Observable<T> {
+export function containsOperator<T>(key: string, value: string): (source: Observable<T>) => Observable<T> {
   return (source: Observable<T>) => {
     return new Observable((suscriber) => {
       source.subscribe({
         next: (items: T) => {
           suscriber.next(
             (items as unknown as Array<any>).filter((item) => {
-              return (item[key] as string)
-                .toUpperCase()
-                .includes(value.toUpperCase());
+              return (item[key] as string).toUpperCase().includes(value.toUpperCase());
             }) as unknown as T
           );
         },
@@ -62,11 +45,7 @@ export function containsOperator<T>(
   };
 }
 
-export function filterWizard<T>(
-  query: Query<DocumentData>,
-  filters?: Filters,
-  mapper?: Mapper<T>
-) {
+export function filterWizard<T>(query: Query<DocumentData>, filters?: Filters, mapper?: Mapper<T>) {
   const customOperators: ((source: Observable<any>) => Observable<any>)[] = [];
   if (filters)
     for (const key in filters) {
@@ -96,15 +75,15 @@ export function filterWizard<T>(
   ) {
     let transformKey = key;
     if (!!mapper) {
-      transformKey = mapper.attributesMapper[key].name;
+      if (!mapper.attributesMapper[key]) {
+        console.log('Propiedad no mapeada: ', key);
+      } else {
+        transformKey = mapper.attributesMapper[key].name;
+      }
     }
 
     if (CustomFilterOperators.indexOf(config.operator) == -1) {
-      query = query.where(
-        transformKey,
-        config.operator as FirebaseFilterOperators,
-        config.value
-      );
+      query = query.where(transformKey, config.operator as FirebaseFilterOperators, config.value);
       return query;
     } else {
       const handler = operatorsHandlerMapper[config.operator];

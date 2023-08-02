@@ -103,7 +103,12 @@ const invoicesConfig = (0, invoices_1.main)(GENERAL_DEPENDENCIES_CONTAINER);
 // exports.players = functions.https.onRequest(playerConfig.app);
 exports.authorization = functions.https.onRequest(authorizationApp);
 exports.tournaments = functions.https.onRequest(tournamentApp);
-exports.teams = functions.https.onRequest(teamApp);
+exports.teams = functions
+    .runWith({
+    timeoutSeconds: 400,
+    memory: '2GB',
+})
+    .https.onRequest(teamApp);
 exports.users = functions.https.onRequest(usersApp);
 exports.organizations = functions.https.onRequest(organizationsApp);
 exports.locations = functions.https.onRequest(locationsApp);

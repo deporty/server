@@ -47,9 +47,7 @@ class GeneralContract {
         const pagination = config === null || config === void 0 ? void 0 : config.pagination;
         if (!!pagination) {
             if (pagination.pageNumber != 0) {
-                query = query
-                    .orderBy('id')
-                    .limit((pagination.pageNumber + 1) * pagination.pageSize);
+                query = query.orderBy('id').limit((pagination.pageNumber + 1) * pagination.pageSize);
                 return (0, rxjs_1.from)(query.get())
                     .pipe((0, operators_1.map)((items) => {
                     return items.docs
@@ -57,9 +55,7 @@ class GeneralContract {
                         .pop();
                 }), (0, operators_1.map)((last) => {
                     if (last) {
-                        query = query
-                            .startAfter(last.id)
-                            .limit(pagination.pageSize);
+                        query = query.startAfter(last.id).limit(pagination.pageSize);
                     }
                     return query;
                 }), (0, operators_1.mergeMap)((query) => {
@@ -130,9 +126,7 @@ class GeneralContract {
         return (0, operators_1.mergeMap)((items) => {
             return items.length > 0
                 ? (0, rxjs_1.zip)(...items.map((item) => {
-                    return this.mapper
-                        .fromJson(item)
-                        .pipe((0, operators_1.filter)((item) => !!item));
+                    return this.mapper.fromJson(item).pipe((0, operators_1.filter)((item) => !!item));
                 })).pipe((0, operators_1.map)((items) => {
                     return items;
                 }))
