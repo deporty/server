@@ -5,15 +5,39 @@ import {
   DEFAULT_FIXTURE_STAGES_CONFIGURATION,
   DEFAULT_NEGATIVE_POINTS_PER_CARD_CONFIGURATION,
   DEFAULT_POINTS_CONFIGURATION_CONFIGURATION,
+  DEFAULT_SCHEMAS_CONFIGURATION,
   DEFAULT_STADISTIS_KIND_CONFIGURATION,
   DEFAULT_TIE_BREAKING_ORDER_CONFIGURATION,
   FixtureStageConfiguration,
   FixtureStagesConfiguration,
   NegativePointsPerCard,
   PointsConfiguration,
+  Schema,
   TournamentLayoutEntity,
 } from '@deporty-org/entities/organizations';
 
+export class SchemaMapper extends Mapper<Schema> {
+  constructor(private fixtureStageConfigurationMapper: FixtureStageConfigurationMapper) {
+    super();
+
+    this.attributesMapper = {
+      name: {
+        name: 'name',
+      },
+
+      stages: {
+        name: 'stages',
+        default: [],
+        from: (value: any[]) => {
+          return value.length > 0 ? zip(...value.map((x) => this.fixtureStageConfigurationMapper.fromJson(x))) : of([]);
+        },
+        to: (value: FixtureStageConfiguration[]) => {
+          return value.map((x) => this.fixtureStageConfigurationMapper.toJson(x));
+        },
+      },
+    };
+  }
+}
 export class FixtureStageConfigurationMapper extends Mapper<FixtureStageConfiguration> {
   constructor() {
     super();
@@ -66,8 +90,8 @@ export class NegativePointsPerCardMapper extends Mapper<NegativePointsPerCard> {
 export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfiguration> {
   constructor(
     private negativePointsPerCardMapper: NegativePointsPerCardMapper,
-    private fixtureStageConfigurationMapper: FixtureStageConfigurationMapper,
-    private pointsConfigurationMapper: PointsConfigurationMapper
+    private pointsConfigurationMapper: PointsConfigurationMapper,
+    private schemaMapper: SchemaMapper
   ) {
     super();
     this.attributesMapper = {
@@ -78,27 +102,17 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
           return this.negativePointsPerCardMapper.fromJson(value);
         },
         to: (value: NegativePointsPerCard) => {
-          console.log("Esta en el mapper negativo ", value);
-          
           return this.negativePointsPerCardMapper.toJson(value);
         },
       },
-      stages: {
-        name: 'stages',
-        default: [],
+      schemas: {
+        name: 'schemas',
+        default: DEFAULT_SCHEMAS_CONFIGURATION,
         from: (value: any[]) => {
-          return value.length > 0
-            ? zip(
-                ...value.map((x) =>
-                  this.fixtureStageConfigurationMapper.fromJson(x)
-                )
-              )
-            : of([]);
+          return value.length > 0 ? zip(...value.map((x) => this.schemaMapper.fromJson(x))) : of([]);
         },
-        to: (value: FixtureStageConfiguration[]) => {
-          return value.map((x) =>
-            this.fixtureStageConfigurationMapper.toJson(x)
-          );
+        to: (value: Schema[]) => {
+          return value.map((x) => this.schemaMapper.toJson(x));
         },
       },
       pointsConfiguration: {
@@ -123,10 +137,7 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
   }
 }
 export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
-  constructor(
-    private fileAdapter: FileAdapter,
-    private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper
-  ) {
+  constructor(private fileAdapter: FileAdapter, private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper) {
     super();
     this.attributesMapper = {
       categories: { name: 'categories' },
@@ -143,17 +154,15 @@ export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
           return this.fixtureStagesConfigurationMapper.fromJson(value);
         },
         to: (value: FixtureStagesConfiguration) => {
-          console.log("Layout::: ", value);
-          
+          console.log('Layout::: ', value);
+
           return this.fixtureStagesConfigurationMapper.toJson(value);
         },
       },
       flayer: {
         name: 'flayer',
         from: (value: string) => {
-          return value
-            ? this.fileAdapter.getAbsoluteHTTPUrl(value)
-            : of(undefined);
+          return value ? this.fileAdapter.getAbsoluteHTTPUrl(value) : of(undefined);
         },
         to: (value: string) => {
           return value ? this.fileAdapter.getRelativeUrl(value) : of(undefined);

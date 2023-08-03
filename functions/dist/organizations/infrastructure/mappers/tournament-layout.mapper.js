@@ -1,9 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TournamentLayoutMapper = exports.FixtureStagesConfigurationMapper = exports.NegativePointsPerCardMapper = exports.PointsConfigurationMapper = exports.FixtureStageConfigurationMapper = void 0;
+exports.TournamentLayoutMapper = exports.FixtureStagesConfigurationMapper = exports.NegativePointsPerCardMapper = exports.PointsConfigurationMapper = exports.FixtureStageConfigurationMapper = exports.SchemaMapper = void 0;
 const rxjs_1 = require("rxjs");
 const mapper_1 = require("../../../core/mapper");
 const organizations_1 = require("@deporty-org/entities/organizations");
+class SchemaMapper extends mapper_1.Mapper {
+    constructor(fixtureStageConfigurationMapper) {
+        super();
+        this.fixtureStageConfigurationMapper = fixtureStageConfigurationMapper;
+        this.attributesMapper = {
+            name: {
+                name: 'name',
+            },
+            stages: {
+                name: 'stages',
+                default: [],
+                from: (value) => {
+                    return value.length > 0 ? (0, rxjs_1.zip)(...value.map((x) => this.fixtureStageConfigurationMapper.fromJson(x))) : (0, rxjs_1.of)([]);
+                },
+                to: (value) => {
+                    return value.map((x) => this.fixtureStageConfigurationMapper.toJson(x));
+                },
+            },
+        };
+    }
+}
+exports.SchemaMapper = SchemaMapper;
 class FixtureStageConfigurationMapper extends mapper_1.Mapper {
     constructor() {
         super();
@@ -53,11 +75,11 @@ class NegativePointsPerCardMapper extends mapper_1.Mapper {
 }
 exports.NegativePointsPerCardMapper = NegativePointsPerCardMapper;
 class FixtureStagesConfigurationMapper extends mapper_1.Mapper {
-    constructor(negativePointsPerCardMapper, fixtureStageConfigurationMapper, pointsConfigurationMapper) {
+    constructor(negativePointsPerCardMapper, pointsConfigurationMapper, schemaMapper) {
         super();
         this.negativePointsPerCardMapper = negativePointsPerCardMapper;
-        this.fixtureStageConfigurationMapper = fixtureStageConfigurationMapper;
         this.pointsConfigurationMapper = pointsConfigurationMapper;
+        this.schemaMapper = schemaMapper;
         this.attributesMapper = {
             negativePointsPerCard: {
                 name: 'negative-points-per-card',
@@ -66,20 +88,17 @@ class FixtureStagesConfigurationMapper extends mapper_1.Mapper {
                     return this.negativePointsPerCardMapper.fromJson(value);
                 },
                 to: (value) => {
-                    console.log("Esta en el mapper negativo ", value);
                     return this.negativePointsPerCardMapper.toJson(value);
                 },
             },
-            stages: {
-                name: 'stages',
-                default: [],
+            schemas: {
+                name: 'schemas',
+                default: organizations_1.DEFAULT_SCHEMAS_CONFIGURATION,
                 from: (value) => {
-                    return value.length > 0
-                        ? (0, rxjs_1.zip)(...value.map((x) => this.fixtureStageConfigurationMapper.fromJson(x)))
-                        : (0, rxjs_1.of)([]);
+                    return value.length > 0 ? (0, rxjs_1.zip)(...value.map((x) => this.schemaMapper.fromJson(x))) : (0, rxjs_1.of)([]);
                 },
                 to: (value) => {
-                    return value.map((x) => this.fixtureStageConfigurationMapper.toJson(x));
+                    return value.map((x) => this.schemaMapper.toJson(x));
                 },
             },
             pointsConfiguration: {
@@ -124,16 +143,14 @@ class TournamentLayoutMapper extends mapper_1.Mapper {
                     return this.fixtureStagesConfigurationMapper.fromJson(value);
                 },
                 to: (value) => {
-                    console.log("Layout::: ", value);
+                    console.log('Layout::: ', value);
                     return this.fixtureStagesConfigurationMapper.toJson(value);
                 },
             },
             flayer: {
                 name: 'flayer',
                 from: (value) => {
-                    return value
-                        ? this.fileAdapter.getAbsoluteHTTPUrl(value)
-                        : (0, rxjs_1.of)(undefined);
+                    return value ? this.fileAdapter.getAbsoluteHTTPUrl(value) : (0, rxjs_1.of)(undefined);
                 },
                 to: (value) => {
                     return value ? this.fileAdapter.getRelativeUrl(value) : (0, rxjs_1.of)(undefined);

@@ -46,13 +46,15 @@ class OrganizationModulesConfig {
             strategy: 'singleton',
         });
         container.add({
+            id: 'SchemaMapper',
+            kind: tournament_layout_mapper_1.SchemaMapper,
+            dependencies: ['FixtureStageConfigurationMapper'],
+            strategy: 'singleton',
+        });
+        container.add({
             id: 'FixtureStagesConfigurationMapper',
             kind: tournament_layout_mapper_1.FixtureStagesConfigurationMapper,
-            dependencies: [
-                'NegativePointsPerCardMapper',
-                'FixtureStageConfigurationMapper',
-                'PointsConfigurationMapper',
-            ],
+            dependencies: ['NegativePointsPerCardMapper', 'PointsConfigurationMapper', 'SchemaMapper'],
             strategy: 'singleton',
         });
         container.add({
@@ -108,10 +110,7 @@ class OrganizationModulesConfig {
         container.add({
             id: 'GetOrganizationWhereExistsMemberEmailUsecase',
             kind: get_organization_where_exists_member_email_usecase_1.GetOrganizationWhereExistsMemberEmailUsecase,
-            dependencies: [
-                'UserContract',
-                'GetOrganizationWhereExistsMemberIdUsecase',
-            ],
+            dependencies: ['UserContract', 'GetOrganizationWhereExistsMemberIdUsecase'],
             strategy: 'singleton',
         });
         container.add({
@@ -141,10 +140,7 @@ class OrganizationModulesConfig {
         container.add({
             id: 'EditTournamentLayoutUsecase',
             kind: edit_tournament_layout_usecase_1.EditTournamentLayoutUsecase,
-            dependencies: [
-                'TournamentLayoutContract',
-                'GetTournamentLayoutByIdUsecase',
-            ],
+            dependencies: ['TournamentLayoutContract', 'GetTournamentLayoutByIdUsecase'],
             strategy: 'singleton',
         });
     }
