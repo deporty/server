@@ -32,4 +32,4 @@ if(args['path'] != None):
 if(len(errors) != 0):
     for error in errors:
         print(*error)
-exit(1)
+    exit(1)
