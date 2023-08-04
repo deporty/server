@@ -48,14 +48,14 @@ jobs:
           cat src/teams/infrastructure/teams.constants.ts
           cat src/tournaments/infrastructure/tournaments.constants.ts
           cat src/users/infrastructure/users.constants.ts
-      # - name: RUN TEST
-      #   run: |
-      #     cd server/functions
-      #     npm test
-      # - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
-      #   run: |
-      #     cd server/functions/scripts
-      #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
+      - name: RUN TEST
+        run: |
+          cd server/functions
+          npm test
+      - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
+        run: |
+          cd server/functions/scripts
+          python3 validate-coverage.py --path ../coverage/lcov-report/index.html
       - name: BUILD DEV
         run: |
           cd functions
