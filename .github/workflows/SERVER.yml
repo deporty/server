@@ -50,11 +50,11 @@ jobs:
           cat src/users/infrastructure/users.constants.ts
       - name: RUN TEST
         run: |
-          cd server/functions
+          cd functions
           npm test
       - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
         run: |
-          cd server/functions/scripts
+          cd functions/scripts
           python3 validate-coverage.py --path ../coverage/lcov-report/index.html
       - name: BUILD DEV
         run: |
@@ -126,11 +126,11 @@ jobs:
           cat src/users/infrastructure/users.constants.ts
       - name: RUN TEST
         run: |
-          cd server/functions
+          cd functions
           npm test
       - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
         run: |
-          cd server/functions/scripts
+          cd functions/scripts
           python3 validate-coverage.py --path ../coverage/lcov-report/index.html
       - name: BUILD PDN
         run: |
