@@ -7,6 +7,6 @@ exports.KM_PER_GRADE_LONGITUDE = 111.3195;
 exports.GRADES_PER_KM_LATITUDE = 1 / exports.KM_PER_GRADE_LATITUDE;
 exports.GRADES_PER_KM_LONGITUDE = 1 / exports.KM_PER_GRADE_LONGITUDE;
 // export const SERVER = 'https://us-central1-deporty-dev.cloudfunctions.net'
-exports.SERVER = 'http://localhost:5001/deporty-dev/us-central1';
+exports.SERVER = 'http://127.0.0.1:5001/deporty-dev/us-central1';
 exports.AUTHORIZATION_SERVER = `${exports.SERVER}/authorization`;
 exports.BEARER_TOKEN = 'f599e916-841b-4a1b-aa0a-65fefcaadf09';

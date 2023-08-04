@@ -5,9 +5,10 @@ export const INTERGROUP_MATCHES_ENTITY = 'intergroup-matches';
 export const MAIN_DRAW_ENTITY = 'main-draw';
 export const GROUPS_ENTITY = 'groups';
 export const MATCHS_ENTITY = 'matches';
+export const MATCHES_BY_REFEREE_ID_ENTITY = 'matches-by-referee-id';
 
 // export const SERVER = 'https://us-central1-deporty-dev.cloudfunctions.net'
-export const SERVER = 'http://localhost:5001/deporty-dev/us-central1';
+export const SERVER = 'http://127.0.0.1:5001/deporty-dev/us-central1';
 export const LOCATION_SERVER = `${SERVER}/locations`;
 export const TEAM_SERVER = `${SERVER}/teams`;
 export const ORGANIZATION_SERVER = `${SERVER}/organizations`;

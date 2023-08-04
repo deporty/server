@@ -7,6 +7,8 @@ const user_constract_1 = require("../../domain/contracts/user.constract");
 const authorization_constants_1 = require("../authorization.constants");
 class UserRepository extends user_constract_1.UserContract {
     getUserInformationByEmail(email) {
+        console.log(authorization_constants_1.USERS_SERVER);
+        console.log(authorization_constants_1.BEARER_TOKEN);
         return new rxjs_1.Observable((observer) => {
             axios_1.default
                 .get(`${authorization_constants_1.USERS_SERVER}/email/${email}`, {
@@ -25,6 +27,7 @@ class UserRepository extends user_constract_1.UserContract {
                 observer.complete();
             })
                 .catch((error) => {
+                console.log(error);
                 observer.error(error);
             });
         });

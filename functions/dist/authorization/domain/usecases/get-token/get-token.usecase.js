@@ -14,6 +14,7 @@ class GetTokenUsecase extends usecase_1.Usecase {
         this.userContract = userContract;
     }
     call(email) {
+        console.log("checho");
         return this.userContract.getUserInformationByEmail(email).pipe((0, operators_1.mergeMap)((user) => {
             return (0, rxjs_1.zip)((0, rxjs_1.of)(user), this.getAllowedResourcesByRoleIdsUsecase.call(user.roles));
         }), (0, operators_1.map)(([user, resources]) => {

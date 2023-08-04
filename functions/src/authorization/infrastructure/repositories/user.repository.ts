@@ -7,6 +7,8 @@ export class UserRepository extends UserContract {
   getUserInformationByEmail(email: string): Observable<UserEntity> {
     
     
+    console.log(USERS_SERVER);
+    console.log(BEARER_TOKEN);
     return new Observable((observer) => {
       axios
         .get<IBaseResponse<UserEntity>>(`${USERS_SERVER}/email/${email}`, {
@@ -25,6 +27,7 @@ export class UserRepository extends UserContract {
           observer.complete();
         })
         .catch((error: any) => {
+          console.log(error);
           observer.error(error);
         });
     });
