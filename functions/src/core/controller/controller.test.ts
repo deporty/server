@@ -34,12 +34,13 @@ describe('Base controller functions', () => {
       send: (data: any) => {},
     };
 
+    const spy = jest.spyOn(fakeResponse, 'send');
     BaseController.handlerController(container, usecaseIdentifier, fakeResponse as any, {
       errorCodes: {},
       exceptions: {},
       identifier: '',
       successCode: '',
     });
-    expect(true).toBe(true);
+    expect(spy).toHaveBeenCalled();
   });
 });
