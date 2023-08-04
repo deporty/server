@@ -21,22 +21,26 @@ describe('Base controller functions', () => {
       strategy: 'singleton',
       dependencies: [],
     });
+
+    container.addValue({
+      id: 'Logger',
+      value: {
+        info: () => {},
+      },
+    });
   });
   test('should ', () => {
     const fakeResponse = {
       send: (data: any) => {},
     };
-    BaseController.handlerController(
-      container,
-      usecaseIdentifier,
-      fakeResponse as any,
-      {
-        errorCodes: {},
-        exceptions: {},
-        identifier: '',
-        successCode: '',
-      }
-    );
-    expect(true).toBe(true);
+
+    const spy = jest.spyOn(fakeResponse, 'send');
+    BaseController.handlerController(container, usecaseIdentifier, fakeResponse as any, {
+      errorCodes: {},
+      exceptions: {},
+      identifier: '',
+      successCode: '',
+    });
+    expect(spy).toHaveBeenCalled();
   });
 });

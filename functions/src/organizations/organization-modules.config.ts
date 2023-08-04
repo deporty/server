@@ -9,6 +9,7 @@ import {
   FixtureStagesConfigurationMapper,
   NegativePointsPerCardMapper,
   PointsConfigurationMapper,
+  SchemaMapper,
   TournamentLayoutMapper,
 } from './infrastructure/mappers/tournament-layout.mapper';
 import { OrganizationContract } from './domain/contracts/organization.contract';
@@ -54,13 +55,15 @@ export class OrganizationModulesConfig {
     });
 
     container.add({
+      id: 'SchemaMapper',
+      kind: SchemaMapper,
+      dependencies: ['FixtureStageConfigurationMapper'],
+      strategy: 'singleton',
+    });
+    container.add({
       id: 'FixtureStagesConfigurationMapper',
       kind: FixtureStagesConfigurationMapper,
-      dependencies: [
-        'NegativePointsPerCardMapper',
-        'FixtureStageConfigurationMapper',
-        'PointsConfigurationMapper',
-      ],
+      dependencies: ['NegativePointsPerCardMapper', 'PointsConfigurationMapper', 'SchemaMapper'],
       strategy: 'singleton',
     });
 
@@ -119,10 +122,7 @@ export class OrganizationModulesConfig {
     container.add({
       id: 'GetOrganizationWhereExistsMemberEmailUsecase',
       kind: GetOrganizationWhereExistsMemberEmailUsecase,
-      dependencies: [
-        'UserContract',
-        'GetOrganizationWhereExistsMemberIdUsecase',
-      ],
+      dependencies: ['UserContract', 'GetOrganizationWhereExistsMemberIdUsecase'],
       strategy: 'singleton',
     });
 
@@ -155,10 +155,7 @@ export class OrganizationModulesConfig {
     container.add({
       id: 'EditTournamentLayoutUsecase',
       kind: EditTournamentLayoutUsecase,
-      dependencies: [
-        'TournamentLayoutContract',
-        'GetTournamentLayoutByIdUsecase',
-      ],
+      dependencies: ['TournamentLayoutContract', 'GetTournamentLayoutByIdUsecase'],
       strategy: 'singleton',
     });
   }
