@@ -12,11 +12,10 @@ import {
   FixtureStagesConfiguration,
   NegativePointsPerCard,
   PointsConfiguration,
-  Schema,
   TournamentLayoutEntity,
 } from '@deporty-org/entities/organizations';
 
-export class SchemaMapper extends Mapper<Schema> {
+export class SchemaMapper extends Mapper<any> {
   constructor(private fixtureStageConfigurationMapper: FixtureStageConfigurationMapper) {
     super();
 
@@ -111,7 +110,7 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
         from: (value: any[]) => {
           return value.length > 0 ? zip(...value.map((x) => this.schemaMapper.fromJson(x))) : of([]);
         },
-        to: (value: Schema[]) => {
+        to: (value: any[]) => {
           return value.map((x) => this.schemaMapper.toJson(x));
         },
       },

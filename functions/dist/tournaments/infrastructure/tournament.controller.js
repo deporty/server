@@ -58,6 +58,19 @@ class TournamentController extends controller_1.BaseController {
             };
             this.handlerController(container, "GetAllMatchesGroupedByDateUsecase", response, config, undefined, params);
         });
+        app.get(`/matches-by-referee-id/:refereeId`, (request, response) => {
+            const params = request.params.refereeId;
+            const config = {
+                exceptions: {},
+                identifier: this.identifier,
+                errorCodes: {},
+                successCode: {
+                    code: "GET-MATCHES-BY-REFEREE-ID:SUCCESS",
+                    message: "The main matches was returned",
+                },
+            };
+            this.handlerController(container, "GetMatchesByRefereeIdUsecase", response, config, undefined, params);
+        });
         // app.get(`/all-match-sheet`, (request: Request, response: Response) => {
         //   const config: IMessagesConfiguration = {
         //     exceptions: {},

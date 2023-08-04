@@ -1,22 +1,21 @@
-import { Id, MatchEntity } from "@deporty-org/entities";
+import { Id } from "@deporty-org/entities";
+import { MatchesByRefereeIdEntity} from '@deporty-org/entities'
 import { Usecase } from "../../../../core/usecase";
 import { Observable } from "rxjs";
 import { MatchesByRefereeIdContract } from "../../contracts/matches-by-referee-id.contract";
 
-export class GetMatchesByRefereeIdUsecase extends Usecase<Id,Array<MatchEntity>>{
+export class GetMatchesByRefereeIdUsecase extends Usecase<Id,Array<MatchesByRefereeIdEntity>>{
 
     constructor(private matchesByRefereeIdContract:MatchesByRefereeIdContract)
     {
       super()
     }
-
-    call(refereId: string): Observable<MatchEntity[]> {
+    call(refereeId: string): Observable<MatchesByRefereeIdEntity[]> {
         
        return this.matchesByRefereeIdContract.filter(
         {
-            refereId:{operator:"==",value:refereId},
+            refereeId:{operator:"==",value:refereeId},
         }
        )
     }
-
 }

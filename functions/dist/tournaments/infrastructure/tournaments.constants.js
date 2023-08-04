@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JWT_SECRET = exports.BEARER_TOKEN = exports.AUTHORIZATION_SERVER = exports.ORGANIZATION_SERVER = exports.TEAM_SERVER = exports.LOCATION_SERVER = exports.SERVER = exports.MATCHS_ENTITY = exports.GROUPS_ENTITY = exports.MAIN_DRAW_ENTITY = exports.INTERGROUP_MATCHES_ENTITY = exports.FIXTURE_STAGES_ENTITY = exports.REGISTERED_TEAMS_ENTITY = exports.TOURNAMENTS_ENTITY = void 0;
+exports.JWT_SECRET = exports.BEARER_TOKEN = exports.AUTHORIZATION_SERVER = exports.ORGANIZATION_SERVER = exports.TEAM_SERVER = exports.LOCATION_SERVER = exports.SERVER = exports.MATCHES_BY_REFEREE_ID_ENTITY = exports.MATCHS_ENTITY = exports.GROUPS_ENTITY = exports.MAIN_DRAW_ENTITY = exports.INTERGROUP_MATCHES_ENTITY = exports.FIXTURE_STAGES_ENTITY = exports.REGISTERED_TEAMS_ENTITY = exports.TOURNAMENTS_ENTITY = void 0;
 exports.TOURNAMENTS_ENTITY = 'tournaments';
 exports.REGISTERED_TEAMS_ENTITY = 'registered-teams';
 exports.FIXTURE_STAGES_ENTITY = 'fixture-stages';
@@ -8,6 +8,7 @@ exports.INTERGROUP_MATCHES_ENTITY = 'intergroup-matches';
 exports.MAIN_DRAW_ENTITY = 'main-draw';
 exports.GROUPS_ENTITY = 'groups';
 exports.MATCHS_ENTITY = 'matches';
+exports.MATCHES_BY_REFEREE_ID_ENTITY = 'matches-by-referee-id';
 // export const SERVER = 'https://us-central1-deporty-dev.cloudfunctions.net'
 exports.SERVER = 'http://127.0.0.1:5001/deporty-dev/us-central1';
 exports.LOCATION_SERVER = `${exports.SERVER}/locations`;

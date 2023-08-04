@@ -1,3 +1,3 @@
 import { TransversalContract } from '../../../core/transversal-contract';
-
-export abstract class MatchesByRefereeIdContract extends TransversalContract<any> {}
+import { MatchesByRefereeIdEntity} from '@deporty-org/entities'
+export abstract class MatchesByRefereeIdContract extends TransversalContract<MatchesByRefereeIdEntity> {}

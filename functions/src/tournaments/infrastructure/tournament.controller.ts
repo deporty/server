@@ -50,6 +50,7 @@ import { GetAllMatchesGroupedByDateUsecase } from "../domain/usecases/get-all-ma
 import { ModifyTournamentRefereesUsecase } from "../domain/usecases/modify-tournament-referees/modify-tournament-referees.usecase";
 import { JWT_SECRET } from "./tournaments.constants";
 import { GetAllMatchesByDateUsecase } from "../domain/usecases/get-all-matches-by-date/get-all-matches-by-date.usecase";
+import { GetMatchesByRefereeIdUsecase } from "../domain/usecases/get-matches-by-referee-id/get-matches-by-referee-id.usecase";
 
 export class TournamentController extends BaseController {
   static identifier = "TOURNAMENT";
@@ -132,6 +133,31 @@ export class TournamentController extends BaseController {
         this.handlerController<GetAllMatchesGroupedByDateUsecase, any>(
           container,
           "GetAllMatchesGroupedByDateUsecase",
+          response,
+          config,
+          undefined,
+          params
+        );
+      }
+    );
+
+    app.get(
+      `/matches-by-referee-id/:refereeId`,
+      (request: Request, response: Response) => {
+        const params = request.params.refereeId;
+
+        const config: IMessagesConfiguration = {
+          exceptions: {},
+          identifier: this.identifier,
+          errorCodes: {},
+          successCode: {
+            code: "GET-MATCHES-BY-REFEREE-ID:SUCCESS",
+            message: "The main matches was returned",
+          },
+        };
+        this.handlerController<GetMatchesByRefereeIdUsecase, any>(
+          container,
+          "GetMatchesByRefereeIdUsecase",
           response,
           config,
           undefined,

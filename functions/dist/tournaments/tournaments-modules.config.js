@@ -94,6 +94,10 @@ const member_mapper_1 = require("./infrastructure/mappers/member.mapper");
 const authorization_contract_1 = require("./domain/contracts/authorization.contract");
 const authorization_repository_1 = require("./infrastructure/repositories/authorization.repository");
 const get_all_matches_by_date_usecase_1 = require("./domain/usecases/get-all-matches-by-date/get-all-matches-by-date.usecase");
+const matches_by_referee_id_mapper_1 = require("./infrastructure/mappers/matches-by-referee-id.mapper");
+const matches_by_referee_id_contract_1 = require("./domain/contracts/matches-by-referee-id.contract");
+const matches_by_referee_id_repository_1 = require("./infrastructure/repositories/matches-by-referee-id.repository");
+const get_matches_by_referee_id_usecase_1 = require("./domain/usecases/get-matches-by-referee-id/get-matches-by-referee-id.usecase");
 class TournamentsModulesConfig {
     static config(container) {
         container.add({
@@ -105,6 +109,11 @@ class TournamentsModulesConfig {
         container.add({
             id: 'ScoreMapper',
             kind: score_mapper_1.ScoreMapper,
+            strategy: 'singleton',
+        });
+        container.add({
+            id: 'MatchesByRefereeIdMapper',
+            kind: matches_by_referee_id_mapper_1.MatchesByRefereeIdMapper,
             strategy: 'singleton',
         });
         container.add({
@@ -238,6 +247,13 @@ class TournamentsModulesConfig {
             strategy: 'singleton',
         });
         container.add({
+            id: 'MatchesByRefereeIdContract',
+            kind: matches_by_referee_id_contract_1.MatchesByRefereeIdContract,
+            override: matches_by_referee_id_repository_1.MatchesByRefereeIdRepository,
+            dependencies: ['DataSource', 'MatchesByRefereeIdMapper'],
+            strategy: 'singleton',
+        });
+        container.add({
             id: 'MatchContract',
             kind: match_contract_1.MatchContract,
             override: match_repository_1.MatchRepository,
@@ -307,6 +323,12 @@ class TournamentsModulesConfig {
                 id: 'GetGroupMatchesUsecase',
                 kind: get_group_matches_usecase_1.GetGroupMatchesUsecase,
                 dependencies: ['MatchContract'],
+                strategy: 'singleton',
+            });
+            container.add({
+                id: 'GetMatchesByRefereeIdUsecase',
+                kind: get_matches_by_referee_id_usecase_1.GetMatchesByRefereeIdUsecase,
+                dependencies: ['MatchesByRefereeIdContract'],
                 strategy: 'singleton',
             });
             container.add({
