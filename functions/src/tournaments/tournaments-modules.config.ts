@@ -22,25 +22,14 @@ import { NodeMatchContract } from './domain/contracts/node-match.contract';
 import { RegisteredTeamsContract } from './domain/contracts/registered-teams.contract';
 import { FinancialStatementsMapper } from './infrastructure/mappers/financialStatements.mapper';
 import { FixtureStageMapper } from './infrastructure/mappers/fixture-stage.mapper';
-import {
-  FlatPointsStadisticsMapper,
-  GroupMapper,
-  LinearStadisticMapper,
-  PositionTableMapper,
-} from './infrastructure/mappers/group.mapper';
-import {
-  MatchMapper,
-  RefereeInMatchMapper,
-} from './infrastructure/mappers/match.mapper';
+import { FlatPointsStadisticsMapper, GroupMapper, LinearStadisticMapper, PositionTableMapper } from './infrastructure/mappers/group.mapper';
+import { MatchMapper, RefereeInMatchMapper } from './infrastructure/mappers/match.mapper';
 import { NodeMatchMapper } from './infrastructure/mappers/node-match.mapper';
 import { PlayerFormMapper } from './infrastructure/mappers/player-form.mapper';
 import { PlaygroundMapper } from './infrastructure/mappers/playground.mapper';
 import { RegisteredTeamMapper } from './infrastructure/mappers/registered-teams.mapper';
 import { ScoreMapper } from './infrastructure/mappers/score.mapper';
-import {
-  StadisticSpecificationMapper,
-  StadisticsMapper,
-} from './infrastructure/mappers/stadistics.mapper';
+import { StadisticSpecificationMapper, StadisticsMapper } from './infrastructure/mappers/stadistics.mapper';
 import { TournamentMapper } from './infrastructure/mappers/tournament.mapper';
 import { FixtureStageRepository } from './infrastructure/repositories/fixture-stage.repository';
 import { GroupRepository } from './infrastructure/repositories/group.repository';
@@ -103,6 +92,7 @@ import { MemberMapper } from './infrastructure/mappers/member.mapper';
 import { AuthorizationContract } from './domain/contracts/authorization.contract';
 import { AuthorizationRepository } from './infrastructure/repositories/authorization.repository';
 import { GetAllMatchesByDateUsecase } from './domain/usecases/get-all-matches-by-date/get-all-matches-by-date.usecase';
+import { GetGroupsByTournamentIdUsecase } from './domain/usecases/groups/get-groups-by-tournament-id/get-groups-by-tournament-id.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -151,13 +141,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'MatchMapper',
       kind: MatchMapper,
-      dependencies: [
-        'ScoreMapper',
-        'PlayerFormMapper',
-        'StadisticsMapper',
-        'RefereeInMatchMapper',
-        'FileAdapter',
-      ],
+      dependencies: ['ScoreMapper', 'PlayerFormMapper', 'StadisticsMapper', 'RefereeInMatchMapper', 'FileAdapter'],
       strategy: 'singleton',
     });
     container.add({
@@ -388,22 +372,14 @@ export class TournamentsModulesConfig {
         container.add({
           id: 'UpdateTeamsInGroupUsecase',
           kind: UpdateTeamsInGroupUsecase,
-          dependencies: [
-            'GetGroupByIdUsecase',
-            'TeamContract',
-            'GroupContract',
-          ],
+          dependencies: ['GetGroupByIdUsecase', 'TeamContract', 'GroupContract'],
           strategy: 'singleton',
         });
 
         container.add({
           id: 'DeleteTeamsInGroupUsecase',
           kind: DeleteTeamsInGroupUsecase,
-          dependencies: [
-            'GetGroupByIdUsecase',
-            'UpdateGroupUsecase',
-            'DeleteMatchesWhereTeamIdExistsUsecase',
-          ],
+          dependencies: ['GetGroupByIdUsecase', 'UpdateGroupUsecase', 'DeleteMatchesWhereTeamIdExistsUsecase'],
           strategy: 'singleton',
         });
 
@@ -416,10 +392,7 @@ export class TournamentsModulesConfig {
         container.add({
           id: 'CompleteGroupMatchesUsecase',
           kind: CompleteGroupMatchesUsecase,
-          dependencies: [
-            'GetNewMatchesToAddInGroupUsecase',
-            'AddMatchToGroupInsideTournamentUsecase',
-          ],
+          dependencies: ['GetNewMatchesToAddInGroupUsecase', 'AddMatchToGroupInsideTournamentUsecase'],
           strategy: 'singleton',
         });
 
@@ -451,13 +424,16 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'DeleteFixtureStageUsecase',
       kind: DeleteFixtureStageUsecase,
-      dependencies: [
-        'FixtureStageContract',
-        'GetGroupsByFixtureStageUsecase',
-        'DeleteGroupByIdUsecase',
-      ],
+      dependencies: ['FixtureStageContract', 'GetGroupsByFixtureStageUsecase', 'DeleteGroupByIdUsecase'],
       strategy: 'singleton',
     });
+    container.add({
+      id: 'GetGroupsByTournamentIdUsecase',
+      kind: GetGroupsByTournamentIdUsecase,
+      dependencies: ['GetGroupsByFixtureStageUsecase', 'GetFixtureStagesByTournamentUsecase'],
+      strategy: 'singleton',
+    });
+
     container.add({
       id: 'CreateFixtureStageUsecase',
       kind: CreateFixtureStageUsecase,
@@ -467,20 +443,13 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GetAllGroupMatchesByTournamentUsecase',
       kind: GetAllGroupMatchesByTournamentUsecase,
-      dependencies: [
-        'GetFixtureStagesByTournamentUsecase',
-        'GetGroupsByFixtureStageUsecase',
-        'GetGroupMatchesUsecase',
-      ],
+      dependencies: ['GetFixtureStagesByTournamentUsecase', 'GetGroupsByFixtureStageUsecase', 'GetGroupMatchesUsecase'],
       strategy: 'singleton',
     });
     container.add({
       id: 'GetAllMatchesByDateUsecase',
       kind: GetAllMatchesByDateUsecase,
-      dependencies: [
-        'TournamentContract',
-        'GetAllGroupMatchesByTournamentUsecase',
-      ],
+      dependencies: ['TournamentContract', 'GetAllGroupMatchesByTournamentUsecase'],
       strategy: 'singleton',
     });
     container.add({
@@ -506,21 +475,13 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'UpdateTournamentUsecase',
       kind: UpdateTournamentUsecase,
-      dependencies: [
-        'TournamentContract',
-        'GetTournamentsByUniqueAttributesUsecase',
-      ],
+      dependencies: ['TournamentContract', 'GetTournamentsByUniqueAttributesUsecase'],
       strategy: 'singleton',
     });
     container.add({
       id: 'DeleteTournamentUsecase',
       kind: DeleteTournamentUsecase,
-      dependencies: [
-        'TournamentContract',
-        'GetTournamentByIdUsecase',
-        'UpdateTournamentUsecase',
-        'FileAdapter',
-      ],
+      dependencies: ['TournamentContract', 'GetTournamentByIdUsecase', 'UpdateTournamentUsecase', 'FileAdapter'],
       strategy: 'singleton',
     });
 
@@ -595,10 +556,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GetAnyMatchByTeamIdsUsecase',
       kind: GetAnyMatchByTeamIdsUsecase,
-      dependencies: [
-        'GetMatchByTeamIdsUsecase',
-        'GetIntergroupMatchByTeamIdsUsecase',
-      ],
+      dependencies: ['GetMatchByTeamIdsUsecase', 'GetIntergroupMatchByTeamIdsUsecase'],
       strategy: 'singleton',
     });
     container.add({
@@ -631,11 +589,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'CalculateTournamentCostByIdUsecase',
       kind: CalculateTournamentCostByIdUsecase,
-      dependencies: [
-        'GetTournamentByIdUsecase',
-        'TournamentContract',
-        'CalculateTournamentCostUsecase',
-      ],
+      dependencies: ['GetTournamentByIdUsecase', 'TournamentContract', 'CalculateTournamentCostUsecase'],
       strategy: 'singleton',
     });
     // container.add({
@@ -751,15 +705,10 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GetPositionsTableByGroupUsecase',
       kind: GetPositionsTableByGroupUsecase,
-      dependencies: [
-        'GetGroupMatchesUsecase',
-        'GetPositionsTableUsecase',
-        'GetIntergroupMatchesUsecase',
-        'GetGroupByIdUsecase',
-      ],
+      dependencies: ['GetGroupMatchesUsecase', 'GetPositionsTableUsecase', 'GetIntergroupMatchesUsecase', 'GetGroupByIdUsecase'],
       strategy: 'singleton',
     });
-   
+
     // container.add({
     //   id: 'GetPositionsTableByStageUsecase',
     //   kind: GetPositionsTableByStageUsecase,
@@ -774,12 +723,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'CreateMatchSheetUsecase',
       kind: CreateMatchSheetUsecase,
-      dependencies: [
-        'FileAdapter',
-        'GetTournamentByIdUsecase',
-        'OrganizationContract',
-        'TeamContract',
-      ],
+      dependencies: ['FileAdapter', 'GetTournamentByIdUsecase', 'OrganizationContract', 'TeamContract'],
       strategy: 'singleton',
     });
     // container.add({
@@ -800,12 +744,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'CreateTournamentUsecase',
       kind: CreateTournamentUsecase,
-      dependencies: [
-        'TournamentContract',
-        'OrganizationContract',
-        'FileAdapter',
-        'GetTournamentsByUniqueAttributesUsecase',
-      ],
+      dependencies: ['TournamentContract', 'OrganizationContract', 'FileAdapter', 'GetTournamentsByUniqueAttributesUsecase'],
       strategy: 'singleton',
     });
     container.add({
@@ -847,10 +786,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'ModifyRegisteredTeamStatusUsecase',
       kind: ModifyRegisteredTeamStatusUsecase,
-      dependencies: [
-        'GetRegisteredTeamByIdUsecase',
-        'UpdateRegisteredTeamByIdUsecase',
-      ],
+      dependencies: ['GetRegisteredTeamByIdUsecase', 'UpdateRegisteredTeamByIdUsecase'],
       strategy: 'singleton',
     });
   }

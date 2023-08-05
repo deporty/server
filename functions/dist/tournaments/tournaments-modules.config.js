@@ -94,6 +94,7 @@ const member_mapper_1 = require("./infrastructure/mappers/member.mapper");
 const authorization_contract_1 = require("./domain/contracts/authorization.contract");
 const authorization_repository_1 = require("./infrastructure/repositories/authorization.repository");
 const get_all_matches_by_date_usecase_1 = require("./domain/usecases/get-all-matches-by-date/get-all-matches-by-date.usecase");
+const get_groups_by_tournament_id_usecase_1 = require("./domain/usecases/groups/get-groups-by-tournament-id/get-groups-by-tournament-id.usecase");
 class TournamentsModulesConfig {
     static config(container) {
         container.add({
@@ -136,13 +137,7 @@ class TournamentsModulesConfig {
         container.add({
             id: 'MatchMapper',
             kind: match_mapper_1.MatchMapper,
-            dependencies: [
-                'ScoreMapper',
-                'PlayerFormMapper',
-                'StadisticsMapper',
-                'RefereeInMatchMapper',
-                'FileAdapter',
-            ],
+            dependencies: ['ScoreMapper', 'PlayerFormMapper', 'StadisticsMapper', 'RefereeInMatchMapper', 'FileAdapter'],
             strategy: 'singleton',
         });
         container.add({
@@ -356,21 +351,13 @@ class TournamentsModulesConfig {
                 container.add({
                     id: 'UpdateTeamsInGroupUsecase',
                     kind: update_teams_in_group_usecase_1.UpdateTeamsInGroupUsecase,
-                    dependencies: [
-                        'GetGroupByIdUsecase',
-                        'TeamContract',
-                        'GroupContract',
-                    ],
+                    dependencies: ['GetGroupByIdUsecase', 'TeamContract', 'GroupContract'],
                     strategy: 'singleton',
                 });
                 container.add({
                     id: 'DeleteTeamsInGroupUsecase',
                     kind: delete_teams_in_group_usecase_1.DeleteTeamsInGroupUsecase,
-                    dependencies: [
-                        'GetGroupByIdUsecase',
-                        'UpdateGroupUsecase',
-                        'DeleteMatchesWhereTeamIdExistsUsecase',
-                    ],
+                    dependencies: ['GetGroupByIdUsecase', 'UpdateGroupUsecase', 'DeleteMatchesWhereTeamIdExistsUsecase'],
                     strategy: 'singleton',
                 });
                 container.add({
@@ -382,10 +369,7 @@ class TournamentsModulesConfig {
                 container.add({
                     id: 'CompleteGroupMatchesUsecase',
                     kind: complete_group_matches_usecase_1.CompleteGroupMatchesUsecase,
-                    dependencies: [
-                        'GetNewMatchesToAddInGroupUsecase',
-                        'AddMatchToGroupInsideTournamentUsecase',
-                    ],
+                    dependencies: ['GetNewMatchesToAddInGroupUsecase', 'AddMatchToGroupInsideTournamentUsecase'],
                     strategy: 'singleton',
                 });
                 container.add({
@@ -415,11 +399,13 @@ class TournamentsModulesConfig {
         container.add({
             id: 'DeleteFixtureStageUsecase',
             kind: delete_fixture_stage_usecase_1.DeleteFixtureStageUsecase,
-            dependencies: [
-                'FixtureStageContract',
-                'GetGroupsByFixtureStageUsecase',
-                'DeleteGroupByIdUsecase',
-            ],
+            dependencies: ['FixtureStageContract', 'GetGroupsByFixtureStageUsecase', 'DeleteGroupByIdUsecase'],
+            strategy: 'singleton',
+        });
+        container.add({
+            id: 'GetGroupsByTournamentIdUsecase',
+            kind: get_groups_by_tournament_id_usecase_1.GetGroupsByTournamentIdUsecase,
+            dependencies: ['GetGroupsByFixtureStageUsecase', 'GetFixtureStagesByTournamentUsecase'],
             strategy: 'singleton',
         });
         container.add({
@@ -431,20 +417,13 @@ class TournamentsModulesConfig {
         container.add({
             id: 'GetAllGroupMatchesByTournamentUsecase',
             kind: get_all_group_matches_by_tournament_usecase_1.GetAllGroupMatchesByTournamentUsecase,
-            dependencies: [
-                'GetFixtureStagesByTournamentUsecase',
-                'GetGroupsByFixtureStageUsecase',
-                'GetGroupMatchesUsecase',
-            ],
+            dependencies: ['GetFixtureStagesByTournamentUsecase', 'GetGroupsByFixtureStageUsecase', 'GetGroupMatchesUsecase'],
             strategy: 'singleton',
         });
         container.add({
             id: 'GetAllMatchesByDateUsecase',
             kind: get_all_matches_by_date_usecase_1.GetAllMatchesByDateUsecase,
-            dependencies: [
-                'TournamentContract',
-                'GetAllGroupMatchesByTournamentUsecase',
-            ],
+            dependencies: ['TournamentContract', 'GetAllGroupMatchesByTournamentUsecase'],
             strategy: 'singleton',
         });
         container.add({
@@ -468,21 +447,13 @@ class TournamentsModulesConfig {
         container.add({
             id: 'UpdateTournamentUsecase',
             kind: update_tournament_usecase_1.UpdateTournamentUsecase,
-            dependencies: [
-                'TournamentContract',
-                'GetTournamentsByUniqueAttributesUsecase',
-            ],
+            dependencies: ['TournamentContract', 'GetTournamentsByUniqueAttributesUsecase'],
             strategy: 'singleton',
         });
         container.add({
             id: 'DeleteTournamentUsecase',
             kind: delete_tournament_usecase_1.DeleteTournamentUsecase,
-            dependencies: [
-                'TournamentContract',
-                'GetTournamentByIdUsecase',
-                'UpdateTournamentUsecase',
-                'FileAdapter',
-            ],
+            dependencies: ['TournamentContract', 'GetTournamentByIdUsecase', 'UpdateTournamentUsecase', 'FileAdapter'],
             strategy: 'singleton',
         });
         // container.add({
@@ -552,10 +523,7 @@ class TournamentsModulesConfig {
         container.add({
             id: 'GetAnyMatchByTeamIdsUsecase',
             kind: get_any_match_by_team_ids_usecase_1.GetAnyMatchByTeamIdsUsecase,
-            dependencies: [
-                'GetMatchByTeamIdsUsecase',
-                'GetIntergroupMatchByTeamIdsUsecase',
-            ],
+            dependencies: ['GetMatchByTeamIdsUsecase', 'GetIntergroupMatchByTeamIdsUsecase'],
             strategy: 'singleton',
         });
         container.add({
@@ -587,11 +555,7 @@ class TournamentsModulesConfig {
         container.add({
             id: 'CalculateTournamentCostByIdUsecase',
             kind: calculate_tournament_cost_by_id_usecase_1.CalculateTournamentCostByIdUsecase,
-            dependencies: [
-                'GetTournamentByIdUsecase',
-                'TournamentContract',
-                'CalculateTournamentCostUsecase',
-            ],
+            dependencies: ['GetTournamentByIdUsecase', 'TournamentContract', 'CalculateTournamentCostUsecase'],
             strategy: 'singleton',
         });
         // container.add({
@@ -700,12 +664,7 @@ class TournamentsModulesConfig {
         container.add({
             id: 'GetPositionsTableByGroupUsecase',
             kind: get_positions_table_by_group_usecase_1.GetPositionsTableByGroupUsecase,
-            dependencies: [
-                'GetGroupMatchesUsecase',
-                'GetPositionsTableUsecase',
-                'GetIntergroupMatchesUsecase',
-                'GetGroupByIdUsecase',
-            ],
+            dependencies: ['GetGroupMatchesUsecase', 'GetPositionsTableUsecase', 'GetIntergroupMatchesUsecase', 'GetGroupByIdUsecase'],
             strategy: 'singleton',
         });
         // container.add({
@@ -722,12 +681,7 @@ class TournamentsModulesConfig {
         container.add({
             id: 'CreateMatchSheetUsecase',
             kind: create_match_sheet_usecase_1.CreateMatchSheetUsecase,
-            dependencies: [
-                'FileAdapter',
-                'GetTournamentByIdUsecase',
-                'OrganizationContract',
-                'TeamContract',
-            ],
+            dependencies: ['FileAdapter', 'GetTournamentByIdUsecase', 'OrganizationContract', 'TeamContract'],
             strategy: 'singleton',
         });
         // container.add({
@@ -747,12 +701,7 @@ class TournamentsModulesConfig {
         container.add({
             id: 'CreateTournamentUsecase',
             kind: create_tournament_usecase_1.CreateTournamentUsecase,
-            dependencies: [
-                'TournamentContract',
-                'OrganizationContract',
-                'FileAdapter',
-                'GetTournamentsByUniqueAttributesUsecase',
-            ],
+            dependencies: ['TournamentContract', 'OrganizationContract', 'FileAdapter', 'GetTournamentsByUniqueAttributesUsecase'],
             strategy: 'singleton',
         });
         container.add({
@@ -793,10 +742,7 @@ class TournamentsModulesConfig {
         container.add({
             id: 'ModifyRegisteredTeamStatusUsecase',
             kind: modify_registered_team_status_usecase_1.ModifyRegisteredTeamStatusUsecase,
-            dependencies: [
-                'GetRegisteredTeamByIdUsecase',
-                'UpdateRegisteredTeamByIdUsecase',
-            ],
+            dependencies: ['GetRegisteredTeamByIdUsecase', 'UpdateRegisteredTeamByIdUsecase'],
             strategy: 'singleton',
         });
     }
