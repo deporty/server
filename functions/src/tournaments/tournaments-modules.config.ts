@@ -93,6 +93,10 @@ import { AuthorizationContract } from './domain/contracts/authorization.contract
 import { AuthorizationRepository } from './infrastructure/repositories/authorization.repository';
 import { GetAllMatchesByDateUsecase } from './domain/usecases/get-all-matches-by-date/get-all-matches-by-date.usecase';
 import { GetGroupsByTournamentIdUsecase } from './domain/usecases/groups/get-groups-by-tournament-id/get-groups-by-tournament-id.usecase';
+import { MatchesByRefereeIdMapper } from './infrastructure/mappers/matches-by-referee-id.mapper';
+import { MatchesByRefereeIdContract } from './domain/contracts/matches-by-referee-id.contract';
+import { MatchesByRefereeIdRepository } from './infrastructure/repositories/matches-by-referee-id.repository';
+import { GetMatchesByRefereeIdUsecase } from './domain/usecases/get-matches-by-referee-id/get-matches-by-referee-id.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -107,7 +111,11 @@ export class TournamentsModulesConfig {
       kind: ScoreMapper,
       strategy: 'singleton',
     });
-
+    container.add({
+      id: 'MatchesByRefereeIdMapper',
+      kind: MatchesByRefereeIdMapper,
+      strategy: 'singleton',
+    });
     container.add({
       id: 'PlaygroundMapper',
       kind: PlaygroundMapper,
@@ -243,6 +251,15 @@ export class TournamentsModulesConfig {
       dependencies: ['Firestore', 'IntergroupMatchMapper'],
       strategy: 'singleton',
     });
+
+    container.add({
+      id: 'MatchesByRefereeIdContract',
+      kind: MatchesByRefereeIdContract,
+      override: MatchesByRefereeIdRepository,
+      dependencies: ['DataSource', 'MatchesByRefereeIdMapper'],
+      strategy: 'singleton',
+    });
+
     container.add({
       id: 'MatchContract',
       kind: MatchContract,
@@ -319,6 +336,13 @@ export class TournamentsModulesConfig {
         id: 'GetGroupMatchesUsecase',
         kind: GetGroupMatchesUsecase,
         dependencies: ['MatchContract'],
+        strategy: 'singleton',
+      });
+
+      container.add({
+        id: 'GetMatchesByRefereeIdUsecase',
+        kind: GetMatchesByRefereeIdUsecase,
+        dependencies: ['MatchesByRefereeIdContract'],
         strategy: 'singleton',
       });
 

@@ -4,7 +4,7 @@ export const SPORTS_ENTITY = 'sports';
 
 
 // export const SERVER = 'https://us-central1-deporty-dev.cloudfunctions.net'
-export const SERVER = 'http://localhost:5001/deporty-dev/us-central1';
+export const SERVER = 'http://127.0.0.1:5001/deporty-dev/us-central1';
 export const USERS_SERVER = `${SERVER}/users`;
 export const AUTHORIZATION_SERVER = `${SERVER}/authorization`;
 

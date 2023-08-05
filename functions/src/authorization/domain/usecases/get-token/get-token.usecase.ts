@@ -16,6 +16,7 @@ export class GetTokenUsecase extends Usecase<string, string> {
     super();
   }
   call(email: string): Observable<string> {
+    console.log("checho")
     return this.userContract.getUserInformationByEmail(email).pipe(
       mergeMap((user: UserEntity) => {
         return zip(
