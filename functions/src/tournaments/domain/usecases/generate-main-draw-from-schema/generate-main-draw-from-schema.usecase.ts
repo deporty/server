@@ -1,75 +1,134 @@
-  // import { GroupEntity, Id, NodeMatchEntity, TournamentEntity } from '@deporty-org/entities';
-  // import { Usecase } from '../../../../core/usecase';
-  // import { Observable, of, throwError, zip } from 'rxjs';
-  // import { GetGroupsByTournamentIdUsecase, Result } from '../groups/get-groups-by-tournament-id/get-groups-by-tournament-id.usecase';
-  // import { GetTournamentByIdUsecase } from '../get-tournament-by-id/get-tournament-by-id.usecase';
-  // import { map, mergeMap } from 'rxjs/operators';
-  // import { FixtureStageConfiguration, TournamentLayoutSchema } from '@deporty-org/entities/organizations';
+import { GroupEntity, Id, NodeMatchEntity, TournamentEntity } from '@deporty-org/entities';
+import { FixtureStageConfiguration, TournamentLayoutSchema } from '@deporty-org/entities/organizations';
+import { Observable, of, throwError, zip } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { Usecase } from '../../../../core/usecase';
+import { GetTournamentByIdUsecase } from '../get-tournament-by-id/get-tournament-by-id.usecase';
+import { GetGroupsByTournamentIdUsecase, Result } from '../groups/get-groups-by-tournament-id/get-groups-by-tournament-id.usecase';
+import { CreateNodeMatchUsecase } from '../main-draw/create-node-match/create-node-match.usecase';
+import { createTree } from './matches-creator';
 
-  // export class SchemaNoSelectedError extends Error {
-  //   constructor() {
-  //     super();
-  //     this.message = `The tournament does not have a schema selected.`;
-  //     this.name = 'SchemaNoSelectedError';
-  //   }
-  // }
+export class SchemaNoSelectedError extends Error {
+  constructor() {
+    super();
+    this.message = `The tournament does not have a schema selected.`;
+    this.name = 'SchemaNoSelectedError';
+  }
+}
+export class GroupsAndSchemaDontMatchError extends Error {
+  constructor() {
+    super();
+    this.message = `The tournament does not have a schema selected.`;
+    this.name = 'GroupsAndSchemaDontMatchError';
+  }
+}
+export class TeamsAmmountInClasificationError extends Error {
+  constructor() {
+    super();
+    this.message = `The tournament does not have a schema selected.`;
+    this.name = 'TeamsAmmountInClasificationError';
+  }
+}
+export class MatchesCreationError extends Error {
+  constructor() {
+    super();
+    this.message = `The tournament does not have a schema selected.`;
+    this.name = 'MatchesCreationError';
+  }
+}
 
-  // export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEntity[]> {
-  //   constructor(
-  //     private getGroupsByTournamentIdUsecase: GetGroupsByTournamentIdUsecase,
-  //     private getTournamentByIdUsecase: GetTournamentByIdUsecase
-  //   ) {
-  //     super();
-  //   }
+export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEntity[]> {
+  constructor(
+    private getGroupsByTournamentIdUsecase: GetGroupsByTournamentIdUsecase,
+    private getTournamentByIdUsecase: GetTournamentByIdUsecase,
+    private createNodeMatchUsecase: CreateNodeMatchUsecase
+  ) {
+    super();
+  }
 
-  //   call(tournamentId: Id): Observable<NodeMatchEntity[]> {
-  //     const $tournament = this.getTournamentByIdUsecase.call(tournamentId);
+  call(tournamentId: Id): Observable<NodeMatchEntity[]> {
+    const $tournament = this.getTournamentByIdUsecase.call(tournamentId);
 
-  //     $tournament.pipe(
-  //       mergeMap((tournament: TournamentEntity) => {
-  //         if (!tournament.schema) {
-  //           return throwError(new SchemaNoSelectedError());
-  //         }
+    return $tournament.pipe(
+      mergeMap((tournament: TournamentEntity) => {
+        if (!tournament.schema) {
+          return throwError(new SchemaNoSelectedError());
+        }
 
-  //         const $groups = this.getGroupsByTournamentIdUsecase.call(tournamentId);
-  //         return zip($groups, of(tournament));
-  //       }),
-  //       map(([data, tournament]) => {
-  //         const lastFixture = this.getLastFixture(data);
-  //         const schema: TournamentLayoutSchema = tournament.schema as TournamentLayoutSchema;
+        const $groups = this.getGroupsByTournamentIdUsecase.call(tournamentId);
+        return zip($groups, of(tournament));
+      }),
+      mergeMap(([data, tournament]) => {
+        const lastFixture = this.getLastFixture(data);
+        const groupsInFixtureStage = lastFixture?.groups;
 
-  //         const lastSchema: FixtureStageConfiguration = [...schema.stages].pop();
+        const schema: TournamentLayoutSchema = tournament.schema! ;
 
-  //         for (let i = 0; i < lastSchema.groupCount; i++) {
+        const lastSchema: FixtureStageConfiguration = [...schema.stages].pop()!;
 
-  //           const passedTeamsCount: number = lastSchema.passedTeamsCount[i]
-            
-            
-            
-  //         }
+        if (lastSchema.groupCount != groupsInFixtureStage?.length) {
+          return throwError(new GroupsAndSchemaDontMatchError());
+        }
+        const teamsIdentifiers = [];
+        for (let i = 0; i < lastSchema.groupCount; i++) {
+          const passedTeamsCount: number = lastSchema.passedTeamsCount[i];
 
+          const group: GroupEntity = groupsInFixtureStage[i];
 
+          const passedTeamIds: Id[] | undefined = group.positionsTable?.table.slice(0, passedTeamsCount).map((stadistic) => {
+            return stadistic.teamId;
+          });
 
-  //       })
-  //     );
+          if (!passedTeamIds) {
+            return throwError(new TeamsAmmountInClasificationError());
+          }
 
-  //     throw new Error('Method not implemented.');
-  //   }
+          teamsIdentifiers.push(passedTeamIds);
+        }
+        const matches = createTree(teamsIdentifiers);
+        return zip(of(matches), of(tournament));
+      }),
+      mergeMap(([simpleMatches, tournament]) => {
+        if (!simpleMatches) {
+          return throwError(new MatchesCreationError());
+        }
+        const ammountOfMatches = simpleMatches?.length || 0;
 
-  //   private getLastFixture(data: Result) {
-  //     let lastFixture = null;
+        const level = Math.ceil(Math.log(ammountOfMatches) / Math.log(2) - 1);
 
-  //     for (const fixtureStageId in data) {
-  //       const element = data[fixtureStageId];
+        const $matches: Observable<NodeMatchEntity>[] = [];
 
-  //       if (lastFixture === null) {
-  //         lastFixture = element;
-  //       } else {
-  //         if (element.fixtureStage.order > lastFixture.fixtureStage.order) {
-  //           lastFixture = element;
-  //         }
-  //       }
-  //     }
-  //     return lastFixture;
-  //   }
-  // }
+        let key = 0;
+        for (const simpleMatch of simpleMatches) {
+          $matches.push(
+            this.createNodeMatchUsecase.call({
+              key,
+              level,
+              teamAId: simpleMatch[0],
+              teamBId: simpleMatch[1],
+              tournamentId: tournament.id!,
+            })
+          );
+        }
+        return zip(...$matches);
+      })
+    );
+  }
+
+  private getLastFixture(data: Result) {
+    let lastFixture = null;
+
+    for (const fixtureStageId in data) {
+      const element = data[fixtureStageId];
+
+      if (lastFixture === null) {
+        lastFixture = element;
+      } else {
+        if (element.fixtureStage.order > lastFixture.fixtureStage.order) {
+          lastFixture = element;
+        }
+      }
+    }
+    return lastFixture;
+  }
+}

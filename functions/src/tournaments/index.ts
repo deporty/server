@@ -2,7 +2,7 @@ import * as cors from 'cors';
 import * as express from 'express';
 import { Container } from '../core/DI';
 import { TournamentController } from './infrastructure/tournament.controller';
-import { TournamentsModulesConfig } from './tournaments-modules.config';
+import { TournamentsModulesConfig } from './modules-config/tournaments-modules.config';
 import { IsKeyPresentMiddleware } from '../core/middlewares/is-key-present.middleware';
 import { env } from './environments/env';
 import { AuthorizationContract } from './domain/contracts/authorization.contract';

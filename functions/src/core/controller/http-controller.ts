@@ -4,6 +4,8 @@ import { IBaseResponse } from '@deporty-org/entities/general';
 import { Container } from '../DI';
 import { DEFAULT_MESSAGES } from './code-responses';
 import moment = require('moment');
+import { Usecase } from '../usecase';
+import { MessagesConfiguration, MessagesConfigurationWithExceptions } from './messages-configuration';
 
 export interface IMessagesConfiguration {
   errorCodes: {
@@ -21,15 +23,11 @@ export interface IMessagesConfiguration {
       };
 }
 
+export abstract class HttpController {
+  public static readyHandler(request: Request, response: Response) {
+    return response.status(200).json({});
+  }
 
-
-
-
-export const readyHandler = (request: Request, response: Response) => {
-  return response.status(200).json({});
-};
-
-export abstract class BaseController {
   public static handlerController<T extends { call: (param?: any) => any }, M>(
     container: Container,
 
@@ -48,35 +46,50 @@ export abstract class BaseController {
     this.generalHandlerController<T, M>(container, usecaseIdentifier, param, func, response, config);
   }
 
-  public static handlerPostController<T extends { call: (param?: any) => any }, M>(
-    container: Container,
-    usecaseIdentifier: string,
-    response: Response,
-    config: IMessagesConfiguration,
-    mapper?: string,
-    param?: any
-  ) {
+  public static handler<U extends Usecase<any, any>, T = any>(config: {
+    container: Container;
+    usecaseId: string;
+    response: Response;
+    messageConfiguration: MessagesConfiguration;
+    translatorId?: string;
+    usecaseParam?: any;
+  }) {
     let func = null;
-    if (mapper) {
-      const mapperObj = container.getInstance<Mapper<M>>(mapper).instance;
-      func = mapperObj.fromJsonWithOutId;
+    const { translatorId, container, usecaseId, usecaseParam, response, messageConfiguration } = config;
+    if (translatorId) {
+      const translator = container.getInstance<T>(translatorId).instance;
+      func = translator.fromJson;
     }
 
-    this.generalHandlerController<T, M>(container, usecaseIdentifier, param, func, response, config);
+    this.generalHandlerController<U, T>(container, usecaseId, usecaseParam, func, response, messageConfiguration);
   }
 
-  static makeErrorMessage(config: IMessagesConfiguration, error: Error) {
-    const data: any = { ...error };
+  static makeErrorMessage(config: IMessagesConfiguration | MessagesConfiguration, error: Error): IBaseResponse<undefined> {
+    const data: Error = { ...error };
 
-    const name = data['name'];
-    let httpMessageCode = config.exceptions[name];
+    const name = data.name;
+    let httpMessageCode = '';
     let message = '';
-    if (httpMessageCode) {
-      message = config.errorCodes[httpMessageCode];
-      message = BaseController.formatMessage(message, data);
-    } else {
+
+    if (!(config as MessagesConfigurationWithExceptions).exceptions) {
       httpMessageCode = 'SERVER:ERROR';
       message = DEFAULT_MESSAGES[httpMessageCode] + ' : ' + error.message;
+    } else {
+      const castedConfig = config as MessagesConfigurationWithExceptions;
+      httpMessageCode = castedConfig.exceptions[name];
+      console.log('FOrever ', httpMessageCode);
+
+      if (httpMessageCode) {
+        if (castedConfig.errorCodes) {
+          message = castedConfig.errorCodes[httpMessageCode];
+          message = HttpController.formatMessage(message, data);
+        } else {
+          message = data.message;
+        }
+      } else {
+        httpMessageCode = 'SERVER:ERROR';
+        message = DEFAULT_MESSAGES[httpMessageCode] + ' : ' + error.message;
+      }
     }
     const code = `${config.identifier}:${httpMessageCode}`;
     return {
@@ -103,7 +116,7 @@ export abstract class BaseController {
     param: any,
     func: Function | null,
     response: Response<any, Record<string, any>>,
-    config: IMessagesConfiguration
+    config: IMessagesConfiguration | MessagesConfiguration
   ) {
     const logger = container.getInstance<any>('Logger').instance;
     const usecase = container.getInstance<T>(usecaseIdentifier).instance;
@@ -139,9 +152,9 @@ export abstract class BaseController {
           message = DEFAULT_MESSAGES[config.successCode];
         } else {
           code = `${config.identifier}:${config.successCode.code}`;
-          message = config.successCode.message;
+          message = config.successCode.message || '';
         }
-        message = BaseController.formatMessage(message, config.extraData);
+        message = HttpController.formatMessage(message, config.extraData);
 
         response.send({
           meta: {
