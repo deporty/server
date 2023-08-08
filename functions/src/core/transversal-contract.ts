@@ -8,10 +8,7 @@ import { Mapper } from './mapper';
 export abstract class TransversalContract<Entity> {
   entity!: string;
 
-  constructor(
-    protected dataSource: DataSource<Entity>,
-    protected mapper: Mapper<Entity>
-  ) {}
+  constructor(protected dataSource: DataSource<Entity>, protected mapper: Mapper<Entity>) {}
 
   delete(id: Id): Observable<void> {
     this.refreshEntity();
@@ -22,7 +19,7 @@ export abstract class TransversalContract<Entity> {
     this.refreshEntity();
 
     const mappedFilters = { ...filter };
-
+    
     for (const key in filter) {
       if (Object.prototype.hasOwnProperty.call(filter, key)) {
         const element = filter[key];
@@ -30,6 +27,7 @@ export abstract class TransversalContract<Entity> {
         mappedFilters[this.mapper.attributesMapper[key].name] = element;
       }
     }
+    console.log(mappedFilters);
     return this.dataSource
       .getByFilter({
         filters: mappedFilters,
@@ -37,10 +35,7 @@ export abstract class TransversalContract<Entity> {
       .pipe(this.mapItems());
   }
 
-  get(pagination?: {
-    pageNumber: number;
-    pageSize: number;
-  }): Observable<Entity[]> {
+  get(pagination?: { pageNumber: number; pageSize: number }): Observable<Entity[]> {
     this.refreshEntity();
 
     return this.dataSource
@@ -64,9 +59,7 @@ export abstract class TransversalContract<Entity> {
       return items.length > 0
         ? zip(
             ...items.map((item) => {
-              return this.mapper
-                .fromJson(item)
-                .pipe(filter((item) => !!item)) as Observable<Entity>;
+              return this.mapper.fromJson(item).pipe(filter((item) => !!item)) as Observable<Entity>;
             })
           ).pipe(
             map((items) => {
@@ -90,8 +83,6 @@ export abstract class TransversalContract<Entity> {
   update(id: Id, entity: Entity): Observable<Entity> {
     this.refreshEntity();
 
-    return this.dataSource
-      .update(id, this.mapper.toJson(entity))
-      .pipe(map(() => entity));
+    return this.dataSource.update(id, this.mapper.toJson(entity)).pipe(map(() => entity));
   }
 }

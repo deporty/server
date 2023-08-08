@@ -62,7 +62,7 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
         const lastFixture = this.getLastFixture(data);
         const groupsInFixtureStage = lastFixture?.groups;
 
-        const schema: TournamentLayoutSchema = tournament.schema! ;
+        const schema: TournamentLayoutSchema = tournament.schema!;
 
         const lastSchema: FixtureStageConfiguration = [...schema.stages].pop()!;
 
@@ -94,7 +94,7 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
         }
         const ammountOfMatches = simpleMatches?.length || 0;
 
-        const level = Math.ceil(Math.log(ammountOfMatches) / Math.log(2) - 1);
+        const level = Math.ceil(Math.log(ammountOfMatches) / Math.log(2) );
 
         const $matches: Observable<NodeMatchEntity>[] = [];
 
@@ -109,6 +109,7 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
               tournamentId: tournament.id!,
             })
           );
+          key++;
         }
         return zip(...$matches);
       })

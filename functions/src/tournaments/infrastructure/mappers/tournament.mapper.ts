@@ -16,6 +16,7 @@ export class TournamentMapper extends Mapper<TournamentEntity> {
       id: { name: 'id' },
       name: { name: 'name' },
       edition: { name: 'edition' },
+      schema: { name: 'schema' },
       year: { name: 'year' },
       version: { name: 'version' },
       podium: { name: 'podium' },

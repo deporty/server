@@ -45,6 +45,7 @@ import { GetGroupsByTournamentIdUsecase } from '../domain/usecases/groups/get-gr
 import { SaveGroupUsecase } from '../domain/usecases/groups/save-group/save-group.usecase';
 import { UpdateGroupUsecase } from '../domain/usecases/groups/update-group/update-group.usecase';
 import { UpdateTeamsInGroupUsecase } from '../domain/usecases/groups/update-teams-in-group/update-teams-in-group.usecase';
+import { ImplementSchemaIntoTournamentUsecase } from '../domain/usecases/implement-schema-into-tournament/implement-schema-into-tournament.usecase';
 import { AddIntergroupMatchUsecase } from '../domain/usecases/intergroup-matches/add-intergroup-match/add-intergroup-match.usecase';
 import { DeleteIntergroupMatchUsecase } from '../domain/usecases/intergroup-matches/delete-intergroup-match/delete-intergroup-match.usecase';
 import { EditIntergroupMatchUsecase } from '../domain/usecases/intergroup-matches/edit-intergroup-match/edit-intergroup-match.usecase';
@@ -531,9 +532,21 @@ export class TournamentsModulesConfig {
     // });
 
     container.add({
+      id: 'ImplementSchemaIntoTournamentUsecase',
+      kind: ImplementSchemaIntoTournamentUsecase,
+      dependencies: ['CreateFixtureStageUsecase', 'SaveGroupUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
       id: 'CreateTournamentUsecase',
       kind: CreateTournamentUsecase,
-      dependencies: ['TournamentContract', 'OrganizationContract', 'FileAdapter', 'GetTournamentsByUniqueAttributesUsecase'],
+      dependencies: [
+        'TournamentContract',
+        'OrganizationContract',
+        'FileAdapter',
+        'GetTournamentsByUniqueAttributesUsecase',
+        'ImplementSchemaIntoTournamentUsecase',
+      ],
       strategy: 'singleton',
     });
     container.add({

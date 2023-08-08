@@ -133,7 +133,7 @@ export class TournamentController extends HttpController {
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         exceptions: {
-          SchemaNoSelectedError: 'SCHEMA-NO-SELECTED:ERROR'
+          SchemaNoSelectedError: 'SCHEMA-NO-SELECTED:ERROR',
         },
         successCode: {
           code: 'MAIN-DRAW-GENERATED:SUCCESS',
