@@ -50,6 +50,7 @@ import { ModifyRegisteredTeamStatusUsecase } from '../domain/usecases/registered
 import { JWT_SECRET } from './tournaments.constants';
 import { MessagesConfiguration } from '../../core/controller/messages-configuration';
 import { GenerateMainDrawFromSchemaUsecase } from '../domain/usecases/generate-main-draw-from-schema/generate-main-draw-from-schema.usecase';
+import { IsASchemaValidForMainDrawUsecase } from '../domain/usecases/is-a-schema-valid-for-main-draw/is-a-schema-valid-for-main-draw.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = 'TOURNAMENT';
@@ -418,6 +419,22 @@ export class TournamentController extends HttpController {
         undefined,
         params
       );
+    });
+    app.post(`/is-a-schema-valid-for-main-draw`, (request: Request, response: Response) => {
+      const schema = request.body;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'SCHEMA-ANALIZED:SUCCESS',
+      };
+
+      this.handler<IsASchemaValidForMainDrawUsecase>({
+        container,
+        usecaseId: 'IsASchemaValidForMainDrawUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: schema,
+      });
     });
 
     app.get(`/available-teams-to-add/:id`, validator('GetPosibleTeamsToAddUsecase'), (request: Request, response: Response) => {

@@ -51,6 +51,7 @@ import { DeleteIntergroupMatchUsecase } from '../domain/usecases/intergroup-matc
 import { EditIntergroupMatchUsecase } from '../domain/usecases/intergroup-matches/edit-intergroup-match/edit-intergroup-match.usecase';
 import { GetIntergroupMatchByTeamIdsUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-match-by-team-ids/get-intergroup-match-by-team-ids.usecase';
 import { GetIntergroupMatchesUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-matches/get-intergroup-match.usecase';
+import { IsASchemaValidForMainDrawUsecase } from '../domain/usecases/is-a-schema-valid-for-main-draw/is-a-schema-valid-for-main-draw.usecase';
 import { CreateNodeMatchUsecase } from '../domain/usecases/main-draw/create-node-match/create-node-match.usecase';
 import { ModifyTournamentLocationsUsecase } from '../domain/usecases/modify-tournament-locations/modify-tournament-locations.usecase';
 import { ModifyTournamentRefereesUsecase } from '../domain/usecases/modify-tournament-referees/modify-tournament-referees.usecase';
@@ -601,6 +602,11 @@ export class TournamentsModulesConfig {
       id: 'GenerateMainDrawFromSchemaUsecase',
       kind: GenerateMainDrawFromSchemaUsecase,
       dependencies: ['GetGroupsByTournamentIdUsecase', 'GetTournamentByIdUsecase', 'CreateNodeMatchUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'IsASchemaValidForMainDrawUsecase',
+      kind: IsASchemaValidForMainDrawUsecase,
       strategy: 'singleton',
     });
   }
