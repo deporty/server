@@ -8,25 +8,25 @@ export class IsASchemaValidForMainDrawUsecase extends Usecase<TournamentLayoutSc
     if (!lastFixtureStageConfiguration) {
       return of(false);
     }
-
     const fullPassedTeams = lastFixtureStageConfiguration.passedTeamsCount.reduce((prev, curr) => {
       return prev + curr;
     }, 0);
+
     const isEven = fullPassedTeams % 2 == 0;
     if (!isEven) {
       return of(false);
     }
 
-    const maxLevelTree = Math.floor(Math.log(fullPassedTeams) / Math.log(2));
-
+    const matches = fullPassedTeams / 2;
+    const maxLevelTree = Math.floor(Math.log(matches) / Math.log(2));
     let sum = 0;
 
     let i = maxLevelTree;
-    while (i > 0 && sum < fullPassedTeams) {
+    while (i > 0 && sum < matches) {
       sum += Math.pow(2, i);
 
       i--;
     }
-    return of(sum == fullPassedTeams);
+    return of(sum == matches);
   }
 }

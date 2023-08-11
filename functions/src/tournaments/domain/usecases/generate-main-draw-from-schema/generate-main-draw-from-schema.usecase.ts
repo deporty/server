@@ -87,14 +87,8 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
         if (!simpleMatches) {
           return throwError(new MatchesCreationError());
         }
-        // const ammountOfMatches = simpleMatches?.length || 0;
-
-        // const level = Math.ceil(Math.log(ammountOfMatches) / Math.log(2));
 
         const $matches: Observable<NodeMatchEntity>[] = [];
-        console.log('--------------------------------');
-        console.log(JSON.stringify(simpleMatches, null, 2));
-        console.log('--------------------------------');
 
         for (const simpleMatch of simpleMatches) {
           $matches.push(
