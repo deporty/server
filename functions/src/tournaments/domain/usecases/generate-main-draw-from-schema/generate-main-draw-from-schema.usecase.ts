@@ -18,14 +18,14 @@ export class SchemaNoSelectedError extends Error {
 export class GroupsAndSchemaDontMatchError extends Error {
   constructor() {
     super();
-    this.message = `The tournament does not have a schema selected.`;
+    this.message = `The group ammount and the schema does not match.`;
     this.name = 'GroupsAndSchemaDontMatchError';
   }
 }
 export class TeamsAmmountInClasificationError extends Error {
   constructor() {
     super();
-    this.message = `The tournament does not have a schema selected.`;
+    this.message = `The ammount of temas inside the position table does not match withe the passed teams configuration.`;
     this.name = 'TeamsAmmountInClasificationError';
   }
 }
@@ -47,6 +47,10 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
   }
 
   call(tournamentId: Id): Observable<NodeMatchEntity[]> {
+    console.log();
+    console.log('Tournament Id: ' + tournamentId);
+    console.log();
+
     const $tournament = this.getTournamentByIdUsecase.call(tournamentId);
 
     return $tournament.pipe(
@@ -69,47 +73,39 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
         if (lastSchema.groupCount != groupsInFixtureStage?.length) {
           return throwError(new GroupsAndSchemaDontMatchError());
         }
-        const teamsIdentifiers = [];
-        for (let i = 0; i < lastSchema.groupCount; i++) {
-          const passedTeamsCount: number = lastSchema.passedTeamsCount[i];
+        let teamsIdentifiers = [];
 
-          const group: GroupEntity = groupsInFixtureStage[i];
-
-          const passedTeamIds: Id[] | undefined = group.positionsTable?.table.slice(0, passedTeamsCount).map((stadistic) => {
-            return stadistic.teamId;
-          });
-
-          if (!passedTeamIds) {
-            return throwError(new TeamsAmmountInClasificationError());
-          }
-
-          teamsIdentifiers.push(passedTeamIds);
+        try {
+          teamsIdentifiers = this.getTeamIdentifiers(lastSchema, groupsInFixtureStage);
+        } catch (error) {
+          return throwError(error);
         }
-        const matches = createTree(teamsIdentifiers);
-        return zip(of(matches), of(tournament));
+        const simpleMatches = createTree(teamsIdentifiers);
+        return zip(of(simpleMatches), of(tournament));
       }),
       mergeMap(([simpleMatches, tournament]) => {
         if (!simpleMatches) {
           return throwError(new MatchesCreationError());
         }
-        const ammountOfMatches = simpleMatches?.length || 0;
+        // const ammountOfMatches = simpleMatches?.length || 0;
 
-        const level = Math.ceil(Math.log(ammountOfMatches) / Math.log(2) );
+        // const level = Math.ceil(Math.log(ammountOfMatches) / Math.log(2));
 
         const $matches: Observable<NodeMatchEntity>[] = [];
+        console.log('--------------------------------');
+        console.log(JSON.stringify(simpleMatches, null, 2));
+        console.log('--------------------------------');
 
-        let key = 0;
         for (const simpleMatch of simpleMatches) {
           $matches.push(
             this.createNodeMatchUsecase.call({
-              key,
-              level,
-              teamAId: simpleMatch[0],
-              teamBId: simpleMatch[1],
+              key: simpleMatch.key,
+              level: simpleMatch.level,
+              teamAId: simpleMatch.match.teamAId,
+              teamBId: simpleMatch.match.teamBId,
               tournamentId: tournament.id!,
             })
           );
-          key++;
         }
         return zip(...$matches);
       })
@@ -131,5 +127,25 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
       }
     }
     return lastFixture;
+  }
+
+  private getTeamIdentifiers(lastSchema: FixtureStageConfiguration, groupsInFixtureStage: GroupEntity[]): string[][] {
+    const teamsIdentifiers: string[][] = [];
+    for (let i = 0; i < lastSchema.groupCount; i++) {
+      const passedTeamsCount: number = lastSchema.passedTeamsCount[i];
+
+      const group: GroupEntity = groupsInFixtureStage[i];
+
+      const passedTeamIds: Id[] | undefined = group.positionsTable?.table.slice(0, passedTeamsCount).map((stadistic) => {
+        return stadistic.teamId;
+      });
+
+      if (!passedTeamIds) {
+        throw new TeamsAmmountInClasificationError();
+      }
+
+      teamsIdentifiers.push(passedTeamIds);
+    }
+    return teamsIdentifiers;
   }
 }

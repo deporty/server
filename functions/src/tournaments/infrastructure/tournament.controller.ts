@@ -134,7 +134,9 @@ export class TournamentController extends HttpController {
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         exceptions: {
+          GroupsAndSchemaDontMatchError: 'GROUPS-AND-SCHEMA-DONT-MATCH:ERROR',
           SchemaNoSelectedError: 'SCHEMA-NO-SELECTED:ERROR',
+          TeamsAmmountInClasificationError: 'TEAMS-AMMOUNT-IN-CLASIFICATION:ERROR'
         },
         successCode: {
           code: 'MAIN-DRAW-GENERATED:SUCCESS',

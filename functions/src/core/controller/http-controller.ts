@@ -24,8 +24,22 @@ export interface IMessagesConfiguration {
 }
 
 export abstract class HttpController {
-  public static readyHandler(request: Request, response: Response) {
-    return response.status(200).json({});
+  public static handler<U extends Usecase<any, any>, T = any>(config: {
+    container: Container;
+    usecaseId: string;
+    response: Response;
+    messageConfiguration: MessagesConfiguration;
+    translatorId?: string;
+    usecaseParam?: any;
+  }) {
+    let func = null;
+    const { translatorId, container, usecaseId, usecaseParam, response, messageConfiguration } = config;
+    if (translatorId) {
+      const translator = container.getInstance<T>(translatorId).instance;
+      func = translator.fromJson;
+    }
+
+    this.generalHandlerController<U, T>(container, usecaseId, usecaseParam, func, response, messageConfiguration);
   }
 
   public static handlerController<T extends { call: (param?: any) => any }, M>(
@@ -46,26 +60,9 @@ export abstract class HttpController {
     this.generalHandlerController<T, M>(container, usecaseIdentifier, param, func, response, config);
   }
 
-  public static handler<U extends Usecase<any, any>, T = any>(config: {
-    container: Container;
-    usecaseId: string;
-    response: Response;
-    messageConfiguration: MessagesConfiguration;
-    translatorId?: string;
-    usecaseParam?: any;
-  }) {
-    let func = null;
-    const { translatorId, container, usecaseId, usecaseParam, response, messageConfiguration } = config;
-    if (translatorId) {
-      const translator = container.getInstance<T>(translatorId).instance;
-      func = translator.fromJson;
-    }
-
-    this.generalHandlerController<U, T>(container, usecaseId, usecaseParam, func, response, messageConfiguration);
-  }
-
   static makeErrorMessage(config: IMessagesConfiguration | MessagesConfiguration, error: Error): IBaseResponse<undefined> {
     const data: Error = { ...error };
+    console.log('Jessi uribe: ', data);
 
     const name = data.name;
     let httpMessageCode = '';
@@ -98,6 +95,10 @@ export abstract class HttpController {
         message,
       },
     } as IBaseResponse<undefined>;
+  }
+
+  public static readyHandler(request: Request, response: Response) {
+    return response.status(200).json({});
   }
 
   private static formatMessage(message: string, data: any) {
