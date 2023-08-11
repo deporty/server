@@ -219,11 +219,6 @@ function generateFlatMatches(params: Params): NodeMatch[] {
 
     const noPromotedNodeMatches = placeMatchInKey(params.initialLevel, true, noPromotedMatches);
     const promotedNodeMatches = placeMatchInKey(params.initialLevel - 1, false, promotedMatches);
-    console.log('00000000000000000000000');
-    console.log(noPromotedNodeMatches);
-    console.log(promotedNodeMatches);
-
-    console.log('00000000000000000000000');
     return [...noPromotedNodeMatches, ...promotedNodeMatches];
   }
 }
@@ -241,8 +236,6 @@ function placeMatchInKey(level: number, expand: boolean, flatMatches: TeamsInNuc
     iDir = -1;
     jDir = 1;
   }
-  console.log('flatMatches', flatMatches);
-  console.log(' - ', i, j, iDir, jDir);
 
   for (let index = 0; index < flatMatches.length; index += 2) {
     const fm = flatMatches[index];
