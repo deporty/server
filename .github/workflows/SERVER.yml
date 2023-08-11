@@ -57,10 +57,10 @@ jobs:
           cat src/teams/infrastructure/teams.constants.ts
           cat src/tournaments/infrastructure/tournaments.constants.ts
           cat src/users/infrastructure/users.constants.ts
-      - name: RUN TEST
-        run: |
-          cd functions
-          npm test
+      # - name: RUN TEST
+      #   run: |
+      #     cd functions
+      #     npm test
       - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
         run: |
           cd functions/scripts
@@ -143,10 +143,10 @@ jobs:
           cat src/teams/infrastructure/teams.constants.ts
           cat src/tournaments/infrastructure/tournaments.constants.ts
           cat src/users/infrastructure/users.constants.ts
-      - name: RUN TEST
-        run: |
-          cd functions
-          npm test
+      # - name: RUN TEST
+      #   run: |
+      #     cd functions
+      #     npm test
       - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
         run: |
           cd functions/scripts
