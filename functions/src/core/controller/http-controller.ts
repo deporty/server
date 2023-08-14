@@ -61,31 +61,36 @@ export abstract class HttpController {
   }
 
   static makeErrorMessage(config: IMessagesConfiguration | MessagesConfiguration, error: Error): IBaseResponse<undefined> {
-    const data: Error = { ...error };
-    console.log('Jessi uribe: ', data);
-
-    const name = data.name;
+   
     let httpMessageCode = '';
     let message = '';
 
-    if (!(config as MessagesConfigurationWithExceptions).exceptions) {
-      httpMessageCode = 'SERVER:ERROR';
-      message = DEFAULT_MESSAGES[httpMessageCode] + ' : ' + error.message;
-    } else {
-      const castedConfig = config as MessagesConfigurationWithExceptions;
-      httpMessageCode = castedConfig.exceptions[name];
-      console.log('FOrever ', httpMessageCode);
+    httpMessageCode = 'SERVER:ERROR';
+    message = DEFAULT_MESSAGES[httpMessageCode];
+    if (error &&  Object.keys(error).length > 0) {
 
-      if (httpMessageCode) {
-        if (castedConfig.errorCodes) {
-          message = castedConfig.errorCodes[httpMessageCode];
-          message = HttpController.formatMessage(message, data);
-        } else {
-          message = data.message;
-        }
-      } else {
+      const data: Error = { ...error };
+  
+      const name = data.name;
+
+      if (!(config as MessagesConfigurationWithExceptions).exceptions) {
         httpMessageCode = 'SERVER:ERROR';
         message = DEFAULT_MESSAGES[httpMessageCode] + ' : ' + error.message;
+      } else {
+        const castedConfig = config as MessagesConfigurationWithExceptions;
+        httpMessageCode = castedConfig.exceptions[name];
+
+        if (httpMessageCode) {
+          if (castedConfig.errorCodes) {
+            message = castedConfig.errorCodes[httpMessageCode];
+            message = HttpController.formatMessage(message, data);
+          } else {
+            message = data.message;
+          }
+        } else {
+          httpMessageCode = 'SERVER:ERROR';
+          message = DEFAULT_MESSAGES[httpMessageCode] + ' : ' + error.message;
+        }
       }
     }
     const code = `${config.identifier}:${httpMessageCode}`;
@@ -167,7 +172,7 @@ export abstract class HttpController {
         logger.info('Output ', usecaseIdentifier, new Date());
       },
       error: (error: any) => {
-        console.error('*:* Error:: ', error.name, error.message);
+        console.error('*:* Error:: ', error?.name, error?.message);
 
         const resp = this.makeErrorMessage(config, error);
         response.send(resp);

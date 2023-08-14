@@ -239,7 +239,7 @@ export class TeamController extends BaseController {
           'GET:ID:ERROR': '{message}',
         },
         successCode: {
-          code: 'GET:ID:SUCCESS',
+          code: 'GET-BY-ID:SUCCESS',
           message: 'Information for team with id {id}',
         },
         extraData: {

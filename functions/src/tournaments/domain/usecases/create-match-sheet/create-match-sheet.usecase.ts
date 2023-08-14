@@ -1,13 +1,6 @@
 import { TeamEntity } from '@deporty-org/entities';
-import {
-  OrganizationEntity,
-  TournamentLayoutEntity,
-} from '@deporty-org/entities/organizations';
-import {
-  MatchEntity,
-  StadisticSpecification,
-  TournamentEntity,
-} from '@deporty-org/entities/tournaments';
+import { OrganizationEntity, TournamentLayoutEntity } from '@deporty-org/entities/organizations';
+import { MatchEntity, StadisticSpecification, TournamentEntity } from '@deporty-org/entities/tournaments';
 import { Observable, from, of, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { FileAdapter } from '../../../../core/file/file.adapter';
@@ -36,53 +29,34 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
 
     return this.getTournamentByIdUsecase.call(param.tournamentId).pipe(
       mergeMap((tournament: TournamentEntity) => {
-        const $organization = this.organizationContract.getOrganizationById(
-          tournament.organizationId
-        );
+        const $organization = this.organizationContract.getOrganizationById(tournament.organizationId);
 
         const $teamA = this.teamContract.getTeamById(match.teamAId);
         const $teamB = this.teamContract.getTeamById(match.teamBId);
-        const $tournamentLayout =
-          this.organizationContract.getTournamentLayoutByIdUsecase(
-            tournament.organizationId,
-            tournament.tournamentLayoutId
-          );
+        const $tournamentLayout = this.organizationContract.getTournamentLayoutByIdUsecase(
+          tournament.organizationId,
+          tournament.tournamentLayoutId
+        );
 
         const $fullMembers = this.getFullMembers(match);
 
-        return zip(
-          $organization,
-          $teamA,
-          $teamB,
-          of(tournament),
-          $tournamentLayout,
-          $fullMembers
-        );
+        return zip($organization, $teamA, $teamB, of(tournament), $tournamentLayout, $fullMembers);
       }),
-      mergeMap(
-        ([
-          organization,
+      mergeMap(([organization, teamA, teamB, tournament, tournamentLayout, fullMembers]) => {
+        return this.createDocDefinition({
+          match,
           teamA,
           teamB,
           tournament,
+          organization,
           tournamentLayout,
           fullMembers,
-        ]) => {
-          return this.createDocDefinition({
-            match,
-            teamA,
-            teamB,
-            tournament,
-            organization,
-            tournamentLayout,
-            fullMembers,
-          }).pipe(
-            mergeMap((docDefinition) => {
-              return this.createDoc(docDefinition);
-            })
-          );
-        }
-      )
+        }).pipe(
+          mergeMap((docDefinition) => {
+            return this.createDoc(docDefinition);
+          })
+        );
+      })
     );
   }
 
@@ -161,24 +135,15 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
       teamB: any;
     };
   }) {
-    const {
+    const { match, tournament, organization, teamA, teamB, tournamentLayout, fullMembers } = param;
+
+    const { $shieldA, $shieldB, $brandIso, $organizationIso } = this.getPhotosFromMatch({
       match,
       tournament,
       organization,
       teamA,
       teamB,
-      tournamentLayout,
-      fullMembers,
-    } = param;
-
-    const { $shieldA, $shieldB, $brandIso, $organizationIso } =
-      this.getPhotosFromMatch({
-        match,
-        tournament,
-        organization,
-        teamA,
-        teamB,
-      });
+    });
 
     const $shields = zip($shieldA, $shieldB, $brandIso, $organizationIso);
     const $signatures = this.getSignatures(match);
@@ -203,18 +168,11 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
             font: 'Helvetica',
           },
           content: [
-            this.createHeaderDefinition(
-              brand64,
-              organization64,
-              tournamentLayout
-            ),
+            this.createHeaderDefinition(brand64, organization64, tournamentLayout),
             this.createGeneralMatchInformation(match, tournament),
             this.createTeamsHeaders({ shield64A, shield64B, teamA, teamB }),
             {
-              columns: [
-                this.extractPlayerForm(match, 'teamA', fullMembers),
-                this.extractPlayerForm(match, 'teamB', fullMembers),
-              ],
+              columns: [this.extractPlayerForm(match, 'teamA', fullMembers), this.extractPlayerForm(match, 'teamB', fullMembers)],
             },
 
             this.getExtraGoles(match),
@@ -267,11 +225,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
                       bold: true,
                     },
                   ],
-                  [
-                    this.createSignature(signatureA),
-                    this.createSignature(signatureJudge),
-                    this.createSignature(signatureB),
-                  ],
+                  [this.createSignature(signatureA), this.createSignature(signatureJudge), this.createSignature(signatureB)],
                 ],
               },
             },
@@ -332,18 +286,14 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
           table: {
             widths: ['auto', 10],
 
-            body: [
-              [{ text: 'Goles extra', fillColor: background, bold: true }],
-            ],
+            body: [[{ text: 'Goles extra', fillColor: background, bold: true }]],
           },
         },
         {
           table: {
             widths: ['auto', 10],
 
-            body: [
-              [{ text: 'Goles extra', fillColor: background, bold: true }],
-            ],
+            body: [[{ text: 'Goles extra', fillColor: background, bold: true }]],
           },
         },
       ],
@@ -366,12 +316,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
     return { $shieldA, $shieldB, $brandIso, $organizationIso };
   }
 
-  createTeamsHeaders(param: {
-    shield64A: string;
-    shield64B: string;
-    teamA: TeamEntity;
-    teamB: TeamEntity;
-  }): any {
+  createTeamsHeaders(param: { shield64A: string; shield64B: string; teamA: TeamEntity; teamB: TeamEntity }): any {
     const { shield64A, teamA, teamB, shield64B } = param;
     return {
       table: {
@@ -395,10 +340,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
       },
     };
   }
-  createGeneralMatchInformation(
-    match: MatchEntity,
-    tournament: TournamentEntity
-  ): any {
+  createGeneralMatchInformation(match: MatchEntity, tournament: TournamentEntity): any {
     const date = match.date ? moment(match.date as any).toDate() : '';
 
     return {
@@ -452,11 +394,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
       },
     };
   }
-  createHeaderDefinition(
-    brand64: string,
-    organization64: string,
-    tournamentLayout: TournamentLayoutEntity
-  ): any {
+  createHeaderDefinition(brand64: string, organization64: string, tournamentLayout: TournamentLayoutEntity): any {
     return {
       margin: [0, 0, 0, 20],
       layout: 'noBorders',
@@ -566,22 +504,15 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
                     decoration: match.playerForm ? '' : 'lineThrough',
                   },
                   {
-                    text:
-                      stadistics.totalYellowCards > 0
-                        ? stadistics?.totalYellowCards
-                        : '',
+                    text: stadistics.totalYellowCards > 0 ? stadistics?.totalYellowCards : '',
                     alignment: 'center',
                   },
                   {
-                    text:
-                      stadistics.totalRedCards > 0
-                        ? stadistics?.totalRedCards
-                        : '',
+                    text: stadistics.totalRedCards > 0 ? stadistics?.totalRedCards : '',
                     alignment: 'center',
                   },
                   {
-                    text:
-                      stadistics.totalGoals > 0 ? stadistics?.totalGoals : '',
+                    text: stadistics.totalGoals > 0 ? stadistics?.totalGoals : '',
                     alignment: 'center',
                   },
                 ];
@@ -629,11 +560,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
     };
   }
 
-  getMember(
-    match: MatchEntity,
-    b: StadisticSpecification,
-    team: 'teamB' | 'teamA'
-  ) {
+  getMember(match: MatchEntity, b: StadisticSpecification, team: 'teamB' | 'teamA') {
     return {
       number: 8,
       player: {
@@ -690,8 +617,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
         });
         pdfDoc.on('end', function () {
           const result = Buffer.concat(chunks);
-          const data =
-            'data:application/pdf;base64,' + result.toString('base64');
+          const data = 'data:application/pdf;base64,' + result.toString('base64');
           resolve(data);
         });
         pdfDoc.end();

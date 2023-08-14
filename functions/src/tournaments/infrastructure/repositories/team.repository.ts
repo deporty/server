@@ -72,6 +72,8 @@ export class TeamRepository extends TeamContract {
           if (data.meta.code === "TEAM:GET-BY-ID:SUCCESS") {
             observer.next(data.data);
           } else {
+            console.log("Error",JSON.stringify(data,null,2));
+            
             observer.error();
           }
           observer.complete();
@@ -97,6 +99,9 @@ export class TeamRepository extends TeamContract {
           if (data.meta.code === "TEAM:GET-MEMBER-BY-ID:SUCCESS") {
             observer.next(data.data);
           } else {
+
+            console.log("Error >>",JSON.stringify(data,null,2));
+
             observer.error();
           }
           observer.complete();
