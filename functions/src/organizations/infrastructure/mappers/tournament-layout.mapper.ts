@@ -13,6 +13,7 @@ import {
   NegativePointsPerCard,
   PointsConfiguration,
   TournamentLayoutEntity,
+  RequiredDocConfig,
 } from '@deporty-org/entities/organizations';
 
 export class SchemaMapper extends Mapper<any> {
@@ -85,6 +86,24 @@ export class NegativePointsPerCardMapper extends Mapper<NegativePointsPerCard> {
     };
   }
 }
+export class RequiredDocConfigMapper extends Mapper<RequiredDocConfig> {
+  constructor() {
+    super();
+    this.attributesMapper = {
+      name: {
+        name: 'name',
+      },
+      description: {
+        name: 'description',
+      },
+      applyTo: {
+        name: 'apply-to',
+      },
+      fileKind: { name: 'file-kind' },
+      status: { name: 'status' },
+    };
+  }
+}
 
 export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfiguration> {
   constructor(
@@ -136,7 +155,11 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
   }
 }
 export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
-  constructor(private fileAdapter: FileAdapter, private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper) {
+  constructor(
+    private fileAdapter: FileAdapter,
+    private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper,
+    private requiredDocConfigMapper: RequiredDocConfigMapper
+  ) {
     super();
     this.attributesMapper = {
       categories: { name: 'categories' },
@@ -153,9 +176,16 @@ export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
           return this.fixtureStagesConfigurationMapper.fromJson(value);
         },
         to: (value: FixtureStagesConfiguration) => {
-          console.log('Layout::: ', value);
-
           return this.fixtureStagesConfigurationMapper.toJson(value);
+        },
+      },
+      requiredDocsConfig: {
+        name: 'required-docs-config',
+        from: (value: Array<any>) => {
+          return value.length > 0 ? zip(...value.map((x) => this.requiredDocConfigMapper.fromJson(x))) : of([]);
+        },
+        to: (value: RequiredDocConfig[]) => {
+          return value.map((y) => this.requiredDocConfigMapper.toJson(y));
         },
       },
       flayer: {

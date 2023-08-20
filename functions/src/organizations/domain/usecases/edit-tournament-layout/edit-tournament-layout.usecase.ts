@@ -41,7 +41,8 @@ export class EditTournamentLayoutUsecase extends Usecase<
             description: tournamentLayout.description,
             categories: tournamentLayout.categories,
             editions: tournamentLayout.editions,
-            registeredTeamsVisibleStatus: tournamentLayout.registeredTeamsVisibleStatus
+            registeredTeamsVisibleStatus: tournamentLayout.registeredTeamsVisibleStatus,
+            requiredDocsConfig: tournamentLayout.requiredDocsConfig
           };
 
           if (toSave.editions == null) {
