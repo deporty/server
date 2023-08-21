@@ -1,9 +1,5 @@
 import { Express, Request, Response } from 'express';
-import {
-  BaseController,
-  IMessagesConfiguration,
-  readyHandler,
-} from '../../core/controller/controller';
+import { BaseController, IMessagesConfiguration, readyHandler } from '../../core/controller/controller';
 import { Container } from '../../core/DI';
 import { GetOrganizationWhereExistsMemberEmailUsecase } from '../domain/usecases/get-organization-where-exists-member-email.usecase';
 import { GetOrganizationWhereExistsMemberIdUsecase } from '../domain/usecases/get-organization-where-exists-member-id.usecase';
@@ -41,14 +37,7 @@ export class OrganizationController extends BaseController {
         },
       };
 
-      this.handlerController<GetOrganizationsUsecase, any>(
-        container,
-        'GetOrganizationsUsecase',
-        response,
-        config,
-        undefined,
-        params
-      );
+      this.handlerController<GetOrganizationsUsecase, any>(container, 'GetOrganizationsUsecase', response, config, undefined, params);
     });
 
     app.get(`/member/:id`, (request: Request, response: Response) => {
@@ -99,31 +88,25 @@ export class OrganizationController extends BaseController {
         email
       );
     });
-    app.get(
-      `/:organizationId/tournament-layouts`,
-      (request: Request, response: Response) => {
-        const organizationId = request.params.organizationId;
+    app.get(`/:organizationId/tournament-layouts`, (request: Request, response: Response) => {
+      const organizationId = request.params.organizationId;
 
-        const config: IMessagesConfiguration = {
-          exceptions: {},
-          identifier: this.identifier,
-          errorCodes: {},
-          successCode: 'GET-TOURNAMENT-LAYOUTS:SUCCESS',
-        };
+      const config: IMessagesConfiguration = {
+        exceptions: {},
+        identifier: this.identifier,
+        errorCodes: {},
+        successCode: 'GET-TOURNAMENT-LAYOUTS:SUCCESS',
+      };
 
-        this.handlerController<
-          GetTournamentLayoutsByOrganizationIdUsecase,
-          any
-        >(
-          container,
-          'GetTournamentLayoutsByOrganizationIdUsecase',
-          response,
-          config,
-          undefined,
-          organizationId
-        );
-      }
-    );
+      this.handlerController<GetTournamentLayoutsByOrganizationIdUsecase, any>(
+        container,
+        'GetTournamentLayoutsByOrganizationIdUsecase',
+        response,
+        config,
+        undefined,
+        organizationId
+      );
+    });
     app.get(`/:organizationId`, (request: Request, response: Response) => {
       const organizationId = request.params.organizationId;
 
@@ -148,32 +131,29 @@ export class OrganizationController extends BaseController {
       );
     });
 
-    app.get(
-      `/:organizationId/tournament-layout/:tournamentLayoutId`,
-      (request: Request, response: Response) => {
-        const params = request.params;
+    app.get(`/:organizationId/tournament-layout/:tournamentLayoutId`, (request: Request, response: Response) => {
+      const params = request.params;
 
-        const config: IMessagesConfiguration = {
-          exceptions: {
-            TournamentLayoutNotFoundError: 'DOES-NOT-EXIST:ERROR',
-          },
-          identifier: this.identifier,
-          errorCodes: {
-            'DOES-NOT-EXIST:ERROR': '{message}',
-          },
-          successCode: 'GET-TOURNAMENT-LAYOUT-BY-ID:SUCCESS',
-        };
+      const config: IMessagesConfiguration = {
+        exceptions: {
+          TournamentLayoutNotFoundError: 'DOES-NOT-EXIST:ERROR',
+        },
+        identifier: this.identifier,
+        errorCodes: {
+          'DOES-NOT-EXIST:ERROR': '{message}',
+        },
+        successCode: 'GET-TOURNAMENT-LAYOUT-BY-ID:SUCCESS',
+      };
 
-        this.handlerController<GetTournamentLayoutByIdUsecase, any>(
-          container,
-          'GetTournamentLayoutByIdUsecase',
-          response,
-          config,
-          undefined,
-          params
-        );
-      }
-    );
+      this.handlerController<GetTournamentLayoutByIdUsecase, any>(
+        container,
+        'GetTournamentLayoutByIdUsecase',
+        response,
+        config,
+        undefined,
+        params
+      );
+    });
     app.post(`/tournament-layout`, (request: Request, response: Response) => {
       const body = request.body;
 
@@ -182,8 +162,7 @@ export class OrganizationController extends BaseController {
           Base64Error: 'IMAGE:ERROR',
           SizeError: 'IMAGE:ERROR',
           SizePropertyError: 'IMAGE-SIZE-PROPERTY:ERROR',
-          TournamentLayoutAlreadyExistsError:
-            'TOURNAMENT-LAYOUT-ALREADY-EXISTS:ERROR',
+          TournamentLayoutAlreadyExistsError: 'TOURNAMENT-LAYOUT-ALREADY-EXISTS:ERROR',
         },
         identifier: this.identifier,
         errorCodes: {
@@ -209,12 +188,9 @@ export class OrganizationController extends BaseController {
         ...request.body,
       };
 
-      console.log('Lo que llego a la petición', body);
-
       const config: IMessagesConfiguration = {
         exceptions: {
-          TournamentLayoutDoesNotExistsError:
-            'TOURNAMENT-LAYOUT-DOES-NOT-EXISTS:ERROR',
+          TournamentLayoutDoesNotExistsError: 'TOURNAMENT-LAYOUT-DOES-NOT-EXISTS:ERROR',
         },
         identifier: this.identifier,
         errorCodes: {
@@ -224,14 +200,7 @@ export class OrganizationController extends BaseController {
         extraData: {},
       };
 
-      this.handlerController<EditTournamentLayoutUsecase, any>(
-        container,
-        'EditTournamentLayoutUsecase',
-        response,
-        config,
-        undefined,
-        body
-      );
+      this.handlerController<EditTournamentLayoutUsecase, any>(container, 'EditTournamentLayoutUsecase', response, config, undefined, body);
     });
   }
 }

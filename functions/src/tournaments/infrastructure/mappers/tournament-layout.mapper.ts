@@ -78,8 +78,6 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
           return this.negativePointsPerCardMapper.fromJson(value);
         },
         to: (value: NegativePointsPerCard) => {
-          console.log("Esta en el mapper negativo ", value);
-          
           return this.negativePointsPerCardMapper.toJson(value);
         },
       },
@@ -87,18 +85,10 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
         name: 'stages',
         default: [],
         from: (value: any[]) => {
-          return value.length > 0
-            ? zip(
-                ...value.map((x) =>
-                  this.fixtureStageConfigurationMapper.fromJson(x)
-                )
-              )
-            : of([]);
+          return value.length > 0 ? zip(...value.map((x) => this.fixtureStageConfigurationMapper.fromJson(x))) : of([]);
         },
         to: (value: FixtureStageConfiguration[]) => {
-          return value.map((x) =>
-            this.fixtureStageConfigurationMapper.toJson(x)
-          );
+          return value.map((x) => this.fixtureStageConfigurationMapper.toJson(x));
         },
       },
       pointsConfiguration: {
@@ -123,10 +113,7 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
   }
 }
 export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
-  constructor(
-    private fileAdapter: FileAdapter,
-    private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper
-  ) {
+  constructor(private fileAdapter: FileAdapter, private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper) {
     super();
     this.attributesMapper = {
       categories: { name: 'categories' },
@@ -143,17 +130,13 @@ export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
           return this.fixtureStagesConfigurationMapper.fromJson(value);
         },
         to: (value: FixtureStagesConfiguration) => {
-          console.log("Layout::: ", value);
-          
           return this.fixtureStagesConfigurationMapper.toJson(value);
         },
       },
       flayer: {
         name: 'flayer',
         from: (value: string) => {
-          return value
-            ? this.fileAdapter.getAbsoluteHTTPUrl(value)
-            : of(undefined);
+          return value ? this.fileAdapter.getAbsoluteHTTPUrl(value) : of(undefined);
         },
         to: (value: string) => {
           return value ? this.fileAdapter.getRelativeUrl(value) : of(undefined);

@@ -51,7 +51,7 @@
 //     return this.getTournamentsOverviewUsecase.call().pipe(
 //       map((tournaments1: ITournamentModel[]) => {
 //         const tournaments = [
-     
+
 //           // {
 //           //   id: '7KqZutvODrgNeypckDrO',
 //           //   name: 'Copa Ciudad Manizales V2 Sub 9 Bronce',
@@ -64,10 +64,7 @@
 //           //   id: 'ozmao6YxwCrpjIKGfLNt',
 //           //   name: 'Copa Ciudad Manizales V2 Sub 9 Oro',
 //           // },
-         
-         
-         
-          
+
 //           // {
 //           //   id: 'Wl4ZhDEjmAG9iIPSjS4K',
 //           //   name: 'Copa Ciudad Manizales V2 Sub 11 Bronce',
@@ -100,7 +97,6 @@
 //           //   name: 'Copa Ciudad Manizales V2 Sub 15 Bronce',
 //           // },
 
-
 //           //   {
 //           //   id: 'v6YwuGIVlndXp9GzLT8d',
 //           //   name: 'Copa Ciudad Manizales V2 Sub 15 Oro',
@@ -110,7 +106,7 @@
 //           //   id: 'DupM3SJtUcY3uD4eojSf',
 //           //   name: 'Copa Ciudad Manizales V2 Sub 15 Plata',
 //           // },
-        
+
 //           // {
 //           //   id: 'LjzFP6fG7xjy8XCj2T9Z',
 //           //   name: 'Copa Ciudad Manizales V2 Sub 17 Oro',
@@ -119,12 +115,7 @@
 //             id: 'lqkIOI9ADrj1CvEPqWEX',
 //             name: 'Copa Ciudad Manizales V2 Sub 17 Plata',
 //           },
-          
-        
-         
-          
-        
-          
+
 //         ];
 
 //         const response = [];
@@ -136,7 +127,6 @@
 //             tournament.id
 //           ).pipe(
 //             map((data) => {
-//               console.log('Tournament ', tournamentId, data);
 //               const allData: any[] = [];
 //               const allDataIntergroups: any[] = [];
 //               const allDataMainDraw: any[] = [];
@@ -158,8 +148,7 @@
 //               this.createIntergroupSheetMatch;
 //               for (const stageId in data.stages) {
 //                 const stageData = data.stages[stageId];
-//                 console.log(stageData,6);
-                
+
 //                 if (stageData) {
 //                   for (const groupLabel in stageData.groups) {
 //                     const matches = stageData.groups[groupLabel];
@@ -368,8 +357,7 @@
 //           const response = [];
 //           if (fixture.stages) {
 //             for (const stage of fixture.stages) {
-//               console.log('Vacaciones ', stage.id);
-              
+
 //               for (const group of stage.groups) {
 //                 const $groupSpecification =
 //                   this.getGroupSpecificationInsideTournamentUsecase
@@ -432,7 +420,6 @@
 //               mainDraw: {},
 //             };
 //             for (const item of x) {
-//               console.log(item.order, 5);
 
 //               if (!response.stages[item.stageId]) {
 //                 response.stages[item.stageId] = {
@@ -454,8 +441,7 @@
 //     return zip($integroupMatches, $groupedMaches, $maindDrawMatches).pipe(
 //       map(([integroupMatches, groupedMaches, maindDrawMatches]) => {
 //         const response: TournamentMatches = { ...groupedMaches };
-//         console.log(integroupMatches,'Bonita');
-        
+
 //         for (const stageId in integroupMatches) {
 //           const element = integroupMatches[stageId];
 //           response.stages[stageId].intergroup = element.matches;

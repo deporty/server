@@ -51,6 +51,7 @@ import { JWT_SECRET } from './tournaments.constants';
 import { MessagesConfiguration } from '../../core/controller/messages-configuration';
 import { GenerateMainDrawFromSchemaUsecase } from '../domain/usecases/generate-main-draw-from-schema/generate-main-draw-from-schema.usecase';
 import { IsASchemaValidForMainDrawUsecase } from '../domain/usecases/is-a-schema-valid-for-main-draw/is-a-schema-valid-for-main-draw.usecase';
+import { PublishAllMatchesByGroupUsecase } from '../domain/usecases/groups/publish-all-matches-by-group/publish-all-matches-by-group.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = 'TOURNAMENT';
@@ -662,6 +663,30 @@ export class TournamentController extends HttpController {
         this.handlerController<DeleteGroupByIdUsecase, any>(container, 'DeleteGroupByIdUsecase', response, config, undefined, params);
       }
     );
+    app.post(
+      `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/publish-all-matches`,
+      //TODO: Add this validator when the authorization dashboard get ready
+      //validator('PublishAllMatchesByGroupUsecase'),
+      (request: Request, response: Response) => {
+        const params = request.params;
+        const config: MessagesConfiguration = {
+          exceptions: {
+            GroupDoesNotExist: 'GROUP-NOT-FOUND:ERROR',
+          },
+          identifier: this.identifier,
+
+          successCode: 'MATCHES-PUBLISHED:SUCCESS',
+        };
+
+        this.handler<PublishAllMatchesByGroupUsecase>({
+          container,
+          usecaseId: 'PublishAllMatchesByGroupUsecase',
+          response,
+          messageConfiguration: config,
+          usecaseParam: params,
+        });
+      }
+    );
     app.delete(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/teams`,
       validator('DeleteTeamsInGroupUsecase'),
@@ -1220,10 +1245,7 @@ export class TournamentController extends HttpController {
     // });
     app.post(`/`, validator('CreateTournamentUsecase'), (request: Request, response: Response) => {
       const tournament = request.body;
-      console.log('Llego ', tournament);
 
-      const usecase = container.getInstance<any>('FixtureStagesConfigurationMapper').instance;
-      console.log('Usecase::: ', usecase);
       tournament['startsDate'] = new Date(Date.parse(tournament['startsDate']));
 
       const config: IMessagesConfiguration = {

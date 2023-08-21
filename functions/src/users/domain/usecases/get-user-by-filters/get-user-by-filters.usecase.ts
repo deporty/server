@@ -18,7 +18,6 @@ export class GetUsersByFiltersUsecase extends Usecase<Params, UserEntity[]> {
   }
 
   call(params: Params): Observable<UserEntity[]> {
-    console.log('Params:::>>  ', params);
     const filters: Filters = {};
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
@@ -38,8 +37,6 @@ export class GetUsersByFiltersUsecase extends Usecase<Params, UserEntity[]> {
         }
       }
     }
-
-    console.log(56446, filters);
 
     return this.userContract.filter(filters);
   }

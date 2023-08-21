@@ -1,9 +1,5 @@
 import { Id } from '@deporty-org/entities';
-import {
-  MatchEntity,
-  StadisticSpecification,
-  Stadistics,
-} from '@deporty-org/entities/tournaments';
+import { MatchEntity, StadisticSpecification, Stadistics } from '@deporty-org/entities/tournaments';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Usecase } from '../../../../core/usecase';
@@ -16,60 +12,47 @@ export interface StadisticResume {
 }
 
 export class GetMarkersTableUsecase extends Usecase<string, StadisticResume[]> {
-  constructor(
-    private getAllGroupMatchesByTournamentUsecase: GetAllGroupMatchesByTournamentUsecase
-  ) {
+  constructor(private getAllGroupMatchesByTournamentUsecase: GetAllGroupMatchesByTournamentUsecase) {
     super();
   }
 
   call(tournamentId: string): Observable<StadisticResume[]> {
-    console.log(tournamentId);
+    return this.getAllGroupMatchesByTournamentUsecase.call({ tournamentId, status: ['completed', 'in-review', 'published'] }).pipe(
+      map((matches: MatchEntity[]) => {
+        return matches.filter((m) => m.status != 'editing');
+      }),
+      map((matches: MatchEntity[]) => {
+        const scorers: StadisticResume[] = [];
 
-    return this.getAllGroupMatchesByTournamentUsecase
-      .call({ tournamentId, status: ['completed', 'in-review', 'published'] })
-      .pipe(
-        map((matches: MatchEntity[]) => {
-          return matches.filter((m) => m.status != 'editing');
-        }),
-        map((matches: MatchEntity[]) => {
-          const scorers: StadisticResume[] = [];
-
-          for (const match of matches) {
-            if (match.stadistics) {
-              this.newFunction({
-                stadisticsByTeam: match.stadistics.teamA,
-                team: match.teamAId,
-                scorers,
-              });
-              this.newFunction({
-                stadisticsByTeam: match.stadistics.teamB,
-                team: match.teamBId,
-                scorers,
-              });
-            }
+        for (const match of matches) {
+          if (match.stadistics) {
+            this.newFunction({
+              stadisticsByTeam: match.stadistics.teamA,
+              team: match.teamAId,
+              scorers,
+            });
+            this.newFunction({
+              stadisticsByTeam: match.stadistics.teamB,
+              team: match.teamBId,
+              scorers,
+            });
           }
+        }
 
-          const response: StadisticResume[] = scorers;
-          response.sort((prev, next) => {
-            return prev.goals > next.goals ? -1 : 1;
-          });
-          return response;
-        })
-      );
-  }
-
-  isNotStadisticsEmpty(stadistic: Stadistics | undefined) {
-    return (
-      stadistic &&
-      ((stadistic.teamA && stadistic.teamA.length > 0) ||
-        (stadistic.teamB && stadistic.teamB.length > 0))
+        const response: StadisticResume[] = scorers;
+        response.sort((prev, next) => {
+          return prev.goals > next.goals ? -1 : 1;
+        });
+        return response;
+      })
     );
   }
 
-  private findStadisticInScores(
-    scorers: StadisticResume[],
-    playerStadistic: StadisticSpecification
-  ): StadisticResume | undefined {
+  isNotStadisticsEmpty(stadistic: Stadistics | undefined) {
+    return stadistic && ((stadistic.teamA && stadistic.teamA.length > 0) || (stadistic.teamB && stadistic.teamB.length > 0));
+  }
+
+  private findStadisticInScores(scorers: StadisticResume[], playerStadistic: StadisticSpecification): StadisticResume | undefined {
     const response = scorers.filter((x) => {
       return x.memberId === playerStadistic.memberId;
     });

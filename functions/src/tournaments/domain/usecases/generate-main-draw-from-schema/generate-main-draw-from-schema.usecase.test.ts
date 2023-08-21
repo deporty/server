@@ -68,7 +68,7 @@ describe('GenerateMainDrawFromSchemaUsecase', () => {
 
             schema: {
               name: 'default',
-              stages: [generateStagesConfig(groups,groupLengh, passedTeamsCount)],
+              stages: [generateStagesConfig(groups, groupLengh, passedTeamsCount)],
             },
           } as TournamentEntity);
         },
@@ -92,8 +92,6 @@ describe('GenerateMainDrawFromSchemaUsecase', () => {
     generateMainDrawFromSchemaUsecase = generateUsecase(6, 4, 2);
     const res = generateMainDrawFromSchemaUsecase.call('tournamentId');
     res.subscribe((nodeMatches) => {
-      console.log("Response: ", JSON.stringify(nodeMatches, null ,2));
-      
       for (const node of nodeMatches) {
         expect(node.level).toBe(2);
       }

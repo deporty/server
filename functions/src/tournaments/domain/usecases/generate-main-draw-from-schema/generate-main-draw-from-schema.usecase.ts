@@ -47,10 +47,6 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
   }
 
   call(tournamentId: Id): Observable<NodeMatchEntity[]> {
-    console.log();
-    console.log('Tournament Id: ' + tournamentId);
-    console.log();
-
     const $tournament = this.getTournamentByIdUsecase.call(tournamentId);
 
     return $tournament.pipe(

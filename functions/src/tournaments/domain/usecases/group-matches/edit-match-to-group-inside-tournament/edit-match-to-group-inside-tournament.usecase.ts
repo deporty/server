@@ -88,11 +88,6 @@ export class EditMatchInsideGroupUsecase extends Usecase<Param, { match: MatchEn
               positionsTable,
             };
 
-            console.log('------------------///////////--------------');
-            console.log(newGroup);
-
-            console.log('------------------////////////--------------');
-
             return zip(
               of(match),
               of(positionsTable),

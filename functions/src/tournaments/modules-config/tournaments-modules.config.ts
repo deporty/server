@@ -42,6 +42,7 @@ import { GetGroupByIdUsecase } from '../domain/usecases/groups/get-group-by-id/g
 import { GetGroupByLabelUsecase } from '../domain/usecases/groups/get-group-by-label/get-group-by-label.usecase';
 import { GetGroupsByFixtureStageUsecase } from '../domain/usecases/groups/get-groups-by-fixture-stage/get-groups-by-fixture-stage.usecase';
 import { GetGroupsByTournamentIdUsecase } from '../domain/usecases/groups/get-groups-by-tournament-id/get-groups-by-tournament-id.usecase';
+import { PublishAllMatchesByGroupUsecase } from '../domain/usecases/groups/publish-all-matches-by-group/publish-all-matches-by-group.usecase';
 import { SaveGroupUsecase } from '../domain/usecases/groups/save-group/save-group.usecase';
 import { UpdateGroupUsecase } from '../domain/usecases/groups/update-group/update-group.usecase';
 import { UpdateTeamsInGroupUsecase } from '../domain/usecases/groups/update-teams-in-group/update-teams-in-group.usecase';
@@ -369,6 +370,13 @@ export class TournamentsModulesConfig {
         'GetTournamentByIdUsecase',
         'OrganizationContract',
       ],
+      strategy: 'singleton',
+    });
+
+    container.add({
+      id: 'PublishAllMatchesByGroupUsecase',
+      kind: PublishAllMatchesByGroupUsecase,
+      dependencies: ['GetGroupMatchesUsecase', 'EditMatchInsideGroupUsecase'],
       strategy: 'singleton',
     });
 
