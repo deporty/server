@@ -1,30 +1,18 @@
-import { Id } from "@deporty-org/entities";
-import {
-  GroupEntity,
-  MatchEntity,
-  PositionsTable,
-} from "@deporty-org/entities/tournaments";
-import { Observable, of, throwError, zip } from "rxjs";
-import { map, mergeMap } from "rxjs/operators";
-import { FileAdapter } from "../../../../../core/file/file.adapter";
-import { convertToImage } from "../../../../../core/helpers";
-import { Usecase } from "../../../../../core/usecase";
-import { MatchContract } from "../../../contracts/match.contract";
-import { GetMatchByIdUsecase } from "../get-match-by-id/get-match-by-id.usecase";
-import { UpdatePositionTableUsecase } from "../../update-positions-table/update-positions-table.usecase";
-import { GetGroupByIdUsecase } from "../../groups/get-group-by-id/get-group-by-id.usecase";
-import { UpdateGroupUsecase } from "../../groups/update-group/update-group.usecase";
-import { GetTournamentByIdUsecase } from "../../get-tournament-by-id/get-tournament-by-id.usecase";
-import { DEFAULT_FIXTURE_STAGES_CONFIGURATION } from "@deporty-org/entities/organizations";
-import { OrganizationContract } from "../../../contracts/organization.contract";
-
-export class MatchIsCompletedError extends Error {
-  constructor() {
-    super();
-    this.message = `The Match is completed`;
-    this.name = "MatchIsCompletedError";
-  }
-}
+import { Id } from '@deporty-org/entities';
+import { GroupEntity, MatchEntity, PositionsTable } from '@deporty-org/entities/tournaments';
+import { Observable, of, zip } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { FileAdapter } from '../../../../../core/file/file.adapter';
+import { convertToImage } from '../../../../../core/helpers';
+import { Usecase } from '../../../../../core/usecase';
+import { MatchContract } from '../../../contracts/match.contract';
+import { GetMatchByIdUsecase } from '../get-match-by-id/get-match-by-id.usecase';
+import { UpdatePositionTableUsecase } from '../../update-positions-table/update-positions-table.usecase';
+import { GetGroupByIdUsecase } from '../../groups/get-group-by-id/get-group-by-id.usecase';
+import { UpdateGroupUsecase } from '../../groups/update-group/update-group.usecase';
+import { GetTournamentByIdUsecase } from '../../get-tournament-by-id/get-tournament-by-id.usecase';
+import { DEFAULT_FIXTURE_STAGES_CONFIGURATION } from '@deporty-org/entities/organizations';
+import { OrganizationContract } from '../../../contracts/organization.contract';
 
 export interface Param {
   fixtureStageId: Id;
@@ -33,10 +21,7 @@ export interface Param {
   tournamentId: Id;
 }
 
-export class EditMatchInsideGroupUsecase extends Usecase<
-  Param,
-  { match: MatchEntity; positionsTable: PositionsTable | undefined }
-> {
+export class EditMatchInsideGroupUsecase extends Usecase<Param, { match: MatchEntity; positionsTable: PositionsTable | undefined }> {
   constructor(
     private matchContract: MatchContract,
     private fileAdapter: FileAdapter,
@@ -50,15 +35,11 @@ export class EditMatchInsideGroupUsecase extends Usecase<
     super();
   }
 
-  call(
-    param: Param
-  ): Observable<{
+  call(param: Param): Observable<{
     match: MatchEntity;
     positionsTable: PositionsTable | undefined;
   }> {
-    const $tournamentId = this.getTournamentByIdUsecase.call(
-      param.tournamentId
-    );
+    const $tournamentId = this.getTournamentByIdUsecase.call(param.tournamentId);
     const $match = this.getMatchByIdUsecase.call({
       fixtureStageId: param.fixtureStageId,
       groupId: param.groupId,
@@ -68,71 +49,64 @@ export class EditMatchInsideGroupUsecase extends Usecase<
 
     return zip($match, $tournamentId).pipe(
       mergeMap(([prevMatch, tournament]) => {
-        if (prevMatch.status !== "completed") {
-          const $tournamentLayout =
-            this.organizationContract.getTournamentLayoutByIdUsecase(
-              tournament.organizationId,
-              tournament.tournamentLayoutId
-            );
+        const $tournamentLayout = this.organizationContract.getTournamentLayoutByIdUsecase(
+          tournament.organizationId,
+          tournament.tournamentLayoutId
+        );
 
-          const $group = this.getGroupByIdUsecase.call({
-            fixtureStageId: param.fixtureStageId,
-            groupId: param.groupId,
-            tournamentId: param.tournamentId,
-          });
-          return zip(this.edit(param), $tournamentLayout, $group).pipe(
-            mergeMap(([match, tournamentLayout, group]) => {
-              const config =
-                tournamentLayout.fixtureStagesConfiguration ||
-                DEFAULT_FIXTURE_STAGES_CONFIGURATION;
-              return zip(
-                of(match),
-                of(group),
-                match.status === "completed"
-                  ? this.updatePositionTableUsecase.call({
-                      availableTeams: group.teamIds,
-                      match,
-                      positionsTable: group.positionsTable,
-                      tieBreakingOrder: config.tieBreakingOrder,
-                      negativePointsPerCard: config.negativePointsPerCard,
-                      pointsConfiguration: config.pointsConfiguration,
-                      meta: {
-                        tournamentId: param.tournamentId,
-                        fixtureStageId: param.fixtureStageId,
-                        groupId: param.groupId,
-                      },
-                    })
-                  : of(group.positionsTable)
-              );
-            }),
+        const $group = this.getGroupByIdUsecase.call({
+          fixtureStageId: param.fixtureStageId,
+          groupId: param.groupId,
+          tournamentId: param.tournamentId,
+        });
+        return zip(this.edit(param), $tournamentLayout, $group).pipe(
+          mergeMap(([match, tournamentLayout, group]) => {
+            const config = tournamentLayout.fixtureStagesConfiguration || DEFAULT_FIXTURE_STAGES_CONFIGURATION;
+            return zip(
+              of(match),
+              of(group),
 
-            mergeMap(([match, group, positionsTable]) => {
-              const newGroup: GroupEntity = {
-                ...group,
-                positionsTable,
-              };
-
-              console.log("------------------///////////--------------");
-              console.log(newGroup);
-
-              console.log("------------------////////////--------------");
-
-              return zip(
-                of(match),
-                of(positionsTable),
-                this.updateGroupUsecase.call({
-                  fixtureStageId: param.fixtureStageId,
-                  group: newGroup,
+              this.updatePositionTableUsecase.call({
+                availableTeams: group.teamIds,
+                match,
+                positionsTable: group.positionsTable,
+                tieBreakingOrder: config.tieBreakingOrder,
+                negativePointsPerCard: config.negativePointsPerCard,
+                pointsConfiguration: config.pointsConfiguration,
+                meta: {
                   tournamentId: param.tournamentId,
-                })
-              );
-            }),
-            map(([match, positionsTable, group]) => {
-              return { match, positionsTable: positionsTable };
-            })
-          );
-        }
-        return throwError(new MatchIsCompletedError());
+                  fixtureStageId: param.fixtureStageId,
+                  groupId: param.groupId,
+                },
+              })
+            );
+          }),
+
+          mergeMap(([match, group, positionsTable]) => {
+            const newGroup: GroupEntity = {
+              ...group,
+              positionsTable,
+            };
+
+            console.log('------------------///////////--------------');
+            console.log(newGroup);
+
+            console.log('------------------////////////--------------');
+
+            return zip(
+              of(match),
+              of(positionsTable),
+              this.updateGroupUsecase.call({
+                fixtureStageId: param.fixtureStageId,
+                group: newGroup,
+                tournamentId: param.tournamentId,
+              })
+            );
+          }),
+          map(([match, positionsTable, group]) => {
+            return { match, positionsTable: positionsTable };
+          })
+        );
       })
     );
   }
@@ -144,21 +118,9 @@ export class EditMatchInsideGroupUsecase extends Usecase<
     const judgeSignaturePath = `${prefixSignaturePath}/judgeSignature.jpg`;
 
     const signatures: Observable<string | undefined>[] = [
-      convertToImage(
-        param.match["captainASignature"],
-        captainASignaturePath,
-        this.fileAdapter
-      ),
-      convertToImage(
-        param.match["captainBSignature"],
-        captainBSignaturePath,
-        this.fileAdapter
-      ),
-      convertToImage(
-        param.match["judgeSignature"],
-        judgeSignaturePath,
-        this.fileAdapter
-      ),
+      convertToImage(param.match['captainASignature'], captainASignaturePath, this.fileAdapter),
+      convertToImage(param.match['captainBSignature'], captainBSignaturePath, this.fileAdapter),
+      convertToImage(param.match['judgeSignature'], judgeSignaturePath, this.fileAdapter),
     ];
     return zip(...signatures).pipe(
       mergeMap((data) => {
