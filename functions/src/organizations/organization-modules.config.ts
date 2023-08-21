@@ -9,6 +9,7 @@ import {
   FixtureStagesConfigurationMapper,
   NegativePointsPerCardMapper,
   PointsConfigurationMapper,
+  RequiredDocConfigMapper,
   SchemaMapper,
   TournamentLayoutMapper,
 } from './infrastructure/mappers/tournament-layout.mapper';
@@ -36,6 +37,12 @@ export class OrganizationModulesConfig {
     container.add({
       id: 'NegativePointsPerCardMapper',
       kind: NegativePointsPerCardMapper,
+      dependencies: [],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'RequiredDocConfigMapper',
+      kind: RequiredDocConfigMapper,
       dependencies: [],
       strategy: 'singleton',
     });
@@ -70,7 +77,7 @@ export class OrganizationModulesConfig {
     container.add({
       id: 'TournamentLayoutMapper',
       kind: TournamentLayoutMapper,
-      dependencies: ['FileAdapter', 'FixtureStagesConfigurationMapper'],
+      dependencies: ['FileAdapter', 'FixtureStagesConfigurationMapper', 'RequiredDocConfigMapper'],
       strategy: 'singleton',
     });
 

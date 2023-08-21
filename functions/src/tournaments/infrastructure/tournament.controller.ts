@@ -103,7 +103,13 @@ export class TournamentController extends HttpController {
         },
       };
 
-      this.handlerController<CreateMatchSheetUsecase, any>(container, 'CreateMatchSheetUsecase', response, config, undefined, params);
+      this.handler<CreateMatchSheetUsecase, any>({
+        container,
+        usecaseId: 'CreateMatchSheetUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
     });
     app.get(`/:tournamentId/grouped-matches`, (request: Request, response: Response) => {
       const params = request.params.tournamentId;
@@ -136,7 +142,7 @@ export class TournamentController extends HttpController {
         exceptions: {
           GroupsAndSchemaDontMatchError: 'GROUPS-AND-SCHEMA-DONT-MATCH:ERROR',
           SchemaNoSelectedError: 'SCHEMA-NO-SELECTED:ERROR',
-          TeamsAmmountInClasificationError: 'TEAMS-AMMOUNT-IN-CLASIFICATION:ERROR'
+          TeamsAmmountInClasificationError: 'TEAMS-AMMOUNT-IN-CLASIFICATION:ERROR',
         },
         successCode: {
           code: 'MAIN-DRAW-GENERATED:SUCCESS',

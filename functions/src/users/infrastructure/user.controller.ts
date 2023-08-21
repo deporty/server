@@ -1,6 +1,6 @@
 import { Express, Request, Response } from 'express';
 import { Container } from '../../core/DI';
-import { BaseController, IMessagesConfiguration, readyHandler } from '../../core/controller/controller';
+import {  IMessagesConfiguration, readyHandler } from '../../core/controller/controller';
 import { AsignRolesToUserUsecase } from '../domain/usecases/asign-roles-to-user/asign-roles-to-user.usecase';
 import { GetUsersByFiltersUsecase } from '../domain/usecases/get-user-by-filters/get-user-by-filters.usecase';
 import { GetUserByIdUsecase } from '../domain/usecases/get-user-by-id/get-user-by-id.usecase';
@@ -8,8 +8,11 @@ import { GetUserInformationByEmailUsecase } from '../domain/usecases/get-user-in
 import { GetUserInformationByFullNameUsecase } from '../domain/usecases/get-user-information-by-full-name/get-user-information-by-full-name.usecase';
 import { GetUsersByIdsUsecase } from '../domain/usecases/get-users-by-ids/get-users-by-ids.usecase';
 import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
+import { GetTeamsThatIBelongUsecase } from '../domain/usecases/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
+import { HttpController } from '../../core/controller/http-controller';
+import { MessagesConfiguration } from '../../core/controller/messages-configuration';
 
-export class UserController extends BaseController {
+export class UserController extends HttpController {
   static identifier = 'USER';
 
   constructor() {
@@ -47,6 +50,26 @@ export class UserController extends BaseController {
         undefined,
         email
       );
+    });
+
+    app.get(`/teams-that-i-belong/:email`, (request: Request, response: Response) => {
+      const email = request.params.email;
+
+      const config: MessagesConfiguration = {
+        exceptions: {
+          UserDoesNotExistException: 'GET-BY-EMAIL:ERROR',
+        },
+        identifier: this.identifier,
+        successCode: 'TEAMS-THAT-I-BELONG:SUCCESS',
+      };
+
+      this.handler<GetTeamsThatIBelongUsecase>({
+        container,
+        usecaseId: 'GetTeamsThatIBelongUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: email,
+      });
     });
 
     app.get(`/fullname`, (request: Request, response: Response) => {

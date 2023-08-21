@@ -3,7 +3,6 @@ import { AsignRolesToUserUsecase } from './domain/usecases/asign-roles-to-user/a
 import { GetUsersByFiltersUsecase } from './domain/usecases/get-user-by-filters/get-user-by-filters.usecase';
 import { GetUserInformationByEmailUsecase } from './domain/usecases/get-user-information-by-email/get-user-information-by-email.usecase';
 import { GetUserInformationByFullNameUsecase } from './domain/usecases/get-user-information-by-full-name/get-user-information-by-full-name.usecase';
-import { GetUsersByRolUsecase } from './domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
 import { UserContract } from './domain/contracts/user.contract';
 import { UserMapper } from './infrastructure/mappers/user.mapper';
 import { UserRepository } from './infrastructure/repositories/user.repository';
@@ -11,6 +10,7 @@ import { AuthorizationRepository } from './infrastructure/repositories/authoriza
 import { AuthorizationContract } from './domain/contracts/authorization.contract';
 import { GetUserByIdUsecase } from './domain/usecases/get-user-by-id/get-user-by-id.usecase';
 import { GetUsersByIdsUsecase } from './domain/usecases/get-users-by-ids/get-users-by-ids.usecase';
+import { GetTeamsThatIBelongUsecase } from './domain/usecases/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
 
 export class UserModulesConfig {
   static config(container: Container) {
@@ -76,9 +76,8 @@ export class UserModulesConfig {
       strategy: 'singleton',
     });
     container.add({
-      id: 'GetUsersByRolUsecase',
-      kind: GetUsersByRolUsecase,
-      dependencies: ['UserContract'],
+      id: 'GetTeamsThatIBelongUsecase',
+      kind: GetTeamsThatIBelongUsecase,
       strategy: 'singleton',
     });
   }
