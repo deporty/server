@@ -7,6 +7,7 @@ import { GetTournamentByIdUsecase } from '../get-tournament-by-id/get-tournament
 import { GetGroupsByTournamentIdUsecase, Result } from '../groups/get-groups-by-tournament-id/get-groups-by-tournament-id.usecase';
 import { CreateNodeMatchUsecase } from '../main-draw/create-node-match/create-node-match.usecase';
 import { createTree } from './matches-creator';
+import { GetMainDrawNodeMatchesoverviewUsecase } from '../get-main-draw-node-matches-overview/get-main-draw-node-matches-overview.usecase';
 
 export class SchemaNoSelectedError extends Error {
   constructor() {
@@ -36,20 +37,34 @@ export class MatchesCreationError extends Error {
     this.name = 'MatchesCreationError';
   }
 }
+export class ExistNodeMatchesError extends Error {
+  constructor() {
+    super();
+    this.message = `There are matches previusly. You have to clear the matches collection before.`;
+    this.name = 'ExistNodeMatchesError';
+  }
+}
 
 export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEntity[]> {
   constructor(
     private getGroupsByTournamentIdUsecase: GetGroupsByTournamentIdUsecase,
     private getTournamentByIdUsecase: GetTournamentByIdUsecase,
-    private createNodeMatchUsecase: CreateNodeMatchUsecase
+    private createNodeMatchUsecase: CreateNodeMatchUsecase,
+    private getMainDrawNodeMatchesoverviewUsecase: GetMainDrawNodeMatchesoverviewUsecase
   ) {
     super();
   }
 
   call(tournamentId: Id): Observable<NodeMatchEntity[]> {
     const $tournament = this.getTournamentByIdUsecase.call(tournamentId);
-
-    return $tournament.pipe(
+    const $nodeMatches = this.getMainDrawNodeMatchesoverviewUsecase.call(tournamentId);
+    return $nodeMatches.pipe(
+      mergeMap((nodeMatches: NodeMatchEntity[]) => {
+        if (nodeMatches.length > 0) {
+          return throwError(new ExistNodeMatchesError());
+        }
+        return $tournament;
+      }),
       mergeMap((tournament: TournamentEntity) => {
         if (!tournament.schema) {
           return throwError(new SchemaNoSelectedError());

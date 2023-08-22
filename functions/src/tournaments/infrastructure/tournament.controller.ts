@@ -144,6 +144,7 @@ export class TournamentController extends HttpController {
           GroupsAndSchemaDontMatchError: 'GROUPS-AND-SCHEMA-DONT-MATCH:ERROR',
           SchemaNoSelectedError: 'SCHEMA-NO-SELECTED:ERROR',
           TeamsAmmountInClasificationError: 'TEAMS-AMMOUNT-IN-CLASIFICATION:ERROR',
+          ExistNodeMatchesError: 'EXIST-NODE-MATCHES:ERROR',
         },
         successCode: {
           code: 'MAIN-DRAW-GENERATED:SUCCESS',

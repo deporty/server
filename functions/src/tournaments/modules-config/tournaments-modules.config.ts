@@ -609,7 +609,12 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GenerateMainDrawFromSchemaUsecase',
       kind: GenerateMainDrawFromSchemaUsecase,
-      dependencies: ['GetGroupsByTournamentIdUsecase', 'GetTournamentByIdUsecase', 'CreateNodeMatchUsecase'],
+      dependencies: [
+        'GetGroupsByTournamentIdUsecase',
+        'GetTournamentByIdUsecase',
+        'CreateNodeMatchUsecase',
+        'GetMainDrawNodeMatchesoverviewUsecase',
+      ],
       strategy: 'singleton',
     });
     container.add({
