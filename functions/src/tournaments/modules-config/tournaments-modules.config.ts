@@ -6,6 +6,7 @@ import { CalculateTournamentCostUsecase } from '../domain/usecases/calculate-tou
 import { CreateMatchSheetUsecase } from '../domain/usecases/create-match-sheet/create-match-sheet.usecase';
 import { CreateTournamentUsecase } from '../domain/usecases/create-tournament/create-tournament.usecase';
 import { DeleteTournamentUsecase } from '../domain/usecases/delete-tournament/delete-tournament.usecase';
+import { EditNodeMatchUsecase } from '../domain/usecases/edit-node-match/edit-node-match.usecase';
 import { GetTournamentsByUniqueAttributesUsecase } from '../domain/usecases/exists-tournament/exists-tournament.usecase';
 import { CreateFixtureStageUsecase } from '../domain/usecases/fixture-stages/create-fixture-stage/create-fixture-stage.usecase';
 import { DeleteFixtureStageUsecase } from '../domain/usecases/fixture-stages/delete-fixture-stage/delete-fixture-stage.usecase';
@@ -432,12 +433,12 @@ export class TournamentsModulesConfig {
     //   strategy: 'singleton',
     // });
 
-    // container.add({
-    //   id: 'EditMatchInMainDrawInsideTournamentUsecase',
-    //   kind: EditMatchInMainDrawInsideTournamentUsecase,
-    //   dependencies: ['TournamentContract', 'FileAdapter'],
-    //   strategy: 'singleton',
-    // });
+    container.add({
+      id: 'EditNodeMatchUsecase',
+      kind: EditNodeMatchUsecase,
+      dependencies: ['NodeMatchContract', 'FileAdapter'],
+      strategy: 'singleton',
+    });
     // container.add({
     //   id: 'GetMatchInMainDrawInsideTournamentUsecase',
     //   kind: GetMatchInMainDrawInsideTournamentUsecase,

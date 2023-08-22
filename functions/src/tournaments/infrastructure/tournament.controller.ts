@@ -52,6 +52,7 @@ import { MessagesConfiguration } from '../../core/controller/messages-configurat
 import { GenerateMainDrawFromSchemaUsecase } from '../domain/usecases/generate-main-draw-from-schema/generate-main-draw-from-schema.usecase';
 import { IsASchemaValidForMainDrawUsecase } from '../domain/usecases/is-a-schema-valid-for-main-draw/is-a-schema-valid-for-main-draw.usecase';
 import { PublishAllMatchesByGroupUsecase } from '../domain/usecases/groups/publish-all-matches-by-group/publish-all-matches-by-group.usecase';
+import { EditNodeMatchUsecase } from '../domain/usecases/edit-node-match/edit-node-match.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = 'TOURNAMENT';
@@ -1127,28 +1128,31 @@ export class TournamentController extends HttpController {
     //   );
     // });
 
-    // app.put(`/main-draw/node-match`, (request: Request, response: Response) => {
-    //   const params = request.body;
+    app.put(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
+      const params = {
+        ...request.body,
+        nodeMatch: {
+          ...request.body.nodeMatch,
+          match: {
+            ...request.body.nodeMatch.match,
+            date: request.body.nodeMatch.match.date ? getDateFromSeconds(request.body.nodeMatch.match.date) : undefined,
+          },
+        },
+      };
 
-    //   const config: IMessagesConfiguration = {
-    //     exceptions: {},
-    //     identifier: this.identifier,
-    //     errorCodes: {},
-    //     successCode: {
-    //       code: 'GET-MAIN-DRAW:SUCCESS',
-    //       message: 'The main draw was returned',
-    //     },
-    //   };
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'EDITED-MAIN-DRAW:SUCCESS',
+      };
 
-    //   this.handlerController<EditMatchInMainDrawInsideTournamentUsecase, any>(
-    //     container,
-    //     'EditMatchInMainDrawInsideTournamentUsecase',
-    //     response,
-    //     config,
-    //     undefined,
-    //     params
-    //   );
-    // });
+      this.handler<EditNodeMatchUsecase>({
+        container,
+        usecaseId: 'EditNodeMatchUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
+    });
 
     // app.get(`/main-draw/node-match`, (request: Request, response: Response) => {
     //   const params = request.query;

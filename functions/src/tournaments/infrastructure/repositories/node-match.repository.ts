@@ -33,7 +33,13 @@ export class NodeMatchRepository extends NodeMatchContract {
     return super.innerFilter([{ collection: TOURNAMENTS_ENTITY, id: accessParams.tournamentId }, { collection: MAIN_DRAW_ENTITY }]);
   }
   update(accessParams: AccessParams, entity: NodeMatchEntity): Observable<void> {
-    throw new Error('Method not implemented.');
+    return super.innerUpdate(
+      [
+        { collection: TOURNAMENTS_ENTITY, id: accessParams.tournamentId },
+        { collection: MAIN_DRAW_ENTITY, id: entity.id },
+      ],
+      entity
+    );
   }
   save(accessParams: AccessParams, entity: NodeMatchEntity): Observable<string> {
     return super.innerSave([{ collection: TOURNAMENTS_ENTITY, id: accessParams.tournamentId }, { collection: MAIN_DRAW_ENTITY }], entity);
