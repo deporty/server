@@ -55,6 +55,7 @@ import { PublishAllMatchesByGroupUsecase } from '../domain/usecases/groups/publi
 import { EditNodeMatchUsecase } from '../domain/usecases/main-draw/edit-node-match/edit-node-match.usecase';
 import { CreateNodeMatchUsecase } from '../domain/usecases/main-draw/create-node-match/create-node-match.usecase';
 import { DeleteNodeMatchUsecase } from '../domain/usecases/main-draw/delete-node-match/delete-node-match.usecase';
+import { GetTournamentsForCheckInUsecase } from '../domain/usecases/get-tournaments-for-check-in/get-tournaments-for-check-in.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = 'TOURNAMENT';
@@ -972,6 +973,32 @@ export class TournamentController extends HttpController {
         };
 
         this.handlerController<GetTournamentByIdUsecase, any>(container, 'GetTournamentByIdUsecase', response, config, undefined, id);
+      }
+    );
+    app.get(
+      `/for-check-in`,
+      // validator('GetTournamentByIdUsecase'),
+      (request: Request, response: Response) => {
+        const id = request.params.id;
+
+        const config: MessagesConfiguration = {
+          exceptions: {
+            TournamentDoesNotExistError: 'GET:ERROR',
+          },
+          identifier: this.identifier,
+          successCode: 'GET:SUCCESS',
+          extraData: {
+            name: id,
+          },
+        };
+
+        this.handler<GetTournamentsForCheckInUsecase>({
+          container,
+          usecaseId: 'GetTournamentsForCheckInUsecase',
+          response,
+          messageConfiguration: config,
+          usecaseParam: id,
+        });
       }
     );
 

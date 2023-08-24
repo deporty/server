@@ -68,6 +68,7 @@ import { UpdateTournamentUsecase } from '../domain/usecases/update-tournament/up
 import { ContractModulesConfig } from './contract-modules-config';
 import { MapperModulesConfig } from './mappers-modules-config';
 import { DeleteNodeMatchUsecase } from '../domain/usecases/main-draw/delete-node-match/delete-node-match.usecase';
+import { GetTournamentsForCheckInUsecase } from '../domain/usecases/get-tournaments-for-check-in/get-tournaments-for-check-in.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -206,6 +207,12 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GetTournamentByIdUsecase',
       kind: GetTournamentByIdUsecase,
+      dependencies: ['TournamentContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetTournamentsForCheckInUsecase',
+      kind: GetTournamentsForCheckInUsecase,
       dependencies: ['TournamentContract'],
       strategy: 'singleton',
     });
