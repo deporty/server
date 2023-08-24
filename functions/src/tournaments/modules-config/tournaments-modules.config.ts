@@ -6,7 +6,7 @@ import { CalculateTournamentCostUsecase } from '../domain/usecases/calculate-tou
 import { CreateMatchSheetUsecase } from '../domain/usecases/create-match-sheet/create-match-sheet.usecase';
 import { CreateTournamentUsecase } from '../domain/usecases/create-tournament/create-tournament.usecase';
 import { DeleteTournamentUsecase } from '../domain/usecases/delete-tournament/delete-tournament.usecase';
-import { EditNodeMatchUsecase } from '../domain/usecases/edit-node-match/edit-node-match.usecase';
+import { EditNodeMatchUsecase } from '../domain/usecases/main-draw/edit-node-match/edit-node-match.usecase';
 import { GetTournamentsByUniqueAttributesUsecase } from '../domain/usecases/exists-tournament/exists-tournament.usecase';
 import { CreateFixtureStageUsecase } from '../domain/usecases/fixture-stages/create-fixture-stage/create-fixture-stage.usecase';
 import { DeleteFixtureStageUsecase } from '../domain/usecases/fixture-stages/delete-fixture-stage/delete-fixture-stage.usecase';
@@ -67,6 +67,7 @@ import { UpdatePositionTableUsecase } from '../domain/usecases/update-positions-
 import { UpdateTournamentUsecase } from '../domain/usecases/update-tournament/update-tournament.usecase';
 import { ContractModulesConfig } from './contract-modules-config';
 import { MapperModulesConfig } from './mappers-modules-config';
+import { DeleteNodeMatchUsecase } from '../domain/usecases/main-draw/delete-node-match/delete-node-match.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -437,6 +438,12 @@ export class TournamentsModulesConfig {
       id: 'EditNodeMatchUsecase',
       kind: EditNodeMatchUsecase,
       dependencies: ['NodeMatchContract', 'FileAdapter'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'DeleteNodeMatchUsecase',
+      kind: DeleteNodeMatchUsecase,
+      dependencies: ['NodeMatchContract'],
       strategy: 'singleton',
     });
     // container.add({

@@ -52,8 +52,9 @@ import { MessagesConfiguration } from '../../core/controller/messages-configurat
 import { GenerateMainDrawFromSchemaUsecase } from '../domain/usecases/generate-main-draw-from-schema/generate-main-draw-from-schema.usecase';
 import { IsASchemaValidForMainDrawUsecase } from '../domain/usecases/is-a-schema-valid-for-main-draw/is-a-schema-valid-for-main-draw.usecase';
 import { PublishAllMatchesByGroupUsecase } from '../domain/usecases/groups/publish-all-matches-by-group/publish-all-matches-by-group.usecase';
-import { EditNodeMatchUsecase } from '../domain/usecases/edit-node-match/edit-node-match.usecase';
+import { EditNodeMatchUsecase } from '../domain/usecases/main-draw/edit-node-match/edit-node-match.usecase';
 import { CreateNodeMatchUsecase } from '../domain/usecases/main-draw/create-node-match/create-node-match.usecase';
+import { DeleteNodeMatchUsecase } from '../domain/usecases/main-draw/delete-node-match/delete-node-match.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = 'TOURNAMENT';
@@ -240,6 +241,22 @@ export class TournamentController extends HttpController {
       this.handlerController<GetIntergroupMatchesUsecase, any>(container, 'GetIntergroupMatchesUsecase', response, config, undefined, {
         ...params,
         states: request.query.states,
+      });
+    });
+    app.delete(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
+      const params = request.params;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'NODE-MATCH-DELETED:SUCCESS',
+      };
+
+      this.handler<DeleteNodeMatchUsecase>({
+        container,
+        usecaseId: 'DeleteNodeMatchUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
       });
     });
     app.delete(

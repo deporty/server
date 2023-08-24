@@ -20,8 +20,12 @@ export class NodeMatchRepository extends NodeMatchContract {
       { collection: MAIN_DRAW_ENTITY, id },
     ]);
   }
-  delete(accessParams: AccessParams): Observable<void> {
-    throw new Error('Method not implemented.');
+  delete(accessParams: AccessParams, id: string): Observable<void> {
+    return super.innerDelete([
+      { collection: TOURNAMENTS_ENTITY, id: accessParams.tournamentId },
+      { collection: MAIN_DRAW_ENTITY, id },
+    ]);
+    
   }
   get(accessParams: AccessParams, pagination?: { pageNumber: number; pageSize: number } | undefined): Observable<NodeMatchEntity[]> {
     return super.innerGet(

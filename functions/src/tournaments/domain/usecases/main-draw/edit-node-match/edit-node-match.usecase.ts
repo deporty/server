@@ -1,11 +1,11 @@
 import { NodeMatchEntity } from '@deporty-org/entities/tournaments';
 import { Observable, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { FileAdapter } from '../../../../core/file/file.adapter';
-import { convertToImage } from '../../../../core/helpers';
-import { Usecase } from '../../../../core/usecase';
+import { FileAdapter } from '../../../../../core/file/file.adapter';
+import { convertToImage } from '../../../../../core/helpers';
+import { Usecase } from '../../../../../core/usecase';
 import { Id } from '@deporty-org/entities';
-import { NodeMatchContract } from '../../contracts/node-match.contract';
+import { NodeMatchContract } from '../../../contracts/node-match.contract';
 
 export interface Param {
   tournamentId: Id;
