@@ -53,6 +53,7 @@ import { GenerateMainDrawFromSchemaUsecase } from '../domain/usecases/generate-m
 import { IsASchemaValidForMainDrawUsecase } from '../domain/usecases/is-a-schema-valid-for-main-draw/is-a-schema-valid-for-main-draw.usecase';
 import { PublishAllMatchesByGroupUsecase } from '../domain/usecases/groups/publish-all-matches-by-group/publish-all-matches-by-group.usecase';
 import { EditNodeMatchUsecase } from '../domain/usecases/edit-node-match/edit-node-match.usecase';
+import { CreateNodeMatchUsecase } from '../domain/usecases/main-draw/create-node-match/create-node-match.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = 'TOURNAMENT';
@@ -1097,36 +1098,6 @@ export class TournamentController extends HttpController {
         params
       );
     });
-    // app.put(`/add-teams-into-group`, (request: Request, response: Response) => {
-    //   const params = request.body;
-
-    //   const config: IMessagesConfiguration = {
-    //     exceptions: {
-    //       MatchWasAlreadyRegistered: 'MATCH-ALREADY-REGISTERED:ERROR',
-    //       StageDoesNotExist: 'STAGE-DOES-NOT-EXIST:ERROR',
-    //       GroupDoesNotExist: 'GROUP-DOES-NOT-EXIST:ERROR',
-    //     },
-    //     identifier: this.identifier,
-    //     errorCodes: {
-    //       'MATCH-ALREADY-REGISTERED:ERROR': '{message}',
-    //       'STAGE-DOES-NOT-EXIST:ERROR': '{message}',
-    //       'GROUP-DOES-NOT-EXIST:ERROR': '{message}',
-    //     },
-    //     successCode: 'TEAM-REGISTERED-INTO-GROUP:SUCCESS',
-    //     extraData: {
-    //       ...params,
-    //     },
-    //   };
-
-    //   this.handlerController<AddTeamsToGroupInsideTournamentUsecase, any>(
-    //     container,
-    //     'AddTeamsToGroupInsideTournamentUsecase',
-    //     response,
-    //     config,
-    //     undefined,
-    //     params
-    //   );
-    // });
 
     app.put(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
       const params = {
@@ -1148,6 +1119,28 @@ export class TournamentController extends HttpController {
       this.handler<EditNodeMatchUsecase>({
         container,
         usecaseId: 'EditNodeMatchUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
+    });
+    app.post(`/:tournamentId/node-match`, (request: Request, response: Response) => {
+      const params = {
+        tournamentId: request.body.tournamentId,
+        key: request.body.key,
+        level: request.body.level,
+        teamAId: request.body.match.teamAId,
+        teamBId: request.body.match.teamBId,
+      };
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'NODE-MATCH-CREATED:SUCCESS',
+      };
+
+      this.handler<CreateNodeMatchUsecase>({
+        container,
+        usecaseId: 'CreateNodeMatchUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: params,
