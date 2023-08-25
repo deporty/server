@@ -19,7 +19,7 @@ export abstract class TransversalContract<Entity> {
     this.refreshEntity();
 
     const mappedFilters = { ...filter };
-    
+
     for (const key in filter) {
       if (Object.prototype.hasOwnProperty.call(filter, key)) {
         const element = filter[key];
@@ -27,7 +27,6 @@ export abstract class TransversalContract<Entity> {
         mappedFilters[this.mapper.attributesMapper[key].name] = element;
       }
     }
-    console.log(mappedFilters);
     return this.dataSource
       .getByFilter({
         filters: mappedFilters,

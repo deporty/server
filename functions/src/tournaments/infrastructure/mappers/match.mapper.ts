@@ -63,6 +63,7 @@ export class MatchMapper extends Mapper<MatchEntity> {
         },
       },
       teamAId: { name: 'team-a-id' },
+      phase: { name: 'phase' },
       teamBId: { name: 'team-b-id' },
       date: { name: 'date', from: (date: Timestamp) => of(date.toDate()) },
       observations: { name: 'observations' },

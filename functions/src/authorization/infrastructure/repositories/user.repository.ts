@@ -5,17 +5,12 @@ import { UserContract } from '../../domain/contracts/user.constract';
 import { BEARER_TOKEN, USERS_SERVER } from '../authorization.constants';
 export class UserRepository extends UserContract {
   getUserInformationByEmail(email: string): Observable<UserEntity> {
-    
-    
-    console.log(USERS_SERVER);
-    console.log(BEARER_TOKEN);
     return new Observable((observer) => {
       axios
         .get<IBaseResponse<UserEntity>>(`${USERS_SERVER}/email/${email}`, {
           headers: {
             Authorization: `Bearer ${BEARER_TOKEN}`,
           },
-  
         })
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<UserEntity>;
@@ -27,12 +22,9 @@ export class UserRepository extends UserContract {
           observer.complete();
         })
         .catch((error: any) => {
-          console.log(error);
           observer.error(error);
         });
     });
-
-
   }
   getUserInformationById(userId: Id): Observable<UserEntity> {
     return new Observable((observer) => {
@@ -41,7 +33,6 @@ export class UserRepository extends UserContract {
           headers: {
             Authorization: `Bearer ${BEARER_TOKEN}`,
           },
-  
         })
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<UserEntity>;

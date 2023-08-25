@@ -51,6 +51,11 @@ import { JWT_SECRET } from './tournaments.constants';
 import { MessagesConfiguration } from '../../core/controller/messages-configuration';
 import { GenerateMainDrawFromSchemaUsecase } from '../domain/usecases/generate-main-draw-from-schema/generate-main-draw-from-schema.usecase';
 import { IsASchemaValidForMainDrawUsecase } from '../domain/usecases/is-a-schema-valid-for-main-draw/is-a-schema-valid-for-main-draw.usecase';
+import { PublishAllMatchesByGroupUsecase } from '../domain/usecases/groups/publish-all-matches-by-group/publish-all-matches-by-group.usecase';
+import { EditNodeMatchUsecase } from '../domain/usecases/main-draw/edit-node-match/edit-node-match.usecase';
+import { CreateNodeMatchUsecase } from '../domain/usecases/main-draw/create-node-match/create-node-match.usecase';
+import { DeleteNodeMatchUsecase } from '../domain/usecases/main-draw/delete-node-match/delete-node-match.usecase';
+import { GetTournamentsForCheckInUsecase } from '../domain/usecases/get-tournaments-for-check-in/get-tournaments-for-check-in.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = 'TOURNAMENT';
@@ -111,6 +116,34 @@ export class TournamentController extends HttpController {
         usecaseParam: params,
       });
     });
+
+    app.get(
+      `/for-check-in`,
+      // validator('GetTournamentByIdUsecase'),
+      (request: Request, response: Response) => {
+        const id = request.params.id;
+
+        const config: MessagesConfiguration = {
+          exceptions: {
+            TournamentDoesNotExistError: 'GET:ERROR',
+          },
+          identifier: this.identifier,
+          successCode: 'GET:SUCCESS',
+          extraData: {
+            name: id,
+          },
+        };
+
+        this.handler<GetTournamentsForCheckInUsecase>({
+          container,
+          usecaseId: 'GetTournamentsForCheckInUsecase',
+          response,
+          messageConfiguration: config,
+          usecaseParam: id,
+        });
+      }
+    );
+
     app.get(`/:tournamentId/grouped-matches`, (request: Request, response: Response) => {
       const params = request.params.tournamentId;
 
@@ -143,6 +176,7 @@ export class TournamentController extends HttpController {
           GroupsAndSchemaDontMatchError: 'GROUPS-AND-SCHEMA-DONT-MATCH:ERROR',
           SchemaNoSelectedError: 'SCHEMA-NO-SELECTED:ERROR',
           TeamsAmmountInClasificationError: 'TEAMS-AMMOUNT-IN-CLASIFICATION:ERROR',
+          ExistNodeMatchesError: 'EXIST-NODE-MATCHES:ERROR',
         },
         successCode: {
           code: 'MAIN-DRAW-GENERATED:SUCCESS',
@@ -236,6 +270,22 @@ export class TournamentController extends HttpController {
       this.handlerController<GetIntergroupMatchesUsecase, any>(container, 'GetIntergroupMatchesUsecase', response, config, undefined, {
         ...params,
         states: request.query.states,
+      });
+    });
+    app.delete(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
+      const params = request.params;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'NODE-MATCH-DELETED:SUCCESS',
+      };
+
+      this.handler<DeleteNodeMatchUsecase>({
+        container,
+        usecaseId: 'DeleteNodeMatchUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
       });
     });
     app.delete(
@@ -662,6 +712,30 @@ export class TournamentController extends HttpController {
         this.handlerController<DeleteGroupByIdUsecase, any>(container, 'DeleteGroupByIdUsecase', response, config, undefined, params);
       }
     );
+    app.post(
+      `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/publish-all-matches`,
+      //TODO: Add this validator when the authorization dashboard get ready
+      //validator('PublishAllMatchesByGroupUsecase'),
+      (request: Request, response: Response) => {
+        const params = request.params;
+        const config: MessagesConfiguration = {
+          exceptions: {
+            GroupDoesNotExist: 'GROUP-NOT-FOUND:ERROR',
+          },
+          identifier: this.identifier,
+
+          successCode: 'MATCHES-PUBLISHED:SUCCESS',
+        };
+
+        this.handler<PublishAllMatchesByGroupUsecase>({
+          container,
+          usecaseId: 'PublishAllMatchesByGroupUsecase',
+          response,
+          messageConfiguration: config,
+          usecaseParam: params,
+        });
+      }
+    );
     app.delete(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/teams`,
       validator('DeleteTeamsInGroupUsecase'),
@@ -1070,59 +1144,54 @@ export class TournamentController extends HttpController {
         params
       );
     });
-    // app.put(`/add-teams-into-group`, (request: Request, response: Response) => {
-    //   const params = request.body;
 
-    //   const config: IMessagesConfiguration = {
-    //     exceptions: {
-    //       MatchWasAlreadyRegistered: 'MATCH-ALREADY-REGISTERED:ERROR',
-    //       StageDoesNotExist: 'STAGE-DOES-NOT-EXIST:ERROR',
-    //       GroupDoesNotExist: 'GROUP-DOES-NOT-EXIST:ERROR',
-    //     },
-    //     identifier: this.identifier,
-    //     errorCodes: {
-    //       'MATCH-ALREADY-REGISTERED:ERROR': '{message}',
-    //       'STAGE-DOES-NOT-EXIST:ERROR': '{message}',
-    //       'GROUP-DOES-NOT-EXIST:ERROR': '{message}',
-    //     },
-    //     successCode: 'TEAM-REGISTERED-INTO-GROUP:SUCCESS',
-    //     extraData: {
-    //       ...params,
-    //     },
-    //   };
+    app.put(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
+      const params = {
+        ...request.body,
+        nodeMatch: {
+          ...request.body.nodeMatch,
+          match: {
+            ...request.body.nodeMatch.match,
+            date: request.body.nodeMatch.match.date ? getDateFromSeconds(request.body.nodeMatch.match.date) : undefined,
+          },
+        },
+      };
 
-    //   this.handlerController<AddTeamsToGroupInsideTournamentUsecase, any>(
-    //     container,
-    //     'AddTeamsToGroupInsideTournamentUsecase',
-    //     response,
-    //     config,
-    //     undefined,
-    //     params
-    //   );
-    // });
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'EDITED-MAIN-DRAW:SUCCESS',
+      };
 
-    // app.put(`/main-draw/node-match`, (request: Request, response: Response) => {
-    //   const params = request.body;
+      this.handler<EditNodeMatchUsecase>({
+        container,
+        usecaseId: 'EditNodeMatchUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
+    });
+    app.post(`/:tournamentId/node-match`, (request: Request, response: Response) => {
+      const params = {
+        tournamentId: request.body.tournamentId,
+        key: request.body.key,
+        level: request.body.level,
+        teamAId: request.body.match.teamAId,
+        teamBId: request.body.match.teamBId,
+      };
 
-    //   const config: IMessagesConfiguration = {
-    //     exceptions: {},
-    //     identifier: this.identifier,
-    //     errorCodes: {},
-    //     successCode: {
-    //       code: 'GET-MAIN-DRAW:SUCCESS',
-    //       message: 'The main draw was returned',
-    //     },
-    //   };
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'NODE-MATCH-CREATED:SUCCESS',
+      };
 
-    //   this.handlerController<EditMatchInMainDrawInsideTournamentUsecase, any>(
-    //     container,
-    //     'EditMatchInMainDrawInsideTournamentUsecase',
-    //     response,
-    //     config,
-    //     undefined,
-    //     params
-    //   );
-    // });
+      this.handler<CreateNodeMatchUsecase>({
+        container,
+        usecaseId: 'CreateNodeMatchUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
+    });
 
     // app.get(`/main-draw/node-match`, (request: Request, response: Response) => {
     //   const params = request.query;
@@ -1220,10 +1289,7 @@ export class TournamentController extends HttpController {
     // });
     app.post(`/`, validator('CreateTournamentUsecase'), (request: Request, response: Response) => {
       const tournament = request.body;
-      console.log('Llego ', tournament);
 
-      const usecase = container.getInstance<any>('FixtureStagesConfigurationMapper').instance;
-      console.log('Usecase::: ', usecase);
       tournament['startsDate'] = new Date(Date.parse(tournament['startsDate']));
 
       const config: IMessagesConfiguration = {

@@ -39,8 +39,6 @@ export function containsOperator<T>(key: string, value: string): (source: Observ
           );
         },
         error: (err) => {
-          console.log('ERROR', err);
-
           return suscriber.error();
         },
         complete: () => suscriber.complete(),
@@ -78,27 +76,18 @@ export function filterWizard<T>(query: Query<DocumentData>, filters?: Filters, m
     query: Query<DocumentData>
   ) {
     let transformKey = key;
-    console.log('Key ', key);
 
     if (!!mapper) {
       if (!mapper.attributesMapper[key]) {
-        console.log('Propiedad no mapeada: ', key);
       } else {
         transformKey = mapper.attributesMapper[key].name;
       }
     }
-    console.log('Transformed Key ', transformKey);
-
-    console.log('Operator ', config);
 
     if (CustomFilterOperators.indexOf(config.operator) == -1) {
-      console.log('\nEs de firebase', config.operator);
-
       query = query.where(transformKey, config.operator as FirebaseFilterOperators, config.value);
       return query;
     } else {
-      console.log('\nEs de Checho', config.operator);
-
       const handler = operatorsHandlerMapper[config.operator];
       if (handler) {
         customOperators.push(handler(transformKey, config.value));

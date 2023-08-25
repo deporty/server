@@ -6,6 +6,7 @@ import { CalculateTournamentCostUsecase } from '../domain/usecases/calculate-tou
 import { CreateMatchSheetUsecase } from '../domain/usecases/create-match-sheet/create-match-sheet.usecase';
 import { CreateTournamentUsecase } from '../domain/usecases/create-tournament/create-tournament.usecase';
 import { DeleteTournamentUsecase } from '../domain/usecases/delete-tournament/delete-tournament.usecase';
+import { EditNodeMatchUsecase } from '../domain/usecases/main-draw/edit-node-match/edit-node-match.usecase';
 import { GetTournamentsByUniqueAttributesUsecase } from '../domain/usecases/exists-tournament/exists-tournament.usecase';
 import { CreateFixtureStageUsecase } from '../domain/usecases/fixture-stages/create-fixture-stage/create-fixture-stage.usecase';
 import { DeleteFixtureStageUsecase } from '../domain/usecases/fixture-stages/delete-fixture-stage/delete-fixture-stage.usecase';
@@ -42,6 +43,7 @@ import { GetGroupByIdUsecase } from '../domain/usecases/groups/get-group-by-id/g
 import { GetGroupByLabelUsecase } from '../domain/usecases/groups/get-group-by-label/get-group-by-label.usecase';
 import { GetGroupsByFixtureStageUsecase } from '../domain/usecases/groups/get-groups-by-fixture-stage/get-groups-by-fixture-stage.usecase';
 import { GetGroupsByTournamentIdUsecase } from '../domain/usecases/groups/get-groups-by-tournament-id/get-groups-by-tournament-id.usecase';
+import { PublishAllMatchesByGroupUsecase } from '../domain/usecases/groups/publish-all-matches-by-group/publish-all-matches-by-group.usecase';
 import { SaveGroupUsecase } from '../domain/usecases/groups/save-group/save-group.usecase';
 import { UpdateGroupUsecase } from '../domain/usecases/groups/update-group/update-group.usecase';
 import { UpdateTeamsInGroupUsecase } from '../domain/usecases/groups/update-teams-in-group/update-teams-in-group.usecase';
@@ -65,6 +67,8 @@ import { UpdatePositionTableUsecase } from '../domain/usecases/update-positions-
 import { UpdateTournamentUsecase } from '../domain/usecases/update-tournament/update-tournament.usecase';
 import { ContractModulesConfig } from './contract-modules-config';
 import { MapperModulesConfig } from './mappers-modules-config';
+import { DeleteNodeMatchUsecase } from '../domain/usecases/main-draw/delete-node-match/delete-node-match.usecase';
+import { GetTournamentsForCheckInUsecase } from '../domain/usecases/get-tournaments-for-check-in/get-tournaments-for-check-in.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -203,6 +207,12 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GetTournamentByIdUsecase',
       kind: GetTournamentByIdUsecase,
+      dependencies: ['TournamentContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetTournamentsForCheckInUsecase',
+      kind: GetTournamentsForCheckInUsecase,
       dependencies: ['TournamentContract'],
       strategy: 'singleton',
     });
@@ -373,6 +383,13 @@ export class TournamentsModulesConfig {
     });
 
     container.add({
+      id: 'PublishAllMatchesByGroupUsecase',
+      kind: PublishAllMatchesByGroupUsecase,
+      dependencies: ['GetGroupMatchesUsecase', 'EditMatchInsideGroupUsecase'],
+      strategy: 'singleton',
+    });
+
+    container.add({
       id: 'CalculateTournamentCostUsecase',
       kind: CalculateTournamentCostUsecase,
       strategy: 'singleton',
@@ -424,12 +441,18 @@ export class TournamentsModulesConfig {
     //   strategy: 'singleton',
     // });
 
-    // container.add({
-    //   id: 'EditMatchInMainDrawInsideTournamentUsecase',
-    //   kind: EditMatchInMainDrawInsideTournamentUsecase,
-    //   dependencies: ['TournamentContract', 'FileAdapter'],
-    //   strategy: 'singleton',
-    // });
+    container.add({
+      id: 'EditNodeMatchUsecase',
+      kind: EditNodeMatchUsecase,
+      dependencies: ['NodeMatchContract', 'FileAdapter'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'DeleteNodeMatchUsecase',
+      kind: DeleteNodeMatchUsecase,
+      dependencies: ['NodeMatchContract'],
+      strategy: 'singleton',
+    });
     // container.add({
     //   id: 'GetMatchInMainDrawInsideTournamentUsecase',
     //   kind: GetMatchInMainDrawInsideTournamentUsecase,
@@ -601,7 +624,12 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GenerateMainDrawFromSchemaUsecase',
       kind: GenerateMainDrawFromSchemaUsecase,
-      dependencies: ['GetGroupsByTournamentIdUsecase', 'GetTournamentByIdUsecase', 'CreateNodeMatchUsecase'],
+      dependencies: [
+        'GetGroupsByTournamentIdUsecase',
+        'GetTournamentByIdUsecase',
+        'CreateNodeMatchUsecase',
+        'GetMainDrawNodeMatchesoverviewUsecase',
+      ],
       strategy: 'singleton',
     });
     container.add({
