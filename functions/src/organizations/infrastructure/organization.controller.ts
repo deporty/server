@@ -1,5 +1,5 @@
 import { Express, Request, Response } from 'express';
-import { BaseController, IMessagesConfiguration, readyHandler } from '../../core/controller/controller';
+import { IMessagesConfiguration, readyHandler } from '../../core/controller/controller';
 import { Container } from '../../core/DI';
 import { GetOrganizationWhereExistsMemberEmailUsecase } from '../domain/usecases/get-organization-where-exists-member-email.usecase';
 import { GetOrganizationWhereExistsMemberIdUsecase } from '../domain/usecases/get-organization-where-exists-member-id.usecase';
