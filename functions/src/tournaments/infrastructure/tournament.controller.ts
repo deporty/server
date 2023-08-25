@@ -116,6 +116,34 @@ export class TournamentController extends HttpController {
         usecaseParam: params,
       });
     });
+
+    app.get(
+      `/for-check-in`,
+      // validator('GetTournamentByIdUsecase'),
+      (request: Request, response: Response) => {
+        const id = request.params.id;
+
+        const config: MessagesConfiguration = {
+          exceptions: {
+            TournamentDoesNotExistError: 'GET:ERROR',
+          },
+          identifier: this.identifier,
+          successCode: 'GET:SUCCESS',
+          extraData: {
+            name: id,
+          },
+        };
+
+        this.handler<GetTournamentsForCheckInUsecase>({
+          container,
+          usecaseId: 'GetTournamentsForCheckInUsecase',
+          response,
+          messageConfiguration: config,
+          usecaseParam: id,
+        });
+      }
+    );
+
     app.get(`/:tournamentId/grouped-matches`, (request: Request, response: Response) => {
       const params = request.params.tournamentId;
 
@@ -973,32 +1001,6 @@ export class TournamentController extends HttpController {
         };
 
         this.handlerController<GetTournamentByIdUsecase, any>(container, 'GetTournamentByIdUsecase', response, config, undefined, id);
-      }
-    );
-    app.get(
-      `/for-check-in`,
-      // validator('GetTournamentByIdUsecase'),
-      (request: Request, response: Response) => {
-        const id = request.params.id;
-
-        const config: MessagesConfiguration = {
-          exceptions: {
-            TournamentDoesNotExistError: 'GET:ERROR',
-          },
-          identifier: this.identifier,
-          successCode: 'GET:SUCCESS',
-          extraData: {
-            name: id,
-          },
-        };
-
-        this.handler<GetTournamentsForCheckInUsecase>({
-          container,
-          usecaseId: 'GetTournamentsForCheckInUsecase',
-          response,
-          messageConfiguration: config,
-          usecaseParam: id,
-        });
       }
     );
 

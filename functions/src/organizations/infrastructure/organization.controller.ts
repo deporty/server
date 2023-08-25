@@ -10,8 +10,10 @@ import { GetOrganizationByIdUsecase } from '../domain/usecases/get-organization-
 import { GetTournamentLayoutByIdUsecase } from '../domain/usecases/get-tournament-layout-by-id/get-tournament-layout-by-id.usecase';
 import { EditTournamentLayoutUsecase } from '../domain/usecases/edit-tournament-layout/edit-tournament-layout.usecase';
 import { TournamentLayoutEntity } from '@deporty-org/entities/organizations';
+import { HttpController } from '../../core/controller/http-controller';
+import { MessagesConfiguration } from '../../core/controller/messages-configuration';
 
-export class OrganizationController extends BaseController {
+export class OrganizationController extends HttpController {
   constructor() {
     super();
   }
@@ -110,25 +112,21 @@ export class OrganizationController extends BaseController {
     app.get(`/:organizationId`, (request: Request, response: Response) => {
       const organizationId = request.params.organizationId;
 
-      const config: IMessagesConfiguration = {
+      const config: MessagesConfiguration = {
         exceptions: {
           OrganizationNotFoundError: 'DOES-NOT-EXIST:ERROR',
         },
         identifier: this.identifier,
-        errorCodes: {
-          'DOES-NOT-EXIST:ERROR': '{message}',
-        },
         successCode: 'GET-BY-ID:SUCCESS',
       };
 
-      this.handlerController<GetOrganizationByIdUsecase, any>(
+      this.handler<GetOrganizationByIdUsecase>({
         container,
-        'GetOrganizationByIdUsecase',
+        usecaseId: 'GetOrganizationByIdUsecase',
         response,
-        config,
-        undefined,
-        organizationId
-      );
+        messageConfiguration: config,
+        usecaseParam: organizationId,
+      });
     });
 
     app.get(`/:organizationId/tournament-layout/:tournamentLayoutId`, (request: Request, response: Response) => {
