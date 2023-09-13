@@ -20,6 +20,8 @@ jobs:
 
       - name: Install npm 6
         run: npm install -g npm@6
+      - name: Install typescript
+        run: npm install -g typescript@4.5.4
 
       - name: SET UP PYTHON 
         uses: actions/setup-python@v3
