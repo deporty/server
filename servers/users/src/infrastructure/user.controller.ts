@@ -1,5 +1,8 @@
-import { Express, Request, Response } from 'express';
+import { Container } from '@scifamek-open-source/iraca/dependency-injection';
+import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
+import { Request, Response, Router } from 'express';
 import { AsignRolesToUserUsecase } from '../domain/usecases/asign-roles-to-user/asign-roles-to-user.usecase';
+import { GetTeamsThatIBelongUsecase } from '../domain/usecases/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
 import { GetUsersByFiltersUsecase } from '../domain/usecases/get-user-by-filters/get-user-by-filters.usecase';
 import { GetUserByIdUsecase, UserDoesNotExistByIdError } from '../domain/usecases/get-user-by-id/get-user-by-id.usecase';
 import {
@@ -12,10 +15,7 @@ import {
 } from '../domain/usecases/get-user-information-by-full-name/get-user-information-by-full-name.usecase';
 import { GetUsersByIdsUsecase } from '../domain/usecases/get-users-by-ids/get-users-by-ids.usecase';
 import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
-import { GetTeamsThatIBelongUsecase } from '../domain/usecases/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
-import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
 import { SERVER_NAME } from './users.constants';
-import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -24,10 +24,10 @@ export class UserController extends HttpController {
     super();
   }
 
-  static registerEntryPoints(app: Express, container: Container) {
-    app.get(`/ready`, this.readyHandler as any);
+  static registerEntryPoints(router: Router, container: Container) {
+    router.get(`/ready`, this.readyHandler as any);
 
-    app.get(`/email/:email`, (request: Request, response: Response) => {
+    router.get(`/email/:email`, (request: Request, response: Response) => {
       const email = request.params.email;
 
       const config: MessagesConfiguration = {
@@ -50,7 +50,7 @@ export class UserController extends HttpController {
       });
     });
 
-    app.get(`/teams-that-i-belong/:email`, (request: Request, response: Response) => {
+    router.get(`/teams-that-i-belong/:email`, (request: Request, response: Response) => {
       const email = request.params.email;
 
       const config: MessagesConfiguration = {
@@ -67,7 +67,7 @@ export class UserController extends HttpController {
       });
     });
 
-    app.get(`/fullname`, (request: Request, response: Response) => {
+    router.get(`/fullname`, (request: Request, response: Response) => {
       const params = request.query;
       const config: MessagesConfiguration = {
         exceptions: {
@@ -90,7 +90,7 @@ export class UserController extends HttpController {
       });
     });
 
-    app.get(`/filters`, (request: Request, response: Response) => {
+    router.get(`/filters`, (request: Request, response: Response) => {
       const query: any = { ...request.query, roles: [request.query.roles] };
 
       const config: MessagesConfiguration = {
@@ -110,7 +110,7 @@ export class UserController extends HttpController {
       });
     });
 
-    app.get(`/ids`, (request: Request, response: Response) => {
+    router.get(`/ids`, (request: Request, response: Response) => {
       const ids = request.query.ids;
 
       const config: MessagesConfiguration = {
@@ -129,7 +129,7 @@ export class UserController extends HttpController {
         usecaseParam: ids,
       });
     });
-    app.get(`/:id`, (request: Request, response: Response) => {
+    router.get(`/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -152,7 +152,7 @@ export class UserController extends HttpController {
       });
     });
 
-    app.get(`/`, (request: Request, response: Response) => {
+    router.get(`/`, (request: Request, response: Response) => {
       const query: any = request.query;
       const params = {
         pageSize: parseInt(query.pageSize),
@@ -176,7 +176,7 @@ export class UserController extends HttpController {
       });
     });
 
-    app.put(`/assign-roles`, (request: Request, response: Response) => {
+    router.put(`/assign-roles`, (request: Request, response: Response) => {
       const params = request.body;
 
       const config: MessagesConfiguration = {

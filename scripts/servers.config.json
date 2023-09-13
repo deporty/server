@@ -1,0 +1,234 @@
+{
+  "authorization": {
+    "name": "authorization",
+    "namespace": "default",
+    "ingress-path": "authorization",
+    "enabled": true,
+    "port": 10001,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 2,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 5,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  },
+  "invoices": {
+    "name": "invoices",
+    "namespace": "default",
+    "ingress-path": "invoices",
+    "enabled": false,
+    "port": 10002,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 2,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 5,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  },
+  "locations": {
+    "name": "locations",
+    "namespace": "default",
+    "ingress-path": "locations",
+    "enabled": true,
+    "port": 10003,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 2,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 5,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  },
+  "news": {
+    "name": "news",
+    "namespace": "default",
+    "ingress-path": "news",
+    "enabled": false,
+    "port": 10004,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 2,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 5,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  },
+  "organizations": {
+    "name": "organizations",
+    "namespace": "default",
+    "ingress-path": "organizations",
+    "enabled": true,
+    "port": 10005,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 2,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 5,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  },
+  "teams": {
+    "name": "teams",
+    "namespace": "default",
+    "ingress-path": "teams",
+    "enabled": true,
+    "port": 10006,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 2,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 5,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  },
+  "tournaments": {
+    "name": "tournaments",
+    "namespace": "default",
+    "ingress-path": "tournaments",
+    "enabled": true,
+    "port": 10007,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 2,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 5,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  },
+  "users": {
+    "name": "users",
+    "namespace": "default",
+    "ingress-path": "users",
+    "enabled": true,
+    "port": 10008,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 2,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 5,
+        "cpu": "10m",
+        "memory": "100Mi",
+        "cpu-limits": "20m",
+        "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  }
+}

@@ -42,9 +42,9 @@ const server = http.createServer((request, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, user-token, authorization');
   const headers = request.headers;
   if (serversMapper[identifier]) {
-    const tail = String(request.url).replace('/' + identifier, '');
+    const tail = String(request.url);
     const configuration = serversMapper[identifier];
-    const path = 'http://127.0.0.1:' + configuration.port + tail;
+    const path = 'http://localhost:' + configuration.port + tail;
 
     if (['POST', 'PUT', 'PATCH'].includes(request.method)) {
       let body = '';
@@ -54,10 +54,8 @@ const server = http.createServer((request, res) => {
       request.on('end', () => {
         console.log();
         console.log({
-          path,
-          tail,
-          identifier,
           method: request.method,
+          url: path,
           data: JSON.parse(body),
         });
         console.log();
@@ -75,18 +73,15 @@ const server = http.createServer((request, res) => {
           .catch((error) => {
             console.error('Error:', error.toString());
             res.end();
+          })
+          .finally(() => {
           });
       });
     } else {
-      console.log();
       console.log({
-        path,
-        tail,
-        identifier,
-        headers,
         method: request.method,
+        url: path,
       });
-      console.log();
       axios({
         method: request.method,
         url: path,
@@ -99,6 +94,8 @@ const server = http.createServer((request, res) => {
         .catch((error) => {
           console.error('Error:', error.toString());
           res.end();
+        })
+        .finally(() => {
         });
     }
   } else {

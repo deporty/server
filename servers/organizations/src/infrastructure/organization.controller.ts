@@ -1,28 +1,28 @@
-import { Express, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 
-import { GetOrganizationWhereExistsMemberEmailUsecase } from '../domain/usecases/get-organization-where-exists-member-email.usecase';
-import { GetOrganizationWhereExistsMemberIdUsecase } from '../domain/usecases/get-organization-where-exists-member-id.usecase';
-import { GetOrganizationsUsecase } from '../domain/usecases/get-organizations/get-organizations.usecase';
-import { GetTournamentLayoutsByOrganizationIdUsecase } from '../domain/usecases/get-tournament-layouts-by-organization-id/get-tournament-layouts-by-organization-id.usecase';
+import { TournamentLayoutEntity } from '@deporty-org/entities/organizations';
+import { Container } from '@scifamek-open-source/iraca/dependency-injection';
+import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
 import {
   CreateTournamentLayoutUsecase,
   TournamentLayoutAlreadyExistsError,
 } from '../domain/usecases/create-tournament-layout/create-tournament-layout.usecase';
 import {
+  EditTournamentLayoutUsecase,
+  TournamentLayoutDoesNotExistsError,
+} from '../domain/usecases/edit-tournament-layout/edit-tournament-layout.usecase';
+import {
   GetOrganizationByIdUsecase,
   OrganizationNotFoundError,
 } from '../domain/usecases/get-organization-by-id/get-organization-by-id.usecase';
+import { GetOrganizationWhereExistsMemberEmailUsecase } from '../domain/usecases/get-organization-where-exists-member-email.usecase';
+import { GetOrganizationWhereExistsMemberIdUsecase } from '../domain/usecases/get-organization-where-exists-member-id.usecase';
+import { GetOrganizationsUsecase } from '../domain/usecases/get-organizations/get-organizations.usecase';
 import {
   GetTournamentLayoutByIdUsecase,
   TournamentLayoutNotFoundError,
 } from '../domain/usecases/get-tournament-layout-by-id/get-tournament-layout-by-id.usecase';
-import {
-  EditTournamentLayoutUsecase,
-  TournamentLayoutDoesNotExistsError,
-} from '../domain/usecases/edit-tournament-layout/edit-tournament-layout.usecase';
-import { TournamentLayoutEntity } from '@deporty-org/entities/organizations';
-import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
-import { Container } from '@scifamek-open-source/iraca/dependency-injection';
+import { GetTournamentLayoutsByOrganizationIdUsecase } from '../domain/usecases/get-tournament-layouts-by-organization-id/get-tournament-layouts-by-organization-id.usecase';
 import { SERVER_NAME } from './organizations.constants';
 
 export class OrganizationController extends HttpController {
@@ -32,10 +32,10 @@ export class OrganizationController extends HttpController {
 
   static identifier = SERVER_NAME;
 
-  static registerEntryPoints(app: Express, container: Container) {
-    app.get(`/ready`, this.readyHandler as any);
+  static registerEntryPoints(router: Router, container: Container) {
+    router.get(`/ready`, this.readyHandler as any);
 
-    app.get(`/`, (request: Request, response: Response) => {
+    router.get(`/`, (request: Request, response: Response) => {
       const params = request.query;
       const config: MessagesConfiguration = {
         exceptions: {
@@ -63,7 +63,7 @@ export class OrganizationController extends HttpController {
       });
     });
 
-    app.get(`/member/:id`, (request: Request, response: Response) => {
+    router.get(`/member/:id`, (request: Request, response: Response) => {
       const memberId = request.params.id;
       const config: MessagesConfiguration = {
         exceptions: {
@@ -88,7 +88,7 @@ export class OrganizationController extends HttpController {
       });
     });
 
-    app.get(`/member/email/:email`, (request: Request, response: Response) => {
+    router.get(`/member/email/:email`, (request: Request, response: Response) => {
       const email = request.params.email;
       const config: MessagesConfiguration = {
         exceptions: {
@@ -109,7 +109,7 @@ export class OrganizationController extends HttpController {
         usecaseParam: email,
       });
     });
-    app.get(`/:organizationId/tournament-layouts`, (request: Request, response: Response) => {
+    router.get(`/:organizationId/tournament-layouts`, (request: Request, response: Response) => {
       const organizationId = request.params.organizationId;
 
       const config: MessagesConfiguration = {
@@ -125,7 +125,7 @@ export class OrganizationController extends HttpController {
         usecaseParam: organizationId,
       });
     });
-    app.get(`/:organizationId`, (request: Request, response: Response) => {
+    router.get(`/:organizationId`, (request: Request, response: Response) => {
       const organizationId = request.params.organizationId;
 
       const config: MessagesConfiguration = {
@@ -145,7 +145,7 @@ export class OrganizationController extends HttpController {
       });
     });
 
-    app.get(`/:organizationId/tournament-layout/:tournamentLayoutId`, (request: Request, response: Response) => {
+    router.get(`/:organizationId/tournament-layout/:tournamentLayoutId`, (request: Request, response: Response) => {
       const params = request.params;
 
       const config: MessagesConfiguration = {
@@ -164,7 +164,7 @@ export class OrganizationController extends HttpController {
         usecaseParam: params,
       });
     });
-    app.post(`/tournament-layout`, (request: Request, response: Response) => {
+    router.post(`/tournament-layout`, (request: Request, response: Response) => {
       const body = request.body;
 
       const config: MessagesConfiguration = {
@@ -188,7 +188,7 @@ export class OrganizationController extends HttpController {
         usecaseParam: body,
       });
     });
-    app.patch(`/tournament-layout`, (request: Request, response: Response) => {
+    router.patch(`/tournament-layout`, (request: Request, response: Response) => {
       const body: TournamentLayoutEntity = {
         ...request.body,
       };

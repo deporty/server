@@ -1,7 +1,8 @@
+import { IsAuthorizedUserMiddleware } from '@deporty-org/core';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { getDateFromSeconds } from '@scifamek-open-source/iraca/helpers';
 import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
-import { Express, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import { of } from 'rxjs';
 import { AddTeamsToTournamentUsecase, TeamsArrayEmptyError } from '../domain/usecases/add-team-to-tournament/add-teams-to-tournament.usecase';
 import { AddTeamsToGroupInsideTournamentUsecase, TeamAreNotRegisteredError, TeamAreRegisteredInOtherGroupError, ThereAreTeamRegisteredPreviuslyError } from '../domain/usecases/add-teams-to-group-inside-tournament/add-teams-to-group-inside-tournament.usecase';
@@ -54,7 +55,6 @@ import { DeleteRegisteredTeamByIdUsecase } from '../domain/usecases/registered-t
 import { GetRegisteredTeamsByTournamentIdUsecase } from '../domain/usecases/registered-team/get-registered-teams-by-tournaments/get-registered-teams-by-tournaments.usecase';
 import { ModifyRegisteredTeamStatusUsecase } from '../domain/usecases/registered-team/modify-registered-team-status/modify-registered-team-status.usecase';
 import { JWT_SECRET, SERVER_NAME } from './tournaments.constants';
-import { IsAuthorizedUserMiddleware } from '@deporty-org/core';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -63,15 +63,15 @@ export class TournamentController extends HttpController {
     super();
   }
 
-  static registerEntryPoints(app: Express, container: Container) {
+  static registerEntryPoints(router: Router, container: Container) {
     const authorizedUserMiddleware = container.getInstance<IsAuthorizedUserMiddleware>('IsAuthorizedUserMiddleware').instance;
 
     const validator = (resourceName: string) =>
       authorizedUserMiddleware ? authorizedUserMiddleware.getValidator(resourceName, JWT_SECRET) : () => of(false);
 
-    app.get(`/ready`, this.readyHandler as any);
+    router.get(`/ready`, this.readyHandler as any);
 
-    app.put(`/match-sheet`, (request: Request, response: Response) => {
+    router.put(`/match-sheet`, (request: Request, response: Response) => {
       const params = request.body;
 
       const config: MessagesConfiguration = {
@@ -91,7 +91,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(
+    router.get(
       `/for-check-in`,
       // validator('GetTournamentByIdUsecase'),
       (request: Request, response: Response) => {
@@ -118,7 +118,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.get(`/:tournamentId/grouped-matches`, (request: Request, response: Response) => {
+    router.get(`/:tournamentId/grouped-matches`, (request: Request, response: Response) => {
       const params = request.params.tournamentId;
 
       const config: MessagesConfiguration = {
@@ -138,7 +138,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.put(`/:tournamentId/generate-main-draw`, (request: Request, response: Response) => {
+    router.put(`/:tournamentId/generate-main-draw`, (request: Request, response: Response) => {
       const params = request.params.tournamentId;
 
       const config: MessagesConfiguration = {
@@ -163,7 +163,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(`/matches-by-referee-id/:refereeId`, (request: Request, response: Response) => {
+    router.get(`/matches-by-referee-id/:refereeId`, (request: Request, response: Response) => {
       const params = request.params.refereeId;
 
       const config: MessagesConfiguration = {
@@ -184,7 +184,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.post(
+    router.post(
       `/:tournamentId/fixture-stage/:fixtureStageId/intergroup-match`,
       validator('AddIntergroupMatchUsecase'),
       (request: Request, response: Response) => {
@@ -210,7 +210,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.get(`/:tournamentId/fixture-stage/:fixtureStageId/intergroup-match`, (request: Request, response: Response) => {
+    router.get(`/:tournamentId/fixture-stage/:fixtureStageId/intergroup-match`, (request: Request, response: Response) => {
       const params = request.params;
 
       const config: MessagesConfiguration = {
@@ -234,7 +234,7 @@ export class TournamentController extends HttpController {
         },
       });
     });
-    app.delete(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
+    router.delete(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
       const params = request.params;
 
       const config: MessagesConfiguration = {
@@ -250,7 +250,7 @@ export class TournamentController extends HttpController {
         usecaseParam: params,
       });
     });
-    app.delete(
+    router.delete(
       `/:tournamentId/fixture-stage/:fixtureStageId/intergroup-match/:intergroupMatchId`,
       validator('DeleteIntergroupMatchUsecase'),
       (request: Request, response: Response) => {
@@ -275,7 +275,7 @@ export class TournamentController extends HttpController {
         });
       }
     );
-    app.patch(
+    router.patch(
       `/:tournamentId/fixture-stage/:fixtureStageId/intergroup-match`,
       validator('EditIntergroupMatchUsecase'),
 
@@ -309,7 +309,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.get(`/markers-table/:id`, (request: Request, response: Response) => {
+    router.get(`/markers-table/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -328,7 +328,7 @@ export class TournamentController extends HttpController {
         usecaseParam: id,
       });
     });
-    app.get(`/by-position`, validator('GetTournamentsByRatioUsecase'), (request: Request, response: Response) => {
+    router.get(`/by-position`, validator('GetTournamentsByRatioUsecase'), (request: Request, response: Response) => {
       const params = request.query;
 
       const id = request.params.id;
@@ -356,7 +356,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.put(`/:id/cost`, validator('CalculateTournamentCostByIdUsecase'), (request: Request, response: Response) => {
+    router.put(`/:id/cost`, validator('CalculateTournamentCostByIdUsecase'), (request: Request, response: Response) => {
       const id = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -378,7 +378,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.put(`/add-team`, validator('AddTeamsToTournamentUsecase'), (request: Request, response: Response) => {
+    router.put(`/add-team`, validator('AddTeamsToTournamentUsecase'), (request: Request, response: Response) => {
       const params = request.body;
 
       const config: MessagesConfiguration = {
@@ -406,7 +406,7 @@ export class TournamentController extends HttpController {
         usecaseParam: params,
       });
     });
-    app.post(`/is-a-schema-valid-for-main-draw`, (request: Request, response: Response) => {
+    router.post(`/is-a-schema-valid-for-main-draw`, (request: Request, response: Response) => {
       const schema = request.body;
 
       const config: MessagesConfiguration = {
@@ -423,7 +423,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(`/available-teams-to-add/:id`, validator('GetPosibleTeamsToAddUsecase'), (request: Request, response: Response) => {
+    router.get(`/available-teams-to-add/:id`, validator('GetPosibleTeamsToAddUsecase'), (request: Request, response: Response) => {
       const tournamentId = request.params.id;
       const query = request.query;
 
@@ -450,7 +450,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(`/`, validator('GetTournamentsUsecase'), (request: Request, response: Response) => {
+    router.get(`/`, validator('GetTournamentsUsecase'), (request: Request, response: Response) => {
       const params = request.query;
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -465,7 +465,7 @@ export class TournamentController extends HttpController {
         usecaseParam: params,
       });
     });
-    app.get(`/current-tournaments`, (request: Request, response: Response) => {
+    router.get(`/current-tournaments`, (request: Request, response: Response) => {
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         successCode: 'GET:SUCCESS',
@@ -478,7 +478,7 @@ export class TournamentController extends HttpController {
         messageConfiguration: config,
       });
     });
-    app.get(`/get-matches-by-date/:date`, (request: Request, response: Response) => {
+    router.get(`/get-matches-by-date/:date`, (request: Request, response: Response) => {
       const date = new Date(request.params.date);
 
       const config: MessagesConfiguration = {
@@ -495,7 +495,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(`/by-organization-and-tournament-layout`, (request: Request, response: Response) => {
+    router.get(`/by-organization-and-tournament-layout`, (request: Request, response: Response) => {
       const params: any = request.query;
       params['includeDraft'] = params['includeDraft'] == 'true';
       const config: MessagesConfiguration = {
@@ -514,7 +514,7 @@ export class TournamentController extends HttpController {
         usecaseParam: params,
       });
     });
-    app.delete(`/:tournamentLayoutId`, validator('DeleteTournamentUsecase'), (request: Request, response: Response) => {
+    router.delete(`/:tournamentLayoutId`, validator('DeleteTournamentUsecase'), (request: Request, response: Response) => {
       const params = request.params.tournamentLayoutId;
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -530,7 +530,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(`/:id/fixture-stages`, (request: Request, response: Response) => {
+    router.get(`/:id/fixture-stages`, (request: Request, response: Response) => {
       const id = request.params.id;
       const config: MessagesConfiguration = {
         exceptions: {},
@@ -548,7 +548,7 @@ export class TournamentController extends HttpController {
         usecaseParam: id,
       });
     });
-    app.post(`/:id/fixture-stage`, validator('CreateFixtureStageUsecase'), (request: Request, response: Response) => {
+    router.post(`/:id/fixture-stage`, validator('CreateFixtureStageUsecase'), (request: Request, response: Response) => {
       const body = request.body;
       const config: MessagesConfiguration = {
         exceptions: {
@@ -571,7 +571,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(`/:tournamentId/fixture-stage/:fixtureStageId/groups`, (request: Request, response: Response) => {
+    router.get(`/:tournamentId/fixture-stage/:fixtureStageId/groups`, (request: Request, response: Response) => {
       const params = request.params;
 
       const config: MessagesConfiguration = {
@@ -589,7 +589,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.delete(
+    router.delete(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId`,
       validator('DeleteGroupByIdUsecase'),
       (request: Request, response: Response) => {
@@ -613,7 +613,7 @@ export class TournamentController extends HttpController {
         });
       }
     );
-    app.post(
+    router.post(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/publish-all-matches`,
       //TODO: Add this validator when the authorization dashboard get ready
       //validator('PublishAllMatchesByGroupUsecase'),
@@ -637,7 +637,7 @@ export class TournamentController extends HttpController {
         });
       }
     );
-    app.delete(
+    router.delete(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/teams`,
       validator('DeleteTeamsInGroupUsecase'),
       (request: Request, response: Response) => {
@@ -666,7 +666,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.post(
+    router.post(
       `/:tournamentId/fixture-stage/:fixtureStageId/group`,
       validator('SaveGroupUsecase'),
       (request: Request, response: Response) => {
@@ -692,7 +692,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.get(
+    router.get(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId`,
       validator('GetGroupByIdUsecase'),
       (request: Request, response: Response) => {
@@ -720,7 +720,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.patch(
+    router.patch(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId`,
       validator('UpdateGroupUsecase'),
       (request: Request, response: Response) => {
@@ -752,7 +752,7 @@ export class TournamentController extends HttpController {
         });
       }
     );
-    app.patch(
+    router.patch(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/udpate-teams`,
       validator('UpdateTeamsInGroupUsecase'),
       (request: Request, response: Response) => {
@@ -786,7 +786,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.get(`/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/matches`, (request: Request, response: Response) => {
+    router.get(`/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/matches`, (request: Request, response: Response) => {
       const params = request.params;
 
       const config: MessagesConfiguration = {
@@ -807,7 +807,7 @@ export class TournamentController extends HttpController {
         },
       });
     });
-    app.delete(
+    router.delete(
       `/:tournamentId/fixture-stage/:fixtureStageId`,
       validator('DeleteFixtureStageUsecase'),
       (request: Request, response: Response) => {
@@ -830,7 +830,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.get(`/:id/registered-teams`, (request: Request, response: Response) => {
+    router.get(`/:id/registered-teams`, (request: Request, response: Response) => {
       const params = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -849,7 +849,7 @@ export class TournamentController extends HttpController {
         usecaseParam: params,
       });
     });
-    app.delete(
+    router.delete(
       `/:tournamentId/registered-teams/:registeredTeamId`,
       validator('DeleteRegisteredTeamByIdUsecase'),
       (request: Request, response: Response) => {
@@ -872,7 +872,7 @@ export class TournamentController extends HttpController {
         });
       }
     );
-    app.patch(
+    router.patch(
       `/:tournamentId/registered-team/:registeredTeamId/modify-status`,
       validator('ModifyRegisteredTeamStatusUsecase'),
       (request: Request, response: Response) => {
@@ -906,7 +906,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.get(
+    router.get(
       `/:id`,
       // validator('GetTournamentByIdUsecase'),
       (request: Request, response: Response) => {
@@ -934,7 +934,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.put(
+    router.put(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/match`,
       validator('EditMatchInsideGroupUsecase'),
       (request: Request, response: Response) => {
@@ -972,7 +972,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.post(
+    router.post(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/match`,
       validator('AddMatchToGroupInsideTournamentUsecase'),
       (request: Request, response: Response) => {
@@ -1003,7 +1003,7 @@ export class TournamentController extends HttpController {
         });
       }
     );
-    app.patch(
+    router.patch(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/complete-matches`,
       validator('AddMatchToGroupInsideTournamentUsecase'),
       (request: Request, response: Response) => {
@@ -1035,7 +1035,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.put(`/add-teams-into-group`, validator('AddTeamsToGroupInsideTournamentUsecase'), (request: Request, response: Response) => {
+    router.put(`/add-teams-into-group`, validator('AddTeamsToGroupInsideTournamentUsecase'), (request: Request, response: Response) => {
       const params = request.body;
 
       const config: MessagesConfiguration = {
@@ -1061,7 +1061,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.put(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
+    router.put(`/:tournamentId/node-match/:nodeMatchId`, (request: Request, response: Response) => {
       const params = {
         ...request.body,
         nodeMatch: {
@@ -1086,7 +1086,7 @@ export class TournamentController extends HttpController {
         usecaseParam: params,
       });
     });
-    app.post(`/:tournamentId/node-match`, (request: Request, response: Response) => {
+    router.post(`/:tournamentId/node-match`, (request: Request, response: Response) => {
       const params = {
         tournamentId: request.body.tournamentId,
         key: request.body.key,
@@ -1109,7 +1109,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(`/:id/main-draw`, (request: Request, response: Response) => {
+    router.get(`/:id/main-draw`, (request: Request, response: Response) => {
       const tournamentId = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -1129,7 +1129,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.get(
+    router.get(
       `/:tournamentId/fixture-stage/:fixtureStageId/group/:groupId/positions-table`,
       validator('GetPositionsTableByGroupUsecase'),
       (request: Request, response: Response) => {
@@ -1153,7 +1153,7 @@ export class TournamentController extends HttpController {
       }
     );
 
-    app.post(`/`, validator('CreateTournamentUsecase'), (request: Request, response: Response) => {
+    router.post(`/`, validator('CreateTournamentUsecase'), (request: Request, response: Response) => {
       const tournament = request.body;
 
       tournament['startsDate'] = new Date(Date.parse(tournament['startsDate']));
@@ -1181,7 +1181,7 @@ export class TournamentController extends HttpController {
         usecaseParam: tournament,
       });
     });
-    app.get(`/:id/register-qr`, validator('GetRegisterTeamQRUsecase'), (request: Request, response: Response) => {
+    router.get(`/:id/register-qr`, validator('GetRegisterTeamQRUsecase'), (request: Request, response: Response) => {
       const tournament = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -1198,7 +1198,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    app.patch(`/:id/modify-status`, validator('ModifyTournamentStatusUsecase'), (request: Request, response: Response) => {
+    router.patch(`/:id/modify-status`, validator('ModifyTournamentStatusUsecase'), (request: Request, response: Response) => {
       const body = request.body;
       const data = {
         ...body,
@@ -1224,7 +1224,7 @@ export class TournamentController extends HttpController {
         usecaseParam: data,
       });
     });
-    app.patch(`/:id/modify-locations`, validator('ModifyTournamentLocationsUsecase'), (request: Request, response: Response) => {
+    router.patch(`/:id/modify-locations`, validator('ModifyTournamentLocationsUsecase'), (request: Request, response: Response) => {
       const body = request.body;
       const data = {
         ...body,
@@ -1247,7 +1247,7 @@ export class TournamentController extends HttpController {
         usecaseParam: data,
       });
     });
-    app.patch(`/:id/modify-referees`, validator('ModifyTournamentRefereesUsecase'), (request: Request, response: Response) => {
+    router.patch(`/:id/modify-referees`, validator('ModifyTournamentRefereesUsecase'), (request: Request, response: Response) => {
       const body = request.body;
       const data = {
         ...body,

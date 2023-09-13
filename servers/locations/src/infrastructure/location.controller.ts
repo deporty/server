@@ -1,13 +1,13 @@
-import { Express, Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 
 import { GetLocationByIdUsecase, LocationDoesNotExistError } from '../domain/usecases/get-locations-by-id/get-location-by-id.usecase';
 import { GetLocationsByIdsUsecase } from '../domain/usecases/get-locations-by-ids/get-locations-by-ids.usecase';
 
-import { GetLocationsUsecase } from '../domain/usecases/get-locations/get-locations.usecase';
-import { GetLocationsByRatioUsecase } from '../domain/usecases/get-locations-by-ratio/get-locations-by-ratio.usecase';
-import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
-import { SERVER_NAME } from './locations.constants';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
+import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
+import { GetLocationsByRatioUsecase } from '../domain/usecases/get-locations-by-ratio/get-locations-by-ratio.usecase';
+import { GetLocationsUsecase } from '../domain/usecases/get-locations/get-locations.usecase';
+import { SERVER_NAME } from './locations.constants';
 
 export class LocationController extends HttpController {
   constructor() {
@@ -16,10 +16,10 @@ export class LocationController extends HttpController {
 
   static identifier = SERVER_NAME;
 
-  static registerEntryPoints(app: Express, container: Container) {
-    app.get(`/ready`, this.readyHandler as any);
+  static registerEntryPoints(router: Router, container: Container) {
+    router.get(`/ready`, this.readyHandler as any);
 
-    app.get(`/`, (request: Request, response: Response) => {
+    router.get(`/`, (request: Request, response: Response) => {
       const params = request.query;
 
       const config: MessagesConfiguration = {
@@ -42,7 +42,7 @@ export class LocationController extends HttpController {
       });
     });
 
-    app.get(`/ids`, (request: Request, response: Response) => {
+    router.get(`/ids`, (request: Request, response: Response) => {
       const params = request.query;
       const ids = (params.ids as string)?.split(',').map((x) => x.trim());
       const config: MessagesConfiguration = {
@@ -61,7 +61,7 @@ export class LocationController extends HttpController {
         usecaseParam: ids,
       });
     });
-    app.get(`/ratio`, (request: Request, response: Response) => {
+    router.get(`/ratio`, (request: Request, response: Response) => {
       const params = request.query;
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -85,7 +85,7 @@ export class LocationController extends HttpController {
         },
       });
     });
-    app.get(`/:id`, (request: Request, response: Response) => {
+    router.get(`/:id`, (request: Request, response: Response) => {
       const params = request.params;
       const id = params.id;
       const config: MessagesConfiguration = {

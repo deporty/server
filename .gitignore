@@ -6,9 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 firebase-debug.log*
 firebase-debug.*.log*
-
+Dockerfile.*
+scripts/logs
 # Firebase cache
 .firebase/
+**/__pycache__
+scripts/*-service-deployment.yaml
+scripts/ingress.yaml
 
 # Firebase config
 

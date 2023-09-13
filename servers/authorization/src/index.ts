@@ -15,6 +15,7 @@ import { env } from '../environments/env';
 import express = require('express');
 import cors = require('cors');
 import bodyParser = require('body-parser');
+import { Router } from 'express';
 
 const logger = require('logger').createLogger('development.log');
 
@@ -60,8 +61,6 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
   override: FirebaseDataSource,
 });
 
-
-
 GENERAL_DEPENDENCIES_CONTAINER.add({
   id: 'FileAdapter',
   kind: FileAdapter,
@@ -69,11 +68,14 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
   dependencies: ['FirebaseStorage'],
   override: FileRepository,
 });
+
 const app = express();
+const router = Router();
+
 app.use(cors());
 
-app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true ,}));
 
 RoleModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
 PermissionModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
@@ -86,7 +88,11 @@ AuthorizationModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
 //   .instance.getValidator();
 // app.use(middleware);
 
-AuthorizationController.registerEntryPoints(app, GENERAL_DEPENDENCIES_CONTAINER);
+AuthorizationController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);
+
+app.use('/authorization', router);
+
 app.listen(10001, () => {
   logger.info('Starting authorization');
+  console.log('Starting authorization');
 });

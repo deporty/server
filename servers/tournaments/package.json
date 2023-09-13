@@ -11,7 +11,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@deporty-org/core": "file:../../packages/core/dist",
+    "@deporty-org/core": "1.0.0",
     "firebase-admin": "^11.0.0",
     "@scifamek-open-source/iraca": "^2.0.1",
     "@deporty-org/entities": "^0.16.3",

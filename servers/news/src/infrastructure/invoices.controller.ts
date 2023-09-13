@@ -1,6 +1,6 @@
-import { Express } from 'express';
-import { HttpController } from '@scifamek-open-source/iraca/web-api';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
+import { HttpController } from '@scifamek-open-source/iraca/web-api';
+import { Router } from 'express';
 // import { GetTournamentsInvoiceByOrganizerUsecase } from '../usecases/get-tournament-bill-by-organizer/get-tournament-invoice-by-organizer.usecase';
 
 export class NewsController extends HttpController {
@@ -10,8 +10,8 @@ export class NewsController extends HttpController {
     super();
   }
 
-  static registerEntryPoints(app: Express, container: Container) {
-    app.get(`/ready`, this.readyHandler as any);
+  static registerEntryPoints(router: Router, container: Container) {
+    router.get(`/ready`, this.readyHandler as any);
 
     // app.get(`/:organizationId`, (request: Request, response: Response) => {
     //   const document = request.params.organizationId;

@@ -1,6 +1,9 @@
 import os
 import shutil
-os.system('npm run compile')
+import subprocess
+
+res = subprocess.check_output('cd .. && tsc -p tsconfig.json',  shell=True, text=True)
+
 
 files = [
     {
@@ -15,4 +18,4 @@ files = [
 for f in files:
     shutil.copyfile(f['original'], f['target'])
 
-
+print(res)

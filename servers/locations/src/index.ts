@@ -1,18 +1,19 @@
+import { of } from 'rxjs';
+import { AuthorizationContract } from './domain/contracts/authorization.contract';
 import { LocationController } from './infrastructure/location.controller';
 import { LocationsModulesConfig } from './locations-modules.config';
-import { AuthorizationContract } from './domain/contracts/authorization.contract';
-import { of } from 'rxjs';
 
+import { FileRepository, FirebaseDataSource, IsKeyPresentMiddleware } from '@deporty-org/core';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
-import { FirebaseDataSource, FileRepository, IsKeyPresentMiddleware } from '@deporty-org/core';
+import { DataSource, FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
+import { Router } from 'express';
 import { cert, initializeApp } from 'firebase-admin/app';
+import { Auth, getAuth } from 'firebase-admin/auth';
+import { Firestore, getFirestore } from 'firebase-admin/firestore';
+import { Storage, getStorage } from 'firebase-admin/storage';
 import { env } from '../environments/env';
 import express = require('express');
 import cors = require('cors');
-import { Firestore, getFirestore } from 'firebase-admin/firestore';
-import { getStorage, Storage } from 'firebase-admin/storage';
-import { Auth, getAuth } from 'firebase-admin/auth';
-import { DataSource, FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import bodyParser = require('body-parser');
 
 const logger = require('logger').createLogger('development.log');
@@ -67,11 +68,11 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
   override: FileRepository,
 });
 const app = express();
+const router = Router();
 app.use(cors());
 
-
-app.use(bodyParser.json()); 
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 LocationsModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
 
@@ -102,7 +103,9 @@ if (middleware) {
   app.use(middleware);
 }
 
-LocationController.registerEntryPoints(app, GENERAL_DEPENDENCIES_CONTAINER);
+LocationController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);
+
+app.use('/locations', router);
 
 app.listen(10003, () => {
   logger.info('Starting locations');

@@ -1,8 +1,8 @@
-import { Express, Request, Response } from 'express';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
-import { GetRoleByIdUsecase, RoleDoesNotExistError } from '../domain/usecases/get-role-by-id.usecase';
+import { Request, Response, Router } from 'express';
 import { SERVER_NAME } from '../../infrastructure/authorization.constants';
+import { GetRoleByIdUsecase, RoleDoesNotExistError } from '../domain/usecases/get-role-by-id.usecase';
 
 export class RoleController extends HttpController {
   static identifier = SERVER_NAME;
@@ -11,8 +11,8 @@ export class RoleController extends HttpController {
     super();
   }
 
-  static registerEntryPoints(app: Express, container: Container) {
-    app.get(`/role/:id`, (request: Request, response: Response) => {
+  static registerEntryPoints(router: Router, container: Container) {
+    router.get(`/role/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
       const config: MessagesConfiguration = {
         exceptions: {

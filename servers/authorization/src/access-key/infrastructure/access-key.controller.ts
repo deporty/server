@@ -1,8 +1,8 @@
-import { Express, Request, Response } from 'express';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
-import { IsAValidAccessKeyUsecase } from '../domain/usecases/is-a-valid-access-key/is-a-valid-access-key.usecase';
+import { Request, Response, Router } from 'express';
 import { SERVER_NAME } from '../../infrastructure/authorization.constants';
+import { IsAValidAccessKeyUsecase } from '../domain/usecases/is-a-valid-access-key/is-a-valid-access-key.usecase';
 
 export class AccessKeyController extends HttpController {
   static identifier = SERVER_NAME;
@@ -11,8 +11,8 @@ export class AccessKeyController extends HttpController {
     super();
   }
 
-  static registerEntryPoints(app: Express, container: Container) {
-    app.get(`/access-key/:accessKey`, (request: Request, response: Response) => {
+  static registerEntryPoints(router: Router, container: Container) {
+    router.get(`/access-key/:accessKey`, (request: Request, response: Response) => {
       const accessKey = request.params.accessKey;
 
       const config: MessagesConfiguration = {

@@ -1,7 +1,6 @@
 export const ACCESS_KEY_ENTITY = 'access-keys';
 export const SERVER_NAME = 'AUTHORIZATION';
 
-// export const SERVER = 'https://us-central1-deporty-dev.cloudfunctions.net'
 export const SERVER = 'http://127.0.0.1:10000';
 
 export const USERS_SERVER = `${SERVER}/users`;

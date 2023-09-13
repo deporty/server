@@ -11,6 +11,7 @@ import { getStorage, Storage } from 'firebase-admin/storage';
 import { Auth, getAuth } from 'firebase-admin/auth';
 import { DataSource, FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import bodyParser = require('body-parser');
+import { Router } from 'express';
 
 const logger = require('logger').createLogger('development.log');
 
@@ -64,6 +65,7 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
   override: FileRepository,
 });
 const app = express();
+const router = Router();
 app.use(cors());
 
 app.use(bodyParser.json()); 
@@ -75,7 +77,12 @@ InvoicesModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
 //   .getInstance<IsKeyPresentMiddleware>('IsKeyPresentMiddleware')
 //   .instance.getValidator();
 // app.use(middleware);
-InvoicesController.registerEntryPoints(app, GENERAL_DEPENDENCIES_CONTAINER);
+
+InvoicesController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);
+
+
+app.use('/invoices', router);
+
 app.listen(10002, () => {
   logger.info('Starting invoices');
 });

@@ -13,6 +13,7 @@ import { getStorage, Storage } from 'firebase-admin/storage';
 import { Auth, getAuth } from 'firebase-admin/auth';
 import { DataSource, FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import bodyParser = require('body-parser');
+import { Router } from 'express';
 
 const logger = require('logger').createLogger('development.log');
 
@@ -66,6 +67,7 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
   override: FileRepository,
 });
 const app = express();
+const router = Router();
 app.use(cors());
 
 app.use(bodyParser.json());
@@ -98,7 +100,9 @@ const middleware = GENERAL_DEPENDENCIES_CONTAINER.getInstance<IsKeyPresentMiddle
 if (middleware) {
   app.use(middleware);
 }
-UserController.registerEntryPoints(app, GENERAL_DEPENDENCIES_CONTAINER);
+UserController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);
+
+app.use('/users', router);
 
 app.listen(10008, () => {
   logger.info('Starting users');

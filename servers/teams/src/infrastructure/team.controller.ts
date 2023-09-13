@@ -1,8 +1,10 @@
 import { Request, Response, Router } from 'express';
 
+import { IsAuthorizedUserMiddleware } from '@deporty-org/core';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
 import { of } from 'rxjs';
+import { CreateTeamUsecase, TeamNameAlreadyExistsError } from '../domain/usecases/create-team/create-team.usecase';
 import { DeleteTeamUsecase } from '../domain/usecases/delete-team/delete-team.usecase';
 import { GetMemberByIdUsecase, MemberDoesNotExistError } from '../domain/usecases/get-member-by-id/get-member-by-id.usecase';
 import { GetMembersByTeamUsecase } from '../domain/usecases/get-members-by-team/get-members-by-team.usecase';
@@ -13,8 +15,6 @@ import { GetTeamByAdvancedFiltersUsecase } from '../domain/usecases/get-teams-by
 import { GetTeamByFiltersUsecase } from '../domain/usecases/get-teams-by-filters/get-teams-by-filters.usecase';
 import { GetTeamsUsecase } from '../domain/usecases/get-teams/get-teams.usecase';
 import { JWT_SECRET, SERVER_NAME } from './teams.constants';
-import { IsAuthorizedUserMiddleware } from '@deporty-org/core';
-import { CreateTeamUsecase, TeamNameAlreadyExistsError } from '../domain/usecases/create-team/create-team.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -23,13 +23,13 @@ export class TeamController extends HttpController {
 
   static identifier = SERVER_NAME;
 
-  static registerEntryPoints(app: Router, container: Container) {
+  static registerEntryPoints(router: Router, container: Container) {
     const middleware = container.getInstance<IsAuthorizedUserMiddleware>('IsAuthorizedUserMiddleware').instance;
     const validator = (i: string) => (middleware ? middleware.getValidator(i, JWT_SECRET) : () => of(false));
 
-    app.get(`/ready`, this.readyHandler as any);
+    router.get(`/ready`, this.readyHandler as any);
 
-    app.delete(`/:id`, (request: Request, response: Response) => {
+    router.delete(`/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -49,7 +49,7 @@ export class TeamController extends HttpController {
       });
     });
 
-    app.get(`/all`, validator('GetTeamsUsecase'), (request: Request, response: Response) => {
+    router.get(`/all`, validator('GetTeamsUsecase'), (request: Request, response: Response) => {
       const params = request.query;
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -70,7 +70,7 @@ export class TeamController extends HttpController {
         },
       });
     });
-    app.get(`/filter`, (request: Request, response: Response) => {
+    router.get(`/filter`, (request: Request, response: Response) => {
       const params = request.query;
 
       const config: MessagesConfiguration = {
@@ -89,7 +89,7 @@ export class TeamController extends HttpController {
         usecaseParam: params,
       });
     });
-    app.post(`/advanced-filter`, (request: Request, response: Response) => {
+    router.post(`/advanced-filter`, (request: Request, response: Response) => {
       const params = request.body;
 
       const config: MessagesConfiguration = {
@@ -109,7 +109,7 @@ export class TeamController extends HttpController {
       });
     });
 
-    app.get(`/name/:name`, (request: Request, response: Response) => {
+    router.get(`/name/:name`, (request: Request, response: Response) => {
       const name = request.params.name;
 
       const config: MessagesConfiguration = {
@@ -135,7 +135,7 @@ export class TeamController extends HttpController {
       });
     });
 
-    app.get(`/:id/members`, (request: Request, response: Response) => {
+    router.get(`/:id/members`, (request: Request, response: Response) => {
       const id = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -158,7 +158,7 @@ export class TeamController extends HttpController {
         usecaseParam: id,
       });
     });
-    app.get(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
+    router.get(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
       const params = request.params;
 
       const config: MessagesConfiguration = {
@@ -181,7 +181,7 @@ export class TeamController extends HttpController {
       });
     });
 
-    app.get(`/:id`, (request: Request, response: Response) => {
+    router.get(`/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -207,7 +207,7 @@ export class TeamController extends HttpController {
         usecaseParam: id,
       });
     });
-    app.get(`/sport/:id`, (request: Request, response: Response) => {
+    router.get(`/sport/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
 
       const config: MessagesConfiguration = {
@@ -233,7 +233,7 @@ export class TeamController extends HttpController {
       });
     });
 
-    app.post(`/`, (request: Request, response: Response) => {
+    router.post(`/`, (request: Request, response: Response) => {
       const team = request.body;
 
       const config: MessagesConfiguration = {

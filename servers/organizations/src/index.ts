@@ -12,7 +12,8 @@ import { Firestore, getFirestore } from 'firebase-admin/firestore';
 import { getStorage, Storage } from 'firebase-admin/storage';
 import { Auth, getAuth } from 'firebase-admin/auth';
 import { DataSource, FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
-const bodyParser = require('body-parser'); 
+import { Router } from 'express';
+const bodyParser = require('body-parser');
 const logger = require('logger').createLogger('development.log');
 
 const firebaseApp = initializeApp({
@@ -90,6 +91,7 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
 });
 
 const app = express();
+const router = Router();
 app.use(cors());
 
 app.use(bodyParser.json()); // Para JSON
@@ -100,8 +102,8 @@ if (middleware) {
   app.use(middleware);
 }
 
-OrganizationController.registerEntryPoints(app, GENERAL_DEPENDENCIES_CONTAINER);
-
+OrganizationController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);
+app.use('/organizations', router);
 app.listen(10005, () => {
   logger.info('Starting organizations');
 });
