@@ -40,6 +40,7 @@ jobs:
         run: |
           git status
           git log --oneline -n 20
+          git log -3
       - name: DEPLOY
         run: |
           cd scripts
