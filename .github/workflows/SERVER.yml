@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: CHECKOUT 
         uses: actions/checkout@v2
+      - name: PRINT
+        run: |
+          git status
+          git log --oneline -n 20
       - name: USE NODE.JS 
         uses: actions/setup-node@v3
         with:
