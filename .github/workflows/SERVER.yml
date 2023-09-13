@@ -44,10 +44,12 @@ jobs:
       #     cd functions/scripts
       #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
 
-      - name: deploy to cluster
-        uses: steebchen/kubectl@v2.0.0
+      # - name: deploy to cluster
+      #   uses: steebchen/kubectl@v2.0.0
       - name: CONFIG ALIAS
         run: |
+          gcloud components install gke-gcloud-auth-plugin
+
           gcloud container clusters get-credentials autopilot-cluster-1 --region southamerica-east1 --project deporty-dev
           kubectl apply -f authorization-service-deployment.yaml
           alias python=python3
