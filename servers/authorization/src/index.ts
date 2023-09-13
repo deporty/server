@@ -27,6 +27,7 @@ const firebaseApp = initializeApp({
 
 const db: Firestore = getFirestore(firebaseApp);
 
+
 db.settings({ ignoreUndefinedProperties: true });
 
 const storage: Storage = getStorage(firebaseApp);
