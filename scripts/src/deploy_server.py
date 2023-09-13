@@ -31,7 +31,10 @@ def build_servers(servers_to_deploy, server_configurations, current_kubernetes_c
       print("Omiting deployment: " + config['name'])
     
   ingress_path = get_ingress_template(server_configurations)
-
+  command = f'kubectl apply -f {ingress_path}'
+  res = subprocess.check_output(command,  shell=True, text=True)
+    
+  print(res)
 
 def deploy_server(server_config, version, current_kubernetes_configuration):
     project = current_kubernetes_configuration['project']
@@ -78,11 +81,6 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     cloud_tag =  upload_image(tag, project,server_config,logger, current_kubernetes_configuration)
     server_config['image'] = cloud_tag
     
-    ingress = kube(server_config, logger)
+    kube(server_config, logger)
     
     
-    command = f'kubectl apply -f {ingress}'
-    res = subprocess.check_output(command,  shell=True, text=True)
-      
-    logger.log(res)
-    logger.save()
