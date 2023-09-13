@@ -9,3 +9,5 @@ class Logger:
   def save(self,):
     with open(self.route, 'w') as f:
       f.write('\n'.join(self.__log_content__))
+  def content(self,):
+    return '\n'.join(self.__log_content__)

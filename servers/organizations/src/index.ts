@@ -102,7 +102,6 @@ if (middleware) {
   app.use(middleware);
 }
 
-
 OrganizationController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);
 app.use('/organizations', router);
 app.listen(10005, () => {

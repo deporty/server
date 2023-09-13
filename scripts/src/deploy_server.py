@@ -84,4 +84,6 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     
     kube(server_config, logger)
     
+    print(logger.content())
+    
     

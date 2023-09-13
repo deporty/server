@@ -54,7 +54,6 @@ GENERAL_DEPENDENCIES_CONTAINER.addValue({
   value: storage,
 });
 
-
 GENERAL_DEPENDENCIES_CONTAINER.add({
   id: 'DataSource',
   kind: DataSource,
