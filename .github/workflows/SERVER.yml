@@ -36,6 +36,12 @@ jobs:
         run: |
           cd scripts
           python3 deploy.py
+      - name: LOGS
+        run: |
+          for archivo in /scripts/logs/*; do
+            echo "Contenido de $archivo:"
+            cat "$archivo"
+          done
 
   # BUILD_AND_DEPLOY_PDN:
   #   runs-on: ubuntu-latest

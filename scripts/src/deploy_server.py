@@ -74,5 +74,8 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     ingress = kube(server_config, logger)
     
     
-
-    res = subprocess.check_output(f'kubectl apply -f {ingress}',  shell=True, text=True)
+    command = f'kubectl apply -f {ingress}'
+    res = subprocess.check_output(command,  shell=True, text=True)
+      
+    logger.log(res)
+    logger.save()
