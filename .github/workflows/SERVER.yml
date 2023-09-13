@@ -45,6 +45,7 @@ jobs:
       #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
       - name: CONFIG ALIAS
         run: |
+          gcloud container clusters get-credentials autopilot-cluster-1 --region southamerica-east1 --project deporty-dev
           alias python=python3
           alias py=python3
         # cd servers/authorization && npm run build 
