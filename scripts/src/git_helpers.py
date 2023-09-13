@@ -9,7 +9,7 @@ def get_last_commit():
 def get_changed_files(commit_hash):
 
     a = subprocess.check_output(
-        'git diff --name-only ' + commit_hash,  shell=True, text=True)
+        'git diff --name-only HEAD~1 HEAD',  shell=True, text=True)
     b = a.split('\n')
 
     def delete_exceptions(x):
