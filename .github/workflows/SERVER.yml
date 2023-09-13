@@ -40,6 +40,8 @@ jobs:
           alias py=python3
       - name: DEPLOY
         run: |
+          alias python=python3
+          alias py=python3
           cd scripts
           python3 deploy.py
       - name: LOGS
