@@ -45,7 +45,7 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     
     logger = Logger(SERVICE_LOG_FOLDER)
     logger.log('Building service ' + server_config['name'])
-    command = 'cd ../servers/' + server_config['name'] + '&& npm run build'
+    command = 'cd ../servers/' + server_config['name'] + ' && npm run build'
     
     
     logger.log(command)
