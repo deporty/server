@@ -1,0 +1,18 @@
+{
+  "dev": {
+    "cluster": "autopilot-cluster-1",
+    "region": "southamerica-east1",
+    "repository": "deporty-server",
+    "service-account": "service-account-dev.json",
+    "project": "deporty-dev",
+    "ip": "http://34.107.159.12"
+  },
+  "pdn": {
+    "cluster": "autopilot-cluster-1",
+    "region": "southamerica-east1",
+    "service-account": "service-account-pdn.json",
+    "repository": "deporty-server",
+    "project": "deporty-app",
+    "ip": "http://34.107.159.12"
+  }
+}
