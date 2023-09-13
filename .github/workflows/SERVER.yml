@@ -13,10 +13,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: PRINT
-        run: |
-          git status
-          git log --oneline -n 20
       - name: USE NODE.JS 
         uses: actions/setup-node@v3
         with:
@@ -38,11 +34,10 @@ jobs:
       #   run: |
       #     cd functions/scripts
       #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
-      - name: PRINT
+      - name: CONFIG ALIAS
         run: |
-          git status
-          git log --oneline -n 20
-          git log -3
+          alias python=python3
+          alias py=python3
       - name: DEPLOY
         run: |
           cd scripts
