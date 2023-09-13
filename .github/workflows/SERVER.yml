@@ -35,7 +35,7 @@ jobs:
       - name: DEPLOY
         run: |
           cd scripts
-          py deploy.py
+          python3 deploy.py
 
   # BUILD_AND_DEPLOY_PDN:
   #   runs-on: ubuntu-latest
