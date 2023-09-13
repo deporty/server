@@ -27,7 +27,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0.2
         with:
           project_id: deporty-dev
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
+          service_account_key: db4c3fe04c601ff8a4678d60a68ad56de93a334e
           export_default_credentials: true
 
       - name: SET UP PYTHON 
