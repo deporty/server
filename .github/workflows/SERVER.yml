@@ -62,7 +62,7 @@ jobs:
           python3 deploy.py
       - name: LOGS
         run: |
-          for archivo in /scripts/logs/*; do
+          for archivo in /logs/*; do
             echo "Contenido de $archivo:"
             cat "$archivo"
           done
