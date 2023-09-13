@@ -32,6 +32,10 @@ jobs:
       #   run: |
       #     cd functions/scripts
       #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
+      - name: PRINT
+        run: |
+          git status
+          git log --oneline -n 20
       - name: DEPLOY
         run: |
           cd scripts
