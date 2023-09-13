@@ -47,18 +47,21 @@ def upload_image(tag, project,server_config,logger, current_kubernetes_configura
 
   logger.log(f"\Renaming from {tag} to {image_cloud_name}")
   logger.log(command2)
+  print(command2)
   res2 = subprocess.check_output (command2, shell=True, text=True)
   logger.log(res2)
   logger.save()
   
   logger.log(f"\nConfiguring cloud registry {image_cloud_name}")
   logger.log(command3)
+  print(command3)
   res3 = subprocess.check_output (command3, shell=True, text=True)
   logger.log(res3)
   logger.save()
   
   logger.log(f"\nUploading image ")
   logger.log(command4)
+  print(command4)
   res4 = subprocess.check_output (command4, shell=True, text=True)
   logger.log(res4)
   logger.save()
