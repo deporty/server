@@ -1,7 +1,7 @@
 import os
 import shutil
 import subprocess    
-
+os.command('cd .. && npx tsc -p tsconfig.json')
 res = subprocess.check_output('cd .. && npx tsc -p tsconfig.json',  shell=True, text=True)
 
 
