@@ -2,7 +2,7 @@ import os
 import shutil
 import subprocess
 
-res = subprocess.check_output('cd .. && tsc -p tsconfig.json',  shell=True, text=True)
+res = subprocess.check_output('cd .. && npx tsc -p tsconfig.json',  shell=True, text=True)
 
 
 files = [
