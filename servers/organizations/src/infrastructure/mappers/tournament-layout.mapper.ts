@@ -92,6 +92,9 @@ export class RequiredDocConfigMapper extends Mapper<RequiredDocConfig> {
       name: {
         name: 'name',
       },
+      identifier: {
+        name: 'identifier',
+      },
       description: {
         name: 'description',
       },

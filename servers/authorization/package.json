@@ -8,6 +8,7 @@
     "build": "cd scripts && python3 build.py",
     "compile": "tsc -p tsconfig.json",
     "start:dev": "nodemon",
+    "tu": "dir",
     "start": "node src/index.js"
   },
   "dependencies": {
