@@ -1,6 +1,7 @@
 export const TEAMS_ENTITY = 'teams';
 export const SERVER_NAME = 'TEAM';
 export const MEMBERS_ENTITY = 'members';
+export const TOURNAMENT_INSCRIPTIONS_ENTITY = 'tournament-inscriptions';
 export const SPORTS_ENTITY = 'sports';
 
 

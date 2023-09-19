@@ -15,6 +15,7 @@ import { GetTeamByAdvancedFiltersUsecase } from '../domain/usecases/get-teams-by
 import { GetTeamByFiltersUsecase } from '../domain/usecases/get-teams-by-filters/get-teams-by-filters.usecase';
 import { GetTeamsUsecase } from '../domain/usecases/get-teams/get-teams.usecase';
 import { JWT_SECRET, SERVER_NAME } from './teams.constants';
+import { GetTournamentInscriptionsByTeamIdUsecase } from '../domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -156,6 +157,19 @@ export class TeamController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: id,
+      });
+    });
+    router.get(`/:teamId/tournament-inscriptions`, (request: Request, response: Response) => {
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'TOURNAMENT-INSCRIPTIONS-GOTTEN:SUCCESS',
+      };
+      this.handler<GetTournamentInscriptionsByTeamIdUsecase>({
+        container,
+        usecaseId: 'GetTournamentInscriptionsByTeamIdUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: request.params.teamId,
       });
     });
     router.get(`/:teamId/member/:memberId`, (request: Request, response: Response) => {

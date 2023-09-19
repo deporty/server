@@ -1,11 +1,10 @@
-import { MemberEntity } from '@deporty-org/entities';
-import { RegisteredTeamEntity } from '@deporty-org/entities/tournaments';
+import { MemberEntity, TournamentInscriptionEntity } from '@deporty-org/entities/teams';
 import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of, zip } from 'rxjs';
-import { MemberMapper } from './member.mapper';
+import { MemberMapper } from '../member.mapper';
 
-export class RegisteredTeamMapper extends Mapper<RegisteredTeamEntity> {
+export class TournamentInscriptionMapper extends Mapper<TournamentInscriptionEntity> {
   constructor(private memberMapper: MemberMapper) {
     super();
     this.attributesMapper = {

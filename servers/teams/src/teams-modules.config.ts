@@ -23,6 +23,10 @@ import { TeamRepository } from './infrastructure/repository/team.repository';
 import { UserRepository } from './infrastructure/repository/user.repository';
 import { SportMapper } from './infrastructure/sport.mapper';
 import { TeamMapper } from './infrastructure/team.mapper';
+import { TournamentInscriptionMapper } from './infrastructure/mappers/tournament-inscription.mapper';
+import { TournamentInscriptionContract } from './domain/contracts/tournament-inscription.contract';
+import { TournamentInscriptionRepository } from './infrastructure/repository/tournament-inscription.repository';
+import { GetTournamentInscriptionsByTeamIdUsecase } from './domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
 
 
 export class TeamsModulesConfig {
@@ -38,6 +42,13 @@ export class TeamsModulesConfig {
     container.add({
       id: 'MemberMapper',
       kind: MemberMapper,
+      strategy: 'singleton',
+    });
+
+    
+    container.add({
+      id: 'TournamentInscriptionMapper',
+      kind: TournamentInscriptionMapper,
       strategy: 'singleton',
     });
 
@@ -60,22 +71,22 @@ export class TeamsModulesConfig {
       override: AuthorizationRepository,
       strategy: 'singleton',
     });
-
     container.add({
-      id: 'GetSportByIdUsecase',
-      kind: GetSportByIdUsecase,
+      id: 'TournamentInscriptionContract',
+      kind: TournamentInscriptionContract,
+      override: TournamentInscriptionRepository,
       strategy: 'singleton',
-      dependencies: ['SportContract'],
     });
 
-
+    
+    
     container.add({
       id: 'TeamMapper',
       kind: TeamMapper,
       strategy: 'singleton',
       dependencies: ['FileAdapter'],
     });
-
+    
     container.add({
       id: 'TeamContract',
       kind: TeamContract,
@@ -90,6 +101,12 @@ export class TeamsModulesConfig {
       dependencies: ['Firestore', 'MemberMapper'],
       strategy: 'singleton',
     });
+    container.add({
+      id: 'GetSportByIdUsecase',
+      kind: GetSportByIdUsecase,
+      strategy: 'singleton',
+      dependencies: ['SportContract'],
+    });
 
     container.add({
       id: 'GetTeamByNameUsecase',
@@ -101,6 +118,12 @@ export class TeamsModulesConfig {
       id: 'GetTeamByAdvancedFiltersUsecase',
       kind: GetTeamByAdvancedFiltersUsecase,
       dependencies: ['TeamContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetTournamentInscriptionsByTeamIdUsecase',
+      kind: GetTournamentInscriptionsByTeamIdUsecase,
+      dependencies: ['TournamentInscriptionContract'],
       strategy: 'singleton',
     });
     container.add({
