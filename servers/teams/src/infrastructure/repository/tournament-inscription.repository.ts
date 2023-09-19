@@ -1,10 +1,18 @@
 import { TournamentInscriptionEntity } from '@deporty-org/entities';
 import { Filters } from '@scifamek-open-source/iraca/domain';
+import { Firestore } from 'firebase-admin/firestore';
 import { Observable } from 'rxjs';
 import { AccessParams, TournamentInscriptionContract } from '../../domain/contracts/tournament-inscription.contract';
+import { TournamentInscriptionMapper } from '../mappers/tournament-inscription.mapper';
 import { TEAMS_ENTITY, TOURNAMENT_INSCRIPTIONS_ENTITY } from '../teams.constants';
 
 export class TournamentInscriptionRepository extends TournamentInscriptionContract {
+  static entity = TOURNAMENT_INSCRIPTIONS_ENTITY;
+
+  constructor(protected datasource: Firestore, protected mapper: TournamentInscriptionMapper) {
+    super(datasource, mapper);
+  }
+
   delete(accessParams: AccessParams, id: string): Observable<void> {
     return super.innerDelete([
       { collection: TEAMS_ENTITY, id: accessParams.teamId },

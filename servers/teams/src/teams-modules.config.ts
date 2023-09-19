@@ -28,7 +28,6 @@ import { TournamentInscriptionContract } from './domain/contracts/tournament-ins
 import { TournamentInscriptionRepository } from './infrastructure/repository/tournament-inscription.repository';
 import { GetTournamentInscriptionsByTeamIdUsecase } from './domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
 
-
 export class TeamsModulesConfig {
   static config(container: Container) {
     container.add({
@@ -38,14 +37,12 @@ export class TeamsModulesConfig {
       dependencies: [],
     });
 
-    
     container.add({
       id: 'MemberMapper',
       kind: MemberMapper,
       strategy: 'singleton',
     });
 
-    
     container.add({
       id: 'TournamentInscriptionMapper',
       kind: TournamentInscriptionMapper,
@@ -75,18 +72,18 @@ export class TeamsModulesConfig {
       id: 'TournamentInscriptionContract',
       kind: TournamentInscriptionContract,
       override: TournamentInscriptionRepository,
+      dependencies: ['Firestore', 'TournamentInscriptionMapper'],
+
       strategy: 'singleton',
     });
 
-    
-    
     container.add({
       id: 'TeamMapper',
       kind: TeamMapper,
       strategy: 'singleton',
       dependencies: ['FileAdapter'],
     });
-    
+
     container.add({
       id: 'TeamContract',
       kind: TeamContract,
@@ -176,12 +173,7 @@ export class TeamsModulesConfig {
     container.add({
       id: 'CreateTeamUsecase',
       kind: CreateTeamUsecase,
-      dependencies: [
-        'TeamContract',
-        'GetTeamByNameUsecase',
-        'EditTeamUsecase',
-        'FileAdapter',
-      ],
+      dependencies: ['TeamContract', 'GetTeamByNameUsecase', 'EditTeamUsecase', 'FileAdapter'],
       strategy: 'singleton',
     });
 
