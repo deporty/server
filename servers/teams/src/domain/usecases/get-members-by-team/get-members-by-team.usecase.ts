@@ -7,7 +7,7 @@ import { UserContract } from '../../contracts/user.constract';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 
 export class GetMembersByTeamUsecase extends Usecase<string, Array<MemberDescriptionType>> {
-  constructor(public memberContract: MemberContract, private userContract: UserContract) {
+  constructor(private memberContract: MemberContract, private userContract: UserContract) {
     super();
   }
 

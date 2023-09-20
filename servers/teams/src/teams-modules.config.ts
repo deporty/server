@@ -27,6 +27,8 @@ import { TournamentInscriptionMapper } from './infrastructure/mappers/tournament
 import { TournamentInscriptionContract } from './domain/contracts/tournament-inscription.contract';
 import { TournamentInscriptionRepository } from './infrastructure/repository/tournament-inscription.repository';
 import { GetTournamentInscriptionsByTeamIdUsecase } from './domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
+import { OrganizationContract } from './domain/contracts/organization.contract';
+import { OrganizationRepository } from './infrastructure/repository/organization.repository';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -46,6 +48,7 @@ export class TeamsModulesConfig {
     container.add({
       id: 'TournamentInscriptionMapper',
       kind: TournamentInscriptionMapper,
+      dependencies: ['MemberMapper'],
       strategy: 'singleton',
     });
 
@@ -66,6 +69,13 @@ export class TeamsModulesConfig {
       id: 'AuthorizationContract',
       kind: AuthorizationContract,
       override: AuthorizationRepository,
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'OrganizationContract',
+      kind: OrganizationContract,
+      override: OrganizationRepository,
+
       strategy: 'singleton',
     });
     container.add({

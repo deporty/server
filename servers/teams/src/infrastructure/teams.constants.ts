@@ -10,6 +10,7 @@ export const SERVER = 'http://127.0.0.1:10000';
 
 export const USERS_SERVER = `${SERVER}/users`;
 export const AUTHORIZATION_SERVER = `${SERVER}/authorization`;
+export const ORGANIZATION_SERVER = `${SERVER}/organizations`;
 
 
 export const BEARER_TOKEN = 'f599e916-841b-4a1b-aa0a-65fefcaadf09'
