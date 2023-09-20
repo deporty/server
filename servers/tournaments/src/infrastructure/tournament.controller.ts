@@ -4,8 +4,16 @@ import { getDateFromSeconds } from '@scifamek-open-source/iraca/helpers';
 import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
 import { Request, Response, Router } from 'express';
 import { of } from 'rxjs';
-import { AddTeamsToTournamentUsecase, TeamsArrayEmptyError } from '../domain/usecases/add-team-to-tournament/add-teams-to-tournament.usecase';
-import { AddTeamsToGroupInsideTournamentUsecase, TeamAreNotRegisteredError, TeamAreRegisteredInOtherGroupError, ThereAreTeamRegisteredPreviuslyError } from '../domain/usecases/add-teams-to-group-inside-tournament/add-teams-to-group-inside-tournament.usecase';
+import {
+  AddTeamsToTournamentUsecase,
+  TeamsArrayEmptyError,
+} from '../domain/usecases/add-team-to-tournament/add-teams-to-tournament.usecase';
+import {
+  AddTeamsToGroupInsideTournamentUsecase,
+  TeamAreNotRegisteredError,
+  TeamAreRegisteredInOtherGroupError,
+  ThereAreTeamRegisteredPreviuslyError,
+} from '../domain/usecases/add-teams-to-group-inside-tournament/add-teams-to-group-inside-tournament.usecase';
 import { CalculateTournamentCostByIdUsecase } from '../domain/usecases/calculate-tournament-cost-by-id/calculate-tournament-cost-by-id.usecase';
 import { CreateMatchSheetUsecase } from '../domain/usecases/create-match-sheet/create-match-sheet.usecase';
 import { CreateTournamentUsecase } from '../domain/usecases/create-tournament/create-tournament.usecase';
@@ -55,6 +63,7 @@ import { DeleteRegisteredTeamByIdUsecase } from '../domain/usecases/registered-t
 import { GetRegisteredTeamsByTournamentIdUsecase } from '../domain/usecases/registered-team/get-registered-teams-by-tournaments/get-registered-teams-by-tournaments.usecase';
 import { ModifyRegisteredTeamStatusUsecase } from '../domain/usecases/registered-team/modify-registered-team-status/modify-registered-team-status.usecase';
 import { JWT_SECRET, SERVER_NAME } from './tournaments.constants';
+import { GetTournamentBaseInformationByIdUsecase } from '../domain/usecases/get-tournament-base-information-by-id/get-tournament-base-information-by-id.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -135,6 +144,20 @@ export class TournamentController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: params,
+      });
+    });
+    router.get(`/:tournamentId/base-information`, (request: Request, response: Response) => {
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'TOURNAMENT-BASE-INFORMATION:SUCCESS',
+      };
+
+      this.handler<GetTournamentBaseInformationByIdUsecase>({
+        container,
+        usecaseId: 'GetTournamentBaseInformationByIdUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: request.params.tournamentId,
       });
     });
 

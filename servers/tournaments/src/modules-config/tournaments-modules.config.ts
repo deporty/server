@@ -69,6 +69,7 @@ import { MapperModulesConfig } from './mappers-modules-config';
 import { DeleteNodeMatchUsecase } from '../domain/usecases/main-draw/delete-node-match/delete-node-match.usecase';
 import { GetTournamentsForCheckInUsecase } from '../domain/usecases/get-tournaments-for-check-in/get-tournaments-for-check-in.usecase';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
+import { GetTournamentBaseInformationByIdUsecase } from '../domain/usecases/get-tournament-base-information-by-id/get-tournament-base-information-by-id.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -636,6 +637,12 @@ export class TournamentsModulesConfig {
       id: 'IsASchemaValidForMainDrawUsecase',
       kind: IsASchemaValidForMainDrawUsecase,
       strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetTournamentBaseInformationByIdUsecase',
+      kind: GetTournamentBaseInformationByIdUsecase,
+      strategy: 'singleton',
+      dependencies: ['GetTournamentByIdUsecase', 'OrganizationContract'],
     });
   }
 }
