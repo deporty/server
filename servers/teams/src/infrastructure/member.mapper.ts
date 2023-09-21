@@ -21,6 +21,12 @@ export class MemberMapper extends Mapper<MemberEntity> {
           return date != null ? of(date.toDate()) : of(date);
         },
       },
+      enrollmentDate: {
+        name: "enrollment-date",
+        from: (date: Timestamp) => {
+          return date != null ? of(date.toDate()) : of(date);
+        },
+      },
       teamId: { name: "team-id" },
       userId: { name: "user-id" },
       kindMember: { name: "kind-member", default: "player" },

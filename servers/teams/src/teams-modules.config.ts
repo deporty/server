@@ -29,6 +29,7 @@ import { TournamentInscriptionRepository } from './infrastructure/repository/tou
 import { GetTournamentInscriptionsByTeamIdUsecase } from './domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
 import { OrganizationContract } from './domain/contracts/organization.contract';
 import { OrganizationRepository } from './infrastructure/repository/organization.repository';
+import { AsignNewMemberToTeamUsecase } from './domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -187,17 +188,17 @@ export class TeamsModulesConfig {
       strategy: 'singleton',
     });
 
-    // container.add({
-    //   id: 'AsignPlayerToTeamUsecase',
-    //   kind: AsignPlayerToTeamUsecase,
-    //   dependencies: [
-    //     'TeamContract',
-    //     'GetTeamByIdUsecase',
-    //     'GetPlayerByIdUsecase',
-    //     'UpdateTournamentUsecase',
-    //     'GetActiveTournamentsByRegisteredTeamUsecase',
-    //   ],
-    //   strategy: 'singleton',
-    // });
+    container.add({
+      id: 'AsignNewMemberToTeamUsecase',
+      kind: AsignNewMemberToTeamUsecase,
+      dependencies: [
+        'TeamContract',
+        'GetTeamByIdUsecase',
+        'GetMembersByTeamUsecase',
+        'UserContract',
+        'MemberContract',
+      ],
+      strategy: 'singleton',
+    });
   }
 }

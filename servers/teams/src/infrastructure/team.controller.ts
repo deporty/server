@@ -16,6 +16,7 @@ import { GetTeamByFiltersUsecase } from '../domain/usecases/get-teams-by-filters
 import { GetTeamsUsecase } from '../domain/usecases/get-teams/get-teams.usecase';
 import { JWT_SECRET, SERVER_NAME } from './teams.constants';
 import { GetTournamentInscriptionsByTeamIdUsecase } from '../domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
+import { AsignNewMemberToTeamUsecase, MemberIsAlreadyInTeamError } from '../domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -271,35 +272,23 @@ export class TeamController extends HttpController {
       });
     });
 
-    // app.put(`/assign-player`, (request: Request, response: Response) => {
-    //   const data = request.body;
-
-    //   const config: MessagesConfiguration = {
-    //     exceptions: {
-    //       PlayerIsAlreadyInTeamException: 'PLAYER-ALREADY-EXISTS:ERROR',
-    //     },
-    //     identifier: this.identifier,
-    //     errorCodes: {
-    //       'PLAYER-ALREADY-EXISTS:ERROR': '{message}',
-    //     },
-    //     successCode: {
-    //       code: 'PLAYER-ASSIGNED:SUCCESS',
-    //       message: 'The player was assigned.',
-    //     },
-    //     extraData: {
-    //       entitiesName: 'Team',
-    //     },
-    //   };
-
-    //   this.handlerPostController<AsignPlayerToTeamUsecase, TeamEntity>(
-    //     container,
-    //     'AsignPlayerToTeamUsecase',
-    //     response,
-    //     config,
-    //     undefined,
-    //     data
-    //   );
-    // });
+    router.put(`/assign-member`, (request: Request, response: Response) => {
+      const data = request.body;
+      const config: MessagesConfiguration = {
+        exceptions: {
+          [MemberIsAlreadyInTeamError.id]: 'MEMBER-IS-ALREADY-IN-TEAM-ERROR:ERROR',
+        },
+        identifier: this.identifier,
+        successCode: 'MEMBER-ASSIGNED:SUCCESS',
+      };
+      this.handler<AsignNewMemberToTeamUsecase>({
+        container,
+        usecaseId: 'AsignNewMemberToTeamUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: data,
+      });
+    });
 
     // app.get(
     //   `/by-registered-team/:id`,
