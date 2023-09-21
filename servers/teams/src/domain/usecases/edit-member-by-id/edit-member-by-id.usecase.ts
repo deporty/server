@@ -33,6 +33,7 @@ export class EditMemberByIdUsecase extends Usecase<Param, MemberEntity> {
             number: member.number,
             position: member.position,
             retirementDate: member.retirementDate,
+            kindMember: member.kindMember
           };
 
           return this.memberContract

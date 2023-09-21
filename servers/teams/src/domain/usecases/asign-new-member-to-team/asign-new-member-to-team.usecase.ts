@@ -3,7 +3,7 @@ import { MemberDescriptionType, MemberEntity, TeamEntity } from '@deporty-org/en
 import { KindMember } from '@deporty-org/entities/teams/team.entity';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { generateError } from '@scifamek-open-source/iraca/helpers';
-import { Observable, throwError, zip } from 'rxjs';
+import { Observable, of, throwError, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { MemberContract } from '../../contracts/member.contract';
 import { TeamContract } from '../../contracts/team.contract';
@@ -14,7 +14,8 @@ import { GetTeamByIdUsecase } from '../get-team-by-id/get-team-by-id.usecase';
 export interface Param {
   teamId: string;
   userId: string;
-  kindMember: KindMember;
+  kindMember: KindMember | KindMember[];
+  team?: TeamEntity
 }
 
 export const MemberIsAlreadyInTeamError = generateError(
@@ -35,7 +36,7 @@ export class AsignNewMemberToTeamUsecase extends Usecase<Param, MemberEntity> {
   call(param: Param): Observable<MemberEntity> {
     const $getPlayerByIdUsecase = this.userContract.getUserInformationById(param.userId);
 
-    const $getTeamByIdUsecase = this.getTeamByIdUsecase.call(param.teamId);
+    const $getTeamByIdUsecase = param.team ? of(param.team) : this.getTeamByIdUsecase.call(param.teamId);
 
     return zip($getPlayerByIdUsecase, $getTeamByIdUsecase).pipe(
       mergeMap(([user, team]: [UserEntity, TeamEntity]) => {

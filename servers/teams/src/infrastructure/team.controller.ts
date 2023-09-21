@@ -4,7 +4,11 @@ import { IsAuthorizedUserMiddleware } from '@deporty-org/core';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
 import { of } from 'rxjs';
-import { CreateTeamUsecase, TeamNameAlreadyExistsError } from '../domain/usecases/create-team/create-team.usecase';
+import {
+  CreateTeamUsecase,
+  TeamNameAlreadyExistsError,
+  UserCreatorIdNotProvidedError,
+} from '../domain/usecases/create-team/create-team.usecase';
 import { DeleteTeamUsecase } from '../domain/usecases/delete-team/delete-team.usecase';
 import { GetMemberByIdUsecase, MemberDoesNotExistError } from '../domain/usecases/get-member-by-id/get-member-by-id.usecase';
 import { GetMembersByTeamUsecase } from '../domain/usecases/get-members-by-team/get-members-by-team.usecase';
@@ -258,6 +262,7 @@ export class TeamController extends HttpController {
       const config: MessagesConfiguration = {
         exceptions: {
           [TeamNameAlreadyExistsError.id]: 'POST:ERROR',
+          [UserCreatorIdNotProvidedError.id]: 'USER-CREATOR-ID-NOT-PROVIDED:ERROR',
         },
         identifier: this.identifier,
 
@@ -272,7 +277,7 @@ export class TeamController extends HttpController {
         usecaseId: 'CreateTeamUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: team,
+        usecaseParam: { team },
       });
     });
 
