@@ -16,7 +16,11 @@ import { GetTeamByFiltersUsecase } from '../domain/usecases/get-teams-by-filters
 import { GetTeamsUsecase } from '../domain/usecases/get-teams/get-teams.usecase';
 import { JWT_SECRET, SERVER_NAME } from './teams.constants';
 import { GetTournamentInscriptionsByTeamIdUsecase } from '../domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
-import { AsignNewMemberToTeamUsecase, MemberIsAlreadyInTeamError } from '../domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
+import {
+  AsignNewMemberToTeamUsecase,
+  MemberIsAlreadyInTeamError,
+} from '../domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
+import { EditMemberByIdUsecase } from '../domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -276,7 +280,7 @@ export class TeamController extends HttpController {
       const data = request.body;
       const config: MessagesConfiguration = {
         exceptions: {
-          [MemberIsAlreadyInTeamError.id]: 'MEMBER-IS-ALREADY-IN-TEAM-ERROR:ERROR',
+          [MemberIsAlreadyInTeamError.id]: 'MEMBER-IS-ALREADY-IN-TEAM:ERROR',
         },
         identifier: this.identifier,
         successCode: 'MEMBER-ASSIGNED:SUCCESS',
@@ -284,6 +288,27 @@ export class TeamController extends HttpController {
       this.handler<AsignNewMemberToTeamUsecase>({
         container,
         usecaseId: 'AsignNewMemberToTeamUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: data,
+      });
+    });
+    router.put(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
+      const data = {
+        teamId: request.params.teamId,
+        memberId: request.params.memberId,
+        member: request.body,
+      };
+      const config: MessagesConfiguration = {
+        exceptions: {
+          [MemberDoesNotExistError.id]: 'MEMBER-DOES-NOT-EXIST:ERROR',
+        },
+        identifier: this.identifier,
+        successCode: 'MEMBER-UPDATED:SUCCESS',
+      };
+      this.handler<EditMemberByIdUsecase>({
+        container,
+        usecaseId: 'EditMemberByIdUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: data,

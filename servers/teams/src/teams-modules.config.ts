@@ -30,6 +30,7 @@ import { GetTournamentInscriptionsByTeamIdUsecase } from './domain/usecases/get-
 import { OrganizationContract } from './domain/contracts/organization.contract';
 import { OrganizationRepository } from './infrastructure/repository/organization.repository';
 import { AsignNewMemberToTeamUsecase } from './domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
+import { EditMemberByIdUsecase } from './domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -191,13 +192,13 @@ export class TeamsModulesConfig {
     container.add({
       id: 'AsignNewMemberToTeamUsecase',
       kind: AsignNewMemberToTeamUsecase,
-      dependencies: [
-        'TeamContract',
-        'GetTeamByIdUsecase',
-        'GetMembersByTeamUsecase',
-        'UserContract',
-        'MemberContract',
-      ],
+      dependencies: ['TeamContract', 'GetTeamByIdUsecase', 'GetMembersByTeamUsecase', 'UserContract', 'MemberContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'EditMemberByIdUsecase',
+      kind: EditMemberByIdUsecase,
+      dependencies: ['GetMemberByIdUsecase', 'MemberContract'],
       strategy: 'singleton',
     });
   }
