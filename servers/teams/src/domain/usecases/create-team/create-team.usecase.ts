@@ -1,5 +1,6 @@
 import { TeamEntity } from '@deporty-org/entities/teams';
-import { Observable, of, throwError, zip } from 'rxjs';
+import { resizeImage, validateImage } from '@deporty-org/utilities';
+import { Observable, from, of, throwError, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import { Usecase } from '@scifamek-open-source/iraca/domain';
@@ -22,6 +23,8 @@ export class CreateTeamUsecase extends Usecase<TeamEntity, string | undefined> {
   }
 
   call(team: TeamEntity): Observable<string | undefined> {
+    const miniShieldSize = 30;
+    const shieldSize = 300;
     return this.getTeamByNameUsecase.call(team.name).pipe(
       mergeMap((teamPrev: TeamEntity | undefined) => {
         if (teamPrev) {
@@ -32,36 +35,53 @@ export class CreateTeamUsecase extends Usecase<TeamEntity, string | undefined> {
           delete teamToSave['shield'];
           return this.teamContract.save(teamToSave).pipe(
             mergeMap((id: string) => {
-              const $shield = team.shield
-                ? (() => {
-                    const extension = team.shield.split(',')[0].split('/')[1].split(';')[0];
+              if (team.shield) {
+                const $isValid = from(
+                  validateImage(team.shield, {
+                    maxAspectRatio: 1.1,
+                    mustBeTransparent: true,
+                  })
+                );
 
-                    const path = `teams/${id}/brand/shield.${extension}`;
-                    return this.fileAdapter.uploadFile(path, team.shield).pipe(map((item) => path));
-                  })()
-                : of(undefined);
+                return $isValid.pipe(
+                  mergeMap((valid) => {
+                    const $resizedImage = from(resizeImage(team.shield!, shieldSize, shieldSize));
+                    const $resizedImageMini = from(resizeImage(team.shield!, miniShieldSize, miniShieldSize));
 
-              const $miniShield = team.miniShield
-                ? (() => {
-                    const extension = team.miniShield.split(',')[0].split('/')[1].split(';')[0];
+                    return zip($resizedImage, $resizedImageMini).pipe(
+                      mergeMap(([resizedImage, resizedImageMini]) => {
+                        const extension = team.shield!.split(',')[0].split('/')[1].split(';')[0];
 
-                    const path = `teams/${id}/brand/mini-shield.${extension}`;
+                        const path = `teams/${id}/brand/shield.${extension}`;
+                        const $resizedImageUpload = this.fileAdapter.uploadFile(path, resizedImage).pipe(map((item) => path));
 
-                    return this.fileAdapter.uploadFile(path, team.miniShield).pipe(map((item) => path));
-                  })()
-                : of(undefined);
+                        const pathMini = `teams/${id}/brand/mini-shield.${extension}`;
+                        const $resizedImageMiniUpload = this.fileAdapter
+                          .uploadFile(pathMini, resizedImageMini)
+                          .pipe(map((item) => pathMini));
 
-              return zip($shield, $miniShield, of(id), of(team));
+                        return zip($resizedImageUpload, $resizedImageMiniUpload);
+                      })
+                    );
+                  }),
+
+                  mergeMap((d) => {
+                    return zip(of(d[0]), of(d[1]), of(id), of(team));
+                  })
+                );
+              }
+
+              return zip(of(undefined), of(undefined), of(id), of(team));
             }),
-            mergeMap((x) => {
+            mergeMap(([shieldPath, miniShieldPath,id, team]) => {
               const teamToEdit: TeamEntity = {
-                ...x[3],
-                id: x[2],
-                miniShield: x[1],
-                shield: x[0],
+                ...team,
+                id,
+                miniShield: miniShieldPath,
+                shield: shieldPath,
               };
               return this.editTeamUsecase.call(teamToEdit).pipe(map((x) => x.id));
-            }),
+            })
           );
         }
       })
