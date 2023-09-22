@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { TeamContract } from '../../contracts/team.contract';
 
-
 export class EditTeamUsecase extends Usecase<TeamEntity, TeamEntity> {
   constructor(public teamContract: TeamContract) {
     super();

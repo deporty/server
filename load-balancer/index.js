@@ -53,13 +53,13 @@ const server = http.createServer((request, res) => {
         body += chunk.toString();
       });
       request.on('end', () => {
-        console.log();
+        console.log(1);
         console.log({
           method: request.method,
           url: path,
           data: JSON.parse(body),
         });
-        console.log();
+        console.log(1);
 
         axios({
           method: request.method,

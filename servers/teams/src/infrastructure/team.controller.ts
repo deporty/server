@@ -265,7 +265,6 @@ export class TeamController extends HttpController {
           [UserCreatorIdNotProvidedError.id]: 'USER-CREATOR-ID-NOT-PROVIDED:ERROR',
         },
         identifier: this.identifier,
-
         successCode: 'POST:SUCCESS',
         extraData: {
           entitiesName: 'Team',
@@ -277,7 +276,7 @@ export class TeamController extends HttpController {
         usecaseId: 'CreateTeamUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: { team },
+        usecaseParam:  team ,
       });
     });
 

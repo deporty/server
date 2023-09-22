@@ -1,14 +1,14 @@
-import { TeamEntity } from '@deporty-org/entities/teams';
-import { resizeImage, validateImage } from '@deporty-org/utilities';
+import { MemberEntity, TeamEntity } from '@deporty-org/entities/teams';
+import { resizeImage, validateImage, removeWhiteBackground } from '@deporty-org/utilities';
 import { Observable, from, of, throwError, zip } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { generateError } from '@scifamek-open-source/iraca/helpers';
 import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import { TeamContract } from '../../contracts/team.contract';
 import { EditTeamUsecase } from '../edit-team/edit-team.usecase';
-import { GetTeamByNameUsecase } from '../get-team-by-name/get-team-by-name.usecase';
+import { GetTeamByNameUsecase, TeamWithNameDoesNotExistError } from '../get-team-by-name/get-team-by-name.usecase';
 import { Id } from '@deporty-org/entities';
 import { AsignNewMemberToTeamUsecase } from '../asign-new-member-to-team/asign-new-member-to-team.usecase';
 
@@ -16,11 +16,15 @@ export interface Param {
   team: TeamEntity;
   userCreatorId: Id;
 }
+export interface Response {
+  team: TeamEntity;
+  member: MemberEntity;
+}
 
 export const TeamNameAlreadyExistsError = generateError('TeamNameAlreadyExistsError', `The team with the name {name} already exists.`);
 export const UserCreatorIdNotProvidedError = generateError('UserCreatorIdNotProvidedError', `The user creator Id wat not provided.`);
 
-export class CreateTeamUsecase extends Usecase<Param, TeamEntity> {
+export class CreateTeamUsecase extends Usecase<Param, Response> {
   constructor(
     public teamContract: TeamContract,
     private getTeamByNameUsecase: GetTeamByNameUsecase,
@@ -31,15 +35,22 @@ export class CreateTeamUsecase extends Usecase<Param, TeamEntity> {
     super();
   }
 
-  call(param: Param): Observable<TeamEntity> {
+  call(param: Param): Observable<Response> {
     const { team, userCreatorId } = param;
     const miniShieldSize = 30;
     const shieldSize = 300;
+
 
     if (!userCreatorId) {
       return throwError(new UserCreatorIdNotProvidedError());
     }
     return this.getTeamByNameUsecase.call(team.name).pipe(
+      catchError((e: Error) => {
+        if (e instanceof TeamWithNameDoesNotExistError) {
+          return of(undefined);
+        }
+        return throwError(e);
+      }),
       mergeMap((teamPrev: TeamEntity | undefined) => {
         if (teamPrev) {
           return throwError(new TeamNameAlreadyExistsError({ name: teamPrev.name }));
@@ -53,23 +64,40 @@ export class CreateTeamUsecase extends Usecase<Param, TeamEntity> {
                 const $isValid = from(
                   validateImage(team.shield, {
                     maxAspectRatio: 1.1,
-                    mustBeTransparent: true,
                   })
                 );
 
                 return $isValid.pipe(
                   mergeMap((valid) => {
-                    const $resizedImage = from(resizeImage(team.shield!, shieldSize, shieldSize));
-                    const $resizedImageMini = from(resizeImage(team.shield!, miniShieldSize, miniShieldSize));
+                    const $isTransparent = from(
+                      validateImage(team.shield!, {
+                        mustBeTransparent: true,
+                      })
+                    );
+
+                    return $isTransparent.pipe(
+                      catchError((err) => {
+                        return from(removeWhiteBackground(team.shield!));
+                      }),
+                      mergeMap((valid) => {
+                        if (typeof valid === 'boolean') {
+                          return of(team.shield!);
+                        } else {
+                          return of(valid);
+                        }
+                      })
+                    );
+                  }),
+
+                  mergeMap((shield) => {
+                    const $resizedImage = from(resizeImage(shield, shieldSize, shieldSize));
+                    const $resizedImageMini = from(resizeImage(shield, miniShieldSize, miniShieldSize));
 
                     return zip($resizedImage, $resizedImageMini).pipe(
                       mergeMap(([resizedImage, resizedImageMini]) => {
-                        const extension = team.shield!.split(',')[0].split('/')[1].split(';')[0];
-
-                        const path = `teams/${id}/brand/shield.${extension}`;
+                        const path = `teams/${id}/brand/shield.png`;
                         const $resizedImageUpload = this.fileAdapter.uploadFile(path, resizedImage).pipe(map((item) => path));
-
-                        const pathMini = `teams/${id}/brand/mini-shield.${extension}`;
+                        const pathMini = `teams/${id}/brand/mini-shield.png`;
                         const $resizedImageMiniUpload = this.fileAdapter
                           .uploadFile(pathMini, resizedImageMini)
                           .pipe(map((item) => pathMini));
@@ -98,14 +126,23 @@ export class CreateTeamUsecase extends Usecase<Param, TeamEntity> {
             }),
 
             mergeMap((team: TeamEntity) => {
+
               return this.asignNewMemberToTeamUsecase
                 .call({
-                  kindMember: ['owner','technical-director'],
+                  kindMember: ['owner', 'technical-director'],
                   teamId: team.id!,
                   userId: param.userCreatorId,
                   team,
                 })
-                .pipe(map(() => team));
+                .pipe(
+                  map((member) => {
+                    
+                    return {
+                      team: team,
+                      member,
+                    };
+                  })
+                );
             })
           );
         }

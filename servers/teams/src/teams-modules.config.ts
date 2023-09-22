@@ -185,7 +185,7 @@ export class TeamsModulesConfig {
     container.add({
       id: 'CreateTeamUsecase',
       kind: CreateTeamUsecase,
-      dependencies: ['TeamContract', 'GetTeamByNameUsecase', 'EditTeamUsecase', 'FileAdapter'],
+      dependencies: ['TeamContract', 'GetTeamByNameUsecase', 'EditTeamUsecase', 'FileAdapter', 'AsignNewMemberToTeamUsecase'],
       strategy: 'singleton',
     });
 

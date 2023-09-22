@@ -5,6 +5,8 @@ import { UserContract } from '../../domain/contracts/user.constract';
 import { BEARER_TOKEN, USERS_SERVER } from '../teams.constants';
 export class UserRepository extends UserContract {
   getUserInformationById(userId: Id): Observable<UserEntity> {
+    console.log('Peticion ', `${USERS_SERVER}/${userId}`);
+
     return new Observable((observer) => {
       axios
         .get<IBaseResponse<UserEntity>>(`${USERS_SERVER}/${userId}`, {
@@ -13,6 +15,8 @@ export class UserRepository extends UserContract {
           },
         })
         .then((response: AxiosResponse) => {
+          console.log('Llego peticion  ', response.data);
+          
           const data = response.data as IBaseResponse<UserEntity>;
           if (data.meta.code === 'USER:GET-BY-ID:SUCCESS') {
             observer.next(data.data);

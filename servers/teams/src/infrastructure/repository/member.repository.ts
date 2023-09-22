@@ -17,14 +17,8 @@ export class MemberRepository extends MemberContract {
     throw new Error('Method not implemented.');
   }
 
-  filter(
-    accessParams: AccessParams,
-    filter: Filters
-  ): Observable<Array<MemberEntity>> {
-    return super.innerFilter([
-      { collection: TEAMS_ENTITY, id: accessParams.teamId },
-      { collection: MEMBERS_ENTITY },
-    ]);
+  filter(accessParams: AccessParams, filter: Filters): Observable<Array<MemberEntity>> {
+    return super.innerFilter([{ collection: TEAMS_ENTITY, id: accessParams.teamId }, { collection: MEMBERS_ENTITY }]);
   }
 
   get(
@@ -34,19 +28,10 @@ export class MemberRepository extends MemberContract {
       pageSize: number;
     }
   ): Observable<MemberEntity[]> {
-    return super.innerGet(
-      [
-        { collection: TEAMS_ENTITY, id: accessParams.teamId },
-        { collection: MEMBERS_ENTITY },
-      ],
-      pagination
-    );
+    return super.innerGet([{ collection: TEAMS_ENTITY, id: accessParams.teamId }, { collection: MEMBERS_ENTITY }], pagination);
   }
 
-  getById(
-    accessParams: AccessParams,
-    id: Id
-  ): Observable<MemberEntity | undefined> {
+  getById(accessParams: AccessParams, id: Id): Observable<MemberEntity | undefined> {
     return super.innerGetById([
       { collection: TEAMS_ENTITY, id: accessParams.teamId },
       { collection: MEMBERS_ENTITY, id },
@@ -54,10 +39,16 @@ export class MemberRepository extends MemberContract {
   }
 
   save(accessParams: AccessParams, entity: MemberEntity): Observable<string> {
-    throw new Error('Method not implemented.');
+    return super.innerSave([{ collection: TEAMS_ENTITY, id: accessParams.teamId }, { collection: MEMBERS_ENTITY }], entity);
   }
 
   update(accessParams: AccessParams, entity: MemberEntity): Observable<void> {
-    throw new Error('Method not implemented.');
+    return super.innerUpdate(
+      [
+        { collection: TEAMS_ENTITY, id: accessParams.teamId },
+        { collection: MEMBERS_ENTITY, id: entity.id },
+      ],
+      entity
+    );
   }
 }
