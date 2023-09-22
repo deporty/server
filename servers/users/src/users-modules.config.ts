@@ -9,13 +9,14 @@ import { AuthorizationRepository } from './infrastructure/repositories/authoriza
 import { AuthorizationContract } from './domain/contracts/authorization.contract';
 import { GetUserByIdUsecase } from './domain/usecases/get-user-by-id/get-user-by-id.usecase';
 import { GetUsersByIdsUsecase } from './domain/usecases/get-users-by-ids/get-users-by-ids.usecase';
-import { GetTeamsThatIBelongUsecase } from './domain/usecases/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
+import { GetTeamsThatIBelongUsecase } from './domain/usecases/team-participations/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { TeamParticipationContract } from './domain/contracts/team-participation.contract';
 import { TeamParticipationRepository } from './infrastructure/repositories/team-participation.repository';
 import { TeamParticipationMapper } from './infrastructure/mappers/team-participation.mapper';
 import { TeamContract } from './domain/contracts/team.contract';
 import { TeamRepository } from './infrastructure/repositories/team.repository';
+import { AddTeamParticipationUsecase } from './domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
 
 export class UserModulesConfig {
   static config(container: Container) {
@@ -99,6 +100,12 @@ export class UserModulesConfig {
       id: 'GetTeamsThatIBelongUsecase',
       kind: GetTeamsThatIBelongUsecase,
       dependencies: ['TeamParticipationContract', 'TeamContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'AddTeamParticipationUsecase',
+      kind: AddTeamParticipationUsecase,
+      dependencies: ['TeamParticipationContract'],
       strategy: 'singleton',
     });
   }

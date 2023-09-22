@@ -2,7 +2,7 @@ import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
 import { Request, Response, Router } from 'express';
 import { AsignRolesToUserUsecase } from '../domain/usecases/asign-roles-to-user/asign-roles-to-user.usecase';
-import { GetTeamsThatIBelongUsecase } from '../domain/usecases/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
+import { GetTeamsThatIBelongUsecase } from '../domain/usecases/team-participations/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
 import { GetUsersByFiltersUsecase } from '../domain/usecases/get-user-by-filters/get-user-by-filters.usecase';
 import { GetUserByIdUsecase, UserDoesNotExistByIdError } from '../domain/usecases/get-user-by-id/get-user-by-id.usecase';
 import {
@@ -16,6 +16,7 @@ import {
 import { GetUsersByIdsUsecase } from '../domain/usecases/get-users-by-ids/get-users-by-ids.usecase';
 import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
 import { SERVER_NAME } from './users.constants';
+import { AddTeamParticipationUsecase } from '../domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -50,7 +51,7 @@ export class UserController extends HttpController {
       });
     });
 
-    router.get(`/:userId/teams-that-i-belong`, (request: Request, response: Response) => {
+    router.get(`/:userId/teams-participations`, (request: Request, response: Response) => {
       const userId = request.params.userId;
 
       const config: MessagesConfiguration = {
@@ -64,6 +65,23 @@ export class UserController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: userId,
+      });
+    });
+
+    router.post(`/:userId/team-participation`, (request: Request, response: Response) => {
+      const body = request.body;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'TEAM-PARTICIPATION-ADDED:SUCCESS',
+      };
+
+      this.handler<AddTeamParticipationUsecase>({
+        container,
+        usecaseId: 'AddTeamParticipationUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
       });
     });
 

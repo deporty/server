@@ -2,8 +2,8 @@ import { Id, TeamEntity, TeamParticipationEntity } from '@deporty-org/entities';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { Observable, of, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { TeamParticipationContract } from '../../contracts/team-participation.contract';
-import { TeamContract } from '../../contracts/team.contract';
+import { TeamParticipationContract } from '../../../contracts/team-participation.contract';
+import { TeamContract } from '../../../contracts/team.contract';
 
 export interface Response {
   team: TeamEntity;

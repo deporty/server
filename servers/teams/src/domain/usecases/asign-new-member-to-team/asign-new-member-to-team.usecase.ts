@@ -71,7 +71,9 @@ export class AsignNewMemberToTeamUsecase extends Usecase<Param, MemberEntity> {
                     };
                   })
                 );
-              return $teamUpdated;
+
+              const $participation = this.userContract.addTeamParticipation(param.userId, newMember);
+              return zip($teamUpdated, $participation).pipe(map(([teamUpdated]) => teamUpdated));
             } else {
               return throwError(new MemberIsAlreadyInTeamError());
             }
