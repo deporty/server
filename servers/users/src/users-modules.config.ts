@@ -11,6 +11,11 @@ import { GetUserByIdUsecase } from './domain/usecases/get-user-by-id/get-user-by
 import { GetUsersByIdsUsecase } from './domain/usecases/get-users-by-ids/get-users-by-ids.usecase';
 import { GetTeamsThatIBelongUsecase } from './domain/usecases/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
+import { TeamParticipationContract } from './domain/contracts/team-participation.contract';
+import { TeamParticipationRepository } from './infrastructure/repositories/team-participation.repository';
+import { TeamParticipationMapper } from './infrastructure/mappers/team-participation.mapper';
+import { TeamContract } from './domain/contracts/team.contract';
+import { TeamRepository } from './infrastructure/repositories/team.repository';
 
 export class UserModulesConfig {
   static config(container: Container) {
@@ -20,12 +25,31 @@ export class UserModulesConfig {
       dependencies: ['FileAdapter'],
       strategy: 'singleton',
     });
+    container.add({
+      id: 'TeamParticipationMapper',
+      kind: TeamParticipationMapper,
+      dependencies: [],
+      strategy: 'singleton',
+    });
 
     container.add({
       id: 'UserContract',
       kind: UserContract,
       override: UserRepository,
       dependencies: ['DataSource', 'UserMapper'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'TeamContract',
+      kind: TeamContract,
+      override: TeamRepository,
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'TeamParticipationContract',
+      kind: TeamParticipationContract,
+      override: TeamParticipationRepository,
+      dependencies: ['Firestore', 'TeamParticipationMapper'],
       strategy: 'singleton',
     });
     container.add({
@@ -62,11 +86,7 @@ export class UserModulesConfig {
     container.add({
       id: 'AsignRolesToUserUsecase',
       kind: AsignRolesToUserUsecase,
-      dependencies: [
-        'GetUserByIdUsecase',
-        'AuthorizationContract',
-        'UserContract',
-      ],
+      dependencies: ['GetUserByIdUsecase', 'AuthorizationContract', 'UserContract'],
       strategy: 'singleton',
     });
     container.add({
@@ -78,6 +98,7 @@ export class UserModulesConfig {
     container.add({
       id: 'GetTeamsThatIBelongUsecase',
       kind: GetTeamsThatIBelongUsecase,
+      dependencies: ['TeamParticipationContract', 'TeamContract'],
       strategy: 'singleton',
     });
   }

@@ -50,8 +50,8 @@ export class UserController extends HttpController {
       });
     });
 
-    router.get(`/teams-that-i-belong/:email`, (request: Request, response: Response) => {
-      const email = request.params.email;
+    router.get(`/:userId/teams-that-i-belong`, (request: Request, response: Response) => {
+      const userId = request.params.userId;
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -63,7 +63,7 @@ export class UserController extends HttpController {
         usecaseId: 'GetTeamsThatIBelongUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: email,
+        usecaseParam: userId,
       });
     });
 

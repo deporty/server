@@ -1,27 +1,44 @@
-import { Observable, of } from 'rxjs';
-import { MemberEntity, TeamEntity } from '@deporty-org/entities';
+import { Id, TeamEntity, TeamParticipationEntity } from '@deporty-org/entities';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
+import { Observable, of, zip } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { TeamParticipationContract } from '../../contracts/team-participation.contract';
+import { TeamContract } from '../../contracts/team.contract';
 
-export class GetTeamsThatIBelongUsecase extends Usecase<string, any> {
-  call(email: string): Observable<any> {
-    return of([
-      {
-        team: {
-          name: 'Once Caldas A',
-          category: 'Sub 15',
-          id: 'aT83kzfkTA1V81EyXNgk',
-          miniShield:
-            'https://firebasestorage.googleapis.com/v0/b/deporty-dev.appspot.com/o/teams%2FaT83kzfkTA1V81EyXNgk%2Fbrand%2Fshield.png?alt=media&token=58ba4343-c8f4-49ce-bfc7-7d3b2c042445',
-          shield:
-            'https://firebasestorage.googleapis.com/v0/b/deporty-dev.appspot.com/o/teams%2FaT83kzfkTA1V81EyXNgk%2Fbrand%2Fshield.png?alt=media&token=58ba4343-c8f4-49ce-bfc7-7d3b2c042445',
-        } as TeamEntity,
-        member: {
-          id: '590ae4eb023b40debb36',
-          kindMember: 'technical-director',
-          teamId: 'aT83kzfkTA1V81EyXNgk',
-          userId: 'FEp8Iizh74DqM01o58tV',
-        } as MemberEntity,
-      },
-    ]);
+export interface Response {
+  team: TeamEntity;
+  teamParticipation: TeamParticipationEntity;
+}
+
+export class GetTeamsThatIBelongUsecase extends Usecase<string, Response[]> {
+  constructor(private teamParticipationContract: TeamParticipationContract, private teamContract: TeamContract) {
+    super();
+  }
+
+  call(userId: Id): Observable<Response[]> {
+    return this.teamParticipationContract
+      .get({
+        userId,
+      })
+      .pipe(
+        mergeMap((response: TeamParticipationEntity[]) => {
+          if (response.length == 0) {
+            return of([]);
+          }
+
+          return zip(
+            ...response.map((teamParticipation) => {
+              return this.teamContract.getTeamById(teamParticipation.teamId).pipe(
+                map((team) => {
+                  return {
+                    team,
+                    teamParticipation,
+                  };
+                })
+              );
+            })
+          );
+        })
+      );
   }
 }
