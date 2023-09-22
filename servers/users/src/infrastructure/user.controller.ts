@@ -69,7 +69,17 @@ export class UserController extends HttpController {
     });
 
     router.post(`/:userId/team-participation`, (request: Request, response: Response) => {
-      const body = request.body;
+      const body = {
+        ...request.body,
+
+        teamParticipation: {
+          ...request.body.teamParticipation,
+          initDate: request.body.teamParticipation.initDate ? new Date(request.body.teamParticipation.initDate) : undefined,
+          enrollmentDate: request.body.teamParticipation.enrollmentDate
+            ? new Date(request.body.teamParticipation.enrollmentDate)
+            : undefined,
+        },
+      };
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
