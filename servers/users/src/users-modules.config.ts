@@ -17,6 +17,9 @@ import { TeamParticipationMapper } from './infrastructure/mappers/team-participa
 import { TeamContract } from './domain/contracts/team.contract';
 import { TeamRepository } from './infrastructure/repositories/team.repository';
 import { AddTeamParticipationUsecase } from './domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
+import { EditUserByIdUsecase } from './domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
+import { SaveUserByIdUsecase } from './domain/usecases/save-user-by-id/save-user-by-id.usecase';
+import { GetUserByUniqueFieldsUsecase } from './domain/usecases/get-user-by-unique-fields/get-user-by-unique-fields.usecase';
 
 export class UserModulesConfig {
   static config(container: Container) {
@@ -106,6 +109,24 @@ export class UserModulesConfig {
       id: 'AddTeamParticipationUsecase',
       kind: AddTeamParticipationUsecase,
       dependencies: ['TeamParticipationContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'EditUserByIdUsecase',
+      kind: EditUserByIdUsecase,
+      dependencies: ['UserContract', 'GetUserByIdUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetUserByUniqueFieldsUsecase',
+      kind: GetUserByUniqueFieldsUsecase,
+      dependencies: ['UserContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'SaveUserByIdUsecase',
+      kind: SaveUserByIdUsecase,
+      dependencies: ['UserContract', 'GetUserByUniqueFieldsUsecase'],
       strategy: 'singleton',
     });
   }

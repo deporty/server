@@ -102,6 +102,11 @@ if (middleware) {
 }
 UserController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);
 
+if (Object.keys(GENERAL_DEPENDENCIES_CONTAINER.pending).length > 0) {
+  console.log(GENERAL_DEPENDENCIES_CONTAINER.pending);
+
+  process.exit(1);
+}
 app.use('/users', router);
 
 app.listen(10008, () => {

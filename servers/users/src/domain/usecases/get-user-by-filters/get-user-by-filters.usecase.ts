@@ -11,6 +11,10 @@ interface Params {
   secondLastName: string;
   roles: Id[];
 }
+
+
+
+
 export class GetUsersByFiltersUsecase extends Usecase<Params, UserEntity[]> {
   constructor(private userContract: UserContract) {
     super();
