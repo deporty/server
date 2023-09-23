@@ -17,6 +17,8 @@ import { GetUsersByIdsUsecase } from '../domain/usecases/get-users-by-ids/get-us
 import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
 import { SERVER_NAME } from './users.constants';
 import { AddTeamParticipationUsecase } from '../domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
+import { SaveUserByIdUsecase } from '../domain/usecases/save-user-by-id/save-user-by-id.usecase';
+import { EditUserByIdUsecase } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -89,6 +91,45 @@ export class UserController extends HttpController {
       this.handler<AddTeamParticipationUsecase>({
         container,
         usecaseId: 'AddTeamParticipationUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
+      });
+    });
+
+    router.post(`/`, (request: Request, response: Response) => {
+      const body = {
+        ...request.body,
+        birthDate: request.body.birthDate,
+      };
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'POST:SUCCESS',
+      };
+
+      this.handler<SaveUserByIdUsecase>({
+        container,
+        usecaseId: 'SaveUserByIdUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
+      });
+    });
+    router.patch(`/:userId`, (request: Request, response: Response) => {
+      const body = {
+        ...request.body,
+        birthDate: request.body.birthDate,
+      };
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'POST:SUCCESS',
+      };
+
+      this.handler<EditUserByIdUsecase>({
+        container,
+        usecaseId: 'EditUserByIdUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: body,
