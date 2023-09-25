@@ -31,6 +31,7 @@ import { OrganizationContract } from './domain/contracts/organization.contract';
 import { OrganizationRepository } from './infrastructure/repository/organization.repository';
 import { AsignNewMemberToTeamUsecase } from './domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
 import { EditMemberByIdUsecase } from './domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
+import { CreateUserAndAsignNewMemberToTeamUsecase } from './domain/usecases/create-user-and-asign-new-member-to-team/create-user-and-asign-new-member-to-team.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -199,6 +200,12 @@ export class TeamsModulesConfig {
       id: 'EditMemberByIdUsecase',
       kind: EditMemberByIdUsecase,
       dependencies: ['GetMemberByIdUsecase', 'MemberContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'CreateUserAndAsignNewMemberToTeamUsecase',
+      kind: CreateUserAndAsignNewMemberToTeamUsecase,
+      dependencies: ['UserContract', 'AsignNewMemberToTeamUsecase'],
       strategy: 'singleton',
     });
   }

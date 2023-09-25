@@ -25,6 +25,7 @@ import {
   MemberIsAlreadyInTeamError,
 } from '../domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
 import { EditMemberByIdUsecase } from '../domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
+import { CreateUserAndAsignNewMemberToTeamUsecase } from '../domain/usecases/create-user-and-asign-new-member-to-team/create-user-and-asign-new-member-to-team.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -80,6 +81,7 @@ export class TeamController extends HttpController {
         },
       });
     });
+
     router.get(`/filter`, (request: Request, response: Response) => {
       const params = request.query;
 
@@ -99,6 +101,7 @@ export class TeamController extends HttpController {
         usecaseParam: params,
       });
     });
+
     router.post(`/advanced-filter`, (request: Request, response: Response) => {
       const params = request.body;
 
@@ -116,6 +119,31 @@ export class TeamController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: params,
+      });
+    });
+
+    router.post(`/create-user-and-asign-new-member-to-team`, (request: Request, response: Response) => {
+      const body = {
+        ...request.body,
+        user: {
+          ...request.body.user,
+          birthDate: request.body.user.birthDate,
+        },
+      };
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'CREATE-USER-AND-ASIGN-NEW-MEMBER-TO-TEAM:SUCCESS',
+        extraData: {
+          entitiesName: 'teams',
+        },
+      };
+
+      this.handler<CreateUserAndAsignNewMemberToTeamUsecase>({
+        container,
+        usecaseId: 'CreateUserAndAsignNewMemberToTeamUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
       });
     });
 
@@ -168,6 +196,7 @@ export class TeamController extends HttpController {
         usecaseParam: id,
       });
     });
+
     router.get(`/:teamId/tournament-inscriptions`, (request: Request, response: Response) => {
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -181,6 +210,7 @@ export class TeamController extends HttpController {
         usecaseParam: request.params.teamId,
       });
     });
+
     router.get(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
       const params = request.params;
 
@@ -230,6 +260,7 @@ export class TeamController extends HttpController {
         usecaseParam: id,
       });
     });
+    
     router.get(`/sport/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
 
@@ -276,7 +307,7 @@ export class TeamController extends HttpController {
         usecaseId: 'CreateTeamUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam:  team ,
+        usecaseParam: team,
       });
     });
 

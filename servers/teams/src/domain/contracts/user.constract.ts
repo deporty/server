@@ -4,4 +4,5 @@ export abstract class UserContract {
   abstract getUserInformationById(userId: Id): Observable<UserEntity>;
   abstract getUsersByIds(userIds: Id[]): Observable<UserEntity[]>;
   abstract addTeamParticipation(userId: Id, teamParticipationEntity: TeamParticipationEntity): Observable<TeamParticipationEntity>;
+  abstract createuser(user: UserEntity): Observable<UserEntity>;
 }

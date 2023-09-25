@@ -9,7 +9,7 @@ import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import { TeamContract } from '../../contracts/team.contract';
 import { EditTeamUsecase } from '../edit-team/edit-team.usecase';
 import { GetTeamByNameUsecase, TeamWithNameDoesNotExistError } from '../get-team-by-name/get-team-by-name.usecase';
-import { Id } from '@deporty-org/entities';
+import { Id, TeamParticipationEntity } from '@deporty-org/entities';
 import { AsignNewMemberToTeamUsecase } from '../asign-new-member-to-team/asign-new-member-to-team.usecase';
 
 export interface Param {
@@ -19,6 +19,7 @@ export interface Param {
 export interface Response {
   team: TeamEntity;
   member: MemberEntity;
+  teamParticipation: TeamParticipationEntity;
 }
 
 export const TeamNameAlreadyExistsError = generateError('TeamNameAlreadyExistsError', `The team with the name {name} already exists.`);
@@ -39,7 +40,6 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
     const { team, userCreatorId } = param;
     const miniShieldSize = 30;
     const shieldSize = 300;
-
 
     if (!userCreatorId) {
       return throwError(new UserCreatorIdNotProvidedError());
@@ -126,7 +126,6 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
             }),
 
             mergeMap((team: TeamEntity) => {
-
               return this.asignNewMemberToTeamUsecase
                 .call({
                   kindMember: ['owner', 'technical-director'],
@@ -136,10 +135,10 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
                 })
                 .pipe(
                   map((member) => {
-                    
                     return {
                       team: team,
-                      member,
+                      member: member.member,
+                      teamParticipation: member.teamParticipation,
                     };
                   })
                 );

@@ -1,4 +1,4 @@
-import { UserEntity } from '@deporty-org/entities';
+import { TeamParticipationEntity, UserEntity } from '@deporty-org/entities';
 import { MemberDescriptionType, MemberEntity, TeamEntity } from '@deporty-org/entities/teams';
 import { KindMember } from '@deporty-org/entities/teams/team.entity';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
@@ -11,9 +11,14 @@ import { UserContract } from '../../contracts/user.constract';
 import { GetMembersByTeamUsecase } from '../get-members-by-team/get-members-by-team.usecase';
 import { GetTeamByIdUsecase } from '../get-team-by-id/get-team-by-id.usecase';
 
+export interface Response {
+  member: MemberEntity;
+  teamParticipation: TeamParticipationEntity;
+}
 export interface Param {
   teamId: string;
   userId: string;
+  user?: UserEntity;
   kindMember: KindMember | KindMember[];
   team?: TeamEntity;
 }
@@ -23,7 +28,7 @@ export const MemberIsAlreadyInTeamError = generateError(
   'The member with the document {property} already exists in the team'
 );
 
-export class AsignNewMemberToTeamUsecase extends Usecase<Param, MemberEntity> {
+export class AsignNewMemberToTeamUsecase extends Usecase<Param, Response> {
   constructor(
     public teamContract: TeamContract,
     private getTeamByIdUsecase: GetTeamByIdUsecase,
@@ -33,8 +38,8 @@ export class AsignNewMemberToTeamUsecase extends Usecase<Param, MemberEntity> {
   ) {
     super();
   }
-  call(param: Param): Observable<MemberEntity> {
-    const $getPlayerByIdUsecase = this.userContract.getUserInformationById(param.userId);
+  call(param: Param): Observable<Response> {
+    const $getPlayerByIdUsecase = param.user ? of(param.user!) : this.userContract.getUserInformationById(param.userId);
 
     const $getTeamByIdUsecase = param.team ? of(param.team) : this.getTeamByIdUsecase.call(param.teamId);
 
@@ -71,12 +76,21 @@ export class AsignNewMemberToTeamUsecase extends Usecase<Param, MemberEntity> {
                     };
                   })
                 );
-
-              const $participation = this.userContract.addTeamParticipation(param.userId, newMember);
-              return zip($teamUpdated, $participation).pipe(map(([teamUpdated]) => teamUpdated));
+              return $teamUpdated;
             } else {
               return throwError(new MemberIsAlreadyInTeamError());
             }
+          }),
+          mergeMap((member: MemberEntity) => {
+            const $participation = this.userContract.addTeamParticipation(param.userId, member);
+            return zip(of(member), $participation).pipe(
+              map(([member, teamParticipation]) => {
+                return {
+                  teamParticipation,
+                  member,
+                };
+              })
+            );
           })
         );
       })

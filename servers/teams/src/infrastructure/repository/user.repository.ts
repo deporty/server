@@ -4,8 +4,33 @@ import { IBaseResponse, Id, TeamParticipationEntity, UserEntity } from '@deporty
 import { UserContract } from '../../domain/contracts/user.constract';
 import { BEARER_TOKEN, USERS_SERVER } from '../teams.constants';
 export class UserRepository extends UserContract {
+  createuser(user: UserEntity): Observable<UserEntity> {
+    return new Observable((observer) => {
+      axios
+        .post<IBaseResponse<UserEntity>>(
+          `${USERS_SERVER}`,
+          { ...user },
+          {
+            headers: {
+              Authorization: `Bearer ${BEARER_TOKEN}`,
+            },
+          }
+        )
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<UserEntity>;
+          if (data.meta.code === 'USER:POST:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
   addTeamParticipation(userId: string, teamParticipation: TeamParticipationEntity): Observable<TeamParticipationEntity> {
-
     return new Observable((observer) => {
       axios
         .post<IBaseResponse<TeamParticipationEntity>>(
@@ -29,7 +54,6 @@ export class UserRepository extends UserContract {
           observer.complete();
         })
         .catch((error: any) => {
-
           observer.error(error);
         });
     });
