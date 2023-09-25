@@ -1,5 +1,5 @@
 import { UserEntity } from '@deporty-org/entities/users';
-import { Filters, Usecase } from '@scifamek-open-source/iraca/domain';
+import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { generateError } from '@scifamek-open-source/iraca/helpers';
 import { Observable, of, throwError, zip } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -18,18 +18,7 @@ export class GetUserByUniqueFieldsUsecase extends Usecase<Params, UserEntity | u
   }
 
   call(params: Params): Observable<UserEntity | undefined> {
-    const filters: Filters = {};
-    for (const key in params) {
-      if (Object.prototype.hasOwnProperty.call(params, key)) {
-        const element: any = (params as any)[key];
-        if (element != undefined && element != null && element != '') {
-          filters[key] = {
-            operator: '=',
-            value: element,
-          };
-        }
-      }
-    }
+    console.log(params);
 
     const $document = this.userContract.filter({
       document: {
@@ -55,9 +44,16 @@ export class GetUserByUniqueFieldsUsecase extends Usecase<Params, UserEntity | u
         for (const user of emailUsers) {
           fullUsers[user.id!] = user;
         }
-        return Object.values<UserEntity[]>(fullUsers);
+
+
+
+        return of(Object.values<UserEntity>(fullUsers));
       }),
       mergeMap((users) => {
+
+
+        console.log('Users',users);
+        
         if (users.length == 0) {
           return of(undefined);
         } else if (users.length == 1) {

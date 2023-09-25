@@ -18,7 +18,7 @@ import { TeamContract } from './domain/contracts/team.contract';
 import { TeamRepository } from './infrastructure/repositories/team.repository';
 import { AddTeamParticipationUsecase } from './domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
 import { EditUserByIdUsecase } from './domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
-import { SaveUserByIdUsecase } from './domain/usecases/save-user-by-id/save-user-by-id.usecase';
+import { SaveUserUsecase } from './domain/usecases/save-user/save-user.usecase';
 import { GetUserByUniqueFieldsUsecase } from './domain/usecases/get-user-by-unique-fields/get-user-by-unique-fields.usecase';
 
 export class UserModulesConfig {
@@ -124,8 +124,8 @@ export class UserModulesConfig {
       strategy: 'singleton',
     });
     container.add({
-      id: 'SaveUserByIdUsecase',
-      kind: SaveUserByIdUsecase,
+      id: 'SaveUserUsecase',
+      kind: SaveUserUsecase,
       dependencies: ['UserContract', 'GetUserByUniqueFieldsUsecase'],
       strategy: 'singleton',
     });

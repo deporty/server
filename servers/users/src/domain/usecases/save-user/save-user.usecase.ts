@@ -11,12 +11,15 @@ export const DEFAULT_ROLE = 'OmUGOqmXbey71Uys1Em2';
 export const UserAlreadyExistError = generateError('UserAlreadyExistError', `The user with the document or email address already exists.`);
 export const InsuficientUserDataError = generateError('InsuficientUserDataError', `You have to provide the email and document.`);
 
-export class SaveUserByIdUsecase extends Usecase<UserEntity, UserEntity> {
+export class SaveUserUsecase extends Usecase<UserEntity, UserEntity> {
   constructor(private userContract: UserContract, private getUserByUniqueFieldsUsecase: GetUserByUniqueFieldsUsecase) {
     super();
   }
 
   call(user: UserEntity): Observable<UserEntity> {
+
+    console.log(user);
+    
     if (!user.email || !user.document) {
       return throwError(new InsuficientUserDataError());
     }

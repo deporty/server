@@ -17,7 +17,7 @@ import { GetUsersByIdsUsecase } from '../domain/usecases/get-users-by-ids/get-us
 import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
 import { SERVER_NAME } from './users.constants';
 import { AddTeamParticipationUsecase } from '../domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
-import { SaveUserByIdUsecase } from '../domain/usecases/save-user-by-id/save-user-by-id.usecase';
+import { SaveUserUsecase } from '../domain/usecases/save-user/save-user.usecase';
 import { EditUserByIdUsecase } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
 
 export class UserController extends HttpController {
@@ -106,11 +106,14 @@ export class UserController extends HttpController {
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         successCode: 'POST:SUCCESS',
+        extraData:{
+          entitiesName: 'User'
+        }
       };
 
-      this.handler<SaveUserByIdUsecase>({
+      this.handler<SaveUserUsecase>({
         container,
-        usecaseId: 'SaveUserByIdUsecase',
+        usecaseId: 'SaveUserUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: body,
