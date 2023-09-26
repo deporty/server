@@ -18,14 +18,18 @@ export class UserRepository extends UserContract {
         )
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<UserEntity>;
+          console.log(0, data, 0);
           if (data.meta.code === 'USER:POST:SUCCESS') {
             observer.next(data.data);
           } else {
-            observer.error();
+            const e = new Error(data.meta.message);
+            e.name = data.meta.code;
+            observer.error(e);
           }
           observer.complete();
         })
         .catch((error: any) => {
+          console.log(1, error, 1);
           observer.error(error);
         });
     });

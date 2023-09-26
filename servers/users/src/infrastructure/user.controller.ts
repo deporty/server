@@ -17,8 +17,9 @@ import { GetUsersByIdsUsecase } from '../domain/usecases/get-users-by-ids/get-us
 import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
 import { SERVER_NAME } from './users.constants';
 import { AddTeamParticipationUsecase } from '../domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
-import { SaveUserUsecase } from '../domain/usecases/save-user/save-user.usecase';
+import { SaveUserUsecase, UserAlreadyExistError } from '../domain/usecases/save-user/save-user.usecase';
 import { EditUserByIdUsecase } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
+import { Logger } from '@scifamek-open-source/logger';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -29,6 +30,9 @@ export class UserController extends HttpController {
 
   static registerEntryPoints(router: Router, container: Container) {
     router.get(`/ready`, this.readyHandler as any);
+
+    const logger = container.getInstance<Logger>('Logger').instance;
+    this.logger = logger;
 
     router.get(`/email/:email`, (request: Request, response: Response) => {
       const email = request.params.email;
@@ -106,9 +110,12 @@ export class UserController extends HttpController {
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         successCode: 'POST:SUCCESS',
-        extraData:{
-          entitiesName: 'User'
-        }
+        exceptions: {
+          [UserAlreadyExistError.id]: 'USER-ALREADY-EXIST:ERROR',
+        },
+        extraData: {
+          entitiesName: 'User',
+        },
       };
 
       this.handler<SaveUserUsecase>({
