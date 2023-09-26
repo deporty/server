@@ -300,6 +300,7 @@ export class TeamController extends HttpController {
         exceptions: {
           [TeamNameAlreadyExistsError.id]: 'POST:ERROR',
           [UserCreatorIdNotProvidedError.id]: 'USER-CREATOR-ID-NOT-PROVIDED:ERROR',
+          'SizePropertyError': 'SIZE-PROPERTY:ERROR',
         },
         identifier: this.identifier,
         successCode: 'POST:SUCCESS',

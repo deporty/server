@@ -20,6 +20,7 @@ import { AddTeamParticipationUsecase } from '../domain/usecases/team-participati
 import { SaveUserUsecase, UserAlreadyExistError } from '../domain/usecases/save-user/save-user.usecase';
 import { EditUserByIdUsecase } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
 import { Logger } from '@scifamek-open-source/logger';
+import { DeleteUserUsecase, UserIsSelfManagedError } from '../domain/usecases/delete-user/delete-user.usecase';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -140,6 +141,29 @@ export class UserController extends HttpController {
       this.handler<EditUserByIdUsecase>({
         container,
         usecaseId: 'EditUserByIdUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
+      });
+    });
+    router.delete(`/:userId`, (request: Request, response: Response) => {
+      const body = {
+        ...request.body,
+        birthDate: request.body.birthDate,
+      };
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        exceptions: {
+          [UserDoesNotExistByIdError.id]: 'USER-DOES-NOT-EXIST-BY-ID:ERROR',
+          [UserIsSelfManagedError.id]: 'USER-IS-SELF-MANAGED:ERROR',
+        },
+        successCode: 'DELETE:SUCCESS',
+      };
+
+      this.handler<DeleteUserUsecase>({
+        container,
+        usecaseId: 'DeleteUserUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: body,

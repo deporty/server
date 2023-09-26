@@ -58,93 +58,98 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
           const teamToSave = { ...team };
           delete teamToSave['miniShield'];
           delete teamToSave['shield'];
-          return this.teamContract.save(teamToSave).pipe(
-            mergeMap((id: string) => {
-              if (team.shield) {
-                const $isValid = from(
-                  validateImage(team.shield, {
-                    maxAspectRatio: 1.1,
-                  })
-                );
 
-                return $isValid.pipe(
-                  mergeMap((valid) => {
-                    const $isTransparent = from(
-                      validateImage(team.shield!, {
-                        mustBeTransparent: true,
+          return this.isAValidImage(team).pipe(
+            mergeMap((imageData) => {
+              return this.teamContract.save(teamToSave).pipe(
+                mergeMap((id: string) => {
+                  return zip(of(imageData), of(id), of(team));
+                }),
+                mergeMap(([imageData, id, team]) => {
+                  return this.saveImage(imageData, shieldSize, miniShieldSize, id);
+                }),
+                mergeMap(([shieldPath, miniShieldPath, id]) => {
+                  const teamToEdit: TeamEntity = {
+                    ...teamToSave,
+                    id,
+                    miniShield: miniShieldPath,
+                    shield: shieldPath,
+                  };
+                  return this.editTeamUsecase.call(teamToEdit);
+                }),
+                mergeMap((team: TeamEntity) => {
+                  return this.asignNewMemberToTeamUsecase
+                    .call({
+                      kindMember: ['owner', 'technical-director'],
+                      teamId: team.id!,
+                      userId: param.userCreatorId,
+                      team,
+                    })
+                    .pipe(
+                      map((member) => {
+                        return {
+                          team: team,
+                          member: member.member,
+                          teamParticipation: member.teamParticipation,
+                        };
                       })
                     );
-
-                    return $isTransparent.pipe(
-                      catchError((err) => {
-                        return from(removeWhiteBackground(team.shield!));
-                      }),
-                      mergeMap((valid) => {
-                        if (typeof valid === 'boolean') {
-                          return of(team.shield!);
-                        } else {
-                          return of(valid);
-                        }
-                      })
-                    );
-                  }),
-
-                  mergeMap((shield) => {
-                    const $resizedImage = from(resizeImage(shield, shieldSize, shieldSize));
-                    const $resizedImageMini = from(resizeImage(shield, miniShieldSize, miniShieldSize));
-
-                    return zip($resizedImage, $resizedImageMini).pipe(
-                      mergeMap(([resizedImage, resizedImageMini]) => {
-                        const path = `teams/${id}/brand/shield.png`;
-                        const $resizedImageUpload = this.fileAdapter.uploadFile(path, resizedImage).pipe(map((item) => path));
-                        const pathMini = `teams/${id}/brand/mini-shield.png`;
-                        const $resizedImageMiniUpload = this.fileAdapter
-                          .uploadFile(pathMini, resizedImageMini)
-                          .pipe(map((item) => pathMini));
-
-                        return zip($resizedImageUpload, $resizedImageMiniUpload);
-                      })
-                    );
-                  }),
-
-                  mergeMap((d) => {
-                    return zip(of(d[0]), of(d[1]), of(id), of(team));
-                  })
-                );
-              }
-
-              return zip(of(undefined), of(undefined), of(id), of(team));
-            }),
-            mergeMap(([shieldPath, miniShieldPath, id, team]) => {
-              const teamToEdit: TeamEntity = {
-                ...team,
-                id,
-                miniShield: miniShieldPath,
-                shield: shieldPath,
-              };
-              return this.editTeamUsecase.call(teamToEdit);
-            }),
-
-            mergeMap((team: TeamEntity) => {
-              return this.asignNewMemberToTeamUsecase
-                .call({
-                  kindMember: ['owner', 'technical-director'],
-                  teamId: team.id!,
-                  userId: param.userCreatorId,
-                  team,
                 })
-                .pipe(
-                  map((member) => {
-                    return {
-                      team: team,
-                      member: member.member,
-                      teamParticipation: member.teamParticipation,
-                    };
-                  })
-                );
+              );
             })
           );
         }
+      })
+    );
+  }
+
+  private isAValidImage(team: TeamEntity) {
+    if (!team.shield) {
+      return of('');
+    }
+    return from(
+      validateImage(team.shield!, {
+        maxAspectRatio: 1.1,
+      })
+    ).pipe(
+      mergeMap((valid) => {
+        const $isTransparent = from(
+          validateImage(team.shield!, {
+            mustBeTransparent: true,
+          })
+        );
+
+        return $isTransparent;
+      }),
+
+      catchError((err) => {
+        return from(removeWhiteBackground(team.shield!));
+      }),
+      mergeMap((valid) => {
+        if (typeof valid === 'boolean') {
+          return of(team.shield!);
+        } else {
+          return of(valid);
+        }
+      })
+    );
+  }
+
+  saveImage(shield: string, shieldSize: number, miniShieldSize: number, id: string) {
+    const $resizedImage = from(resizeImage(shield, shieldSize, shieldSize));
+    const $resizedImageMini = from(resizeImage(shield, miniShieldSize, miniShieldSize));
+
+    return zip($resizedImage, $resizedImageMini).pipe(
+      mergeMap(([resizedImage, resizedImageMini]) => {
+        const path = `teams/${id}/brand/shield.png`;
+        const $resizedImageUpload = this.fileAdapter.uploadFile(path, resizedImage).pipe(map((item) => path));
+        const pathMini = `teams/${id}/brand/mini-shield.png`;
+        const $resizedImageMiniUpload = this.fileAdapter.uploadFile(pathMini, resizedImageMini).pipe(map((item) => pathMini));
+
+        return zip($resizedImageUpload, $resizedImageMiniUpload);
+      }),
+      mergeMap((d) => {
+        return zip(of(d[0]), of(d[1]), of(id));
       })
     );
   }
