@@ -78,17 +78,30 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
                   return this.editTeamUsecase.call(teamToEdit);
                 }),
                 mergeMap((team: TeamEntity) => {
+                  const $shield = team.shield ? this.fileAdapter.getAbsoluteHTTPUrl(team.shield) : of(undefined);
+                  const $miniShield = team.miniShield ? this.fileAdapter.getAbsoluteHTTPUrl(team.miniShield) : of(undefined);
+                  return zip(of(team), $shield, $miniShield);
+                }),
+                mergeMap(([team, shield, miniShield]) => {
                   return this.asignNewMemberToTeamUsecase
                     .call({
                       kindMember: ['owner', 'technical-director'],
                       teamId: team.id!,
                       userId: param.userCreatorId,
-                      team,
+                      team: {
+                        ...team,
+                        shield,
+                        miniShield,
+                      },
                     })
                     .pipe(
                       map((member) => {
                         return {
-                          team: team,
+                          team: {
+                            ...team,
+                            shield,
+                            miniShield,
+                          },
                           member: member.member,
                           teamParticipation: member.teamParticipation,
                         };
@@ -142,7 +155,11 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
     return zip($resizedImage, $resizedImageMini).pipe(
       mergeMap(([resizedImage, resizedImageMini]) => {
         const path = `teams/${id}/brand/shield.png`;
-        const $resizedImageUpload = this.fileAdapter.uploadFile(path, resizedImage).pipe(map((item) => path));
+        const $resizedImageUpload = this.fileAdapter.uploadFile(path, resizedImage).pipe(
+          map((item) => {
+            return path;
+          })
+        );
         const pathMini = `teams/${id}/brand/mini-shield.png`;
         const $resizedImageMiniUpload = this.fileAdapter.uploadFile(pathMini, resizedImageMini).pipe(map((item) => pathMini));
 

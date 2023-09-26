@@ -298,7 +298,7 @@ export class TeamController extends HttpController {
 
       const config: MessagesConfiguration = {
         exceptions: {
-          [TeamNameAlreadyExistsError.id]: 'POST:ERROR',
+          [TeamNameAlreadyExistsError.id]: 'TEAM-NAME-ALREADY-EXISTS:ERROR',
           [UserCreatorIdNotProvidedError.id]: 'USER-CREATOR-ID-NOT-PROVIDED:ERROR',
           'SizePropertyError': 'SIZE-PROPERTY:ERROR',
         },
