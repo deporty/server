@@ -6,6 +6,7 @@ export class UserMapper extends Mapper<UserEntity> {
     super();
     this.attributesMapper = {
       secondLastName: { name: 'second-last-name' },
+      administrationMode: { name: 'administration-mode', default: 'self-managed' },
       firstLastName: { name: 'first-last-name' },
       firstName: { name: 'first-name' },
       secondName: { name: 'second-name' },

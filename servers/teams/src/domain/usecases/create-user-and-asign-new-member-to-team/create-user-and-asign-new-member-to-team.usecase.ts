@@ -23,7 +23,8 @@ export class CreateUserAndAsignNewMemberToTeamUsecase extends Usecase<Param, Res
     super();
   }
   call(param: Param): Observable<Response> {
-    const $user = this.userContract.createuser(param.user);
+    const userToCreate: UserEntity = { ...param.user, administrationWay: 'delegated' };
+    const $user = this.userContract.createuser(userToCreate);
     return $user.pipe(
       mergeMap((user: UserEntity) => {
         const $asignNewMemberToTeamUsecase = this.asignNewMemberToTeamUsecase.call({

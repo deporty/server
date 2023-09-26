@@ -37,6 +37,7 @@ export class SaveUserUsecase extends Usecase<UserEntity, UserEntity> {
             birthDate: user.birthDate,
             document: user.document,
             email: user.email,
+            administrationWay: user.administrationWay,
             phoneExtension: user.phoneExtension ?? '57',
             roles: user.roles ?? [DEFAULT_ROLE],
             firstLastName: user.firstLastName,

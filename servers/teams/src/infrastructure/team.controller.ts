@@ -26,6 +26,7 @@ import {
 } from '../domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
 import { EditMemberByIdUsecase } from '../domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
 import { CreateUserAndAsignNewMemberToTeamUsecase } from '../domain/usecases/create-user-and-asign-new-member-to-team/create-user-and-asign-new-member-to-team.usecase';
+import { Logger } from '@scifamek-open-source/logger';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -35,6 +36,8 @@ export class TeamController extends HttpController {
   static identifier = SERVER_NAME;
 
   static registerEntryPoints(router: Router, container: Container) {
+    const logger = container.getInstance<Logger>('Logger').instance;
+    this.logger = logger;
     const middleware = container.getInstance<IsAuthorizedUserMiddleware>('IsAuthorizedUserMiddleware').instance;
     const validator = (i: string) => (middleware ? middleware.getValidator(i, JWT_SECRET) : () => of(false));
 
@@ -260,7 +263,7 @@ export class TeamController extends HttpController {
         usecaseParam: id,
       });
     });
-    
+
     router.get(`/sport/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
 
