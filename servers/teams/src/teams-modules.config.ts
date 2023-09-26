@@ -32,6 +32,7 @@ import { OrganizationRepository } from './infrastructure/repository/organization
 import { AsignNewMemberToTeamUsecase } from './domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
 import { EditMemberByIdUsecase } from './domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
 import { CreateUserAndAsignNewMemberToTeamUsecase } from './domain/usecases/create-user-and-asign-new-member-to-team/create-user-and-asign-new-member-to-team.usecase';
+import { DeleteMemberByIdUsecase } from './domain/usecases/delete-member-by-id/delete-member-by-id.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -165,7 +166,7 @@ export class TeamsModulesConfig {
     container.add({
       id: 'DeleteTeamUsecase',
       kind: DeleteTeamUsecase,
-      dependencies: ['TeamContract', 'GetTeamByIdUsecase', 'FileAdapter'],
+      dependencies: ['TeamContract', 'GetTeamByIdUsecase', 'EditTeamUsecase', 'GetTournamentInscriptionsByTeamIdUsecase', 'FileAdapter'],
       strategy: 'singleton',
     });
 
@@ -206,6 +207,12 @@ export class TeamsModulesConfig {
       id: 'CreateUserAndAsignNewMemberToTeamUsecase',
       kind: CreateUserAndAsignNewMemberToTeamUsecase,
       dependencies: ['UserContract', 'AsignNewMemberToTeamUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'DeleteMemberByIdUsecase',
+      kind: DeleteMemberByIdUsecase,
+      dependencies: ['GetMemberByIdUsecase', 'MemberContract', 'FileAdapter'],
       strategy: 'singleton',
     });
   }
