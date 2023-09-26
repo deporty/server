@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, of, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
 import { TeamEntity, TournamentInscriptionEntity } from '@deporty-org/entities';
@@ -8,11 +8,13 @@ import { TeamContract } from '../../contracts/team.contract';
 import { EditTeamUsecase } from '../edit-team/edit-team.usecase';
 import { GetTeamByIdUsecase } from '../get-team-by-id/get-team-by-id.usecase';
 import { GetTournamentInscriptionsByTeamIdUsecase } from '../get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
+import { DeleteMembersFromTeamUsecase } from '../delete-members-from-team/delete-members-from-team.usecase';
 
 export class DeleteTeamUsecase extends Usecase<string, TeamEntity | undefined> {
   constructor(
     public teamContract: TeamContract,
     private getTeamByIdUsecase: GetTeamByIdUsecase,
+    private deleteMembersFromTeamUsecase: DeleteMembersFromTeamUsecase,
     private editTeamUsecase: EditTeamUsecase,
     private getTournamentInscriptionsByTeamIdUsecase: GetTournamentInscriptionsByTeamIdUsecase,
     private fileAdapter: FileAdapter
@@ -29,17 +31,28 @@ export class DeleteTeamUsecase extends Usecase<string, TeamEntity | undefined> {
               const t: TeamEntity = { ...team, status: 'deleted' };
               return this.editTeamUsecase.call(t);
             } else {
+              const $response = [];
               if (team.shield) {
-                return this.fileAdapter.deleteFile(team.shield).pipe(
-                  mergeMap((player) => {
-                    return this.teamContract.delete(id).pipe(map(() => undefined));
-                  })
-                );
+                $response.push(this.fileAdapter.deleteFile(team.shield));
               }
-              return this.teamContract.delete(id).pipe(map(() => undefined));
+              if (team.miniShield) {
+                $response.push(this.fileAdapter.deleteFile(team.miniShield));
+              }
+              return $response.length > 0 ? zip(...$response) : of([]);
             }
+          }),
+          mergeMap(() => {
+            return this.delete(id);
           })
         );
+      })
+    );
+  }
+
+  private delete(id: string) {
+    return this.deleteMembersFromTeamUsecase.call(id).pipe(
+      mergeMap(() => {
+        return this.teamContract.delete(id).pipe(map(() => undefined));
       })
     );
   }

@@ -4,6 +4,35 @@ import { IBaseResponse, Id, TeamParticipationEntity, UserEntity } from '@deporty
 import { UserContract } from '../../domain/contracts/user.constract';
 import { BEARER_TOKEN, USERS_SERVER } from '../teams.constants';
 export class UserRepository extends UserContract {
+  deleteTeamParticipation(userId: string, teamId: string): Observable<boolean> {
+    return new Observable((observer) => {
+      axios
+        .delete<IBaseResponse<boolean>>(
+          `${USERS_SERVER}/${userId}/team-participation/${teamId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${BEARER_TOKEN}`,
+            },
+          }
+        )
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<boolean>;
+          console.log(0, data, 0);
+          if (data.meta.code === 'USER:TEAM-PARTICIPATION-DELETED:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            const e = new Error(data.meta.message);
+            e.name = data.meta.code;
+            observer.error(e);
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          console.log(1, error, 1);
+          observer.error(error);
+        });
+    });
+  }
   createuser(user: UserEntity): Observable<UserEntity> {
     return new Observable((observer) => {
       axios

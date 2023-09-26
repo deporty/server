@@ -21,6 +21,7 @@ import { EditUserByIdUsecase } from './domain/usecases/edit-user-by-id/edit-user
 import { SaveUserUsecase } from './domain/usecases/save-user/save-user.usecase';
 import { GetUserByUniqueFieldsUsecase } from './domain/usecases/get-user-by-unique-fields/get-user-by-unique-fields.usecase';
 import { DeleteUserUsecase } from './domain/usecases/delete-user/delete-user.usecase';
+import { DeleteTeamParticipationUsecase } from './domain/usecases/team-participations/delete-team-participation/delete-team-participation.usecase';
 
 export class UserModulesConfig {
   static config(container: Container) {
@@ -134,6 +135,12 @@ export class UserModulesConfig {
       id: 'DeleteUserUsecase',
       kind: DeleteUserUsecase,
       dependencies: ['GetUserByIdUsecase', 'UserContract', 'FileAdapter'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'DeleteTeamParticipationUsecase',
+      kind: DeleteTeamParticipationUsecase,
+      dependencies: ['TeamParticipationContract', 'GetTeamsThatIBelongUsecase', 'GetUserByIdUsecase', 'DeleteUserUsecase'],
       strategy: 'singleton',
     });
   }

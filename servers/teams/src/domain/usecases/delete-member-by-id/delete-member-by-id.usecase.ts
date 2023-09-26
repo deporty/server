@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { MemberContract } from '../../contracts/member.contract';
 import { GetMemberByIdUsecase } from '../get-member-by-id/get-member-by-id.usecase';
+import { UserContract } from '../../contracts/user.constract';
 
 export interface Param {
   memberId: Id;
@@ -17,12 +18,14 @@ export class DeleteMemberByIdUsecase extends Usecase<Param, boolean> {
   constructor(
     private getMemberByIdUsecase: GetMemberByIdUsecase,
     private memberContract: MemberContract,
-    private fileAdapter: FileAdapter
+    private fileAdapter: FileAdapter,
+    private userContract: UserContract
   ) {
     super();
   }
 
   call(param: Param): Observable<boolean> {
+    this.userContract;
     const { teamId, memberId, member } = param;
     let $member = member
       ? of(member)
@@ -48,7 +51,11 @@ export class DeleteMemberByIdUsecase extends Usecase<Param, boolean> {
             },
             m.id!
           )
-          .pipe(map(() => true));
+          .pipe(
+            mergeMap(() => {
+              return this.userContract.deleteTeamParticipation(m.userId, m.teamId);
+            })
+          );
       })
     );
   }

@@ -7,6 +7,7 @@ export class TeamMapper extends Mapper<TeamEntity> {
     this.attributesMapper = {
       name: { name: 'name' },
       id: { name: 'id' },
+      status: { name: 'status', default: 'enabled' },
       athem: { name: 'athem' },
       category: { name: 'category' },
       sportIds: { name: 'sport-ids' },

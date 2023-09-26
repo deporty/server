@@ -13,8 +13,11 @@ export class MemberRepository extends MemberContract {
     super(datasource, mapper);
   }
 
-  delete(accessParams: AccessParams): Observable<void> {
-    throw new Error('Method not implemented.');
+  delete(accessParams: AccessParams, id: Id): Observable<void> {
+    return super.innerDelete([
+      { collection: TEAMS_ENTITY, id: accessParams.teamId },
+      { collection: MEMBERS_ENTITY, id },
+    ]);
   }
 
   filter(accessParams: AccessParams, filter: Filters): Observable<Array<MemberEntity>> {
