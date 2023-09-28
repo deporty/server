@@ -17,9 +17,6 @@ export class SaveUserUsecase extends Usecase<UserEntity, UserEntity> {
   }
 
   call(user: UserEntity): Observable<UserEntity> {
-
-    console.log(user);
-    
     if (!user.email || !user.document) {
       return throwError(new InsuficientUserDataError());
     }
@@ -37,7 +34,7 @@ export class SaveUserUsecase extends Usecase<UserEntity, UserEntity> {
             birthDate: user.birthDate,
             document: user.document,
             email: user.email,
-            administrationWay: user.administrationWay,
+            administrationMode: user.administrationMode,
             phoneExtension: user.phoneExtension ?? '57',
             roles: user.roles ?? [DEFAULT_ROLE],
             firstLastName: user.firstLastName,

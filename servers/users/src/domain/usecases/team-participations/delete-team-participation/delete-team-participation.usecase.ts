@@ -72,7 +72,7 @@ export class DeleteTeamParticipationUsecase extends Usecase<Param, boolean> {
                   return DEFAULT_OWNER_ROLES_ID.includes(R);
                 });
 
-                return (user.administrationWay === 'delegated' || true) && kind.length == 0;
+                return (user.administrationMode === 'delegated' || true) && kind.length == 0;
               })
             );
           }

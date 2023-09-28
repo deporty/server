@@ -18,7 +18,7 @@ export class DeleteUserUsecase extends Usecase<string, boolean> {
   call(userId: string): Observable<boolean> {
     return this.getUserByIdUsecase.call(userId).pipe(
       mergeMap((user: UserEntity) => {
-        if (user.administrationWay == 'self-managed') {
+        if (user.administrationMode == 'self-managed') {
           return throwError(new UserIsSelfManagedError());
         }
         let $image = of(null);

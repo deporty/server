@@ -1,5 +1,5 @@
 import { MemberEntity, TeamEntity } from '@deporty-org/entities/teams';
-import { resizeImage, validateImage, removeWhiteBackground } from '@deporty-org/utilities';
+import { forceTransformation, resizeImageProportionally } from '@scifamek-open-source/tairona';
 import { Observable, from, of, throwError, zip } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 
@@ -23,6 +23,7 @@ export interface Response {
 }
 
 export const TeamNameAlreadyExistsError = generateError('TeamNameAlreadyExistsError', `The team with the name {name} already exists.`);
+export const TeamShieldGeneralError = generateError('TeamShieldGeneralError', `Consider using a square image `);
 export const UserCreatorIdNotProvidedError = generateError('UserCreatorIdNotProvidedError', `The user creator Id wat not provided.`);
 
 export class CreateTeamUsecase extends Usecase<Param, Response> {
@@ -59,14 +60,17 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
           delete teamToSave['miniShield'];
           delete teamToSave['shield'];
 
-          return this.isAValidImage(team).pipe(
+          return this.isAValidImage(team, shieldSize).pipe(
             mergeMap((imageData) => {
+              if (!imageData) {
+                return throwError(new TeamShieldGeneralError());
+              }
               return this.teamContract.save(teamToSave).pipe(
                 mergeMap((id: string) => {
                   return zip(of(imageData), of(id), of(team));
                 }),
                 mergeMap(([imageData, id, team]) => {
-                  return this.saveImage(imageData, shieldSize, miniShieldSize, id);
+                  return this.saveImage(imageData, miniShieldSize, id);
                 }),
                 mergeMap(([shieldPath, miniShieldPath, id]) => {
                   const teamToEdit: TeamEntity = {
@@ -116,50 +120,30 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
     );
   }
 
-  private isAValidImage(team: TeamEntity) {
+  private isAValidImage(team: TeamEntity, size: number) {
     if (!team.shield) {
       return of('');
     }
+
     return from(
-      validateImage(team.shield!, {
+      forceTransformation(team.shield!, {
         maxAspectRatio: 1.1,
-      })
-    ).pipe(
-      mergeMap((valid) => {
-        const $isTransparent = from(
-          validateImage(team.shield!, {
-            mustBeTransparent: true,
-          })
-        );
-
-        return $isTransparent;
-      }),
-
-      catchError((err) => {
-        return from(removeWhiteBackground(team.shield!));
-      }),
-      mergeMap((valid) => {
-        if (typeof valid === 'boolean') {
-          return of(team.shield!);
-        } else {
-          return of(valid);
-        }
+        maxWidth: size,
       })
     );
   }
 
-  saveImage(shield: string, shieldSize: number, miniShieldSize: number, id: string) {
-    const $resizedImage = from(resizeImage(shield, shieldSize, shieldSize));
-    const $resizedImageMini = from(resizeImage(shield, miniShieldSize, miniShieldSize));
+  saveImage(shield: string, miniShieldSize: number, id: string) {
+    const $resizedImageMini = from(
+      resizeImageProportionally(shield, {
+        width: miniShieldSize,
+      })
+    );
 
-    return zip($resizedImage, $resizedImageMini).pipe(
-      mergeMap(([resizedImage, resizedImageMini]) => {
+    return $resizedImageMini.pipe(
+      mergeMap((resizedImageMini) => {
         const path = `teams/${id}/brand/shield.png`;
-        const $resizedImageUpload = this.fileAdapter.uploadFile(path, resizedImage).pipe(
-          map((item) => {
-            return path;
-          })
-        );
+        const $resizedImageUpload = this.fileAdapter.uploadFile(path, shield).pipe(map((item) => path));
         const pathMini = `teams/${id}/brand/mini-shield.png`;
         const $resizedImageMiniUpload = this.fileAdapter.uploadFile(pathMini, resizedImageMini).pipe(map((item) => pathMini));
 

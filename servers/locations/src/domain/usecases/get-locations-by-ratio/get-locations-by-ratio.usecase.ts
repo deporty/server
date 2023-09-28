@@ -1,6 +1,6 @@
 import { LocationEntity } from '@deporty-org/entities/locations';
 import { Coordinate } from '@deporty-org/entities/locations/location.entity';
-import { generateQuadrants, getDistance } from '@deporty-org/utilities';
+import { generateQuadrants, getDistance } from '@scifamek-open-source/guatavita';
 import { Observable, of, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LocationContract } from '../../contracts/location.contract';

@@ -1,5 +1,5 @@
 import { TournamentLayoutEntity } from '@deporty-org/entities/organizations';
-import { getImageExtension, validateImage } from '@deporty-org/utilities';
+import { getImageExtension, validateImage } from '@scifamek-open-source/tairona';
 import { Observable, from, throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { TournamentLayoutContract } from '../../contracts/tournament-layout.contract';
