@@ -71,8 +71,8 @@ const app = express();
 const router = Router();
 app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '1mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 UserModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
 
 GENERAL_DEPENDENCIES_CONTAINER.addValue({
@@ -112,4 +112,5 @@ app.use('/users', router);
 
 app.listen(10008, () => {
   logger.info('Starting users');
+  console.log('Starting users');
 });

@@ -45,7 +45,7 @@ const server = http.createServer((request, res) => {
   if (serversMapper[identifier]) {
     const tail = String(request.url);
     const configuration = serversMapper[identifier];
-    const path = 'http://localhost:' + configuration.port + tail;
+    const path = 'http://127.0.0.1:' + configuration.port + tail;
 
     if (['POST', 'PUT', 'PATCH'].includes(request.method)) {
       let body = '';
@@ -53,19 +53,17 @@ const server = http.createServer((request, res) => {
         body += chunk.toString();
       });
       request.on('end', () => {
-        console.log(1);
         console.log({
           method: request.method,
           url: path,
           data: JSON.parse(body),
         });
-        console.log(1);
 
         axios({
           method: request.method,
           url: path,
           headers: { ...headers },
-          data: JSON.parse(body),
+          data: (body),
         })
           .then((responseBOdy) => {
             res.statusCode = 200;

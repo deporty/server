@@ -116,7 +116,7 @@ export class UserModulesConfig {
     container.add({
       id: 'EditUserByIdUsecase',
       kind: EditUserByIdUsecase,
-      dependencies: ['UserContract', 'GetUserByIdUsecase'],
+      dependencies: ['UserContract', 'GetUserByIdUsecase', 'FileAdapter'],
       strategy: 'singleton',
     });
     container.add({

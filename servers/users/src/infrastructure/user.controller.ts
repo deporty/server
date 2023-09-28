@@ -18,7 +18,7 @@ import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-us
 import { SERVER_NAME } from './users.constants';
 import { AddTeamParticipationUsecase } from '../domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
 import { SaveUserUsecase, UserAlreadyExistError } from '../domain/usecases/save-user/save-user.usecase';
-import { EditUserByIdUsecase } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
+import { EditUserByIdUsecase, UserImageNotAllowedError } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
 import { Logger } from '@scifamek-open-source/logger';
 import { DeleteUserUsecase, UserIsSelfManagedError } from '../domain/usecases/delete-user/delete-user.usecase';
 import { DeleteTeamParticipationUsecase } from '../domain/usecases/team-participations/delete-team-participation/delete-team-participation.usecase';
@@ -148,12 +148,20 @@ export class UserController extends HttpController {
     router.patch(`/:userId`, (request: Request, response: Response) => {
       const body = {
         ...request.body,
-        birthDate: request.body.birthDate,
+        id: request.params.userId,
+        user: {
+          ...request.body.user,
+          birthDate: request.body.user.birthDate,
+        },
       };
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
-        successCode: 'POST:SUCCESS',
+        successCode: 'EDITED-USER-BY-ID:SUCCESS',
+        exceptions: {
+          [UserImageNotAllowedError.id]: 'USER-IMAGE-NOT-ALLOWED:ERROR',
+          [UserDoesNotExistByIdError.id]: 'USER-DOES-NOT-EXIST-BY-ID:ERROR',
+        },
       };
 
       this.handler<EditUserByIdUsecase>({
