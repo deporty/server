@@ -60,7 +60,7 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     
     logger.log(command)
     
-    res = os.system(command)
+    res = subprocess.check_output(command,  shell=True, text=True)
     
     
     with open(f"../servers/{server_config['name']}/dist/src/infrastructure/{server_config['name']}.constants.js", "r") as t:
