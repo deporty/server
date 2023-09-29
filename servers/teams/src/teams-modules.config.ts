@@ -48,6 +48,7 @@ export class TeamsModulesConfig {
     container.add({
       id: 'MemberMapper',
       kind: MemberMapper,
+      dependencies: ['FileAdapter'],
       strategy: 'singleton',
     });
 
