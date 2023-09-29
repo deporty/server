@@ -2,7 +2,12 @@ import os
 import shutil
 import subprocess
 
-res = subprocess.check_output('npx tsc -p ../tsconfig.json',  shell=True, text=True)
+
+command = 'npx tsc -p ../tsconfig.json'
+
+print(command)
+
+res = subprocess.check_output(command,  shell=True, text=True)
 
 
 files = [
