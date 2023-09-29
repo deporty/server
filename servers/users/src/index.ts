@@ -71,8 +71,8 @@ const app = express();
 const router = Router();
 app.use(cors());
 
-app.use(bodyParser.json({limit: '1mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
+app.use(bodyParser.json({limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 UserModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
 
 GENERAL_DEPENDENCIES_CONTAINER.addValue({
