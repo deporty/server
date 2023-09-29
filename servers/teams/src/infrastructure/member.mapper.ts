@@ -28,6 +28,7 @@ export class MemberMapper extends Mapper<MemberEntity> {
         },
       },
       teamId: { name: "team-id" },
+      image: { name: "image" },
       userId: { name: "user-id" },
       kindMember: { name: "kind-member", default: "player" },
       id: { name: "id" },
