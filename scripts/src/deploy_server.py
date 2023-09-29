@@ -55,7 +55,7 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     res = subprocess.check_output(command,  shell=True, text=True)
     
    
-    command = 'cd ../servers/' + server_config['name'] + ' && npm run build'
+    command = 'cd ../servers/' + server_config['name'] + ' && npx tsc -p tsconfig.json '
     
     print(command)
     logger.log(command)
