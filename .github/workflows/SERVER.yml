@@ -46,18 +46,18 @@ jobs:
 
       # - name: deploy to cluster
       #   uses: steebchen/kubectl@v2.0.0
-      - name: CONFIG ALIAS
+      - name: CLUSTER CREDENTIALS
         run: |
           gcloud components install gke-gcloud-auth-plugin
 
           gcloud container clusters get-credentials autopilot-cluster-1 --region southamerica-east1 --project deporty-dev
-          alias python=python3
-          alias py=python3
+        
         # cd servers/authorization && npm run build 
       - name: DEPLOY
         run: |
-          alias python=python3
-          alias py=python3
+          py --version
+          python --version
+          python3 --version
           cd scripts
           python3 deploy.py
 

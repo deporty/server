@@ -4,7 +4,7 @@ import threading
 
 from src.deploy_server import build_servers
 from src.git_helpers import get_last_commit, get_changed_files
-from src.helpers import extract_servers_to_deploy, build_packages, print_title
+from src.helpers import extract_servers_to_deploy, print_title
 
 
 last_commit_hash = get_last_commit()
@@ -14,12 +14,10 @@ print("Last commit hash ", last_commit_hash)
 files = get_changed_files(last_commit_hash)
 
 print_title("Files: ")
-
 for file in files:
     print("\t- ", file)
 print()
 
-# build_packages()
 
 
 with open('servers.config.json', 'r') as f:
@@ -29,6 +27,7 @@ with open('kubernetes.config.json', 'r') as f:
     KUBERNETES_CONFIGURATION = json.load(f)
 
 servers_to_deploy = extract_servers_to_deploy(files)
+# servers_to_deploy = [('users','10.0.0')]
 
 env = os.environ.get('ENV') or 'dev'
 

@@ -31,7 +31,6 @@ def build_servers(servers_to_deploy, server_configurations, current_kubernetes_c
       print("Omiting deployment: " + config['name'])
     
   ingress_path = get_ingress_template(server_configurations)
-  os.system('ls')
   command = f'kubectl apply -f {ingress_path}'
   res = subprocess.check_output(command,  shell=True, text=True)
     
