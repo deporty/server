@@ -30,7 +30,6 @@ def get_deployment_template(server_config):
     res = pattern.search(template)
     while res != None:
       key = res.group(1)
-      print(res.group(0), res.group(1))
       template = template.replace(res.group(0), str(server_config[key]))
       res = pattern.search(template)
   
