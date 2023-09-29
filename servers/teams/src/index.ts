@@ -118,4 +118,5 @@ TeamController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);
 app.use('/teams', router);
 app.listen(10006, () => {
   logger.info('Starting teams');
+  console.log('Starting teams');
 });

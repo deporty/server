@@ -34,6 +34,7 @@ import { EditMemberByIdUsecase } from './domain/usecases/edit-member-by-id/edit-
 import { CreateUserAndAsignNewMemberToTeamUsecase } from './domain/usecases/create-user-and-asign-new-member-to-team/create-user-and-asign-new-member-to-team.usecase';
 import { DeleteMemberByIdUsecase } from './domain/usecases/delete-member-by-id/delete-member-by-id.usecase';
 import { DeleteMembersFromTeamUsecase } from './domain/usecases/delete-members-from-team/delete-members-from-team.usecase';
+import { GetOnlyMemberByIdUsecase } from './domain/usecases/get-only-member-by-id/get-only-member-by-id.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -158,6 +159,12 @@ export class TeamsModulesConfig {
       strategy: 'singleton',
     });
     container.add({
+      id: 'GetOnlyMemberByIdUsecase',
+      kind: GetOnlyMemberByIdUsecase,
+      dependencies: ['MemberContract'],
+      strategy: 'singleton',
+    });
+    container.add({
       id: 'GetMembersByTeamUsecase',
       kind: GetMembersByTeamUsecase,
       dependencies: ['MemberContract', 'UserContract'],
@@ -208,7 +215,7 @@ export class TeamsModulesConfig {
     container.add({
       id: 'EditMemberByIdUsecase',
       kind: EditMemberByIdUsecase,
-      dependencies: ['GetMemberByIdUsecase', 'MemberContract'],
+      dependencies: ['GetOnlyMemberByIdUsecase', 'MemberContract', 'FileAdapter'],
       strategy: 'singleton',
     });
     container.add({

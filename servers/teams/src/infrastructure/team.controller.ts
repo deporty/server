@@ -337,9 +337,9 @@ export class TeamController extends HttpController {
     });
     router.put(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
       const data = {
+        ...request.body,
         teamId: request.params.teamId,
         memberId: request.params.memberId,
-        member: request.body,
       };
       const config: MessagesConfiguration = {
         exceptions: {
