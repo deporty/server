@@ -66,7 +66,7 @@ export class EditUserByIdUsecase extends Usecase<Param, UserEntity> {
           image: path ? this.fileAdapter.getRelativeUrl(path) : prevUser.image,
           phone: user.phone,
           secondLastName: user.secondLastName,
-          secondName: user.secondLastName,
+          secondName: user.secondName,
         };
         return this.userContract.update(prevUser.id!, newUser).pipe(
           mergeMap((user) => {
