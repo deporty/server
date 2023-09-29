@@ -63,7 +63,7 @@ export class EditUserByIdUsecase extends Usecase<Param, UserEntity> {
           document: user.document,
           firstLastName: user.firstLastName,
           firstName: user.firstName,
-          image: path ? this.fileAdapter.getRelativeUrl(path) : '',
+          image: path ? this.fileAdapter.getRelativeUrl(path) : prevUser.image,
           phone: user.phone,
           secondLastName: user.secondLastName,
           secondName: user.secondLastName,
