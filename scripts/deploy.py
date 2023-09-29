@@ -27,7 +27,7 @@ with open('kubernetes.config.json', 'r') as f:
     KUBERNETES_CONFIGURATION = json.load(f)
 
 servers_to_deploy = extract_servers_to_deploy(files)
-servers_to_deploy = [('users','10.0.0')]
+# servers_to_deploy = [('users','10.0.0')]
 
 env = os.environ.get('ENV') or 'dev'
 
