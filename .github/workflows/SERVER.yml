@@ -58,7 +58,7 @@ jobs:
       #     cd servers/users && npm run build
       - name: DEPLOY 2
         run: |
-          cd servers/users
+          cd servers/locations
           npm i
           npx tsc -p tsconfig.json
       - name: DEPLOY
