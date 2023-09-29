@@ -58,7 +58,9 @@ jobs:
       #     cd servers/users && npm run build
       - name: DEPLOY 2
         run: |
-          cd servers/users && npx tsc -p tsconfig.json
+          cd servers/users
+          npm i
+          npx tsc -p tsconfig.json
       - name: DEPLOY
         run: |
           python --version
