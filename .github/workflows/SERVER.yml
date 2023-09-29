@@ -57,6 +57,7 @@ jobs:
         run: |
           python --version
           python3 --version
+          cd servers/users &&  npm run build
           cd scripts
           python3 deploy.py
 
