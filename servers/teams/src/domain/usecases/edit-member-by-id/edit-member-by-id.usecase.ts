@@ -36,9 +36,9 @@ export class EditMemberByIdUsecase extends Usecase<Param, MemberEntity> {
       })
       .pipe(
         mergeMap((prevMember: MemberEntity) => {
-          if (param.member.image) {
+          if (param.image) {
             const $t = from(
-              forceTransformation(param.member.image, {
+              forceTransformation(param.image, {
                 maxAspectRatio: 1.1,
                 maxWidth: 300,
               })
