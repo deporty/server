@@ -55,7 +55,6 @@ jobs:
         # cd servers/authorization && npm run build 
       - name: DEPLOY
         run: |
-          py --version
           python --version
           python3 --version
           cd scripts
