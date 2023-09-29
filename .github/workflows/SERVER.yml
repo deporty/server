@@ -52,10 +52,10 @@ jobs:
 
           gcloud container clusters get-credentials autopilot-cluster-1 --region southamerica-east1 --project deporty-dev
         
-        # cd servers/authorization && npm run build 
-      - name: DEPLOY 1
-        run: |
-          cd servers/users && npm run build
+      #   # cd servers/authorization && npm run build 
+      # - name: DEPLOY 1
+      #   run: |
+      #     cd servers/users && npm run build
       - name: DEPLOY 2
         run: |
           cd servers/users && npx tsc -p tsconfig.json
