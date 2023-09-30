@@ -10,6 +10,7 @@ export class TeamMapper extends Mapper<TeamEntity> {
       status: { name: 'status', default: 'enabled' },
       athem: { name: 'athem' },
       category: { name: 'category' },
+      city: { name: 'city' },
       sportIds: { name: 'sport-ids' },
       miniShield: {
         name: 'mini-shield',

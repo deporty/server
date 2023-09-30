@@ -27,6 +27,7 @@ import {
 import { EditMemberByIdUsecase } from '../domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
 import { CreateUserAndAsignNewMemberToTeamUsecase } from '../domain/usecases/create-user-and-asign-new-member-to-team/create-user-and-asign-new-member-to-team.usecase';
 import { Logger } from '@scifamek-open-source/logger';
+import { EditTeamUsecase, UserImageNotAllowedError } from '../domain/usecases/edit-team/edit-team.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -300,7 +301,7 @@ export class TeamController extends HttpController {
         exceptions: {
           [TeamNameAlreadyExistsError.id]: 'TEAM-NAME-ALREADY-EXISTS:ERROR',
           [UserCreatorIdNotProvidedError.id]: 'USER-CREATOR-ID-NOT-PROVIDED:ERROR',
-          'SizePropertyError': 'SIZE-PROPERTY:ERROR',
+          SizePropertyError: 'SIZE-PROPERTY:ERROR',
         },
         identifier: this.identifier,
         successCode: 'POST:SUCCESS',
@@ -315,6 +316,31 @@ export class TeamController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: team,
+      });
+    });
+    router.patch(`/:teamId`, (request: Request, response: Response) => {
+      const body = {
+        id: request.params.teamId,
+        ...request.body,
+      };
+
+      const config: MessagesConfiguration = {
+        exceptions: {
+          [UserImageNotAllowedError.id]: 'TEAM-SHIELD-INVALID:ERROR',
+        },
+        identifier: this.identifier,
+        successCode: 'PATCH:SUCCESS',
+        extraData: {
+          entitiesName: 'Team',
+        },
+      };
+
+      this.handler<EditTeamUsecase>({
+        container,
+        usecaseId: 'EditTeamUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
       });
     });
 
@@ -335,6 +361,7 @@ export class TeamController extends HttpController {
         usecaseParam: data,
       });
     });
+
     router.put(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
       const data = {
         ...request.body,

@@ -29,7 +29,7 @@ export class DeleteTeamUsecase extends Usecase<string, TeamEntity | undefined> {
           mergeMap((d: TournamentInscriptionEntity[]) => {
             if (d.length > 0) {
               const t: TeamEntity = { ...team, status: 'deleted' };
-              return this.editTeamUsecase.call(t);
+              return this.editTeamUsecase.call({ team: t, id: t.id! });
             } else {
               const $response = [];
               if (team.shield) {

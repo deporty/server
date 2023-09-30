@@ -1,0 +1,5930 @@
+[
+  {
+    "name": "Medellín",
+    "state": "Antioquia",
+    "latitude": 6.2518,
+    "longitude": -75.5636
+  },
+  {
+    "name": "Abejorral",
+    "state": "Antioquia",
+    "latitude": 5.7893,
+    "longitude": -75.4273
+  },
+  {
+    "name": "Abriaquí",
+    "state": "Antioquia",
+    "latitude": 6.6315,
+    "longitude": -76.0644
+  },
+  {
+    "name": "Alejandría",
+    "state": "Antioquia",
+    "latitude": 6.3774,
+    "longitude": -75.1406
+  },
+  {
+    "name": "Amagá",
+    "state": "Antioquia",
+    "latitude": 6.04,
+    "longitude": -75.7032
+  },
+  {
+    "name": "Amalfi",
+    "state": "Antioquia",
+    "latitude": 6.9102,
+    "longitude": -75.0776
+  },
+  {
+    "name": "Andes",
+    "state": "Antioquia",
+    "latitude": 5.6561,
+    "longitude": -75.8788
+  },
+  {
+    "name": "Angelópolis",
+    "state": "Antioquia",
+    "latitude": 6.1107,
+    "longitude": -75.7092
+  },
+  {
+    "name": "Angostura",
+    "state": "Antioquia",
+    "latitude": 6.8851,
+    "longitude": -75.3347
+  },
+  {
+    "name": "Anorí",
+    "state": "Antioquia",
+    "latitude": 7.1833,
+    "longitude": -75.0667
+  },
+  {
+    "name": "Tununguá",
+    "state": "Boyacá",
+    "latitude": 5.7297,
+    "longitude": -73.9414
+  },
+  {
+    "name": "Anza",
+    "state": "Antioquia",
+    "latitude": 6.3032,
+    "longitude": -75.8538
+  },
+  {
+    "name": "Apartadó",
+    "state": "Antioquia",
+    "latitude": 7.883,
+    "longitude": -76.6259
+  },
+  {
+    "name": "Arboletes",
+    "state": "Antioquia",
+    "latitude": 8.8505,
+    "longitude": -76.4269
+  },
+  {
+    "name": "Argelia",
+    "state": "Antioquia",
+    "latitude": 5.7313,
+    "longitude": -75.1426
+  },
+  {
+    "name": "Armenia",
+    "state": "Antioquia",
+    "latitude": 6.1564,
+    "longitude": -75.7872
+  },
+  {
+    "name": "Barbosa",
+    "state": "Antioquia",
+    "latitude": 6.4381,
+    "longitude": -75.3314
+  },
+  {
+    "name": "Bello",
+    "state": "Antioquia",
+    "latitude": 6.3373,
+    "longitude": -75.558
+  },
+  {
+    "name": "Betania",
+    "state": "Antioquia",
+    "latitude": 5.746,
+    "longitude": -75.9777
+  },
+  {
+    "name": "Betulia",
+    "state": "Antioquia",
+    "latitude": 6.1128,
+    "longitude": -75.9838
+  },
+  {
+    "name": "Ciudad Bolívar",
+    "state": "Antioquia",
+    "latitude": 5.8539,
+    "longitude": -76.0253
+  },
+  {
+    "name": "Briceño",
+    "state": "Antioquia",
+    "latitude": 7.111,
+    "longitude": -75.5515
+  },
+  {
+    "name": "Buriticá",
+    "state": "Antioquia",
+    "latitude": 6.7187,
+    "longitude": -75.9073
+  },
+  {
+    "name": "Cáceres",
+    "state": "Antioquia",
+    "latitude": 7.5808,
+    "longitude": -75.3484
+  },
+  {
+    "name": "Caicedo",
+    "state": "Antioquia",
+    "latitude": 6.4051,
+    "longitude": -75.9825
+  },
+  {
+    "name": "Caldas",
+    "state": "Antioquia",
+    "latitude": 6.0911,
+    "longitude": -75.6357
+  },
+  {
+    "name": "Campamento",
+    "state": "Antioquia",
+    "latitude": 6.9792,
+    "longitude": -75.2972
+  },
+  {
+    "name": "Cañasgordas",
+    "state": "Antioquia",
+    "latitude": 6.7499,
+    "longitude": -76.0254
+  },
+  {
+    "name": "Caracolí",
+    "state": "Antioquia",
+    "latitude": 6.4119,
+    "longitude": -74.7606
+  },
+  {
+    "name": "Caramanta",
+    "state": "Antioquia",
+    "latitude": 5.5478,
+    "longitude": -75.6437
+  },
+  {
+    "name": "Carepa",
+    "state": "Antioquia",
+    "latitude": 7.7585,
+    "longitude": -76.6525
+  },
+  {
+    "name": "Motavita",
+    "state": "Boyacá",
+    "latitude": 5.5765,
+    "longitude": -73.367
+  },
+  {
+    "name": "Carolina",
+    "state": "Antioquia",
+    "latitude": 6.7244,
+    "longitude": -75.2817
+  },
+  {
+    "name": "Caucasia",
+    "state": "Antioquia",
+    "latitude": 7.9865,
+    "longitude": -75.1935
+  },
+  {
+    "name": "Chigorodó",
+    "state": "Antioquia",
+    "latitude": 7.6664,
+    "longitude": -76.6811
+  },
+  {
+    "name": "Cisneros",
+    "state": "Antioquia",
+    "latitude": 6.5383,
+    "longitude": -75.0886
+  },
+  {
+    "name": "Cocorná",
+    "state": "Antioquia",
+    "latitude": 6.0573,
+    "longitude": -75.1852
+  },
+  {
+    "name": "Concepción",
+    "state": "Antioquia",
+    "latitude": 6.3941,
+    "longitude": -75.2583
+  },
+  {
+    "name": "Concordia",
+    "state": "Antioquia",
+    "latitude": 6.0464,
+    "longitude": -75.9071
+  },
+  {
+    "name": "Copacabana",
+    "state": "Antioquia",
+    "latitude": 6.3463,
+    "longitude": -75.5089
+  },
+  {
+    "name": "Dabeiba",
+    "state": "Antioquia",
+    "latitude": 7.0002,
+    "longitude": -76.2691
+  },
+  {
+    "name": "Don Matías",
+    "state": "Antioquia",
+    "latitude": 6.4857,
+    "longitude": -75.395
+  },
+  {
+    "name": "Ebéjico",
+    "state": "Antioquia",
+    "latitude": 6.326,
+    "longitude": -75.7683
+  },
+  {
+    "name": "El Bagre",
+    "state": "Antioquia",
+    "latitude": 7.6035,
+    "longitude": -74.8095
+  },
+  {
+    "name": "Entrerrios",
+    "state": "Antioquia",
+    "latitude": 6.5654,
+    "longitude": -75.5169
+  },
+  {
+    "name": "Envigado",
+    "state": "Antioquia",
+    "latitude": 6.1759,
+    "longitude": -75.5917
+  },
+  {
+    "name": "Fredonia",
+    "state": "Antioquia",
+    "latitude": 5.9258,
+    "longitude": -75.6706
+  },
+  {
+    "name": "San Bernardo del Viento",
+    "state": "Córdoba",
+    "latitude": 9.3533,
+    "longitude": -75.9524
+  },
+  {
+    "name": "Giraldo",
+    "state": "Antioquia",
+    "latitude": 6.6831,
+    "longitude": -75.9892
+  },
+  {
+    "name": "Girardota",
+    "state": "Antioquia",
+    "latitude": 6.3771,
+    "longitude": -75.4478
+  },
+  {
+    "name": "Gómez Plata",
+    "state": "Antioquia",
+    "latitude": 6.6818,
+    "longitude": -75.2191
+  },
+  {
+    "name": "Istmina",
+    "state": "Chocó",
+    "latitude": 5.1605,
+    "longitude": -76.684
+  },
+  {
+    "name": "Guadalupe",
+    "state": "Antioquia",
+    "latitude": 6.8145,
+    "longitude": -75.2406
+  },
+  {
+    "name": "Guarne",
+    "state": "Antioquia",
+    "latitude": 6.2805,
+    "longitude": -75.4435
+  },
+  {
+    "name": "Guatapé",
+    "state": "Antioquia",
+    "latitude": 6.2343,
+    "longitude": -75.1633
+  },
+  {
+    "name": "Heliconia",
+    "state": "Antioquia",
+    "latitude": 6.2083,
+    "longitude": -75.7357
+  },
+  {
+    "name": "Hispania",
+    "state": "Antioquia",
+    "latitude": 5.7993,
+    "longitude": -75.9072
+  },
+  {
+    "name": "Ituango",
+    "state": "Antioquia",
+    "latitude": 7.1712,
+    "longitude": -75.764
+  },
+  {
+    "name": "Belmira",
+    "state": "Antioquia",
+    "latitude": 6.6051,
+    "longitude": -75.6662
+  },
+  {
+    "name": "Jericó",
+    "state": "Antioquia",
+    "latitude": 5.7921,
+    "longitude": -75.786
+  },
+  {
+    "name": "La Ceja",
+    "state": "Antioquia",
+    "latitude": 6.0313,
+    "longitude": -75.4333
+  },
+  {
+    "name": "La Estrella",
+    "state": "Antioquia",
+    "latitude": 6.1577,
+    "longitude": -75.6432
+  },
+  {
+    "name": "La Pintada",
+    "state": "Antioquia",
+    "latitude": 5.7487,
+    "longitude": -75.6063
+  },
+  {
+    "name": "La Unión",
+    "state": "Antioquia",
+    "latitude": 5.9743,
+    "longitude": -75.362
+  },
+  {
+    "name": "Liborina",
+    "state": "Antioquia",
+    "latitude": 6.6779,
+    "longitude": -75.8122
+  },
+  {
+    "name": "Maceo",
+    "state": "Antioquia",
+    "latitude": 6.552,
+    "longitude": -74.7874
+  },
+  {
+    "name": "Marinilla",
+    "state": "Antioquia",
+    "latitude": 6.1736,
+    "longitude": -75.3362
+  },
+  {
+    "name": "Montebello",
+    "state": "Antioquia",
+    "latitude": 5.9449,
+    "longitude": -75.5243
+  },
+  {
+    "name": "Murindó",
+    "state": "Antioquia",
+    "latitude": 6.9848,
+    "longitude": -76.7544
+  },
+  {
+    "name": "Mutatá",
+    "state": "Antioquia",
+    "latitude": 7.2441,
+    "longitude": -76.4356
+  },
+  {
+    "name": "Nariño",
+    "state": "Antioquia",
+    "latitude": 5.6089,
+    "longitude": -75.1766
+  },
+  {
+    "name": "Necoclí",
+    "state": "Antioquia",
+    "latitude": 8.4263,
+    "longitude": -76.7893
+  },
+  {
+    "name": "Nechí",
+    "state": "Antioquia",
+    "latitude": 8.0942,
+    "longitude": -74.7757
+  },
+  {
+    "name": "Olaya",
+    "state": "Antioquia",
+    "latitude": 6.6299,
+    "longitude": -75.803
+  },
+  {
+    "name": "Peñol",
+    "state": "Antioquia",
+    "latitude": 6.2464,
+    "longitude": -75.221
+  },
+  {
+    "name": "Peque",
+    "state": "Antioquia",
+    "latitude": 7.0212,
+    "longitude": -75.9093
+  },
+  {
+    "name": "Pueblorrico",
+    "state": "Antioquia",
+    "latitude": 5.7918,
+    "longitude": -75.841
+  },
+  {
+    "name": "Puerto Berrío",
+    "state": "Antioquia",
+    "latitude": 6.4916,
+    "longitude": -74.4033
+  },
+  {
+    "name": "Puerto Nare",
+    "state": "Antioquia",
+    "latitude": 6.2053,
+    "longitude": -74.5997
+  },
+  {
+    "name": "Puerto Triunfo",
+    "state": "Antioquia",
+    "latitude": 5.8726,
+    "longitude": -74.6403
+  },
+  {
+    "name": "Remedios",
+    "state": "Antioquia",
+    "latitude": 7.0308,
+    "longitude": -74.5333
+  },
+  {
+    "name": "Retiro",
+    "state": "Antioquia",
+    "latitude": 6.0547,
+    "longitude": -75.5137
+  },
+  {
+    "name": "Rionegro",
+    "state": "Antioquia",
+    "latitude": 6.1551,
+    "longitude": -75.3737
+  },
+  {
+    "name": "Sabanalarga",
+    "state": "Antioquia",
+    "latitude": 6.8489,
+    "longitude": -75.8171
+  },
+  {
+    "name": "Sabaneta",
+    "state": "Antioquia",
+    "latitude": 6.1515,
+    "longitude": -75.6166
+  },
+  {
+    "name": "Salgar",
+    "state": "Antioquia",
+    "latitude": 5.965,
+    "longitude": -75.9654
+  },
+  {
+    "name": "Ciénega",
+    "state": "Boyacá",
+    "latitude": 5.4087,
+    "longitude": -73.2957
+  },
+  {
+    "name": "Santacruz",
+    "state": "Nariño",
+    "latitude": 1.2656,
+    "longitude": -77.7356
+  },
+  {
+    "name": "San Francisco",
+    "state": "Antioquia",
+    "latitude": 5.9643,
+    "longitude": -75.1016
+  },
+  {
+    "name": "San Jerónimo",
+    "state": "Antioquia",
+    "latitude": 6.4434,
+    "longitude": -75.7281
+  },
+  {
+    "name": "Puerto Wilches",
+    "state": "Santander",
+    "latitude": 7.3483,
+    "longitude": -73.896
+  },
+  {
+    "name": "Puerto Parra",
+    "state": "Santander",
+    "latitude": 6.6515,
+    "longitude": -74.0573
+  },
+  {
+    "name": "San Luis",
+    "state": "Antioquia",
+    "latitude": 6.0434,
+    "longitude": -74.9937
+  },
+  {
+    "name": "San Pedro",
+    "state": "Antioquia",
+    "latitude": 6.4582,
+    "longitude": -75.5638
+  },
+  {
+    "name": "San Rafael",
+    "state": "Antioquia",
+    "latitude": 6.2944,
+    "longitude": -75.0259
+  },
+  {
+    "name": "San Roque",
+    "state": "Antioquia",
+    "latitude": 6.4851,
+    "longitude": -75.0196
+  },
+  {
+    "name": "San Vicente",
+    "state": "Antioquia",
+    "latitude": 6.2328,
+    "longitude": -75.3361
+  },
+  {
+    "name": "Santa Bárbara",
+    "state": "Antioquia",
+    "latitude": 5.8746,
+    "longitude": -75.5671
+  },
+  {
+    "name": "Santo Domingo",
+    "state": "Antioquia",
+    "latitude": 6.4728,
+    "longitude": -75.1655
+  },
+  {
+    "name": "El Santuario",
+    "state": "Antioquia",
+    "latitude": 6.1383,
+    "longitude": -75.2642
+  },
+  {
+    "name": "Segovia",
+    "state": "Antioquia",
+    "latitude": 7.0799,
+    "longitude": -74.6989
+  },
+  {
+    "name": "Sopetrán",
+    "state": "Antioquia",
+    "latitude": 6.5213,
+    "longitude": -75.7455
+  },
+  {
+    "name": "Uribe",
+    "state": "Meta",
+    "latitude": 3.0264,
+    "longitude": -74.4361
+  },
+  {
+    "name": "Támesis",
+    "state": "Antioquia",
+    "latitude": 5.6646,
+    "longitude": -75.7134
+  },
+  {
+    "name": "Tarazá",
+    "state": "Antioquia",
+    "latitude": 7.5836,
+    "longitude": -75.4007
+  },
+  {
+    "name": "Tarso",
+    "state": "Antioquia",
+    "latitude": 5.8647,
+    "longitude": -75.8219
+  },
+  {
+    "name": "Titiribí",
+    "state": "Antioquia",
+    "latitude": 6.0628,
+    "longitude": -75.7937
+  },
+  {
+    "name": "Toledo",
+    "state": "Antioquia",
+    "latitude": 7.0131,
+    "longitude": -75.6953
+  },
+  {
+    "name": "Turbo",
+    "state": "Antioquia",
+    "latitude": 8.0926,
+    "longitude": -76.7282
+  },
+  {
+    "name": "Uramita",
+    "state": "Antioquia",
+    "latitude": 6.8994,
+    "longitude": -76.1742
+  },
+  {
+    "name": "Urrao",
+    "state": "Antioquia",
+    "latitude": 6.317,
+    "longitude": -76.1342
+  },
+  {
+    "name": "Valdivia",
+    "state": "Antioquia",
+    "latitude": 7.2889,
+    "longitude": -75.3978
+  },
+  {
+    "name": "Valparaíso",
+    "state": "Antioquia",
+    "latitude": 5.615,
+    "longitude": -75.6242
+  },
+  {
+    "name": "Vegachí",
+    "state": "Antioquia",
+    "latitude": 6.8361,
+    "longitude": -74.7532
+  },
+  {
+    "name": "Venecia",
+    "state": "Antioquia",
+    "latitude": 5.9628,
+    "longitude": -75.7381
+  },
+  {
+    "name": "Yalí",
+    "state": "Antioquia",
+    "latitude": 6.6746,
+    "longitude": -74.8343
+  },
+  {
+    "name": "Yarumal",
+    "state": "Antioquia",
+    "latitude": 7.0303,
+    "longitude": -75.5906
+  },
+  {
+    "name": "Yolombó",
+    "state": "Antioquia",
+    "latitude": 6.5984,
+    "longitude": -75.0114
+  },
+  {
+    "name": "Yondó",
+    "state": "Antioquia",
+    "latitude": 6.2859,
+    "longitude": -74.6188
+  },
+  {
+    "name": "Zaragoza",
+    "state": "Antioquia",
+    "latitude": 7.4897,
+    "longitude": -74.8692
+  },
+  {
+    "name": "Barranquilla",
+    "state": "Atlántico",
+    "latitude": 10.9685,
+    "longitude": -74.7813
+  },
+  {
+    "name": "Baranoa",
+    "state": "Atlántico",
+    "latitude": 10.7941,
+    "longitude": -74.9164
+  },
+  {
+    "name": "Candelaria",
+    "state": "Atlántico",
+    "latitude": 10.4591,
+    "longitude": -74.8797
+  },
+  {
+    "name": "Galapa",
+    "state": "Atlántico",
+    "latitude": 10.8969,
+    "longitude": -74.886
+  },
+  {
+    "name": "Luruaco",
+    "state": "Atlántico",
+    "latitude": 10.6171,
+    "longitude": -75.1515
+  },
+  {
+    "name": "Malambo",
+    "state": "Atlántico",
+    "latitude": 10.8595,
+    "longitude": -74.7739
+  },
+  {
+    "name": "Manatí",
+    "state": "Atlántico",
+    "latitude": 10.4459,
+    "longitude": -74.9587
+  },
+  {
+    "name": "Piojó",
+    "state": "Atlántico",
+    "latitude": 10.7485,
+    "longitude": -75.1078
+  },
+  {
+    "name": "Polonuevo",
+    "state": "Atlántico",
+    "latitude": 10.777,
+    "longitude": -74.8534
+  },
+  {
+    "name": "Sabanagrande",
+    "state": "Atlántico",
+    "latitude": 10.7912,
+    "longitude": -74.7606
+  },
+  {
+    "name": "Sabanalarga",
+    "state": "Atlántico",
+    "latitude": 10.6296,
+    "longitude": -74.9206
+  },
+  {
+    "name": "Santa Lucía",
+    "state": "Atlántico",
+    "latitude": 10.3242,
+    "longitude": -74.9602
+  },
+  {
+    "name": "Santo Tomás",
+    "state": "Atlántico",
+    "latitude": 10.7577,
+    "longitude": -74.7545
+  },
+  {
+    "name": "Soledad",
+    "state": "Atlántico",
+    "latitude": 10.9184,
+    "longitude": -74.7646
+  },
+  {
+    "name": "Suan",
+    "state": "Atlántico",
+    "latitude": 10.3335,
+    "longitude": -74.8802
+  },
+  {
+    "name": "Tubará",
+    "state": "Atlántico",
+    "latitude": 10.8756,
+    "longitude": -74.9787
+  },
+  {
+    "name": "Usiacurí",
+    "state": "Atlántico",
+    "latitude": 10.75,
+    "longitude": -74.9833
+  },
+  {
+    "name": "Achí",
+    "state": "Bolivar",
+    "latitude": 8.5682,
+    "longitude": -74.5541
+  },
+  {
+    "name": "Arenal",
+    "state": "Bolivar",
+    "latitude": 8.4593,
+    "longitude": -73.9433
+  },
+  {
+    "name": "Arjona",
+    "state": "Bolivar",
+    "latitude": 10.2544,
+    "longitude": -75.3439
+  },
+  {
+    "name": "Arroyohondo",
+    "state": "Bolivar",
+    "latitude": 10.2522,
+    "longitude": -75.0198
+  },
+  {
+    "name": "Calamar",
+    "state": "Bolivar",
+    "latitude": 10.2226,
+    "longitude": -74.9969
+  },
+  {
+    "name": "Cantagallo",
+    "state": "Bolivar",
+    "latitude": 7.376,
+    "longitude": -73.9196
+  },
+  {
+    "name": "Cicuco",
+    "state": "Bolivar",
+    "latitude": 9.2631,
+    "longitude": -74.6569
+  },
+  {
+    "name": "Córdoba",
+    "state": "Bolivar",
+    "latitude": 9.5861,
+    "longitude": -74.8271
+  },
+  {
+    "name": "Clemencia",
+    "state": "Bolivar",
+    "latitude": 10.5665,
+    "longitude": -75.325
+  },
+  {
+    "name": "El Guamo",
+    "state": "Bolivar",
+    "latitude": 10.0316,
+    "longitude": -74.9761
+  },
+  {
+    "name": "Magangué",
+    "state": "Bolivar",
+    "latitude": 9.242,
+    "longitude": -74.7547
+  },
+  {
+    "name": "Mahates",
+    "state": "Bolivar",
+    "latitude": 10.2329,
+    "longitude": -75.1898
+  },
+  {
+    "name": "Margarita",
+    "state": "Bolivar",
+    "latitude": 9.156,
+    "longitude": -74.2662
+  },
+  {
+    "name": "Montecristo",
+    "state": "Bolivar",
+    "latitude": 8.2971,
+    "longitude": -74.4733
+  },
+  {
+    "name": "Mompós",
+    "state": "Bolivar",
+    "latitude": 9.2419,
+    "longitude": -74.4267
+  },
+  {
+    "name": "Morales",
+    "state": "Bolivar",
+    "latitude": 8.2752,
+    "longitude": -73.8688
+  },
+  {
+    "name": "Norosi",
+    "state": "Bolivar",
+    "latitude": 8.5269,
+    "longitude": -74.0374
+  },
+  {
+    "name": "Pinillos",
+    "state": "Bolivar",
+    "latitude": 8.9192,
+    "longitude": -74.4677
+  },
+  {
+    "name": "Regidor",
+    "state": "Bolivar",
+    "latitude": 8.6657,
+    "longitude": -73.8215
+  },
+  {
+    "name": "Río Viejo",
+    "state": "Bolivar",
+    "latitude": 8.5874,
+    "longitude": -73.839
+  },
+  {
+    "name": "San Estanislao",
+    "state": "Bolivar",
+    "latitude": 10.3983,
+    "longitude": -75.1511
+  },
+  {
+    "name": "San Fernando",
+    "state": "Bolivar",
+    "latitude": 9.0919,
+    "longitude": -74.3597
+  },
+  {
+    "name": "San Juan Nepomuceno",
+    "state": "Bolivar",
+    "latitude": 9.9516,
+    "longitude": -75.082
+  },
+  {
+    "name": "Santa Catalina",
+    "state": "Bolivar",
+    "latitude": 10.6036,
+    "longitude": -75.2882
+  },
+  {
+    "name": "Santa Rosa",
+    "state": "Bolivar",
+    "latitude": 10.4447,
+    "longitude": -75.3697
+  },
+  {
+    "name": "Simití",
+    "state": "Bolivar",
+    "latitude": 7.9579,
+    "longitude": -73.9436
+  },
+  {
+    "name": "Soplaviento",
+    "state": "Bolivar",
+    "latitude": 10.3875,
+    "longitude": -75.1356
+  },
+  {
+    "name": "Talaigua Nuevo",
+    "state": "Bolivar",
+    "latitude": 9.3035,
+    "longitude": -74.5648
+  },
+  {
+    "name": "Tiquisio",
+    "state": "Bolivar",
+    "latitude": 8.5597,
+    "longitude": -74.2669
+  },
+  {
+    "name": "Turbaco",
+    "state": "Bolivar",
+    "latitude": 10.3294,
+    "longitude": -75.4114
+  },
+  {
+    "name": "Turbaná",
+    "state": "Bolivar",
+    "latitude": 10.2717,
+    "longitude": -75.4422
+  },
+  {
+    "name": "Villanueva",
+    "state": "Bolivar",
+    "latitude": 10.4436,
+    "longitude": -75.2731
+  },
+  {
+    "name": "Tunja",
+    "state": "Boyacá",
+    "latitude": 5.5353,
+    "longitude": -73.3678
+  },
+  {
+    "name": "Almeida",
+    "state": "Boyacá",
+    "latitude": 4.9708,
+    "longitude": -73.3797
+  },
+  {
+    "name": "Aquitania",
+    "state": "Boyacá",
+    "latitude": 5.5197,
+    "longitude": -72.8875
+  },
+  {
+    "name": "Arcabuco",
+    "state": "Boyacá",
+    "latitude": 5.7546,
+    "longitude": -73.4367
+  },
+  {
+    "name": "Berbeo",
+    "state": "Boyacá",
+    "latitude": 5.2268,
+    "longitude": -73.1261
+  },
+  {
+    "name": "Betéitiva",
+    "state": "Boyacá",
+    "latitude": 5.911,
+    "longitude": -72.8093
+  },
+  {
+    "name": "Boavita",
+    "state": "Boyacá",
+    "latitude": 6.3303,
+    "longitude": -72.585
+  },
+  {
+    "name": "Boyacá",
+    "state": "Boyacá",
+    "latitude": 5.4537,
+    "longitude": -73.3625
+  },
+  {
+    "name": "Briceño",
+    "state": "Boyacá",
+    "latitude": 5.6882,
+    "longitude": -73.9178
+  },
+  {
+    "name": "Busbanzá",
+    "state": "Boyacá",
+    "latitude": 5.8305,
+    "longitude": -72.8842
+  },
+  {
+    "name": "Caldas",
+    "state": "Boyacá",
+    "latitude": 5.5546,
+    "longitude": -73.8657
+  },
+  {
+    "name": "Campohermoso",
+    "state": "Boyacá",
+    "latitude": 5.0313,
+    "longitude": -73.1033
+  },
+  {
+    "name": "Cerinza",
+    "state": "Boyacá",
+    "latitude": 5.9557,
+    "longitude": -72.9478
+  },
+  {
+    "name": "Chinavita",
+    "state": "Boyacá",
+    "latitude": 5.1672,
+    "longitude": -73.3682
+  },
+  {
+    "name": "Chiquinquirá",
+    "state": "Boyacá",
+    "latitude": 5.6164,
+    "longitude": -73.8175
+  },
+  {
+    "name": "Chiscas",
+    "state": "Boyacá",
+    "latitude": 6.5564,
+    "longitude": -72.5038
+  },
+  {
+    "name": "Chita",
+    "state": "Boyacá",
+    "latitude": 6.1905,
+    "longitude": -72.4759
+  },
+  {
+    "name": "Chitaraque",
+    "state": "Boyacá",
+    "latitude": 5.9828,
+    "longitude": -73.4254
+  },
+  {
+    "name": "Chivatá",
+    "state": "Boyacá",
+    "latitude": 5.5582,
+    "longitude": -73.282
+  },
+  {
+    "name": "Cómbita",
+    "state": "Boyacá",
+    "latitude": 5.6333,
+    "longitude": -73.3167
+  },
+  {
+    "name": "Coper",
+    "state": "Boyacá",
+    "latitude": 5.4768,
+    "longitude": -74.0442
+  },
+  {
+    "name": "Corrales",
+    "state": "Boyacá",
+    "latitude": 5.8297,
+    "longitude": -72.8433
+  },
+  {
+    "name": "Covarachía",
+    "state": "Boyacá",
+    "latitude": 6.5056,
+    "longitude": -72.7331
+  },
+  {
+    "name": "Cubará",
+    "state": "Boyacá",
+    "latitude": 6.9989,
+    "longitude": -72.1092
+  },
+  {
+    "name": "Cucaita",
+    "state": "Boyacá",
+    "latitude": 5.5437,
+    "longitude": -73.4543
+  },
+  {
+    "name": "Cuítiva",
+    "state": "Boyacá",
+    "latitude": 5.5801,
+    "longitude": -72.9669
+  },
+  {
+    "name": "Chíquiza",
+    "state": "Boyacá",
+    "latitude": 5.6041,
+    "longitude": -73.4852
+  },
+  {
+    "name": "Chivor",
+    "state": "Boyacá",
+    "latitude": 4.8856,
+    "longitude": -73.3689
+  },
+  {
+    "name": "Duitama",
+    "state": "Boyacá",
+    "latitude": 5.8245,
+    "longitude": -73.0341
+  },
+  {
+    "name": "El Cocuy",
+    "state": "Boyacá",
+    "latitude": 6.4115,
+    "longitude": -72.4488
+  },
+  {
+    "name": "El Espino",
+    "state": "Boyacá",
+    "latitude": 6.4828,
+    "longitude": -72.4972
+  },
+  {
+    "name": "Firavitoba",
+    "state": "Boyacá",
+    "latitude": 5.6688,
+    "longitude": -72.9929
+  },
+  {
+    "name": "Floresta",
+    "state": "Boyacá",
+    "latitude": 5.859,
+    "longitude": -72.9188
+  },
+  {
+    "name": "Gachantivá",
+    "state": "Boyacá",
+    "latitude": 5.7566,
+    "longitude": -73.5395
+  },
+  {
+    "name": "Gameza",
+    "state": "Boyacá",
+    "latitude": 5.8026,
+    "longitude": -72.8059
+  },
+  {
+    "name": "Garagoa",
+    "state": "Boyacá",
+    "latitude": 5.0824,
+    "longitude": -73.3633
+  },
+  {
+    "name": "Guacamayas",
+    "state": "Boyacá",
+    "latitude": 6.4624,
+    "longitude": -72.5047
+  },
+  {
+    "name": "Guateque",
+    "state": "Boyacá",
+    "latitude": 5.0062,
+    "longitude": -73.4727
+  },
+  {
+    "name": "Guayatá",
+    "state": "Boyacá",
+    "latitude": 4.9642,
+    "longitude": -73.4875
+  },
+  {
+    "name": "Güicán",
+    "state": "Boyacá",
+    "latitude": 6.4655,
+    "longitude": -72.4154
+  },
+  {
+    "name": "Chíquiza",
+    "state": "Boyacá",
+    "latitude": 5.6041,
+    "longitude": -73.4852
+  },
+  {
+    "name": "Jenesano",
+    "state": "Boyacá",
+    "latitude": 5.3854,
+    "longitude": -73.3636
+  },
+  {
+    "name": "Jericó",
+    "state": "Boyacá",
+    "latitude": 6.1459,
+    "longitude": -72.5708
+  },
+  {
+    "name": "Labranzagrande",
+    "state": "Boyacá",
+    "latitude": 5.5622,
+    "longitude": -72.575
+  },
+  {
+    "name": "La Capilla",
+    "state": "Boyacá",
+    "latitude": 5.1138,
+    "longitude": -73.4587
+  },
+  {
+    "name": "La Victoria",
+    "state": "Boyacá",
+    "latitude": 5.5228,
+    "longitude": -74.2328
+  },
+  {
+    "name": "Macanal",
+    "state": "Boyacá",
+    "latitude": 4.9721,
+    "longitude": -73.3196
+  },
+  {
+    "name": "Maripí",
+    "state": "Boyacá",
+    "latitude": 5.5519,
+    "longitude": -74.0086
+  },
+  {
+    "name": "Miraflores",
+    "state": "Boyacá",
+    "latitude": 5.1961,
+    "longitude": -73.145
+  },
+  {
+    "name": "Mongua",
+    "state": "Boyacá",
+    "latitude": 5.7508,
+    "longitude": -72.8034
+  },
+  {
+    "name": "Monguí",
+    "state": "Boyacá",
+    "latitude": 5.7215,
+    "longitude": -72.8491
+  },
+  {
+    "name": "Moniquirá",
+    "state": "Boyacá",
+    "latitude": 5.8764,
+    "longitude": -73.5728
+  },
+  {
+    "name": "Muzo",
+    "state": "Boyacá",
+    "latitude": 5.5353,
+    "longitude": -74.1078
+  },
+  {
+    "name": "Nobsa",
+    "state": "Boyacá",
+    "latitude": 5.7698,
+    "longitude": -72.941
+  },
+  {
+    "name": "Nuevo Colón",
+    "state": "Boyacá",
+    "latitude": 5.3537,
+    "longitude": -73.4566
+  },
+  {
+    "name": "Oicatá",
+    "state": "Boyacá",
+    "latitude": 5.5955,
+    "longitude": -73.3082
+  },
+  {
+    "name": "Otanche",
+    "state": "Boyacá",
+    "latitude": 5.6567,
+    "longitude": -74.1825
+  },
+  {
+    "name": "Pachavita",
+    "state": "Boyacá",
+    "latitude": 5.1486,
+    "longitude": -73.3994
+  },
+  {
+    "name": "Páez",
+    "state": "Boyacá",
+    "latitude": 5.1011,
+    "longitude": -73.0512
+  },
+  {
+    "name": "Paipa",
+    "state": "Boyacá",
+    "latitude": 5.7801,
+    "longitude": -73.1171
+  },
+  {
+    "name": "Pajarito",
+    "state": "Boyacá",
+    "latitude": 5.3842,
+    "longitude": -72.697
+  },
+  {
+    "name": "Panqueba",
+    "state": "Boyacá",
+    "latitude": 6.4453,
+    "longitude": -72.4627
+  },
+  {
+    "name": "Pauna",
+    "state": "Boyacá",
+    "latitude": 5.6586,
+    "longitude": -73.9825
+  },
+  {
+    "name": "Paya",
+    "state": "Boyacá",
+    "latitude": 5.6249,
+    "longitude": -72.4235
+  },
+  {
+    "name": "Pesca",
+    "state": "Boyacá",
+    "latitude": 5.55,
+    "longitude": -73.05
+  },
+  {
+    "name": "Pisba",
+    "state": "Boyacá",
+    "latitude": 5.724,
+    "longitude": -72.4865
+  },
+  {
+    "name": "Puerto Boyacá",
+    "state": "Boyacá",
+    "latitude": 5.9758,
+    "longitude": -74.5885
+  },
+  {
+    "name": "Quípama",
+    "state": "Boyacá",
+    "latitude": 5.5194,
+    "longitude": -74.1777
+  },
+  {
+    "name": "Ramiriquí",
+    "state": "Boyacá",
+    "latitude": 5.4002,
+    "longitude": -73.3354
+  },
+  {
+    "name": "Ráquira",
+    "state": "Boyacá",
+    "latitude": 5.5379,
+    "longitude": -73.632
+  },
+  {
+    "name": "Rondón",
+    "state": "Boyacá",
+    "latitude": 5.3564,
+    "longitude": -73.2092
+  },
+  {
+    "name": "Saboyá",
+    "state": "Boyacá",
+    "latitude": 5.6964,
+    "longitude": -73.7693
+  },
+  {
+    "name": "Sáchica",
+    "state": "Boyacá",
+    "latitude": 5.5845,
+    "longitude": -73.5418
+  },
+  {
+    "name": "Samacá",
+    "state": "Boyacá",
+    "latitude": 5.4927,
+    "longitude": -73.4854
+  },
+  {
+    "name": "San Eduardo",
+    "state": "Boyacá",
+    "latitude": 5.2,
+    "longitude": -73.05
+  },
+  {
+    "name": "San Mateo",
+    "state": "Boyacá",
+    "latitude": 6.402,
+    "longitude": -72.5531
+  },
+  {
+    "name": "Santana",
+    "state": "Boyacá",
+    "latitude": 6.0575,
+    "longitude": -73.4811
+  },
+  {
+    "name": "Santa María",
+    "state": "Boyacá",
+    "latitude": 4.8605,
+    "longitude": -73.2623
+  },
+  {
+    "name": "Santa Sofía",
+    "state": "Boyacá",
+    "latitude": 5.7091,
+    "longitude": -73.604
+  },
+  {
+    "name": "Sativanorte",
+    "state": "Boyacá",
+    "latitude": 6.1316,
+    "longitude": -72.7089
+  },
+  {
+    "name": "Sativasur",
+    "state": "Boyacá",
+    "latitude": 6.0896,
+    "longitude": -72.7243
+  },
+  {
+    "name": "Siachoque",
+    "state": "Boyacá",
+    "latitude": 5.5124,
+    "longitude": -73.2444
+  },
+  {
+    "name": "Soatá",
+    "state": "Boyacá",
+    "latitude": 6.3337,
+    "longitude": -72.6828
+  },
+  {
+    "name": "Socotá",
+    "state": "Boyacá",
+    "latitude": 6.0403,
+    "longitude": -72.6351
+  },
+  {
+    "name": "Socha",
+    "state": "Boyacá",
+    "latitude": 5.9817,
+    "longitude": -72.715
+  },
+  {
+    "name": "Sogamoso",
+    "state": "Boyacá",
+    "latitude": 5.7143,
+    "longitude": -72.9339
+  },
+  {
+    "name": "Somondoco",
+    "state": "Boyacá",
+    "latitude": 4.9854,
+    "longitude": -73.4327
+  },
+  {
+    "name": "Sora",
+    "state": "Boyacá",
+    "latitude": 5.5651,
+    "longitude": -73.4502
+  },
+  {
+    "name": "Sotaquirá",
+    "state": "Boyacá",
+    "latitude": 5.7648,
+    "longitude": -73.2476
+  },
+  {
+    "name": "Soracá",
+    "state": "Boyacá",
+    "latitude": 5.5005,
+    "longitude": -73.333
+  },
+  {
+    "name": "Susacón",
+    "state": "Boyacá",
+    "latitude": 6.2298,
+    "longitude": -72.6901
+  },
+  {
+    "name": "Sutamarchán",
+    "state": "Boyacá",
+    "latitude": 5.6154,
+    "longitude": -73.617
+  },
+  {
+    "name": "Sutatenza",
+    "state": "Boyacá",
+    "latitude": 5.0264,
+    "longitude": -73.4337
+  },
+  {
+    "name": "Tasco",
+    "state": "Boyacá",
+    "latitude": 5.9104,
+    "longitude": -72.78
+  },
+  {
+    "name": "Sutatenza",
+    "state": "Boyacá",
+    "latitude": 5.0264,
+    "longitude": -73.4337
+  },
+  {
+    "name": "Tibaná",
+    "state": "Boyacá",
+    "latitude": 5.3173,
+    "longitude": -73.3965
+  },
+  {
+    "name": "Tinjacá",
+    "state": "Boyacá",
+    "latitude": 5.5792,
+    "longitude": -73.6449
+  },
+  {
+    "name": "Tipacoque",
+    "state": "Boyacá",
+    "latitude": 6.4203,
+    "longitude": -72.6918
+  },
+  {
+    "name": "Toca",
+    "state": "Boyacá",
+    "latitude": 5.5639,
+    "longitude": -73.184
+  },
+  {
+    "name": "Tópaga",
+    "state": "Boyacá",
+    "latitude": 5.7598,
+    "longitude": -72.8258
+  },
+  {
+    "name": "Tota",
+    "state": "Boyacá",
+    "latitude": 5.5583,
+    "longitude": -72.9876
+  },
+  {
+    "name": "Turmequé",
+    "state": "Boyacá",
+    "latitude": 5.3236,
+    "longitude": -73.4907
+  },
+  {
+    "name": "Tutazá",
+    "state": "Boyacá",
+    "latitude": 6.0323,
+    "longitude": -72.8564
+  },
+  {
+    "name": "Umbita",
+    "state": "Boyacá",
+    "latitude": 5.2184,
+    "longitude": -73.3931
+  },
+  {
+    "name": "Ventaquemada",
+    "state": "Boyacá",
+    "latitude": 5.3675,
+    "longitude": -73.5207
+  },
+  {
+    "name": "Viracachá",
+    "state": "Boyacá",
+    "latitude": 5.4364,
+    "longitude": -73.2961
+  },
+  {
+    "name": "Zetaquira",
+    "state": "Boyacá",
+    "latitude": 5.2822,
+    "longitude": -73.169
+  },
+  {
+    "name": "Manizales",
+    "state": "Caldas",
+    "latitude": 5.0689,
+    "longitude": -75.5174
+  },
+  {
+    "name": "Aguadas",
+    "state": "Caldas",
+    "latitude": 5.6116,
+    "longitude": -75.4562
+  },
+  {
+    "name": "Anserma",
+    "state": "Caldas",
+    "latitude": 5.2006,
+    "longitude": -75.7531
+  },
+  {
+    "name": "Aranzazu",
+    "state": "Caldas",
+    "latitude": 5.2712,
+    "longitude": -75.4904
+  },
+  {
+    "name": "Belalcázar",
+    "state": "Caldas",
+    "latitude": 4.9953,
+    "longitude": -75.8128
+  },
+  {
+    "name": "Chinchiná",
+    "state": "Caldas",
+    "latitude": 4.9825,
+    "longitude": -75.6036
+  },
+  {
+    "name": "Filadelfia",
+    "state": "Caldas",
+    "latitude": 5.2961,
+    "longitude": -75.5612
+  },
+  {
+    "name": "La Dorada",
+    "state": "Caldas",
+    "latitude": 5.4478,
+    "longitude": -74.6631
+  },
+  {
+    "name": "La Merced",
+    "state": "Caldas",
+    "latitude": 5.3934,
+    "longitude": -75.5581
+  },
+  {
+    "name": "Manzanares",
+    "state": "Caldas",
+    "latitude": 5.2327,
+    "longitude": -75.1504
+  },
+  {
+    "name": "Marmato",
+    "state": "Caldas",
+    "latitude": 5.4784,
+    "longitude": -75.5927
+  },
+  {
+    "name": "Marulanda",
+    "state": "Caldas",
+    "latitude": 5.2839,
+    "longitude": -75.2602
+  },
+  {
+    "name": "Neira",
+    "state": "Caldas",
+    "latitude": 5.1665,
+    "longitude": -75.52
+  },
+  {
+    "name": "Norcasia",
+    "state": "Caldas",
+    "latitude": 5.5778,
+    "longitude": -74.8852
+  },
+  {
+    "name": "Pácora",
+    "state": "Caldas",
+    "latitude": 5.5271,
+    "longitude": -75.4593
+  },
+  {
+    "name": "Palestina",
+    "state": "Caldas",
+    "latitude": 5.0194,
+    "longitude": -75.6224
+  },
+  {
+    "name": "Pensilvania",
+    "state": "Caldas",
+    "latitude": 5.3835,
+    "longitude": -75.1612
+  },
+  {
+    "name": "Riosucio",
+    "state": "Caldas",
+    "latitude": 5.4216,
+    "longitude": -75.7032
+  },
+  {
+    "name": "Risaralda",
+    "state": "Caldas",
+    "latitude": 5.1665,
+    "longitude": -75.766
+  },
+  {
+    "name": "Salamina",
+    "state": "Caldas",
+    "latitude": 5.4073,
+    "longitude": -75.4875
+  },
+  {
+    "name": "Samaná",
+    "state": "Caldas",
+    "latitude": 5.4126,
+    "longitude": -74.9922
+  },
+  {
+    "name": "San José",
+    "state": "Caldas",
+    "latitude": 5.0858,
+    "longitude": -75.7883
+  },
+  {
+    "name": "Supía",
+    "state": "Caldas",
+    "latitude": 5.453,
+    "longitude": -75.6507
+  },
+  {
+    "name": "Victoria",
+    "state": "Caldas",
+    "latitude": 5.3165,
+    "longitude": -74.911
+  },
+  {
+    "name": "Villamaría",
+    "state": "Caldas",
+    "latitude": 5.0449,
+    "longitude": -75.5146
+  },
+  {
+    "name": "Viterbo",
+    "state": "Caldas",
+    "latitude": 5.0624,
+    "longitude": -75.8716
+  },
+  {
+    "name": "Florencia",
+    "state": "Caquetá",
+    "latitude": 1.6144,
+    "longitude": -75.6062
+  },
+  {
+    "name": "Albania",
+    "state": "Caquetá",
+    "latitude": 1.3287,
+    "longitude": -75.8782
+  },
+  {
+    "name": "Curillo",
+    "state": "Caquetá",
+    "latitude": 1.0333,
+    "longitude": -75.9191
+  },
+  {
+    "name": "El Doncello",
+    "state": "Caquetá",
+    "latitude": 1.6782,
+    "longitude": -75.2847
+  },
+  {
+    "name": "El Paujil",
+    "state": "Caquetá",
+    "latitude": 1.5701,
+    "longitude": -75.3286
+  },
+  {
+    "name": "Morelia",
+    "state": "Caquetá",
+    "latitude": 1.4875,
+    "longitude": -75.7258
+  },
+  {
+    "name": "Puerto Rico",
+    "state": "Caquetá",
+    "latitude": 1.9142,
+    "longitude": -75.145
+  },
+  {
+    "name": "Solano",
+    "state": "Caquetá",
+    "latitude": 0.6994,
+    "longitude": -75.2535
+  },
+  {
+    "name": "Solita",
+    "state": "Caquetá",
+    "latitude": 0.874,
+    "longitude": -75.6188
+  },
+  {
+    "name": "Valparaíso",
+    "state": "Caquetá",
+    "latitude": 1.1951,
+    "longitude": -75.7071
+  },
+  {
+    "name": "Popayán",
+    "state": "Cauca",
+    "latitude": 2.4382,
+    "longitude": -76.6132
+  },
+  {
+    "name": "Almaguer",
+    "state": "Cauca",
+    "latitude": 1.917,
+    "longitude": -76.8523
+  },
+  {
+    "name": "Argelia",
+    "state": "Cauca",
+    "latitude": 2.2556,
+    "longitude": -77.2488
+  },
+  {
+    "name": "Balboa",
+    "state": "Cauca",
+    "latitude": 2.0396,
+    "longitude": -77.2168
+  },
+  {
+    "name": "Bolívar",
+    "state": "Cauca",
+    "latitude": 1.8399,
+    "longitude": -76.9689
+  },
+  {
+    "name": "Buenos Aires",
+    "state": "Cauca",
+    "latitude": 3.014,
+    "longitude": -76.6461
+  },
+  {
+    "name": "Cajibío",
+    "state": "Cauca",
+    "latitude": 2.6227,
+    "longitude": -76.5704
+  },
+  {
+    "name": "Caldono",
+    "state": "Cauca",
+    "latitude": 2.7974,
+    "longitude": -76.4832
+  },
+  {
+    "name": "Caloto",
+    "state": "Cauca",
+    "latitude": 3.0359,
+    "longitude": -76.4079
+  },
+  {
+    "name": "Corinto",
+    "state": "Cauca",
+    "latitude": 3.173,
+    "longitude": -76.2627
+  },
+  {
+    "name": "El Tambo",
+    "state": "Cauca",
+    "latitude": 2.452,
+    "longitude": -76.8103
+  },
+  {
+    "name": "Florencia",
+    "state": "Cauca",
+    "latitude": 1.6832,
+    "longitude": -77.0733
+  },
+  {
+    "name": "Guachene",
+    "state": "Cauca",
+    "latitude": 3.1333,
+    "longitude": -76.3927
+  },
+  {
+    "name": "Guapi",
+    "state": "Cauca",
+    "latitude": 2.5708,
+    "longitude": -77.8854
+  },
+  {
+    "name": "Inzá",
+    "state": "Cauca",
+    "latitude": 2.5545,
+    "longitude": -76.0672
+  },
+  {
+    "name": "Jambaló",
+    "state": "Cauca",
+    "latitude": 2.7798,
+    "longitude": -76.3282
+  },
+  {
+    "name": "La Sierra",
+    "state": "Cauca",
+    "latitude": 2.1783,
+    "longitude": -76.7626
+  },
+  {
+    "name": "La Vega",
+    "state": "Cauca",
+    "latitude": 2.0063,
+    "longitude": -76.7803
+  },
+  {
+    "name": "López",
+    "state": "Cauca",
+    "latitude": 2.8454,
+    "longitude": -77.2479
+  },
+  {
+    "name": "Mercaderes",
+    "state": "Cauca",
+    "latitude": 1.8017,
+    "longitude": -77.1703
+  },
+  {
+    "name": "Miranda",
+    "state": "Cauca",
+    "latitude": 3.2499,
+    "longitude": -76.2281
+  },
+  {
+    "name": "Morales",
+    "state": "Cauca",
+    "latitude": 2.757,
+    "longitude": -76.6172
+  },
+  {
+    "name": "Padilla",
+    "state": "Cauca",
+    "latitude": 3.2204,
+    "longitude": -76.3139
+  },
+  {
+    "name": "Patía",
+    "state": "Cauca",
+    "latitude": 2.0689,
+    "longitude": -77.0527
+  },
+  {
+    "name": "Piamonte",
+    "state": "Cauca",
+    "latitude": 1.12,
+    "longitude": -76.3213
+  },
+  {
+    "name": "Piendamó",
+    "state": "Cauca",
+    "latitude": 2.6392,
+    "longitude": -76.5306
+  },
+  {
+    "name": "Puerto Tejada",
+    "state": "Cauca",
+    "latitude": 3.2311,
+    "longitude": -76.4167
+  },
+  {
+    "name": "Puracé",
+    "state": "Cauca",
+    "latitude": 2.3425,
+    "longitude": -76.4958
+  },
+  {
+    "name": "Rosas",
+    "state": "Cauca",
+    "latitude": 2.2609,
+    "longitude": -76.7399
+  },
+  {
+    "name": "Santa Rosa",
+    "state": "Cauca",
+    "latitude": 1.7027,
+    "longitude": -76.5739
+  },
+  {
+    "name": "Silvia",
+    "state": "Cauca",
+    "latitude": 2.6156,
+    "longitude": -76.3826
+  },
+  {
+    "name": "Sotara",
+    "state": "Cauca",
+    "latitude": 2.2546,
+    "longitude": -76.6109
+  },
+  {
+    "name": "Suárez",
+    "state": "Cauca",
+    "latitude": 2.954,
+    "longitude": -76.6964
+  },
+  {
+    "name": "Sucre",
+    "state": "Cauca",
+    "latitude": 2.038,
+    "longitude": -76.9245
+  },
+  {
+    "name": "Timbío",
+    "state": "Cauca",
+    "latitude": 2.3502,
+    "longitude": -76.6834
+  },
+  {
+    "name": "Timbiquí",
+    "state": "Cauca",
+    "latitude": 2.7717,
+    "longitude": -77.6654
+  },
+  {
+    "name": "Toribio",
+    "state": "Cauca",
+    "latitude": 2.9548,
+    "longitude": -76.2684
+  },
+  {
+    "name": "Totoró",
+    "state": "Cauca",
+    "latitude": 2.5159,
+    "longitude": -76.4044
+  },
+  {
+    "name": "Villa Rica",
+    "state": "Cauca",
+    "latitude": 3.1748,
+    "longitude": -76.462
+  },
+  {
+    "name": "Valledupar",
+    "state": "Cesar",
+    "latitude": 10.4631,
+    "longitude": -73.2532
+  },
+  {
+    "name": "Aguachica",
+    "state": "Cesar",
+    "latitude": 8.3084,
+    "longitude": -73.6166
+  },
+  {
+    "name": "Agustín Codazzi",
+    "state": "Cesar",
+    "latitude": 10.0367,
+    "longitude": -73.2356
+  },
+  {
+    "name": "Astrea",
+    "state": "Cesar",
+    "latitude": 9.4983,
+    "longitude": -73.9759
+  },
+  {
+    "name": "Becerril",
+    "state": "Cesar",
+    "latitude": 9.7041,
+    "longitude": -73.2793
+  },
+  {
+    "name": "Bosconia",
+    "state": "Cesar",
+    "latitude": 9.9689,
+    "longitude": -73.8836
+  },
+  {
+    "name": "Chimichagua",
+    "state": "Cesar",
+    "latitude": 9.2578,
+    "longitude": -73.8123
+  },
+  {
+    "name": "Chiriguaná",
+    "state": "Cesar",
+    "latitude": 9.3624,
+    "longitude": -73.6031
+  },
+  {
+    "name": "Curumaní",
+    "state": "Cesar",
+    "latitude": 9.1999,
+    "longitude": -73.5427
+  },
+  {
+    "name": "El Copey",
+    "state": "Cesar",
+    "latitude": 10.1503,
+    "longitude": -73.9614
+  },
+  {
+    "name": "El Paso",
+    "state": "Cesar",
+    "latitude": 9.6572,
+    "longitude": -73.7468
+  },
+  {
+    "name": "Gamarra",
+    "state": "Cesar",
+    "latitude": 8.3228,
+    "longitude": -73.7427
+  },
+  {
+    "name": "González",
+    "state": "Cesar",
+    "latitude": 8.3894,
+    "longitude": -73.3799
+  },
+  {
+    "name": "La Gloria",
+    "state": "Cesar",
+    "latitude": 8.6187,
+    "longitude": -73.8027
+  },
+  {
+    "name": "Manaure",
+    "state": "Cesar",
+    "latitude": 10.3909,
+    "longitude": -72.992
+  },
+  {
+    "name": "Pailitas",
+    "state": "Cesar",
+    "latitude": 8.9565,
+    "longitude": -73.6255
+  },
+  {
+    "name": "Pelaya",
+    "state": "Cesar",
+    "latitude": 8.6882,
+    "longitude": -73.6645
+  },
+  {
+    "name": "Pueblo Bello",
+    "state": "Cesar",
+    "latitude": 10.4171,
+    "longitude": -73.5804
+  },
+  {
+    "name": "La Paz",
+    "state": "Cesar",
+    "latitude": 10.3844,
+    "longitude": -73.1733
+  },
+  {
+    "name": "San Alberto",
+    "state": "Cesar",
+    "latitude": 7.7611,
+    "longitude": -73.3922
+  },
+  {
+    "name": "San Diego",
+    "state": "Cesar",
+    "latitude": 10.3362,
+    "longitude": -73.182
+  },
+  {
+    "name": "San Martín",
+    "state": "Cesar",
+    "latitude": 8.0015,
+    "longitude": -73.5113
+  },
+  {
+    "name": "Tamalameque",
+    "state": "Cesar",
+    "latitude": 8.8522,
+    "longitude": -73.8123
+  },
+  {
+    "name": "Montería",
+    "state": "Córdoba",
+    "latitude": 8.748,
+    "longitude": -75.8814
+  },
+  {
+    "name": "Ayapel",
+    "state": "Córdoba",
+    "latitude": 8.3137,
+    "longitude": -75.1398
+  },
+  {
+    "name": "Buenavista",
+    "state": "Córdoba",
+    "latitude": 8.1915,
+    "longitude": -75.4338
+  },
+  {
+    "name": "Canalete",
+    "state": "Córdoba",
+    "latitude": 8.7856,
+    "longitude": -76.2406
+  },
+  {
+    "name": "Cereté",
+    "state": "Córdoba",
+    "latitude": 8.8848,
+    "longitude": -75.7905
+  },
+  {
+    "name": "Chimá",
+    "state": "Córdoba",
+    "latitude": 9.1489,
+    "longitude": -75.6284
+  },
+  {
+    "name": "Chinú",
+    "state": "Córdoba",
+    "latitude": 9.1057,
+    "longitude": -75.3981
+  },
+  {
+    "name": "Cotorra",
+    "state": "Córdoba",
+    "latitude": 9.0389,
+    "longitude": -75.7897
+  },
+  {
+    "name": "Lorica",
+    "state": "Córdoba",
+    "latitude": 9.2365,
+    "longitude": -75.8135
+  },
+  {
+    "name": "Los Córdobas",
+    "state": "Córdoba",
+    "latitude": 8.894,
+    "longitude": -76.3546
+  },
+  {
+    "name": "Momil",
+    "state": "Córdoba",
+    "latitude": 9.2377,
+    "longitude": -75.6749
+  },
+  {
+    "name": "Moñitos",
+    "state": "Córdoba",
+    "latitude": 9.2455,
+    "longitude": -76.1302
+  },
+  {
+    "name": "Planeta Rica",
+    "state": "Córdoba",
+    "latitude": 8.4115,
+    "longitude": -75.5851
+  },
+  {
+    "name": "Pueblo Nuevo",
+    "state": "Córdoba",
+    "latitude": 8.5012,
+    "longitude": -75.508
+  },
+  {
+    "name": "Puerto Escondido",
+    "state": "Córdoba",
+    "latitude": 9.0181,
+    "longitude": -76.2641
+  },
+  {
+    "name": "Purísima",
+    "state": "Córdoba",
+    "latitude": 9.2366,
+    "longitude": -75.7219
+  },
+  {
+    "name": "Sahagún",
+    "state": "Córdoba",
+    "latitude": 8.9462,
+    "longitude": -75.4427
+  },
+  {
+    "name": "San Andrés Sotavento",
+    "state": "Córdoba",
+    "latitude": 9.1218,
+    "longitude": -75.5163
+  },
+  {
+    "name": "San Antero",
+    "state": "Córdoba",
+    "latitude": 9.3741,
+    "longitude": -75.7589
+  },
+  {
+    "name": "San Pelayo",
+    "state": "Córdoba",
+    "latitude": 8.9583,
+    "longitude": -75.8363
+  },
+  {
+    "name": "Tierralta",
+    "state": "Córdoba",
+    "latitude": 8.1736,
+    "longitude": -76.0592
+  },
+  {
+    "name": "Tuchin",
+    "state": "Córdoba",
+    "latitude": 9.1866,
+    "longitude": -75.5547
+  },
+  {
+    "name": "Valencia",
+    "state": "Córdoba",
+    "latitude": 8.258,
+    "longitude": -76.1493
+  },
+  {
+    "name": "Anapoima",
+    "state": "Cundinamarca",
+    "latitude": 4.5203,
+    "longitude": -74.5394
+  },
+  {
+    "name": "Arbeláez",
+    "state": "Cundinamarca",
+    "latitude": 4.2725,
+    "longitude": -74.4151
+  },
+  {
+    "name": "Beltrán",
+    "state": "Cundinamarca",
+    "latitude": 4.8017,
+    "longitude": -74.7418
+  },
+  {
+    "name": "Bituima",
+    "state": "Cundinamarca",
+    "latitude": 4.8725,
+    "longitude": -74.5393
+  },
+  {
+    "name": "Bojacá",
+    "state": "Cundinamarca",
+    "latitude": 4.7318,
+    "longitude": -74.3413
+  },
+  {
+    "name": "Cabrera",
+    "state": "Cundinamarca",
+    "latitude": 3.986,
+    "longitude": -74.4828
+  },
+  {
+    "name": "Cachipay",
+    "state": "Cundinamarca",
+    "latitude": 4.7231,
+    "longitude": -74.4592
+  },
+  {
+    "name": "Cajicá",
+    "state": "Cundinamarca",
+    "latitude": 4.9186,
+    "longitude": -74.028
+  },
+  {
+    "name": "Caparrapí",
+    "state": "Cundinamarca",
+    "latitude": 5.3464,
+    "longitude": -74.4915
+  },
+  {
+    "name": "Caqueza",
+    "state": "Cundinamarca",
+    "latitude": 4.4057,
+    "longitude": -73.9468
+  },
+  {
+    "name": "Chaguaní",
+    "state": "Cundinamarca",
+    "latitude": 4.9483,
+    "longitude": -74.5939
+  },
+  {
+    "name": "Chipaque",
+    "state": "Cundinamarca",
+    "latitude": 4.4425,
+    "longitude": -74.0442
+  },
+  {
+    "name": "Choachí",
+    "state": "Cundinamarca",
+    "latitude": 4.529,
+    "longitude": -73.9227
+  },
+  {
+    "name": "Chocontá",
+    "state": "Cundinamarca",
+    "latitude": 5.1447,
+    "longitude": -73.6858
+  },
+  {
+    "name": "Cogua",
+    "state": "Cundinamarca",
+    "latitude": 5.0605,
+    "longitude": -73.9793
+  },
+  {
+    "name": "Cota",
+    "state": "Cundinamarca",
+    "latitude": 4.8094,
+    "longitude": -74.098
+  },
+  {
+    "name": "Cucunubá",
+    "state": "Cundinamarca",
+    "latitude": 5.2496,
+    "longitude": -73.7661
+  },
+  {
+    "name": "El Colegio",
+    "state": "Cundinamarca",
+    "latitude": 4.5573,
+    "longitude": -74.4834
+  },
+  {
+    "name": "El Rosal",
+    "state": "Cundinamarca",
+    "latitude": 4.8531,
+    "longitude": -74.26
+  },
+  {
+    "name": "Fomeque",
+    "state": "Cundinamarca",
+    "latitude": 4.488,
+    "longitude": -73.8975
+  },
+  {
+    "name": "Fosca",
+    "state": "Cundinamarca",
+    "latitude": 4.3392,
+    "longitude": -73.9385
+  },
+  {
+    "name": "Funza",
+    "state": "Cundinamarca",
+    "latitude": 4.7164,
+    "longitude": -74.212
+  },
+  {
+    "name": "Fúquene",
+    "state": "Cundinamarca",
+    "latitude": 5.4043,
+    "longitude": -73.7964
+  },
+  {
+    "name": "Gachala",
+    "state": "Cundinamarca",
+    "latitude": 4.6924,
+    "longitude": -73.5204
+  },
+  {
+    "name": "Gachancipá",
+    "state": "Cundinamarca",
+    "latitude": 4.9911,
+    "longitude": -73.8715
+  },
+  {
+    "name": "Gachetá",
+    "state": "Cundinamarca",
+    "latitude": 4.8208,
+    "longitude": -73.64
+  },
+  {
+    "name": "Girardot",
+    "state": "Cundinamarca",
+    "latitude": 4.3008,
+    "longitude": -74.8075
+  },
+  {
+    "name": "Granada",
+    "state": "Cundinamarca",
+    "latitude": 4.52,
+    "longitude": -74.3526
+  },
+  {
+    "name": "Guachetá",
+    "state": "Cundinamarca",
+    "latitude": 5.3842,
+    "longitude": -73.6862
+  },
+  {
+    "name": "Guaduas",
+    "state": "Cundinamarca",
+    "latitude": 5.0669,
+    "longitude": -74.595
+  },
+  {
+    "name": "Guasca",
+    "state": "Cundinamarca",
+    "latitude": 4.866,
+    "longitude": -73.8775
+  },
+  {
+    "name": "Guataquí",
+    "state": "Cundinamarca",
+    "latitude": 4.5157,
+    "longitude": -74.7894
+  },
+  {
+    "name": "Guatavita",
+    "state": "Cundinamarca",
+    "latitude": 4.9366,
+    "longitude": -73.8331
+  },
+  {
+    "name": "Guayabetal",
+    "state": "Cundinamarca",
+    "latitude": 4.2147,
+    "longitude": -73.8172
+  },
+  {
+    "name": "Gutiérrez",
+    "state": "Cundinamarca",
+    "latitude": 4.2547,
+    "longitude": -74.0025
+  },
+  {
+    "name": "Jerusalén",
+    "state": "Cundinamarca",
+    "latitude": 4.5631,
+    "longitude": -74.6952
+  },
+  {
+    "name": "Junín",
+    "state": "Cundinamarca",
+    "latitude": 4.7903,
+    "longitude": -73.6601
+  },
+  {
+    "name": "La Calera",
+    "state": "Cundinamarca",
+    "latitude": 4.7207,
+    "longitude": -73.9693
+  },
+  {
+    "name": "La Mesa",
+    "state": "Cundinamarca",
+    "latitude": 4.6303,
+    "longitude": -74.4633
+  },
+  {
+    "name": "La Palma",
+    "state": "Cundinamarca",
+    "latitude": 5.3592,
+    "longitude": -74.3905
+  },
+  {
+    "name": "La Peña",
+    "state": "Cundinamarca",
+    "latitude": 5.1985,
+    "longitude": -74.3937
+  },
+  {
+    "name": "La Vega",
+    "state": "Cundinamarca",
+    "latitude": 5.0018,
+    "longitude": -74.3417
+  },
+  {
+    "name": "Lenguazaque",
+    "state": "Cundinamarca",
+    "latitude": 5.3071,
+    "longitude": -73.7115
+  },
+  {
+    "name": "Macheta",
+    "state": "Cundinamarca",
+    "latitude": 5.0815,
+    "longitude": -73.6076
+  },
+  {
+    "name": "Madrid",
+    "state": "Cundinamarca",
+    "latitude": 4.7324,
+    "longitude": -74.2642
+  },
+  {
+    "name": "Manta",
+    "state": "Cundinamarca",
+    "latitude": 5.0086,
+    "longitude": -73.5412
+  },
+  {
+    "name": "Medina",
+    "state": "Cundinamarca",
+    "latitude": 4.5101,
+    "longitude": -73.3498
+  },
+  {
+    "name": "Mosquera",
+    "state": "Cundinamarca",
+    "latitude": 4.7059,
+    "longitude": -74.2302
+  },
+  {
+    "name": "Nariño",
+    "state": "Cundinamarca",
+    "latitude": 4.3978,
+    "longitude": -74.8273
+  },
+  {
+    "name": "Nemocón",
+    "state": "Cundinamarca",
+    "latitude": 5.05,
+    "longitude": -73.8833
+  },
+  {
+    "name": "Nilo",
+    "state": "Cundinamarca",
+    "latitude": 4.306,
+    "longitude": -74.6208
+  },
+  {
+    "name": "Nimaima",
+    "state": "Cundinamarca",
+    "latitude": 5.1261,
+    "longitude": -74.3849
+  },
+  {
+    "name": "Nocaima",
+    "state": "Cundinamarca",
+    "latitude": 5.067,
+    "longitude": -74.3844
+  },
+  {
+    "name": "Venecia",
+    "state": "Cundinamarca",
+    "latitude": 4.0881,
+    "longitude": -74.4775
+  },
+  {
+    "name": "Pacho",
+    "state": "Cundinamarca",
+    "latitude": 5.1328,
+    "longitude": -74.1598
+  },
+  {
+    "name": "Paime",
+    "state": "Cundinamarca",
+    "latitude": 5.3636,
+    "longitude": -74.1458
+  },
+  {
+    "name": "Pandi",
+    "state": "Cundinamarca",
+    "latitude": 4.1911,
+    "longitude": -74.4875
+  },
+  {
+    "name": "Paratebueno",
+    "state": "Cundinamarca",
+    "latitude": 4.3758,
+    "longitude": -73.2155
+  },
+  {
+    "name": "Pasca",
+    "state": "Cundinamarca",
+    "latitude": 4.3072,
+    "longitude": -74.3006
+  },
+  {
+    "name": "Puerto Salgar",
+    "state": "Cundinamarca",
+    "latitude": 5.463,
+    "longitude": -74.6544
+  },
+  {
+    "name": "Pulí",
+    "state": "Cundinamarca",
+    "latitude": 4.6812,
+    "longitude": -74.7141
+  },
+  {
+    "name": "Quebradanegra",
+    "state": "Cundinamarca",
+    "latitude": 5.1174,
+    "longitude": -74.4794
+  },
+  {
+    "name": "Quetame",
+    "state": "Cundinamarca",
+    "latitude": 4.3323,
+    "longitude": -73.8614
+  },
+  {
+    "name": "Quipile",
+    "state": "Cundinamarca",
+    "latitude": 4.7481,
+    "longitude": -74.5631
+  },
+  {
+    "name": "Apulo",
+    "state": "Cundinamarca",
+    "latitude": 4.5195,
+    "longitude": -74.5929
+  },
+  {
+    "name": "Ricaurte",
+    "state": "Cundinamarca",
+    "latitude": 4.2808,
+    "longitude": -74.7647
+  },
+  {
+    "name": "San Bernardo",
+    "state": "Cundinamarca",
+    "latitude": 4.1786,
+    "longitude": -74.4231
+  },
+  {
+    "name": "San Cayetano",
+    "state": "Cundinamarca",
+    "latitude": 5.3015,
+    "longitude": -74.0695
+  },
+  {
+    "name": "San Francisco",
+    "state": "Cundinamarca",
+    "latitude": 4.9788,
+    "longitude": -74.2927
+  },
+  {
+    "name": "Sesquilé",
+    "state": "Cundinamarca",
+    "latitude": 5.0446,
+    "longitude": -73.7972
+  },
+  {
+    "name": "Sibaté",
+    "state": "Cundinamarca",
+    "latitude": 4.4842,
+    "longitude": -74.245
+  },
+  {
+    "name": "Silvania",
+    "state": "Cundinamarca",
+    "latitude": 4.4037,
+    "longitude": -74.3867
+  },
+  {
+    "name": "Simijaca",
+    "state": "Cundinamarca",
+    "latitude": 5.5029,
+    "longitude": -73.8523
+  },
+  {
+    "name": "Soacha",
+    "state": "Cundinamarca",
+    "latitude": 4.5794,
+    "longitude": -74.2168
+  },
+  {
+    "name": "Subachoque",
+    "state": "Cundinamarca",
+    "latitude": 4.9261,
+    "longitude": -74.173
+  },
+  {
+    "name": "Suesca",
+    "state": "Cundinamarca",
+    "latitude": 5.1029,
+    "longitude": -73.7985
+  },
+  {
+    "name": "Supatá",
+    "state": "Cundinamarca",
+    "latitude": 5.061,
+    "longitude": -74.2372
+  },
+  {
+    "name": "Susa",
+    "state": "Cundinamarca",
+    "latitude": 5.4519,
+    "longitude": -73.8144
+  },
+  {
+    "name": "Sutatausa",
+    "state": "Cundinamarca",
+    "latitude": 5.2478,
+    "longitude": -73.8524
+  },
+  {
+    "name": "Tabio",
+    "state": "Cundinamarca",
+    "latitude": 4.9173,
+    "longitude": -74.0936
+  },
+  {
+    "name": "Sutatausa",
+    "state": "Cundinamarca",
+    "latitude": 5.2478,
+    "longitude": -73.8524
+  },
+  {
+    "name": "Tena",
+    "state": "Cundinamarca",
+    "latitude": 4.66,
+    "longitude": -74.3926
+  },
+  {
+    "name": "Tenjo",
+    "state": "Cundinamarca",
+    "latitude": 4.8727,
+    "longitude": -74.1444
+  },
+  {
+    "name": "Tibacuy",
+    "state": "Cundinamarca",
+    "latitude": 4.3206,
+    "longitude": -74.4872
+  },
+  {
+    "name": "Tibirita",
+    "state": "Cundinamarca",
+    "latitude": 5.0523,
+    "longitude": -73.5046
+  },
+  {
+    "name": "Tocaima",
+    "state": "Cundinamarca",
+    "latitude": 4.4582,
+    "longitude": -74.6343
+  },
+  {
+    "name": "Tocancipá",
+    "state": "Cundinamarca",
+    "latitude": 4.9653,
+    "longitude": -73.913
+  },
+  {
+    "name": "Topaipí",
+    "state": "Cundinamarca",
+    "latitude": 5.3346,
+    "longitude": -74.3029
+  },
+  {
+    "name": "Ubalá",
+    "state": "Cundinamarca",
+    "latitude": 4.7592,
+    "longitude": -73.4082
+  },
+  {
+    "name": "Ubaque",
+    "state": "Cundinamarca",
+    "latitude": 4.4867,
+    "longitude": -73.9375
+  },
+  {
+    "name": "Une",
+    "state": "Cundinamarca",
+    "latitude": 4.4031,
+    "longitude": -74.0253
+  },
+  {
+    "name": "Vianí",
+    "state": "Cundinamarca",
+    "latitude": 4.8738,
+    "longitude": -74.5624
+  },
+  {
+    "name": "Villagómez",
+    "state": "Cundinamarca",
+    "latitude": 5.2737,
+    "longitude": -74.1961
+  },
+  {
+    "name": "Villapinzón",
+    "state": "Cundinamarca",
+    "latitude": 5.2162,
+    "longitude": -73.5949
+  },
+  {
+    "name": "Villeta",
+    "state": "Cundinamarca",
+    "latitude": 5.0089,
+    "longitude": -74.4723
+  },
+  {
+    "name": "Viotá",
+    "state": "Cundinamarca",
+    "latitude": 4.4371,
+    "longitude": -74.5216
+  },
+  {
+    "name": "Zipacón",
+    "state": "Cundinamarca",
+    "latitude": 4.7588,
+    "longitude": -74.3802
+  },
+  {
+    "name": "Quibdó",
+    "state": "Chocó",
+    "latitude": 5.6919,
+    "longitude": -76.6583
+  },
+  {
+    "name": "Acandí",
+    "state": "Chocó",
+    "latitude": 8.5116,
+    "longitude": -77.2772
+  },
+  {
+    "name": "Alto Baudo",
+    "state": "Chocó",
+    "latitude": 5.516,
+    "longitude": -76.9745
+  },
+  {
+    "name": "Atrato",
+    "state": "Chocó",
+    "latitude": 5.5514,
+    "longitude": -76.6138
+  },
+  {
+    "name": "Bagadó",
+    "state": "Chocó",
+    "latitude": 5.4116,
+    "longitude": -76.4152
+  },
+  {
+    "name": "Bahía Solano",
+    "state": "Chocó",
+    "latitude": 6.2262,
+    "longitude": -77.4044
+  },
+  {
+    "name": "Bajo Baudó",
+    "state": "Chocó",
+    "latitude": 4.9533,
+    "longitude": -77.366
+  },
+  {
+    "name": "Bojaya",
+    "state": "Chocó",
+    "latitude": 6.5213,
+    "longitude": -76.9723
+  },
+  {
+    "name": "Cértegui",
+    "state": "Chocó",
+    "latitude": 5.3707,
+    "longitude": -76.6044
+  },
+  {
+    "name": "Condoto",
+    "state": "Chocó",
+    "latitude": 5.0935,
+    "longitude": -76.6497
+  },
+  {
+    "name": "Juradó",
+    "state": "Chocó",
+    "latitude": 7.1042,
+    "longitude": -77.762
+  },
+  {
+    "name": "Lloró",
+    "state": "Chocó",
+    "latitude": 5.496,
+    "longitude": -76.5494
+  },
+  {
+    "name": "Medio Atrato",
+    "state": "Chocó",
+    "latitude": 6.0265,
+    "longitude": -76.6945
+  },
+  {
+    "name": "Medio Baudó",
+    "state": "Chocó",
+    "latitude": 5.1107,
+    "longitude": -76.9962
+  },
+  {
+    "name": "Medio San Juan",
+    "state": "Chocó",
+    "latitude": 4.8113,
+    "longitude": -76.8044
+  },
+  {
+    "name": "Nóvita",
+    "state": "Chocó",
+    "latitude": 4.9551,
+    "longitude": -76.6053
+  },
+  {
+    "name": "Nuquí",
+    "state": "Chocó",
+    "latitude": 5.6741,
+    "longitude": -77.2909
+  },
+  {
+    "name": "Río Iro",
+    "state": "Chocó",
+    "latitude": 5.1767,
+    "longitude": -76.4802
+  },
+  {
+    "name": "Río Quito",
+    "state": "Chocó",
+    "latitude": 5.5665,
+    "longitude": -76.8134
+  },
+  {
+    "name": "Riosucio",
+    "state": "Chocó",
+    "latitude": 7.4435,
+    "longitude": -77.1196
+  },
+  {
+    "name": "Sipí",
+    "state": "Chocó",
+    "latitude": 4.6581,
+    "longitude": -76.4767
+  },
+  {
+    "name": "Unguía",
+    "state": "Chocó",
+    "latitude": 8.0436,
+    "longitude": -77.0914
+  },
+  {
+    "name": "Neiva",
+    "state": "Huila",
+    "latitude": 2.9273,
+    "longitude": -75.2819
+  },
+  {
+    "name": "Acevedo",
+    "state": "Huila",
+    "latitude": 1.6867,
+    "longitude": -76.0207
+  },
+  {
+    "name": "Agrado",
+    "state": "Huila",
+    "latitude": 2.2573,
+    "longitude": -75.7714
+  },
+  {
+    "name": "Aipe",
+    "state": "Huila",
+    "latitude": 3.2222,
+    "longitude": -75.2367
+  },
+  {
+    "name": "Algeciras",
+    "state": "Huila",
+    "latitude": 2.5238,
+    "longitude": -75.3173
+  },
+  {
+    "name": "Altamira",
+    "state": "Huila",
+    "latitude": 2.0628,
+    "longitude": -75.7872
+  },
+  {
+    "name": "Baraya",
+    "state": "Huila",
+    "latitude": 3.1533,
+    "longitude": -75.0531
+  },
+  {
+    "name": "Campoalegre",
+    "state": "Huila",
+    "latitude": 2.6849,
+    "longitude": -75.3231
+  },
+  {
+    "name": "Colombia",
+    "state": "Huila",
+    "latitude": 3.3761,
+    "longitude": -74.8015
+  },
+  {
+    "name": "Elías",
+    "state": "Huila",
+    "latitude": 2.0117,
+    "longitude": -75.9397
+  },
+  {
+    "name": "Garzón",
+    "state": "Huila",
+    "latitude": 2.1959,
+    "longitude": -75.6278
+  },
+  {
+    "name": "Gigante",
+    "state": "Huila",
+    "latitude": 2.3868,
+    "longitude": -75.5474
+  },
+  {
+    "name": "Guadalupe",
+    "state": "Huila",
+    "latitude": 2.0248,
+    "longitude": -75.7559
+  },
+  {
+    "name": "Hobo",
+    "state": "Huila",
+    "latitude": 2.5833,
+    "longitude": -75.45
+  },
+  {
+    "name": "Iquira",
+    "state": "Huila",
+    "latitude": 2.6487,
+    "longitude": -75.6346
+  },
+  {
+    "name": "Isnos",
+    "state": "Huila",
+    "latitude": 1.9287,
+    "longitude": -76.211
+  },
+  {
+    "name": "La Argentina",
+    "state": "Huila",
+    "latitude": 2.1976,
+    "longitude": -75.9799
+  },
+  {
+    "name": "La Plata",
+    "state": "Huila",
+    "latitude": 2.3934,
+    "longitude": -75.8923
+  },
+  {
+    "name": "Nátaga",
+    "state": "Huila",
+    "latitude": 2.5436,
+    "longitude": -75.8085
+  },
+  {
+    "name": "Oporapa",
+    "state": "Huila",
+    "latitude": 2.0501,
+    "longitude": -75.9767
+  },
+  {
+    "name": "Paicol",
+    "state": "Huila",
+    "latitude": 2.4496,
+    "longitude": -75.775
+  },
+  {
+    "name": "Palermo",
+    "state": "Huila",
+    "latitude": 2.8917,
+    "longitude": -75.4375
+  },
+  {
+    "name": "Palestina",
+    "state": "Huila",
+    "latitude": 1.7236,
+    "longitude": -76.134
+  },
+  {
+    "name": "Pital",
+    "state": "Huila",
+    "latitude": 2.2665,
+    "longitude": -75.8044
+  },
+  {
+    "name": "Pitalito",
+    "state": "Huila",
+    "latitude": 1.8537,
+    "longitude": -76.0507
+  },
+  {
+    "name": "Rivera",
+    "state": "Huila",
+    "latitude": 2.7772,
+    "longitude": -75.2564
+  },
+  {
+    "name": "Saladoblanco",
+    "state": "Huila",
+    "latitude": 1.9924,
+    "longitude": -76.0434
+  },
+  {
+    "name": "Santa María",
+    "state": "Huila",
+    "latitude": 2.939,
+    "longitude": -75.5858
+  },
+  {
+    "name": "Suaza",
+    "state": "Huila",
+    "latitude": 1.9761,
+    "longitude": -75.7945
+  },
+  {
+    "name": "Tarqui",
+    "state": "Huila",
+    "latitude": 2.1125,
+    "longitude": -75.8242
+  },
+  {
+    "name": "Tesalia",
+    "state": "Huila",
+    "latitude": 2.4859,
+    "longitude": -75.7292
+  },
+  {
+    "name": "Tello",
+    "state": "Huila",
+    "latitude": 3.0669,
+    "longitude": -75.1378
+  },
+  {
+    "name": "Teruel",
+    "state": "Huila",
+    "latitude": 2.7419,
+    "longitude": -75.5674
+  },
+  {
+    "name": "Timaná",
+    "state": "Huila",
+    "latitude": 1.9714,
+    "longitude": -75.9312
+  },
+  {
+    "name": "Villavieja",
+    "state": "Huila",
+    "latitude": 3.2205,
+    "longitude": -75.2186
+  },
+  {
+    "name": "Yaguará",
+    "state": "Huila",
+    "latitude": 2.6635,
+    "longitude": -75.5175
+  },
+  {
+    "name": "Riohacha",
+    "state": "La Guajira",
+    "latitude": 11.5444,
+    "longitude": -72.9072
+  },
+  {
+    "name": "Albania",
+    "state": "La Guajira",
+    "latitude": 11.161,
+    "longitude": -72.5924
+  },
+  {
+    "name": "Barrancas",
+    "state": "La Guajira",
+    "latitude": 10.9576,
+    "longitude": -72.7877
+  },
+  {
+    "name": "Distracción",
+    "state": "La Guajira",
+    "latitude": 10.8969,
+    "longitude": -72.8861
+  },
+  {
+    "name": "El Molino",
+    "state": "La Guajira",
+    "latitude": 10.6522,
+    "longitude": -72.924
+  },
+  {
+    "name": "Fonseca",
+    "state": "La Guajira",
+    "latitude": 10.8861,
+    "longitude": -72.8487
+  },
+  {
+    "name": "Hatonuevo",
+    "state": "La Guajira",
+    "latitude": 11.0694,
+    "longitude": -72.7669
+  },
+  {
+    "name": "Maicao",
+    "state": "La Guajira",
+    "latitude": 11.3832,
+    "longitude": -72.2432
+  },
+  {
+    "name": "Manaure",
+    "state": "La Guajira",
+    "latitude": 11.775,
+    "longitude": -72.4445
+  },
+  {
+    "name": "Uribia",
+    "state": "La Guajira",
+    "latitude": 11.7139,
+    "longitude": -72.266
+  },
+  {
+    "name": "Urumita",
+    "state": "La Guajira",
+    "latitude": 10.5589,
+    "longitude": -73.0123
+  },
+  {
+    "name": "Villanueva",
+    "state": "La Guajira",
+    "latitude": 10.6053,
+    "longitude": -72.98
+  },
+  {
+    "name": "Santa Marta",
+    "state": "Magdalena",
+    "latitude": 11.2408,
+    "longitude": -74.199
+  },
+  {
+    "name": "Algarrobo",
+    "state": "Magdalena",
+    "latitude": 10.1862,
+    "longitude": -74.0609
+  },
+  {
+    "name": "Aracataca",
+    "state": "Magdalena",
+    "latitude": 10.5918,
+    "longitude": -74.1898
+  },
+  {
+    "name": "Ariguaní",
+    "state": "Magdalena",
+    "latitude": 9.8497,
+    "longitude": -74.2363
+  },
+  {
+    "name": "Cerro San Antonio",
+    "state": "Magdalena",
+    "latitude": 10.3259,
+    "longitude": -74.8693
+  },
+  {
+    "name": "Concordia",
+    "state": "Magdalena",
+    "latitude": 10.2576,
+    "longitude": -74.8333
+  },
+  {
+    "name": "El Banco",
+    "state": "Magdalena",
+    "latitude": 9.0011,
+    "longitude": -73.9758
+  },
+  {
+    "name": "El Piñon",
+    "state": "Magdalena",
+    "latitude": 10.4028,
+    "longitude": -74.8242
+  },
+  {
+    "name": "El Retén",
+    "state": "Magdalena",
+    "latitude": 10.6114,
+    "longitude": -74.2682
+  },
+  {
+    "name": "Fundación",
+    "state": "Magdalena",
+    "latitude": 10.5207,
+    "longitude": -74.185
+  },
+  {
+    "name": "Guamal",
+    "state": "Magdalena",
+    "latitude": 9.1433,
+    "longitude": -74.2238
+  },
+  {
+    "name": "Nueva Granada",
+    "state": "Magdalena",
+    "latitude": 9.8017,
+    "longitude": -74.393
+  },
+  {
+    "name": "Pedraza",
+    "state": "Magdalena",
+    "latitude": 10.1874,
+    "longitude": -74.915
+  },
+  {
+    "name": "Pivijay",
+    "state": "Magdalena",
+    "latitude": 10.4617,
+    "longitude": -74.6162
+  },
+  {
+    "name": "Plato",
+    "state": "Magdalena",
+    "latitude": 9.7903,
+    "longitude": -74.7824
+  },
+  {
+    "name": "Remolino",
+    "state": "Magdalena",
+    "latitude": 10.702,
+    "longitude": -74.716
+  },
+  {
+    "name": "Salamina",
+    "state": "Magdalena",
+    "latitude": 10.4903,
+    "longitude": -74.7946
+  },
+  {
+    "name": "San Zenón",
+    "state": "Magdalena",
+    "latitude": 9.3315,
+    "longitude": -74.3471
+  },
+  {
+    "name": "Santa Ana",
+    "state": "Magdalena",
+    "latitude": 9.3212,
+    "longitude": -74.5685
+  },
+  {
+    "name": "Sitionuevo",
+    "state": "Magdalena",
+    "latitude": 10.8916,
+    "longitude": -74.6297
+  },
+  {
+    "name": "Tenerife",
+    "state": "Magdalena",
+    "latitude": 9.9009,
+    "longitude": -74.8599
+  },
+  {
+    "name": "Zapayán",
+    "state": "Magdalena",
+    "latitude": 10.1186,
+    "longitude": -74.6914
+  },
+  {
+    "name": "Zona Bananera",
+    "state": "Magdalena",
+    "latitude": 10.7964,
+    "longitude": -74.178
+  },
+  {
+    "name": "Villavicencio",
+    "state": "Meta",
+    "latitude": 4.142,
+    "longitude": -73.6266
+  },
+  {
+    "name": "Acacías",
+    "state": "Meta",
+    "latitude": 3.9869,
+    "longitude": -73.758
+  },
+  {
+    "name": "Cabuyaro",
+    "state": "Meta",
+    "latitude": 4.2817,
+    "longitude": -72.794
+  },
+  {
+    "name": "Cubarral",
+    "state": "Meta",
+    "latitude": 3.7954,
+    "longitude": -73.8406
+  },
+  {
+    "name": "Cumaral",
+    "state": "Meta",
+    "latitude": 4.2708,
+    "longitude": -73.4867
+  },
+  {
+    "name": "El Calvario",
+    "state": "Meta",
+    "latitude": 4.3534,
+    "longitude": -73.7115
+  },
+  {
+    "name": "El Castillo",
+    "state": "Meta",
+    "latitude": 3.5636,
+    "longitude": -73.7949
+  },
+  {
+    "name": "El Dorado",
+    "state": "Meta",
+    "latitude": 3.7392,
+    "longitude": -73.8349
+  },
+  {
+    "name": "Granada",
+    "state": "Meta",
+    "latitude": 3.5462,
+    "longitude": -73.7069
+  },
+  {
+    "name": "Guamal",
+    "state": "Meta",
+    "latitude": 3.8804,
+    "longitude": -73.7657
+  },
+  {
+    "name": "Mapiripán",
+    "state": "Meta",
+    "latitude": 2.8118,
+    "longitude": -73.0279
+  },
+  {
+    "name": "Mesetas",
+    "state": "Meta",
+    "latitude": 3.3846,
+    "longitude": -74.0442
+  },
+  {
+    "name": "La Macarena",
+    "state": "Meta",
+    "latitude": 2.1837,
+    "longitude": -73.7848
+  },
+  {
+    "name": "Lejanías",
+    "state": "Meta",
+    "latitude": 3.5276,
+    "longitude": -74.0234
+  },
+  {
+    "name": "Puerto Concordia",
+    "state": "Meta",
+    "latitude": 2.6221,
+    "longitude": -72.7572
+  },
+  {
+    "name": "Puerto Gaitán",
+    "state": "Meta",
+    "latitude": 4.3133,
+    "longitude": -72.0816
+  },
+  {
+    "name": "Puerto López",
+    "state": "Meta",
+    "latitude": 4.0991,
+    "longitude": -72.9565
+  },
+  {
+    "name": "Puerto Lleras",
+    "state": "Meta",
+    "latitude": 2.8118,
+    "longitude": -73.0279
+  },
+  {
+    "name": "Puerto Rico",
+    "state": "Meta",
+    "latitude": 2.9383,
+    "longitude": -73.2083
+  },
+  {
+    "name": "Restrepo",
+    "state": "Meta",
+    "latitude": 4.2583,
+    "longitude": -73.5614
+  },
+  {
+    "name": "San Juanito",
+    "state": "Meta",
+    "latitude": 4.461,
+    "longitude": -73.6805
+  },
+  {
+    "name": "San Martín",
+    "state": "Meta",
+    "latitude": 3.6964,
+    "longitude": -73.6996
+  },
+  {
+    "name": "Pasto",
+    "state": "Nariño",
+    "latitude": 1.2136,
+    "longitude": -77.2811
+  },
+  {
+    "name": "Albán",
+    "state": "Nariño",
+    "latitude": 1.4769,
+    "longitude": -77.0829
+  },
+  {
+    "name": "Aldana",
+    "state": "Nariño",
+    "latitude": 0.8828,
+    "longitude": -77.701
+  },
+  {
+    "name": "Ancuyá",
+    "state": "Nariño",
+    "latitude": 1.2633,
+    "longitude": -77.5138
+  },
+  {
+    "name": "Barbacoas",
+    "state": "Nariño",
+    "latitude": 1.6715,
+    "longitude": -78.1398
+  },
+  {
+    "name": "Colón",
+    "state": "Nariño",
+    "latitude": 1.6236,
+    "longitude": -77.0311
+  },
+  {
+    "name": "Consaca",
+    "state": "Nariño",
+    "latitude": 1.2081,
+    "longitude": -77.4655
+  },
+  {
+    "name": "Contadero",
+    "state": "Nariño",
+    "latitude": 0.907,
+    "longitude": -77.5473
+  },
+  {
+    "name": "Córdoba",
+    "state": "Nariño",
+    "latitude": 0.8591,
+    "longitude": -77.5195
+  },
+  {
+    "name": "Cuaspud",
+    "state": "Nariño",
+    "latitude": 0.8757,
+    "longitude": -77.7364
+  },
+  {
+    "name": "Cumbal",
+    "state": "Nariño",
+    "latitude": 0.9087,
+    "longitude": -77.7915
+  },
+  {
+    "name": "Cumbitara",
+    "state": "Nariño",
+    "latitude": 1.6517,
+    "longitude": -77.5822
+  },
+  {
+    "name": "El Charco",
+    "state": "Nariño",
+    "latitude": 2.4769,
+    "longitude": -78.1105
+  },
+  {
+    "name": "El Peñol",
+    "state": "Nariño",
+    "latitude": 1.4599,
+    "longitude": -77.4454
+  },
+  {
+    "name": "El Rosario",
+    "state": "Nariño",
+    "latitude": 1.7417,
+    "longitude": -77.3352
+  },
+  {
+    "name": "El Tambo",
+    "state": "Nariño",
+    "latitude": 1.4181,
+    "longitude": -77.3968
+  },
+  {
+    "name": "Funes",
+    "state": "Nariño",
+    "latitude": 1.0027,
+    "longitude": -77.4507
+  },
+  {
+    "name": "Guachucal",
+    "state": "Nariño",
+    "latitude": 0.9609,
+    "longitude": -77.7316
+  },
+  {
+    "name": "Guaitarilla",
+    "state": "Nariño",
+    "latitude": 1.131,
+    "longitude": -77.5481
+  },
+  {
+    "name": "Gualmatán",
+    "state": "Nariño",
+    "latitude": 0.9189,
+    "longitude": -77.5665
+  },
+  {
+    "name": "Iles",
+    "state": "Nariño",
+    "latitude": 0.9749,
+    "longitude": -77.5274
+  },
+  {
+    "name": "Imués",
+    "state": "Nariño",
+    "latitude": 1.0529,
+    "longitude": -77.5017
+  },
+  {
+    "name": "Ipiales",
+    "state": "Nariño",
+    "latitude": 0.8302,
+    "longitude": -77.6496
+  },
+  {
+    "name": "La Cruz",
+    "state": "Nariño",
+    "latitude": 1.5841,
+    "longitude": -76.9239
+  },
+  {
+    "name": "La Florida",
+    "state": "Nariño",
+    "latitude": 1.2985,
+    "longitude": -77.4061
+  },
+  {
+    "name": "La Llanada",
+    "state": "Nariño",
+    "latitude": 1.49,
+    "longitude": -77.5835
+  },
+  {
+    "name": "La Tola",
+    "state": "Nariño",
+    "latitude": 2.4808,
+    "longitude": -78.1912
+  },
+  {
+    "name": "La Unión",
+    "state": "Nariño",
+    "latitude": 1.6045,
+    "longitude": -77.1315
+  },
+  {
+    "name": "Leiva",
+    "state": "Nariño",
+    "latitude": 1.9339,
+    "longitude": -77.3025
+  },
+  {
+    "name": "Linares",
+    "state": "Nariño",
+    "latitude": 1.3578,
+    "longitude": -77.5272
+  },
+  {
+    "name": "Los Andes",
+    "state": "Nariño",
+    "latitude": 1.5147,
+    "longitude": -77.5044
+  },
+  {
+    "name": "Magüi",
+    "state": "Nariño",
+    "latitude": 1.905,
+    "longitude": -78.0492
+  },
+  {
+    "name": "Mallama",
+    "state": "Nariño",
+    "latitude": 1.1374,
+    "longitude": -77.8489
+  },
+  {
+    "name": "Mosquera",
+    "state": "Nariño",
+    "latitude": 2.5086,
+    "longitude": -78.4511
+  },
+  {
+    "name": "Nariño",
+    "state": "Nariño",
+    "latitude": 1.2899,
+    "longitude": -77.3572
+  },
+  {
+    "name": "Olaya Herrera",
+    "state": "Nariño",
+    "latitude": 2.286,
+    "longitude": -78.2933
+  },
+  {
+    "name": "Ospina",
+    "state": "Nariño",
+    "latitude": 1.0595,
+    "longitude": -77.5655
+  },
+  {
+    "name": "Francisco Pizarro",
+    "state": "Nariño",
+    "latitude": 2.0965,
+    "longitude": -78.5857
+  },
+  {
+    "name": "Policarpa",
+    "state": "Nariño",
+    "latitude": 1.6323,
+    "longitude": -77.462
+  },
+  {
+    "name": "Potosí",
+    "state": "Nariño",
+    "latitude": 0.8074,
+    "longitude": -77.5722
+  },
+  {
+    "name": "Providencia",
+    "state": "Nariño",
+    "latitude": 1.2398,
+    "longitude": -77.5972
+  },
+  {
+    "name": "Puerres",
+    "state": "Nariño",
+    "latitude": 0.8837,
+    "longitude": -77.5032
+  },
+  {
+    "name": "Pupiales",
+    "state": "Nariño",
+    "latitude": 0.8714,
+    "longitude": -77.6403
+  },
+  {
+    "name": "Ricaurte",
+    "state": "Nariño",
+    "latitude": 1.1811,
+    "longitude": -77.9612
+  },
+  {
+    "name": "Roberto Payán",
+    "state": "Nariño",
+    "latitude": 1.6966,
+    "longitude": -78.2448
+  },
+  {
+    "name": "Samaniego",
+    "state": "Nariño",
+    "latitude": 1.3385,
+    "longitude": -77.5957
+  },
+  {
+    "name": "Sandoná",
+    "state": "Nariño",
+    "latitude": 1.2863,
+    "longitude": -77.4692
+  },
+  {
+    "name": "San Bernardo",
+    "state": "Nariño",
+    "latitude": 1.5306,
+    "longitude": -77.0216
+  },
+  {
+    "name": "San Lorenzo",
+    "state": "Nariño",
+    "latitude": 1.5063,
+    "longitude": -77.219
+  },
+  {
+    "name": "San Pablo",
+    "state": "Nariño",
+    "latitude": 1.6725,
+    "longitude": -77.0139
+  },
+  {
+    "name": "Santa Bárbara",
+    "state": "Nariño",
+    "latitude": 2.4501,
+    "longitude": -77.9794
+  },
+  {
+    "name": "Sapuyes",
+    "state": "Nariño",
+    "latitude": 1.0333,
+    "longitude": -77.6
+  },
+  {
+    "name": "Taminango",
+    "state": "Nariño",
+    "latitude": 1.5749,
+    "longitude": -77.2867
+  },
+  {
+    "name": "Tangua",
+    "state": "Nariño",
+    "latitude": 1.0947,
+    "longitude": -77.3948
+  },
+  {
+    "name": "Túquerres",
+    "state": "Nariño",
+    "latitude": 1.0888,
+    "longitude": -77.6183
+  },
+  {
+    "name": "Yacuanquer",
+    "state": "Nariño",
+    "latitude": 1.1158,
+    "longitude": -77.4017
+  },
+  {
+    "name": "Armenia",
+    "state": "Quindio",
+    "latitude": 4.5339,
+    "longitude": -75.6811
+  },
+  {
+    "name": "Buenavista",
+    "state": "Quindio",
+    "latitude": 4.3539,
+    "longitude": -75.7178
+  },
+  {
+    "name": "Circasia",
+    "state": "Quindio",
+    "latitude": 4.6189,
+    "longitude": -75.6358
+  },
+  {
+    "name": "Córdoba",
+    "state": "Quindio",
+    "latitude": 4.3932,
+    "longitude": -75.6894
+  },
+  {
+    "name": "Filandia",
+    "state": "Quindio",
+    "latitude": 4.6747,
+    "longitude": -75.6583
+  },
+  {
+    "name": "La Tebaida",
+    "state": "Quindio",
+    "latitude": 4.4526,
+    "longitude": -75.7875
+  },
+  {
+    "name": "Montenegro",
+    "state": "Quindio",
+    "latitude": 4.5664,
+    "longitude": -75.7511
+  },
+  {
+    "name": "Pijao",
+    "state": "Quindio",
+    "latitude": 4.3342,
+    "longitude": -75.7035
+  },
+  {
+    "name": "Quimbaya",
+    "state": "Quindio",
+    "latitude": 4.6231,
+    "longitude": -75.7628
+  },
+  {
+    "name": "Salento",
+    "state": "Quindio",
+    "latitude": 4.6375,
+    "longitude": -75.5703
+  },
+  {
+    "name": "Pereira",
+    "state": "Risaralda",
+    "latitude": 4.8133,
+    "longitude": -75.6961
+  },
+  {
+    "name": "Apía",
+    "state": "Risaralda",
+    "latitude": 5.1064,
+    "longitude": -75.9432
+  },
+  {
+    "name": "Balboa",
+    "state": "Risaralda",
+    "latitude": 4.9517,
+    "longitude": -75.9572
+  },
+  {
+    "name": "Dosquebradas",
+    "state": "Risaralda",
+    "latitude": 4.8417,
+    "longitude": -75.6701
+  },
+  {
+    "name": "Guática",
+    "state": "Risaralda",
+    "latitude": 5.3157,
+    "longitude": -75.7983
+  },
+  {
+    "name": "La Celia",
+    "state": "Risaralda",
+    "latitude": 4.9878,
+    "longitude": -76.0084
+  },
+  {
+    "name": "La Virginia",
+    "state": "Risaralda",
+    "latitude": 4.8997,
+    "longitude": -75.8825
+  },
+  {
+    "name": "Marsella",
+    "state": "Risaralda",
+    "latitude": 4.9372,
+    "longitude": -75.7378
+  },
+  {
+    "name": "Mistrató",
+    "state": "Risaralda",
+    "latitude": 5.2962,
+    "longitude": -75.8839
+  },
+  {
+    "name": "Pueblo Rico",
+    "state": "Risaralda",
+    "latitude": 5.2383,
+    "longitude": -76.0364
+  },
+  {
+    "name": "Quinchía",
+    "state": "Risaralda",
+    "latitude": 5.3396,
+    "longitude": -75.7302
+  },
+  {
+    "name": "Santuario",
+    "state": "Risaralda",
+    "latitude": 5.0724,
+    "longitude": -75.9634
+  },
+  {
+    "name": "Bucaramanga",
+    "state": "Santander",
+    "latitude": 7.1254,
+    "longitude": -73.1198
+  },
+  {
+    "name": "Aguada",
+    "state": "Santander",
+    "latitude": 6.1816,
+    "longitude": -73.531
+  },
+  {
+    "name": "Albania",
+    "state": "Santander",
+    "latitude": 5.7614,
+    "longitude": -73.9178
+  },
+  {
+    "name": "Aratoca",
+    "state": "Santander",
+    "latitude": 6.6935,
+    "longitude": -73.0208
+  },
+  {
+    "name": "Barbosa",
+    "state": "Santander",
+    "latitude": 5.9317,
+    "longitude": -73.6151
+  },
+  {
+    "name": "Barichara",
+    "state": "Santander",
+    "latitude": 6.6357,
+    "longitude": -73.2228
+  },
+  {
+    "name": "Barrancabermeja",
+    "state": "Santander",
+    "latitude": 7.0653,
+    "longitude": -73.8547
+  },
+  {
+    "name": "Betulia",
+    "state": "Santander",
+    "latitude": 6.9007,
+    "longitude": -73.2835
+  },
+  {
+    "name": "Bolívar",
+    "state": "Santander",
+    "latitude": 5.9894,
+    "longitude": -73.7702
+  },
+  {
+    "name": "Cabrera",
+    "state": "Santander",
+    "latitude": 6.5933,
+    "longitude": -73.2455
+  },
+  {
+    "name": "California",
+    "state": "Santander",
+    "latitude": 7.3471,
+    "longitude": -72.9452
+  },
+  {
+    "name": "Carcasí",
+    "state": "Santander",
+    "latitude": 6.6271,
+    "longitude": -72.6262
+  },
+  {
+    "name": "Cepitá",
+    "state": "Santander",
+    "latitude": 6.7543,
+    "longitude": -72.9744
+  },
+  {
+    "name": "Cerrito",
+    "state": "Santander",
+    "latitude": 6.8431,
+    "longitude": -72.694
+  },
+  {
+    "name": "Charalá",
+    "state": "Santander",
+    "latitude": 6.2858,
+    "longitude": -73.1472
+  },
+  {
+    "name": "Charta",
+    "state": "Santander",
+    "latitude": 7.2803,
+    "longitude": -72.9678
+  },
+  {
+    "name": "Chipatá",
+    "state": "Santander",
+    "latitude": 6.062,
+    "longitude": -73.6372
+  },
+  {
+    "name": "Cimitarra",
+    "state": "Santander",
+    "latitude": 6.3142,
+    "longitude": -73.9497
+  },
+  {
+    "name": "Concepción",
+    "state": "Santander",
+    "latitude": 6.7662,
+    "longitude": -72.694
+  },
+  {
+    "name": "Confines",
+    "state": "Santander",
+    "latitude": 6.3636,
+    "longitude": -73.244
+  },
+  {
+    "name": "Contratación",
+    "state": "Santander",
+    "latitude": 6.2901,
+    "longitude": -73.4735
+  },
+  {
+    "name": "Coromoro",
+    "state": "Santander",
+    "latitude": 6.2946,
+    "longitude": -73.0402
+  },
+  {
+    "name": "Curití",
+    "state": "Santander",
+    "latitude": 6.6052,
+    "longitude": -73.0681
+  },
+  {
+    "name": "El Guacamayo",
+    "state": "Santander",
+    "latitude": 6.2452,
+    "longitude": -73.4966
+  },
+  {
+    "name": "El Playón",
+    "state": "Santander",
+    "latitude": 7.4713,
+    "longitude": -73.2031
+  },
+  {
+    "name": "Encino",
+    "state": "Santander",
+    "latitude": 6.1373,
+    "longitude": -73.0985
+  },
+  {
+    "name": "Enciso",
+    "state": "Santander",
+    "latitude": 6.6681,
+    "longitude": -72.6999
+  },
+  {
+    "name": "Florián",
+    "state": "Santander",
+    "latitude": 5.8049,
+    "longitude": -73.9703
+  },
+  {
+    "name": "Floridablanca",
+    "state": "Santander",
+    "latitude": 7.0622,
+    "longitude": -73.0864
+  },
+  {
+    "name": "Galán",
+    "state": "Santander",
+    "latitude": 6.6378,
+    "longitude": -73.2888
+  },
+  {
+    "name": "Gambita",
+    "state": "Santander",
+    "latitude": 5.946,
+    "longitude": -73.3443
+  },
+  {
+    "name": "Girón",
+    "state": "Santander",
+    "latitude": 7.0682,
+    "longitude": -73.1698
+  },
+  {
+    "name": "El Guacamayo",
+    "state": "Santander",
+    "latitude": 6.2452,
+    "longitude": -73.4966
+  },
+  {
+    "name": "Guadalupe",
+    "state": "Santander",
+    "latitude": 6.2464,
+    "longitude": -73.4183
+  },
+  {
+    "name": "Guapotá",
+    "state": "Santander",
+    "latitude": 6.308,
+    "longitude": -73.3202
+  },
+  {
+    "name": "Guavatá",
+    "state": "Santander",
+    "latitude": 5.955,
+    "longitude": -73.7002
+  },
+  {
+    "name": "Güepsa",
+    "state": "Santander",
+    "latitude": 6.0251,
+    "longitude": -73.5731
+  },
+  {
+    "name": "Jesús María",
+    "state": "Santander",
+    "latitude": 5.8772,
+    "longitude": -73.781
+  },
+  {
+    "name": "Jordán",
+    "state": "Santander",
+    "latitude": 6.733,
+    "longitude": -73.0959
+  },
+  {
+    "name": "La Belleza",
+    "state": "Santander",
+    "latitude": 5.8637,
+    "longitude": -73.9617
+  },
+  {
+    "name": "Landázuri",
+    "state": "Santander",
+    "latitude": 6.2183,
+    "longitude": -73.8112
+  },
+  {
+    "name": "La Paz",
+    "state": "Santander",
+    "latitude": 6.1785,
+    "longitude": -73.5895
+  },
+  {
+    "name": "Lebríja",
+    "state": "Santander",
+    "latitude": 7.1132,
+    "longitude": -73.2178
+  },
+  {
+    "name": "Los Santos",
+    "state": "Santander",
+    "latitude": 6.7534,
+    "longitude": -73.1047
+  },
+  {
+    "name": "Macaravita",
+    "state": "Santander",
+    "latitude": 6.5057,
+    "longitude": -72.593
+  },
+  {
+    "name": "Málaga",
+    "state": "Santander",
+    "latitude": 6.699,
+    "longitude": -72.7323
+  },
+  {
+    "name": "Matanza",
+    "state": "Santander",
+    "latitude": 7.3223,
+    "longitude": -73.0152
+  },
+  {
+    "name": "Mogotes",
+    "state": "Santander",
+    "latitude": 6.4756,
+    "longitude": -72.9705
+  },
+  {
+    "name": "Molagavita",
+    "state": "Santander",
+    "latitude": 6.6732,
+    "longitude": -72.8087
+  },
+  {
+    "name": "Ocamonte",
+    "state": "Santander",
+    "latitude": 6.34,
+    "longitude": -73.1221
+  },
+  {
+    "name": "Oiba",
+    "state": "Santander",
+    "latitude": 6.2639,
+    "longitude": -73.2988
+  },
+  {
+    "name": "Onzaga",
+    "state": "Santander",
+    "latitude": 6.3443,
+    "longitude": -72.8173
+  },
+  {
+    "name": "Palmar",
+    "state": "Santander",
+    "latitude": 6.5377,
+    "longitude": -73.2923
+  },
+  {
+    "name": "Páramo",
+    "state": "Santander",
+    "latitude": 6.4164,
+    "longitude": -73.17
+  },
+  {
+    "name": "Piedecuesta",
+    "state": "Santander",
+    "latitude": 6.9879,
+    "longitude": -73.0495
+  },
+  {
+    "name": "Pinchote",
+    "state": "Santander",
+    "latitude": 6.5323,
+    "longitude": -73.1731
+  },
+  {
+    "name": "Puente Nacional",
+    "state": "Santander",
+    "latitude": 5.8774,
+    "longitude": -73.6781
+  },
+  {
+    "name": "Rionegro",
+    "state": "Santander",
+    "latitude": 7.2646,
+    "longitude": -73.1501
+  },
+  {
+    "name": "San Andrés",
+    "state": "Santander",
+    "latitude": 6.8115,
+    "longitude": -72.8493
+  },
+  {
+    "name": "San Gil",
+    "state": "Santander",
+    "latitude": 6.5595,
+    "longitude": -73.1364
+  },
+  {
+    "name": "San Joaquín",
+    "state": "Santander",
+    "latitude": 6.43,
+    "longitude": -72.8677
+  },
+  {
+    "name": "San Miguel",
+    "state": "Santander",
+    "latitude": 6.5758,
+    "longitude": -72.6459
+  },
+  {
+    "name": "Santa Bárbara",
+    "state": "Santander",
+    "latitude": 6.9902,
+    "longitude": -72.907
+  },
+  {
+    "name": "Simacota",
+    "state": "Santander",
+    "latitude": 6.4429,
+    "longitude": -73.3369
+  },
+  {
+    "name": "Palmas del Socorro",
+    "state": "Santander",
+    "latitude": 6.4076,
+    "longitude": -73.2882
+  },
+  {
+    "name": "Suaita",
+    "state": "Santander",
+    "latitude": 6.159,
+    "longitude": -73.4476
+  },
+  {
+    "name": "Sucre",
+    "state": "Santander",
+    "latitude": 5.9183,
+    "longitude": -73.7911
+  },
+  {
+    "name": "Suratá",
+    "state": "Santander",
+    "latitude": 7.3663,
+    "longitude": -72.9836
+  },
+  {
+    "name": "Tona",
+    "state": "Santander",
+    "latitude": 7.2022,
+    "longitude": -72.965
+  },
+  {
+    "name": "Vélez",
+    "state": "Santander",
+    "latitude": 6.0134,
+    "longitude": -73.6735
+  },
+  {
+    "name": "Vetas",
+    "state": "Santander",
+    "latitude": 7.3091,
+    "longitude": -72.8712
+  },
+  {
+    "name": "Villanueva",
+    "state": "Santander",
+    "latitude": 6.6717,
+    "longitude": -73.1742
+  },
+  {
+    "name": "Zapatoca",
+    "state": "Santander",
+    "latitude": 6.8153,
+    "longitude": -73.2677
+  },
+  {
+    "name": "Sincelejo",
+    "state": "Sucre",
+    "latitude": 9.3047,
+    "longitude": -75.3978
+  },
+  {
+    "name": "Buenavista",
+    "state": "Sucre",
+    "latitude": 9.3194,
+    "longitude": -74.9736
+  },
+  {
+    "name": "Caimito",
+    "state": "Sucre",
+    "latitude": 8.7401,
+    "longitude": -75.1891
+  },
+  {
+    "name": "Coloso",
+    "state": "Sucre",
+    "latitude": 9.4915,
+    "longitude": -75.3615
+  },
+  {
+    "name": "Coveñas",
+    "state": "Sucre",
+    "latitude": 9.4041,
+    "longitude": -75.6963
+  },
+  {
+    "name": "Chalán",
+    "state": "Sucre",
+    "latitude": 9.5477,
+    "longitude": -75.3113
+  },
+  {
+    "name": "El Roble",
+    "state": "Sucre",
+    "latitude": 9.1019,
+    "longitude": -75.1951
+  },
+  {
+    "name": "Galeras",
+    "state": "Sucre",
+    "latitude": 9.1609,
+    "longitude": -75.0481
+  },
+  {
+    "name": "Guaranda",
+    "state": "Sucre",
+    "latitude": 8.3813,
+    "longitude": -74.6744
+  },
+  {
+    "name": "La Unión",
+    "state": "Sucre",
+    "latitude": 8.8606,
+    "longitude": -75.2806
+  },
+  {
+    "name": "Los Palmitos",
+    "state": "Sucre",
+    "latitude": 9.379,
+    "longitude": -75.2677
+  },
+  {
+    "name": "Majagual",
+    "state": "Sucre",
+    "latitude": 8.5389,
+    "longitude": -74.6204
+  },
+  {
+    "name": "Morroa",
+    "state": "Sucre",
+    "latitude": 9.3335,
+    "longitude": -75.3054
+  },
+  {
+    "name": "Ovejas",
+    "state": "Sucre",
+    "latitude": 9.5325,
+    "longitude": -75.2238
+  },
+  {
+    "name": "Los Palmitos",
+    "state": "Sucre",
+    "latitude": 9.379,
+    "longitude": -75.2677
+  },
+  {
+    "name": "San Benito Abad",
+    "state": "Sucre",
+    "latitude": 8.929,
+    "longitude": -75.0271
+  },
+  {
+    "name": "San Marcos",
+    "state": "Sucre",
+    "latitude": 8.6597,
+    "longitude": -75.1281
+  },
+  {
+    "name": "San Onofre",
+    "state": "Sucre",
+    "latitude": 9.7359,
+    "longitude": -75.5263
+  },
+  {
+    "name": "San Pedro",
+    "state": "Sucre",
+    "latitude": 9.3956,
+    "longitude": -75.0648
+  },
+  {
+    "name": "Sucre",
+    "state": "Sucre",
+    "latitude": 8.8114,
+    "longitude": -74.7208
+  },
+  {
+    "name": "Tolú Viejo",
+    "state": "Sucre",
+    "latitude": 9.6381,
+    "longitude": -75.4603
+  },
+  {
+    "name": "Alpujarra",
+    "state": "Tolima",
+    "latitude": 3.3918,
+    "longitude": -74.9334
+  },
+  {
+    "name": "Alvarado",
+    "state": "Tolima",
+    "latitude": 4.5661,
+    "longitude": -74.9623
+  },
+  {
+    "name": "Ambalema",
+    "state": "Tolima",
+    "latitude": 4.784,
+    "longitude": -74.7627
+  },
+  {
+    "name": "Armero",
+    "state": "Tolima",
+    "latitude": 5.031,
+    "longitude": -74.8868
+  },
+  {
+    "name": "Ataco",
+    "state": "Tolima",
+    "latitude": 3.5915,
+    "longitude": -75.3818
+  },
+  {
+    "name": "Cajamarca",
+    "state": "Tolima",
+    "latitude": 4.4423,
+    "longitude": -75.4287
+  },
+  {
+    "name": "Chaparral",
+    "state": "Tolima",
+    "latitude": 3.7231,
+    "longitude": -75.4832
+  },
+  {
+    "name": "Coello",
+    "state": "Tolima",
+    "latitude": 4.2891,
+    "longitude": -74.8982
+  },
+  {
+    "name": "Coyaima",
+    "state": "Tolima",
+    "latitude": 3.7994,
+    "longitude": -75.1947
+  },
+  {
+    "name": "Cunday",
+    "state": "Tolima",
+    "latitude": 4.06,
+    "longitude": -74.6921
+  },
+  {
+    "name": "Dolores",
+    "state": "Tolima",
+    "latitude": 3.5391,
+    "longitude": -74.8975
+  },
+  {
+    "name": "Espinal",
+    "state": "Tolima",
+    "latitude": 4.1492,
+    "longitude": -74.8843
+  },
+  {
+    "name": "Falan",
+    "state": "Tolima",
+    "latitude": 5.1156,
+    "longitude": -74.9489
+  },
+  {
+    "name": "Flandes",
+    "state": "Tolima",
+    "latitude": 4.29,
+    "longitude": -74.8161
+  },
+  {
+    "name": "Fresno",
+    "state": "Tolima",
+    "latitude": 5.1526,
+    "longitude": -75.0362
+  },
+  {
+    "name": "Guamo",
+    "state": "Tolima",
+    "latitude": 4.0308,
+    "longitude": -74.9701
+  },
+  {
+    "name": "Herveo",
+    "state": "Tolima",
+    "latitude": 5.0833,
+    "longitude": -75.1667
+  },
+  {
+    "name": "Honda",
+    "state": "Tolima",
+    "latitude": 5.2086,
+    "longitude": -74.7358
+  },
+  {
+    "name": "Icononzo",
+    "state": "Tolima",
+    "latitude": 4.177,
+    "longitude": -74.5325
+  },
+  {
+    "name": "Mariquita",
+    "state": "Tolima",
+    "latitude": 5.1989,
+    "longitude": -74.8929
+  },
+  {
+    "name": "Melgar",
+    "state": "Tolima",
+    "latitude": 4.2047,
+    "longitude": -74.6407
+  },
+  {
+    "name": "Murillo",
+    "state": "Tolima",
+    "latitude": 4.8739,
+    "longitude": -75.1715
+  },
+  {
+    "name": "Natagaima",
+    "state": "Tolima",
+    "latitude": 3.6206,
+    "longitude": -75.0941
+  },
+  {
+    "name": "Ortega",
+    "state": "Tolima",
+    "latitude": 3.9361,
+    "longitude": -75.2217
+  },
+  {
+    "name": "Palocabildo",
+    "state": "Tolima",
+    "latitude": 5.117,
+    "longitude": -75.0173
+  },
+  {
+    "name": "Piedras",
+    "state": "Tolima",
+    "latitude": 4.5383,
+    "longitude": -74.8817
+  },
+  {
+    "name": "Planadas",
+    "state": "Tolima",
+    "latitude": 3.197,
+    "longitude": -75.6451
+  },
+  {
+    "name": "Prado",
+    "state": "Tolima",
+    "latitude": 3.7512,
+    "longitude": -74.93
+  },
+  {
+    "name": "Purificación",
+    "state": "Tolima",
+    "latitude": 3.8587,
+    "longitude": -74.9313
+  },
+  {
+    "name": "Roncesvalles",
+    "state": "Tolima",
+    "latitude": 4.0108,
+    "longitude": -75.6049
+  },
+  {
+    "name": "Rovira",
+    "state": "Tolima",
+    "latitude": 4.2392,
+    "longitude": -75.24
+  },
+  {
+    "name": "Saldaña",
+    "state": "Tolima",
+    "latitude": 3.9292,
+    "longitude": -75.0152
+  },
+  {
+    "name": "Santa Isabel",
+    "state": "Tolima",
+    "latitude": 4.7142,
+    "longitude": -75.098
+  },
+  {
+    "name": "Venadillo",
+    "state": "Tolima",
+    "latitude": 4.7193,
+    "longitude": -74.9292
+  },
+  {
+    "name": "Villahermosa",
+    "state": "Tolima",
+    "latitude": 5.0307,
+    "longitude": -75.1161
+  },
+  {
+    "name": "Villarrica",
+    "state": "Tolima",
+    "latitude": 3.935,
+    "longitude": -74.6004
+  },
+  {
+    "name": "Arauquita",
+    "state": "Arauca",
+    "latitude": 7.0292,
+    "longitude": -71.4281
+  },
+  {
+    "name": "Cravo Norte",
+    "state": "Arauca",
+    "latitude": 6.3017,
+    "longitude": -70.2042
+  },
+  {
+    "name": "Fortul",
+    "state": "Arauca",
+    "latitude": 6.6965,
+    "longitude": -71.8569
+  },
+  {
+    "name": "Puerto Rondón",
+    "state": "Arauca",
+    "latitude": 6.2805,
+    "longitude": -71.1
+  },
+  {
+    "name": "Saravena",
+    "state": "Arauca",
+    "latitude": 6.9632,
+    "longitude": -71.8823
+  },
+  {
+    "name": "Tame",
+    "state": "Arauca",
+    "latitude": 6.4606,
+    "longitude": -71.7362
+  },
+  {
+    "name": "Arauca",
+    "state": "Arauca",
+    "latitude": 7.0847,
+    "longitude": -70.7591
+  },
+  {
+    "name": "Yopal",
+    "state": "Casanare",
+    "latitude": 5.3378,
+    "longitude": -72.3959
+  },
+  {
+    "name": "Aguazul",
+    "state": "Casanare",
+    "latitude": 5.1728,
+    "longitude": -72.5471
+  },
+  {
+    "name": "Chameza",
+    "state": "Casanare",
+    "latitude": 5.2142,
+    "longitude": -72.8695
+  },
+  {
+    "name": "Hato Corozal",
+    "state": "Casanare",
+    "latitude": 6.109,
+    "longitude": -71.1377
+  },
+  {
+    "name": "La Salina",
+    "state": "Casanare",
+    "latitude": 6.1316,
+    "longitude": -72.3384
+  },
+  {
+    "name": "Monterrey",
+    "state": "Casanare",
+    "latitude": 4.8721,
+    "longitude": -72.8988
+  },
+  {
+    "name": "Pore",
+    "state": "Casanare",
+    "latitude": 5.7299,
+    "longitude": -72.0016
+  },
+  {
+    "name": "Recetor",
+    "state": "Casanare",
+    "latitude": 5.2318,
+    "longitude": -72.7604
+  },
+  {
+    "name": "Sabanalarga",
+    "state": "Casanare",
+    "latitude": 4.8543,
+    "longitude": -73.04
+  },
+  {
+    "name": "Sácama",
+    "state": "Casanare",
+    "latitude": 6.1023,
+    "longitude": -72.2528
+  },
+  {
+    "name": "Tauramena",
+    "state": "Casanare",
+    "latitude": 5.0183,
+    "longitude": -72.7492
+  },
+  {
+    "name": "Trinidad",
+    "state": "Casanare",
+    "latitude": 5.4074,
+    "longitude": -71.6614
+  },
+  {
+    "name": "Villanueva",
+    "state": "Casanare",
+    "latitude": 4.5553,
+    "longitude": -72.8825
+  },
+  {
+    "name": "Mocoa",
+    "state": "Putumayo",
+    "latitude": 1.1528,
+    "longitude": -76.6521
+  },
+  {
+    "name": "Colón",
+    "state": "Putumayo",
+    "latitude": 1.1903,
+    "longitude": -76.9737
+  },
+  {
+    "name": "Orito",
+    "state": "Putumayo",
+    "latitude": 0.6675,
+    "longitude": -76.873
+  },
+  {
+    "name": "Puerto Caicedo",
+    "state": "Putumayo",
+    "latitude": 0.6836,
+    "longitude": -76.6044
+  },
+  {
+    "name": "Puerto Guzmán",
+    "state": "Putumayo",
+    "latitude": 0.9645,
+    "longitude": -76.408
+  },
+  {
+    "name": "Leguízamo",
+    "state": "Putumayo",
+    "latitude": -0.1934,
+    "longitude": -74.7819
+  },
+  {
+    "name": "Sibundoy",
+    "state": "Putumayo",
+    "latitude": 1.203,
+    "longitude": -76.9227
+  },
+  {
+    "name": "San Francisco",
+    "state": "Putumayo",
+    "latitude": 1.1764,
+    "longitude": -76.8784
+  },
+  {
+    "name": "San Miguel",
+    "state": "Putumayo",
+    "latitude": 0.3431,
+    "longitude": -76.9112
+  },
+  {
+    "name": "Santiago",
+    "state": "Putumayo",
+    "latitude": 1.1484,
+    "longitude": -77.0045
+  },
+  {
+    "name": "Leticia",
+    "state": "Amazonas",
+    "latitude": -4.2153,
+    "longitude": -69.9406
+  },
+  {
+    "name": "El Encanto",
+    "state": "Amazonas",
+    "latitude": -1.7477,
+    "longitude": -73.2083
+  },
+  {
+    "name": "La Chorrera",
+    "state": "Amazonas",
+    "latitude": -0.7333,
+    "longitude": -73.0167
+  },
+  {
+    "name": "La Pedrera",
+    "state": "Amazonas",
+    "latitude": -1.3239,
+    "longitude": -69.5744
+  },
+  {
+    "name": "La Victoria",
+    "state": "Amazonas",
+    "latitude": 0.0551,
+    "longitude": -71.222
+  },
+  {
+    "name": "Puerto Arica",
+    "state": "Amazonas",
+    "latitude": -2.1485,
+    "longitude": -71.7548
+  },
+  {
+    "name": "Puerto Nariño",
+    "state": "Amazonas",
+    "latitude": -3.7889,
+    "longitude": -70.3558
+  },
+  {
+    "name": "Puerto Santander",
+    "state": "Amazonas",
+    "latitude": -0.6217,
+    "longitude": -72.384
+  },
+  {
+    "name": "Tarapacá",
+    "state": "Amazonas",
+    "latitude": -2.8786,
+    "longitude": -69.7442
+  },
+  {
+    "name": "Inírida",
+    "state": "Guainía",
+    "latitude": 3.8653,
+    "longitude": -67.9239
+  },
+  {
+    "name": "Barranco Minas",
+    "state": "Guainía",
+    "latitude": 3.4842,
+    "longitude": -69.8108
+  },
+  {
+    "name": "Mapiripana",
+    "state": "Guainía",
+    "latitude": 2.8101,
+    "longitude": -70.2856
+  },
+  {
+    "name": "San Felipe",
+    "state": "Guainía",
+    "latitude": 1.9141,
+    "longitude": -67.07
+  },
+  {
+    "name": "Puerto Colombia",
+    "state": "Guainía",
+    "latitude": 2.7221,
+    "longitude": -67.5658
+  },
+  {
+    "name": "Cacahual",
+    "state": "Guainía",
+    "latitude": 3.5142,
+    "longitude": -67.4153
+  },
+  {
+    "name": "Pana Pana",
+    "state": "Guainía",
+    "latitude": 1.8442,
+    "longitude": -69.0064
+  },
+  {
+    "name": "Mitú",
+    "state": "Vaupés",
+    "latitude": 1.2578,
+    "longitude": -70.2347
+  },
+  {
+    "name": "Caruru",
+    "state": "Vaupés",
+    "latitude": 1.014,
+    "longitude": -71.2962
+  },
+  {
+    "name": "Taraira",
+    "state": "Vaupés",
+    "latitude": -0.5636,
+    "longitude": -69.6336
+  },
+  {
+    "name": "Yavaraté",
+    "state": "Vaupés",
+    "latitude": 0.615,
+    "longitude": -69.2081
+  },
+  {
+    "name": "Pacoa",
+    "state": "Vaupés",
+    "latitude": 0.1814,
+    "longitude": -70.91
+  },
+  {
+    "name": "Morichal",
+    "state": "Guainía",
+    "latitude": 2.4298,
+    "longitude": -69.8328
+  },
+  {
+    "name": "Puerto Carreño",
+    "state": "Vichada",
+    "latitude": 6.189,
+    "longitude": -67.4859
+  },
+  {
+    "name": "La Primavera",
+    "state": "Vichada",
+    "latitude": 5.4906,
+    "longitude": -70.4092
+  },
+  {
+    "name": "Santa Rosalía",
+    "state": "Vichada",
+    "latitude": 5.3493,
+    "longitude": -70.6773
+  },
+  {
+    "name": "Cumaribo",
+    "state": "Vichada",
+    "latitude": 4.4455,
+    "longitude": -69.799
+  },
+  {
+    "name": "San José del Fragua",
+    "state": "Caquetá",
+    "latitude": 1.332,
+    "longitude": -75.973
+  },
+  {
+    "name": "Barranca de Upía",
+    "state": "Meta",
+    "latitude": 4.5696,
+    "longitude": -72.9668
+  },
+  {
+    "name": "Palmas del Socorro",
+    "state": "Santander",
+    "latitude": 6.4076,
+    "longitude": -73.2882
+  },
+  {
+    "name": "San Juan de Río Seco",
+    "state": "Cundinamarca",
+    "latitude": 4.8402,
+    "longitude": -74.6592
+  },
+  {
+    "name": "Juan de Acosta",
+    "state": "Atlántico",
+    "latitude": 10.8281,
+    "longitude": -75.0334
+  },
+  {
+    "name": "Fuente de Oro",
+    "state": "Meta",
+    "latitude": 3.4626,
+    "longitude": -73.6216
+  },
+  {
+    "name": "San Luis de Gaceno",
+    "state": "Boyacá",
+    "latitude": 4.8205,
+    "longitude": -73.1685
+  },
+  {
+    "name": "El Litoral del San Juan",
+    "state": "Chocó",
+    "latitude": 4.251,
+    "longitude": -76.9682
+  },
+  {
+    "name": "Villa de San Diego de Ubate",
+    "state": "Cundinamarca",
+    "latitude": 5.3154,
+    "longitude": -73.8204
+  },
+  {
+    "name": "Barranco de Loba",
+    "state": "Bolivar",
+    "latitude": 8.946,
+    "longitude": -74.1065
+  },
+  {
+    "name": "Togüí",
+    "state": "Boyacá",
+    "latitude": 5.9204,
+    "longitude": -73.4885
+  },
+  {
+    "name": "Santa Rosa del Sur",
+    "state": "Bolivar",
+    "latitude": 7.9644,
+    "longitude": -74.0544
+  },
+  {
+    "name": "El Cantón del San Pablo",
+    "state": "Chocó",
+    "latitude": 5.3596,
+    "longitude": -76.7723
+  },
+  {
+    "name": "Villa de Leyva",
+    "state": "Boyacá",
+    "latitude": 5.6667,
+    "longitude": -73.5119
+  },
+  {
+    "name": "San Sebastián de Buenavista",
+    "state": "Magdalena",
+    "latitude": 9.2378,
+    "longitude": -74.3517
+  },
+  {
+    "name": "Paz de Río",
+    "state": "Boyacá",
+    "latitude": 5.9845,
+    "longitude": -72.7505
+  },
+  {
+    "name": "Hatillo de Loba",
+    "state": "Bolivar",
+    "latitude": 8.9564,
+    "longitude": -74.0782
+  },
+  {
+    "name": "Sabanas de San Angel",
+    "state": "Magdalena",
+    "latitude": 10.1108,
+    "longitude": -74.2601
+  },
+  {
+    "name": "Calamar",
+    "state": "Guaviare",
+    "latitude": 1.9596,
+    "longitude": -72.6531
+  },
+  {
+    "name": "Río de Oro",
+    "state": "Cesar",
+    "latitude": 8.2919,
+    "longitude": -73.3849
+  },
+  {
+    "name": "San Pedro de Uraba",
+    "state": "Antioquia",
+    "latitude": 8.2751,
+    "longitude": -76.3764
+  },
+  {
+    "name": "San José del Guaviare",
+    "state": "Guaviare",
+    "latitude": 2.5729,
+    "longitude": -72.6459
+  },
+  {
+    "name": "Santa Rosa de Viterbo",
+    "state": "Boyacá",
+    "latitude": 5.874,
+    "longitude": -72.9822
+  },
+  {
+    "name": "Santander de Quilichao",
+    "state": "Cauca",
+    "latitude": 3.0095,
+    "longitude": -76.4849
+  },
+  {
+    "name": "Miraflores",
+    "state": "Guaviare",
+    "latitude": 1.3367,
+    "longitude": -71.9511
+  },
+  {
+    "name": "Santafé de Antioquia",
+    "state": "Antioquia",
+    "latitude": 6.5332,
+    "longitude": -75.9028
+  },
+  {
+    "name": "San Carlos de Guaroa",
+    "state": "Meta",
+    "latitude": 3.7116,
+    "longitude": -73.2434
+  },
+  {
+    "name": "Palmar de Varela",
+    "state": "Atlántico",
+    "latitude": 10.7405,
+    "longitude": -74.7544
+  },
+  {
+    "name": "Santa Rosa de Osos",
+    "state": "Antioquia",
+    "latitude": 6.6474,
+    "longitude": -75.4603
+  },
+  {
+    "name": "San Andrés de Cuerquía",
+    "state": "Antioquia",
+    "latitude": 6.9189,
+    "longitude": -75.6641
+  },
+  {
+    "name": "Valle de San Juan",
+    "state": "Tolima",
+    "latitude": 4.1987,
+    "longitude": -75.1173
+  },
+  {
+    "name": "San Vicente de Chucurí",
+    "state": "Santander",
+    "latitude": 6.881,
+    "longitude": -73.4098
+  },
+  {
+    "name": "San José de Miranda",
+    "state": "Santander",
+    "latitude": 6.6587,
+    "longitude": -72.7334
+  },
+  {
+    "name": "Providencia",
+    "state": "Nariño",
+    "latitude": 1.2398,
+    "longitude": -77.5972
+  },
+  {
+    "name": "Santa Rosa de Cabal",
+    "state": "Risaralda",
+    "latitude": 4.8681,
+    "longitude": -75.6214
+  },
+  {
+    "name": "Guayabal de Siquima",
+    "state": "Cundinamarca",
+    "latitude": 4.8774,
+    "longitude": -74.4674
+  },
+  {
+    "name": "Belén de Los Andaquies",
+    "state": "Caquetá",
+    "latitude": 1.4183,
+    "longitude": -75.8775
+  },
+  {
+    "name": "Paz de Ariporo",
+    "state": "Casanare",
+    "latitude": 5.8836,
+    "longitude": -71.8973
+  },
+  {
+    "name": "Santa Helena del Opón",
+    "state": "Santander",
+    "latitude": 6.34,
+    "longitude": -73.617
+  },
+  {
+    "name": "San Pablo de Borbur",
+    "state": "Boyacá",
+    "latitude": 5.6603,
+    "longitude": -74.0621
+  },
+  {
+    "name": "La Jagua del Pilar",
+    "state": "La Guajira",
+    "latitude": 10.5167,
+    "longitude": -73.0833
+  },
+  {
+    "name": "La Jagua de Ibirico",
+    "state": "Cesar",
+    "latitude": 9.5623,
+    "longitude": -73.3341
+  },
+  {
+    "name": "San Luis de Sincé",
+    "state": "Sucre",
+    "latitude": 9.3068,
+    "longitude": -75.0339
+  },
+  {
+    "name": "San Luis de Gaceno",
+    "state": "Boyacá",
+    "latitude": 4.8205,
+    "longitude": -73.1685
+  },
+  {
+    "name": "El Carmen de Bolívar",
+    "state": "Bolivar",
+    "latitude": 9.7174,
+    "longitude": -75.1202
+  },
+  {
+    "name": "El Carmen de Atrato",
+    "state": "Chocó",
+    "latitude": 5.8108,
+    "longitude": -76.192
+  },
+  {
+    "name": "San Juan de Betulia",
+    "state": "Sucre",
+    "latitude": 9.2735,
+    "longitude": -75.241
+  },
+  {
+    "name": "Pijiño del Carmen",
+    "state": "Magdalena",
+    "latitude": 9.5353,
+    "longitude": -74.1199
+  },
+  {
+    "name": "Vigía del Fuerte",
+    "state": "Antioquia",
+    "latitude": 6.5789,
+    "longitude": -76.8863
+  },
+  {
+    "name": "San Martín de Loba",
+    "state": "Bolivar",
+    "latitude": 8.8191,
+    "longitude": -74.0575
+  },
+  {
+    "name": "Altos del Rosario",
+    "state": "Bolivar",
+    "latitude": 8.7944,
+    "longitude": -74.1658
+  },
+  {
+    "name": "Carmen de Apicalá",
+    "state": "Tolima",
+    "latitude": 4.1473,
+    "longitude": -74.7201
+  },
+  {
+    "name": "San Antonio del Tequendama",
+    "state": "Cundinamarca",
+    "latitude": 4.6189,
+    "longitude": -74.3539
+  },
+  {
+    "name": "Sabana de Torres",
+    "state": "Santander",
+    "latitude": 7.3915,
+    "longitude": -73.4957
+  },
+  {
+    "name": "El Retorno",
+    "state": "Guaviare",
+    "latitude": 2.3302,
+    "longitude": -72.6276
+  },
+  {
+    "name": "San Jose De Ure",
+    "state": "Córdoba",
+    "latitude": 7.7533,
+    "longitude": -75.5659
+  },
+  {
+    "name": "San Pedro de Cartago",
+    "state": "Nariño",
+    "latitude": 1.5368,
+    "longitude": -77.1014
+  },
+  {
+    "name": "Campo de La Cruz",
+    "state": "Atlántico",
+    "latitude": 10.3781,
+    "longitude": -74.8836
+  },
+  {
+    "name": "San Juan de Arama",
+    "state": "Meta",
+    "latitude": 3.3699,
+    "longitude": -73.8727
+  },
+  {
+    "name": "San José de La Montaña",
+    "state": "Antioquia",
+    "latitude": 6.8503,
+    "longitude": -75.6833
+  },
+  {
+    "name": "Cartagena del Chairá",
+    "state": "Caquetá",
+    "latitude": 1.3349,
+    "longitude": -74.8429
+  },
+  {
+    "name": "San José del Palmar",
+    "state": "Chocó",
+    "latitude": 4.8885,
+    "longitude": -76.2965
+  },
+  {
+    "name": "Agua de Dios",
+    "state": "Cundinamarca",
+    "latitude": 4.3765,
+    "longitude": -74.67
+  },
+  {
+    "name": "San Jacinto del Cauca",
+    "state": "Bolivar",
+    "latitude": 8.2373,
+    "longitude": -74.6677
+  },
+  {
+    "name": "San Agustín",
+    "state": "Huila",
+    "latitude": 1.8788,
+    "longitude": -76.2672
+  },
+  {
+    "name": "El Tablón de Gómez",
+    "state": "Nariño",
+    "latitude": 1.412,
+    "longitude": -76.9853
+  },
+  {
+    "name": "San Andrés de Cuerquía",
+    "state": "Antioquia",
+    "latitude": 6.9189,
+    "longitude": -75.6641
+  },
+  {
+    "name": "San José de Pare",
+    "state": "Boyacá",
+    "latitude": 6.0175,
+    "longitude": -73.547
+  },
+  {
+    "name": "San Pablo de Borbur",
+    "state": "Boyacá",
+    "latitude": 5.6603,
+    "longitude": -74.0621
+  },
+  {
+    "name": "Santiago de Tolú",
+    "state": "Sucre",
+    "latitude": 9.5239,
+    "longitude": -75.5814
+  },
+  {
+    "name": "Carmen de Carupa",
+    "state": "Cundinamarca",
+    "latitude": 5.3486,
+    "longitude": -73.9017
+  },
+  {
+    "name": "Ciénaga de Oro",
+    "state": "Córdoba",
+    "latitude": 8.8744,
+    "longitude": -75.6203
+  },
+  {
+    "name": "San Juan de Urabá",
+    "state": "Antioquia",
+    "latitude": 8.7592,
+    "longitude": -76.5297
+  },
+  {
+    "name": "San Juan del Cesar",
+    "state": "La Guajira",
+    "latitude": 10.7711,
+    "longitude": -73.0031
+  },
+  {
+    "name": "El Carmen de Chucurí",
+    "state": "Santander",
+    "latitude": 6.6637,
+    "longitude": -73.5628
+  },
+  {
+    "name": "El Carmen de Viboral",
+    "state": "Antioquia",
+    "latitude": 6.0824,
+    "longitude": -75.3351
+  },
+  {
+    "name": "Belén de Umbría",
+    "state": "Risaralda",
+    "latitude": 5.2009,
+    "longitude": -75.8687
+  },
+  {
+    "name": "Valle de San José",
+    "state": "Santander",
+    "latitude": 6.4475,
+    "longitude": -73.1436
+  },
+  {
+    "name": "San Luis",
+    "state": "Tolima",
+    "latitude": 4.1326,
+    "longitude": -75.095
+  },
+  {
+    "name": "San Miguel de Sema",
+    "state": "Boyacá",
+    "latitude": 5.5185,
+    "longitude": -73.7224
+  },
+  {
+    "name": "San Antonio",
+    "state": "Tolima",
+    "latitude": 3.9142,
+    "longitude": -75.4801
+  },
+  {
+    "name": "San Benito",
+    "state": "Santander",
+    "latitude": 6.1327,
+    "longitude": -73.4907
+  },
+  {
+    "name": "Vergara",
+    "state": "Cundinamarca",
+    "latitude": 5.1184,
+    "longitude": -74.3455
+  },
+  {
+    "name": "San Carlos",
+    "state": "Córdoba",
+    "latitude": 8.7958,
+    "longitude": -75.6995
+  },
+  {
+    "name": "Puerto Alegría",
+    "state": "Amazonas",
+    "latitude": -1.0333,
+    "longitude": -74.0333
+  },
+  {
+    "name": "Hato",
+    "state": "Santander",
+    "latitude": 6.543,
+    "longitude": -73.3083
+  },
+  {
+    "name": "San Jacinto",
+    "state": "Bolivar",
+    "latitude": 9.8277,
+    "longitude": -75.1217
+  },
+  {
+    "name": "San Sebastián",
+    "state": "Cauca",
+    "latitude": 1.8386,
+    "longitude": -76.7719
+  },
+  {
+    "name": "San Carlos",
+    "state": "Antioquia",
+    "latitude": 6.1879,
+    "longitude": -74.9931
+  },
+  {
+    "name": "Tuta",
+    "state": "Boyacá",
+    "latitude": 5.6897,
+    "longitude": -73.2278
+  },
+  {
+    "name": "Silos",
+    "state": "Norte De Santander",
+    "latitude": 7.2052,
+    "longitude": -72.7564
+  },
+  {
+    "name": "Cácota",
+    "state": "Norte De Santander",
+    "latitude": 7.2679,
+    "longitude": -72.642
+  },
+  {
+    "name": "El Dovio",
+    "state": "Valle Del Cauca",
+    "latitude": 4.5079,
+    "longitude": -76.2362
+  },
+  {
+    "name": "Toledo",
+    "state": "Norte De Santander",
+    "latitude": 7.3098,
+    "longitude": -72.4829
+  },
+  {
+    "name": "Roldanillo",
+    "state": "Valle Del Cauca",
+    "latitude": 4.4126,
+    "longitude": -76.1546
+  },
+  {
+    "name": "Mutiscua",
+    "state": "Norte De Santander",
+    "latitude": 7.3006,
+    "longitude": -72.7467
+  },
+  {
+    "name": "Argelia",
+    "state": "Valle Del Cauca",
+    "latitude": 4.7234,
+    "longitude": -76.1191
+  },
+  {
+    "name": "El Zulia",
+    "state": "Norte De Santander",
+    "latitude": 7.9325,
+    "longitude": -72.6013
+  },
+  {
+    "name": "Salazar",
+    "state": "Norte De Santander",
+    "latitude": 7.7736,
+    "longitude": -72.8679
+  },
+  {
+    "name": "Sevilla",
+    "state": "Valle Del Cauca",
+    "latitude": 4.2642,
+    "longitude": -75.9309
+  },
+  {
+    "name": "Zarzal",
+    "state": "Valle Del Cauca",
+    "latitude": 4.3946,
+    "longitude": -76.0715
+  },
+  {
+    "name": "Cucutilla",
+    "state": "Norte De Santander",
+    "latitude": 7.5394,
+    "longitude": -72.7724
+  },
+  {
+    "name": "El Cerrito",
+    "state": "Valle Del Cauca",
+    "latitude": 3.6855,
+    "longitude": -76.3137
+  },
+  {
+    "name": "Cartago",
+    "state": "Valle Del Cauca",
+    "latitude": 4.7464,
+    "longitude": -75.9117
+  },
+  {
+    "name": "Caicedonia",
+    "state": "Valle Del Cauca",
+    "latitude": 4.3324,
+    "longitude": -75.8267
+  },
+  {
+    "name": "Puerto Santander",
+    "state": "Norte De Santander",
+    "latitude": 8.3636,
+    "longitude": -72.4063
+  },
+  {
+    "name": "Gramalote",
+    "state": "Norte De Santander",
+    "latitude": 7.8875,
+    "longitude": -72.7975
+  },
+  {
+    "name": "El Cairo",
+    "state": "Valle Del Cauca",
+    "latitude": 4.7628,
+    "longitude": -76.221
+  },
+  {
+    "name": "El Tarra",
+    "state": "Norte De Santander",
+    "latitude": 8.5756,
+    "longitude": -73.0949
+  },
+  {
+    "name": "La Unión",
+    "state": "Valle Del Cauca",
+    "latitude": 4.5328,
+    "longitude": -76.1032
+  },
+  {
+    "name": "Restrepo",
+    "state": "Valle Del Cauca",
+    "latitude": 3.822,
+    "longitude": -76.5224
+  },
+  {
+    "name": "Teorama",
+    "state": "Norte De Santander",
+    "latitude": 8.7637,
+    "longitude": -73.1569
+  },
+  {
+    "name": "Dagua",
+    "state": "Valle Del Cauca",
+    "latitude": 3.6569,
+    "longitude": -76.6886
+  },
+  {
+    "name": "Arboledas",
+    "state": "Norte De Santander",
+    "latitude": 7.6423,
+    "longitude": -72.7994
+  },
+  {
+    "name": "Guacarí",
+    "state": "Valle Del Cauca",
+    "latitude": 3.7638,
+    "longitude": -76.3329
+  }
+]

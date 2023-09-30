@@ -71,8 +71,12 @@ const app = express();
 const router = Router();
 app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  bodyParser.json({
+    limit: '10mb',
+  })
+);
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 TeamsModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
 
