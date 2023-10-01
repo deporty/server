@@ -3,7 +3,7 @@ import { TeamEntity } from '@deporty-org/entities/teams';
 import { Observable, from, of, throwError, zip } from 'rxjs';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { TeamContract } from '../../contracts/team.contract';
-import { GetTeamByIdUsecase, TeamDoesNotExistError } from '../get-team-by-id/get-team-by-id.usecase';
+import { GetTeamByIdUsecase } from '../get-team-by-id/get-team-by-id.usecase';
 import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { forceTransformation, getImageExtension, resizeImageProportionally } from '@scifamek-open-source/tairona';
