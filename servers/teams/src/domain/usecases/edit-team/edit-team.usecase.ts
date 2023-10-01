@@ -41,11 +41,14 @@ export class EditTeamUsecase extends Usecase<Param, TeamEntity> {
           return this.getTeamByNameUsecase.call(team.name).pipe(
             catchError((e: Error) => {
               if (e instanceof TeamWithNameDoesNotExistError) {
-                return of(prevTeam);
+                return of(null);
               }
               return throwError(e);
             }),
-            mergeMap(() => {
+            mergeMap((data) => {
+              if(data === null){
+                return of(prevTeam);
+              }
               return throwError(new TeamNameAlreadyExistsError());
             })
           );
