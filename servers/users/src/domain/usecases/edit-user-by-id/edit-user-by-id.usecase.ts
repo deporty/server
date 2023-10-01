@@ -70,7 +70,7 @@ export class EditUserByIdUsecase extends Usecase<Param, UserEntity> {
         };
         return this.userContract.update(prevUser.id!, newUser).pipe(
           mergeMap((user) => {
-            return zip(of(user), user.image ? this.fileAdapter.getAbsoluteHTTPUrl(path) : of(''));
+            return zip(of(user), user.image ? this.fileAdapter.getAbsoluteHTTPUrl(user.image) : of(''));
           }),
           map(([user, path]) => {
             return {
