@@ -326,6 +326,8 @@ export class TeamController extends HttpController {
 
       const config: MessagesConfiguration = {
         exceptions: {
+          [TeamDoesNotExistError.id]: 'GET:ID:ERROR',
+          [TeamNameAlreadyExistsError.id]: 'TEAM-NAME-ALREADY-EXISTS:ERROR',
           [UserImageNotAllowedError.id]: 'TEAM-SHIELD-INVALID:ERROR',
         },
         identifier: this.identifier,

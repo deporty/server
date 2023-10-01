@@ -3,11 +3,13 @@ import { TeamEntity } from '@deporty-org/entities/teams';
 import { Observable, from, of, throwError, zip } from 'rxjs';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { TeamContract } from '../../contracts/team.contract';
-import { GetTeamByIdUsecase } from '../get-team-by-id/get-team-by-id.usecase';
+import { GetTeamByIdUsecase, TeamDoesNotExistError } from '../get-team-by-id/get-team-by-id.usecase';
 import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
-import { map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { forceTransformation, getImageExtension, resizeImageProportionally } from '@scifamek-open-source/tairona';
 import { generateError } from '@scifamek-open-source/iraca/helpers';
+import { GetTeamByNameUsecase, TeamWithNameDoesNotExistError } from '../get-team-by-name/get-team-by-name.usecase';
+import { TeamNameAlreadyExistsError } from '../create-team/create-team.usecase';
 
 export interface Param {
   team: TeamEntity;
@@ -18,7 +20,13 @@ export interface Param {
 export const UserImageNotAllowedError = generateError('UserImageNotAllowed', `Consider usign a square image`);
 
 export class EditTeamUsecase extends Usecase<Param, TeamEntity> {
-  constructor(public teamContract: TeamContract, private getTeamByIdUsecase: GetTeamByIdUsecase, private fileAdapter: FileAdapter) {
+  constructor(
+    public teamContract: TeamContract,
+    private getTeamByIdUsecase: GetTeamByIdUsecase,
+    private fileAdapter: FileAdapter,
+
+    private getTeamByNameUsecase: GetTeamByNameUsecase
+  ) {
     super();
   }
   call(param: Param): Observable<TeamEntity> {
@@ -28,6 +36,22 @@ export class EditTeamUsecase extends Usecase<Param, TeamEntity> {
     const shieldSize = 300;
 
     return this.getTeamByIdUsecase.call(param.id).pipe(
+      mergeMap((prevTeam: TeamEntity) => {
+        if (prevTeam.name !== team.name) {
+          return this.getTeamByNameUsecase.call(team.name).pipe(
+            catchError((e: Error) => {
+              if (e instanceof TeamWithNameDoesNotExistError) {
+                return of(prevTeam);
+              }
+              return throwError(e);
+            }),
+            mergeMap(() => {
+              return throwError(new TeamNameAlreadyExistsError());
+            })
+          );
+        }
+        return of(prevTeam);
+      }),
       mergeMap((prevTeam: TeamEntity) => {
         if (param.image) {
           const $t = from(
