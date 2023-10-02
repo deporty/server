@@ -2,7 +2,7 @@ import { TeamParticipationEntity, UserEntity } from '@deporty-org/entities';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { Observable, of, zip } from 'rxjs';
 import { TeamParticipationContract } from '../../../contracts/team-participation.contract';
-import { map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { GetTeamsThatIBelongUsecase } from '../get-teams-that-i-belong/get-teams-that-i-belong.usecase';
 import { GetUserByIdUsecase } from '../../get-user-by-id/get-user-by-id.usecase';
 import { DeleteUserUsecase } from '../../delete-user/delete-user.usecase';
@@ -80,7 +80,7 @@ export class DeleteTeamParticipationUsecase extends Usecase<Param, boolean> {
         }),
         mergeMap((toDelete: boolean) => {
           if (toDelete) {
-            return this.deleteUserUsecase.call(param.userId);
+            return this.deleteUserUsecase.call(param.userId).pipe(catchError(() => of(true)));
           }
           return of(true);
         })

@@ -11,7 +11,7 @@ import { UserContract } from '../../contracts/user.constract';
 export interface Param {
   memberId: Id;
   teamId: Id;
-  member: MemberEntity;
+  member?: MemberEntity;
 }
 
 export class DeleteMemberByIdUsecase extends Usecase<Param, boolean> {
@@ -25,10 +25,9 @@ export class DeleteMemberByIdUsecase extends Usecase<Param, boolean> {
   }
 
   call(param: Param): Observable<boolean> {
-    this.userContract;
     const { teamId, memberId, member } = param;
     let $member = member
-      ? of(member)
+      ? of(member!)
       : this.getMemberByIdUsecase
           .call({
             memberId,
@@ -38,8 +37,8 @@ export class DeleteMemberByIdUsecase extends Usecase<Param, boolean> {
 
     return $member.pipe(
       mergeMap((m) => {
-        if (member.image) {
-          return this.fileAdapter.deleteFile(member.image).pipe(map(() => m));
+        if (m.image) {
+          return this.fileAdapter.deleteFile(m.image).pipe(map(() => m));
         }
         return of(m);
       }),

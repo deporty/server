@@ -28,6 +28,7 @@ import { EditMemberByIdUsecase } from '../domain/usecases/edit-member-by-id/edit
 import { CreateUserAndAsignNewMemberToTeamUsecase } from '../domain/usecases/create-user-and-asign-new-member-to-team/create-user-and-asign-new-member-to-team.usecase';
 import { Logger } from '@scifamek-open-source/logger';
 import { EditTeamUsecase, UserImageNotAllowedError } from '../domain/usecases/edit-team/edit-team.usecase';
+import { DeleteMemberByIdUsecase } from '../domain/usecases/delete-member-by-id/delete-member-by-id.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -61,6 +62,29 @@ export class TeamController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: id,
+      });
+    });
+    router.delete(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
+      const teamId = request.params.teamId;
+      const memberId = request.params.memberId;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'DELETED-MEMBER:SUCCESS',
+        extraData: {
+          entitiesName: 'team',
+        },
+      };
+
+      this.handler<DeleteMemberByIdUsecase>({
+        container,
+        usecaseId: 'DeleteMemberByIdUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: {
+          teamId,
+          memberId,
+        },
       });
     });
 
