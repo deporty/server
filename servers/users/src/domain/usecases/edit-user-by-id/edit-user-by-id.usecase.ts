@@ -57,6 +57,14 @@ export class EditUserByIdUsecase extends Usecase<Param, UserEntity> {
         return zip(of(prevUser.image), of(prevUser));
       }),
       mergeMap(([path, prevUser]: [string, UserEntity]) => {
+
+
+
+
+        console.log("Rutas");
+        console.log(path,prevUser);
+        
+        
         const newUser: UserEntity = {
           ...prevUser,
           birthDate: user.birthDate,

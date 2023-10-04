@@ -388,12 +388,13 @@ export class TeamController extends HttpController {
       });
     });
 
-    router.put(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
+    router.patch(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
       const data = {
         ...request.body,
         teamId: request.params.teamId,
         memberId: request.params.memberId,
       };
+      console.log(data);
       const config: MessagesConfiguration = {
         exceptions: {
           [MemberDoesNotExistError.id]: 'MEMBER-DOES-NOT-EXIST:ERROR',

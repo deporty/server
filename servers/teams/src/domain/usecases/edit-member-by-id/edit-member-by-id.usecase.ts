@@ -54,7 +54,10 @@ export class EditMemberByIdUsecase extends Usecase<Param, MemberEntity> {
           }
 
           if (img !== null) {
+            console.log(1, img);
+
             const extension = getImageExtension(img);
+            console.log(extension);
 
             const path = `teams/${param.teamId}/members/${param.memberId}/profile${extension}`;
 
@@ -86,12 +89,12 @@ export class EditMemberByIdUsecase extends Usecase<Param, MemberEntity> {
             )
             .pipe(
               mergeMap(() => {
-                return zip(of(newMember), newMember.image ? this.fileAdapter.getAbsoluteHTTPUrl(path!) : of(newMember.image));
+                return zip(of(newMember), newMember.image ? this.fileAdapter.getAbsoluteHTTPUrl(newMember.image) : of(''));
               }),
-              map(([user, path]) => {
+              map(([user, p]) => {
                 return {
                   ...user,
-                  image: path,
+                  image: p,
                 };
               })
             );

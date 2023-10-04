@@ -79,7 +79,7 @@ export class EditTeamUsecase extends Usecase<Param, TeamEntity> {
             })
           );
         }
-        return zip(of(prevTeam), of(prevTeam.shield), of(prevTeam.miniShield));
+        return zip(of(prevTeam), of(param.team.shield), of(param.team.miniShield));
       }),
       mergeMap(([prevTeam, path, pathMini]: [TeamEntity, string?, string?]) => {
         const newUser: TeamEntity = {

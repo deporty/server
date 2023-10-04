@@ -74,6 +74,7 @@ const server = http.createServer((request, res) => {
             res.end();
           })
           .finally(() => {
+            console.log("Finalizando transación: ", path );
           });
       });
     } else {

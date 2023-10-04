@@ -1,5 +1,7 @@
 import { UserEntity } from '@deporty-org/entities/users';
 import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
+import { Timestamp } from 'firebase-admin/firestore';
+import { of } from 'rxjs';
 
 export class UserMapper extends Mapper<UserEntity> {
   constructor(private fileAdapter: FileAdapter) {
@@ -21,7 +23,14 @@ export class UserMapper extends Mapper<UserEntity> {
       phone: { name: 'phone' },
       email: { name: 'email' },
       roles: { name: 'roles' },
-      birthDate: { name: 'birth-date' },
+      birthDate: {
+        name: 'birth-date',
+        from: (date: Timestamp) => {
+          console.log(date);
+          
+          return date ? of(date.toDate()) : of(date);
+        },
+      },
     };
   }
 }

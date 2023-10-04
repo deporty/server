@@ -79,9 +79,14 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
                     miniShield: miniShieldPath,
                     shield: shieldPath,
                   };
-                  return this.editTeamUsecase.call({ team: teamToEdit , id: teamToEdit.id!});
+
+                  console.log(teamToEdit,456);
+                  
+                  return this.editTeamUsecase.call({ team: teamToEdit , id: teamToEdit.id!}).pipe(map(() => teamToEdit));
                 }),
                 mergeMap((team: TeamEntity) => {
+
+
                   const $shield = team.shield ? this.fileAdapter.getAbsoluteHTTPUrl(team.shield) : of(undefined);
                   const $miniShield = team.miniShield ? this.fileAdapter.getAbsoluteHTTPUrl(team.miniShield) : of(undefined);
                   return zip(of(team), $shield, $miniShield);

@@ -123,7 +123,7 @@ export class UserController extends HttpController {
     router.post(`/`, (request: Request, response: Response) => {
       const body = {
         ...request.body,
-        birthDate: request.body.birthDate,
+        birthDate: request.body.birthDate ? new Date(request.body.birthDate) : null,
       };
 
       const config: MessagesConfiguration = {
@@ -151,7 +151,7 @@ export class UserController extends HttpController {
         id: request.params.userId,
         user: {
           ...request.body.user,
-          birthDate: request.body.user.birthDate,
+          birthDate: request.body.user.birthDate ? new Date(request.body.user.birthDate) : null,
         },
       };
 
