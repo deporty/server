@@ -49,8 +49,8 @@ jobs:
       - name: CLUSTER CREDENTIALS
         run: |
           gcloud components install gke-gcloud-auth-plugin
-
-          gcloud container clusters get-credentials autopilot-cluster-1 --region southamerica-east1 --project deporty-dev
+          gcloud components install beta
+          gcloud container clusters get-credentials deporty-server-cluster --region us-central1-a --project deporty-dev
         
       #   # cd servers/authorization && npm run build 
       # - name: DEPLOY 1
@@ -58,8 +58,6 @@ jobs:
       #     cd servers/users && npm run build
       - name: DEPLOY
         run: |
-          python --version
-          python3 --version
           cd scripts
           python3 deploy.py
 

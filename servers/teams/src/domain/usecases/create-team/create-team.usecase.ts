@@ -80,7 +80,6 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
                     shield: shieldPath,
                   };
 
-                  console.log(teamToEdit,456);
                   
                   return this.editTeamUsecase.call({ team: teamToEdit , id: teamToEdit.id!}).pipe(map(() => teamToEdit));
                 }),
