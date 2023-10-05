@@ -50,7 +50,6 @@ jobs:
         run: |
           gcloud components install gke-gcloud-auth-plugin
           gcloud components install beta
-          gcloud container clusters get-credentials deporty-server-cluster --region us-central1-a --project deporty-dev
         
       #   # cd servers/authorization && npm run build 
       # - name: DEPLOY 1

@@ -20,6 +20,12 @@ def build_servers(servers_to_deploy, server_configurations, current_kubernetes_c
   
   print_title("Construyendo servicios")
   
+  project = current_kubernetes_configuration['project']
+  cluster = current_kubernetes_configuration['cluster']
+  region = current_kubernetes_configuration['region']
+  command = f'gcloud container clusters get-credentials {cluster} --region {region} --project {project}'
+  res = subprocess.check_output(command,  shell=True, text=True)
+  
   for server in servers_to_deploy:
     version = server[1]
     config = organize_server_config(server_configurations[server[0]], env)
@@ -38,6 +44,8 @@ def build_servers(servers_to_deploy, server_configurations, current_kubernetes_c
 
 def deploy_server(server_config, version, current_kubernetes_configuration):
     project = current_kubernetes_configuration['project']
+    cluster = current_kubernetes_configuration['cluster']
+    region = current_kubernetes_configuration['region']
     print_title(f"Construyendo: {server_config['name']} {version}")
 
     LOG_FOLDER = 'logs'
@@ -81,7 +89,7 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     cloud_tag =  upload_image(tag, project,server_config,logger, current_kubernetes_configuration)
     server_config['image'] = cloud_tag
     
-    kube(server_config, logger)
+    kube(server_config, logger, cluster, region)
     
     print(logger.content())
     
