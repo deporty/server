@@ -3,8 +3,8 @@ import { CollectionReference, DocumentData, DocumentReference, Firestore, Query,
 import { from, Observable, of, zip } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { filterWizard } from './filter-query-manager';
-import {  Mapper } from '@scifamek-open-source/iraca/infrastructure';
-import {  Filters } from '@scifamek-open-source/iraca/domain';
+import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
+import { Filters } from '@scifamek-open-source/iraca/domain';
 import { unifyData } from '@scifamek-open-source/iraca/helpers';
 
 export interface RouteParam {
@@ -136,9 +136,10 @@ export abstract class GeneralContract<AccessParams, Entity> {
       }
     }
 
-    const computedFilters = filterWizard(query, filters, this.mapper);
-
-    query = computedFilters.query;
+    const computedFilters = filterWizard(filters, this.mapper);
+    if (computedFilters.query) {
+      query = query.where(computedFilters.query);
+    }
     let $query = from(query.get()).pipe(
       map((items: QuerySnapshot<DocumentData>) => {
         return items.docs.map(

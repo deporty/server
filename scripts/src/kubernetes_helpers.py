@@ -40,12 +40,12 @@ def get_deployment_template(server_config):
   return route
     
 
-def get_ingress_template(servers_config):
+def get_ingress_template(servers_config, servers_to_deploy):
   
   with open("deployment-templates/ingress.yaml", "r") as ingress:
     template = ingress.read()
-  for server in servers_config:
-    server_config = servers_config[server]
+  for server in servers_to_deploy:
+    server_config = servers_config[server[0]]
     if(server_config['enabled']):
       path_ingress = '''
         - path: /:[ingress-path]:

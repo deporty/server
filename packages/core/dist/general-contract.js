@@ -72,8 +72,10 @@ class GeneralContract {
                 }));
             }
         }
-        const computedFilters = (0, filter_query_manager_1.filterWizard)(query, filters, this.mapper);
-        query = computedFilters.query;
+        const computedFilters = (0, filter_query_manager_1.filterWizard)(filters, this.mapper);
+        if (computedFilters.query) {
+            query = query.where(computedFilters.query);
+        }
         let $query = (0, rxjs_1.from)(query.get()).pipe((0, operators_1.map)((items) => {
             return items.docs.map((item) => (Object.assign(Object.assign({}, item.data()), { id: item.id })));
         }));

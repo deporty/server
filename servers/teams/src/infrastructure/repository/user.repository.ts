@@ -4,17 +4,19 @@ import { IBaseResponse, Id, TeamParticipationEntity, UserEntity } from '@deporty
 import { UserContract } from '../../domain/contracts/user.constract';
 import { BEARER_TOKEN, USERS_SERVER } from '../teams.constants';
 export class UserRepository extends UserContract {
+  exceptionsMapper: any = {
+    'USER:USER-ALREADY-EXIST:ERROR': 'UserAlreadyExistError',
+    'USER:INSUFICIENT-USER-DATA:ERROR': 'InsuficientUserDataError',
+    'USER:MULTIPLE-USER-WITH-UNIQUE-DATA:ERROR': 'MultipleUserWithUniqueDataError',
+  };
   deleteTeamParticipation(userId: string, teamId: string): Observable<boolean> {
     return new Observable((observer) => {
       axios
-        .delete<IBaseResponse<boolean>>(
-          `${USERS_SERVER}/${userId}/team-participation/${teamId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${BEARER_TOKEN}`,
-            },
-          }
-        )
+        .delete<IBaseResponse<boolean>>(`${USERS_SERVER}/${userId}/team-participation/${teamId}`, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<boolean>;
           console.log(0, data, 0);
@@ -52,13 +54,15 @@ export class UserRepository extends UserContract {
             observer.next(data.data);
           } else {
             const e = new Error(data.meta.message);
-            e.name = data.meta.code;
+            e.name = this.exceptionsMapper[data.meta.code];
+            console.log(1, e, 1);
             observer.error(e);
           }
           observer.complete();
         })
         .catch((error: any) => {
           console.log(1, error, 1);
+          // UserAlreadyExistError
           observer.error(error);
         });
     });

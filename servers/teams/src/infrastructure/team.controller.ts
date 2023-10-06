@@ -162,7 +162,9 @@ export class TeamController extends HttpController {
         identifier: this.identifier,
         successCode: 'CREATE-USER-AND-ASIGN-NEW-MEMBER-TO-TEAM:SUCCESS',
         exceptions: {
-          'USER:USER-ALREADY-EXIST:ERROR': 'USER-ALREADY-EXIST:ERROR',
+          UserAlreadyExistError: 'USER-ALREADY-EXIST:ERROR',
+          InsuficientUserDataError: 'INSUFICIENT-USER-DATA:ERROR',
+          MultipleUserWithUniqueDataError: 'MULTIPLE-USER-WITH-UNIQUE-DATA:ERROR',
         },
         extraData: {
           entitiesName: 'teams',

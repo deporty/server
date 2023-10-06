@@ -1,9 +1,10 @@
-import { DataSource} from '@scifamek-open-source/iraca/infrastructure';
-import {   Filters } from '@scifamek-open-source/iraca/domain';
+import { DataSource } from '@scifamek-open-source/iraca/infrastructure';
+import { Filters } from '@scifamek-open-source/iraca/domain';
 import { DocumentData, DocumentReference, DocumentSnapshot, Firestore, Query, QuerySnapshot } from 'firebase-admin/firestore';
 import { from, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { filterWizard } from './filter-query-manager';
+import { CompositeFilters } from '@scifamek-open-source/iraca/domain/filters';
 
 export class FirebaseDataSource<T> extends DataSource<T> {
   constructor(public db: Firestore) {
@@ -19,7 +20,7 @@ export class FirebaseDataSource<T> extends DataSource<T> {
     );
   }
 
-  getByFilter(config?: { filters?: Filters; pagination?: { pageSize: number; pageNumber: number } }): Observable<T[]> {
+  getByFilter(config?: { filters?: Filters | CompositeFilters; pagination?: { pageSize: number; pageNumber: number } }): Observable<T[]> {
     let query: Query<DocumentData> = this.db.collection(this.entity);
 
     const filters = config?.filters;
@@ -78,8 +79,10 @@ export class FirebaseDataSource<T> extends DataSource<T> {
         );
       }
     }
-    const computedFilters = filterWizard(query, filters);
-    query = computedFilters.query;
+    const computedFilters = filterWizard(filters);
+    if (computedFilters.query) {
+      query = query.where(computedFilters.query);
+    }
     let $query = from(query.get()).pipe(
       map((items: QuerySnapshot<DocumentData>) => {
         return items.docs.map(

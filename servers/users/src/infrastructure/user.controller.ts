@@ -17,11 +17,12 @@ import { GetUsersByIdsUsecase } from '../domain/usecases/get-users-by-ids/get-us
 import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
 import { SERVER_NAME } from './users.constants';
 import { AddTeamParticipationUsecase } from '../domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
-import { SaveUserUsecase, UserAlreadyExistError } from '../domain/usecases/save-user/save-user.usecase';
+import { InsuficientUserDataError, SaveUserUsecase, UserAlreadyExistError } from '../domain/usecases/save-user/save-user.usecase';
 import { EditUserByIdUsecase, UserImageNotAllowedError } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
 import { Logger } from '@scifamek-open-source/logger';
 import { DeleteUserUsecase, UserIsSelfManagedError } from '../domain/usecases/delete-user/delete-user.usecase';
 import { DeleteTeamParticipationUsecase } from '../domain/usecases/team-participations/delete-team-participation/delete-team-participation.usecase';
+import { GetUserByUniqueFieldsUsecase, MultipleUserWithUniqueDataError } from '../domain/usecases/get-user-by-unique-fields/get-user-by-unique-fields.usecase';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -73,6 +74,25 @@ export class UserController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: userId,
+      });
+    });
+    router.get(`/get-user-by-unique-fields/:document/:email`, (request: Request, response: Response) => {
+      const params = request.params;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        exceptions: {
+          [MultipleUserWithUniqueDataError.id]: 'MULTIPLE-USER-WITH-UNIQUE-DATA:ERROR'
+        },
+        successCode: 'GET-USER-BY-UNIQUE-FIELDS:SUCCESS',
+      };
+
+      this.handler<GetUserByUniqueFieldsUsecase>({
+        container,
+        usecaseId: 'GetUserByUniqueFieldsUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
       });
     });
 
@@ -131,6 +151,8 @@ export class UserController extends HttpController {
         successCode: 'POST:SUCCESS',
         exceptions: {
           [UserAlreadyExistError.id]: 'USER-ALREADY-EXIST:ERROR',
+          [InsuficientUserDataError.id]: 'INSUFICIENT-USER-DATA:ERROR',
+          [MultipleUserWithUniqueDataError.id]: 'MULTIPLE-USER-WITH-UNIQUE-DATA:ERROR',
         },
         extraData: {
           entitiesName: 'User',

@@ -1,7 +1,8 @@
 {
   "dev": {
     "cluster": "deporty-dev-cluster",
-    "region": "us-central1-a",
+    "region": "southamerica-east1-a",
+    "repository-region": "southamerica-east1",
     "repository": "deporty-server",
     "service-account": "service-account-dev.json",
     "project": "deporty-dev",

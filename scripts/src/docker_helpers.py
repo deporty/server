@@ -33,7 +33,7 @@ def build_image(dockerfile_path, server_config, version, logger):
 
 def upload_image(tag, project,server_config,logger, current_kubernetes_configuration):
   repository = current_kubernetes_configuration['repository']
-  location = current_kubernetes_configuration['region']
+  location = current_kubernetes_configuration['repository-region']
   location_registry = f"{location}-docker.pkg.dev"
   
   image_cloud_name = f"{location_registry}/{project}/{repository}/{tag}"
