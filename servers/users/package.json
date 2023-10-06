@@ -1,6 +1,6 @@
 {
   "name": "@deporty-org/users",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Users",
   "main": "index.js",
   "scripts": {
