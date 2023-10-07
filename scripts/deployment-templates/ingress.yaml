@@ -4,6 +4,9 @@ metadata:
   name: deporty-server-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    kubernetes.io/ingress.global-static-ip-name: ADDRESS_NAME
+    networking.gke.io/managed-certificates: managed-cert-dev
+    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
   - http:
