@@ -6,7 +6,7 @@
     "repository": "deporty-server",
     "service-account": "service-account-dev.json",
     "project": "deporty-dev",
-    "ip": "http://34.107.159.12"
+    "ip": "https://www.deporty-server-dev.com"
   },
   "pdn": {
     "cluster": "autopilot-cluster-1",

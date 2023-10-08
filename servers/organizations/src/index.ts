@@ -13,8 +13,11 @@ import { getStorage, Storage } from 'firebase-admin/storage';
 import { Auth, getAuth } from 'firebase-admin/auth';
 import { DataSource, FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import { Router } from 'express';
+import { Logger } from '@scifamek-open-source/logger';
+
 const bodyParser = require('body-parser');
-const logger = require('logger').createLogger('development.log');
+const logger = new Logger('development.log');
+
 
 const firebaseApp = initializeApp({
   credential: cert(env.credentials),

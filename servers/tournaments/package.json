@@ -1,6 +1,6 @@
 {
   "name": "@deporty-org/tournaments",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "firebase-admin": "^11.0.0",
     "@scifamek-open-source/iraca": "^2.4.0",
     "@deporty-org/entities": "^0.17.3",
+    "@scifamek-open-source/logger": "^1.1.0",
     "@scifamek-open-source/tairona": "^1.0.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -23,7 +24,6 @@
     "axios": "^1.5.1",
     "firebase": "8.10.1",
     "jsonwebtoken": "^9.0.0",
-    "logger": "0.0.1",
     "moment": "^2.29.3",
     "rxjs": "~6.6.0",
     "qr-image": "^3.2.0",
