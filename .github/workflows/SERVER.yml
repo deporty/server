@@ -52,7 +52,9 @@ jobs:
       - name: DEPLOY
         run: |
           echo ${{ secrets.SERVICE_ACCOUNT }} > scripts/service-account.json
+          ls
           cd scripts
+          ls
           alias py=python3
           alias python=python3
           python3 deploy.py --env dev
