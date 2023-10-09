@@ -47,6 +47,7 @@ servers_to_deploy = [
 CURRENT_KUBERNETES_CONFIGURATION = KUBERNETES_CONFIGURATION[env]
 project_name = CURRENT_KUBERNETES_CONFIGURATION['project']
 c = 'gcloud auth activate-service-account --key-file=service-account.json'
+print(c)
 res = os.system(c)
 command = f'gcloud config set project {project_name}'
 res = os.system(command)
