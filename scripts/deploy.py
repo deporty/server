@@ -44,7 +44,9 @@ servers_to_deploy = extract_servers_to_deploy(files)
 #     ('locations','1.0.1')
 # ]
 
-
 CURRENT_KUBERNETES_CONFIGURATION = KUBERNETES_CONFIGURATION[env]
+project_name = CURRENT_KUBERNETES_CONFIGURATION['project']
+command = f'gcloud config set project {project_name}'
+res = os.system(command)
 
 build_servers(servers_to_deploy, SERVER_CONFIGURATIONS,CURRENT_KUBERNETES_CONFIGURATION, env)
