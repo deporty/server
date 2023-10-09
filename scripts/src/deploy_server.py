@@ -84,7 +84,7 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     cloud_tag =  upload_image(tag, project,server_config,logger, current_kubernetes_configuration)
     server_config['image'] = cloud_tag
     
-    kube(server_config, logger, cluster, region)
+    kube(server_config, logger, cluster, region, project)
     
     print(logger.content())
     

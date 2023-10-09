@@ -9,11 +9,12 @@
     "ip": "https://www.deporty-server-dev.com"
   },
   "pdn": {
-    "cluster": "autopilot-cluster-1",
-    "region": "southamerica-east1",
+    "cluster": "deporty-app-cluster",
+    "region": "southamerica-east1-a",
+    "repository-region": "southamerica-east1",
     "service-account": "service-account-pdn.json",
     "repository": "deporty-server",
     "project": "deporty-app",
-    "ip": "http://34.107.159.12"
+    "ip": "https://api.deporty.com"
   }
 }

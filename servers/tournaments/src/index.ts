@@ -121,4 +121,5 @@ TournamentController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER)
 app.use('/tournaments', router);
 app.listen(10007, () => {
   logger.info('Starting tournaments');
+  console.log('Starting tournaments');
 });

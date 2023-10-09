@@ -1,9 +1,11 @@
 import subprocess
 import re
 
-def kube(server_config, logger, cluster, region):
+def kube(server_config, logger, cluster, region,project):
+  
 
-  command = f"gcloud container clusters get-credentials {cluster} --region {region} --project deporty-dev"
+
+  command = f"gcloud container clusters get-credentials {cluster} --region {region} --project {project}"
   print(command)
   res = subprocess.check_output (command, shell=True, text=True)
   logger.log(res)

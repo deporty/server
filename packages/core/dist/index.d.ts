@@ -5,3 +5,4 @@ export { FirebaseDataSource } from './firebase.datasource';
 export { GeneralContract, RouteParam } from './general-contract';
 export { IsAuthorizedUserMiddleware } from './middlewares/is-authorized-user.middleware';
 export { IsKeyPresentMiddleware } from './middlewares/is-key-present.middleware';
+export { formatDateFromJson } from './mapper.helpers';

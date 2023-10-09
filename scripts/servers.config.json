@@ -9,20 +9,20 @@
       "dev": {
         "min-replicas": 1,
         "max-replicas": 2,
-        "cpu": "10m",
-        "memory": "40Mi",
-        "cpu-limits": "25m",
-        "memory-limits": "50Mi",
+        "cpu": "30m",
+        "memory": "70Mi",
+        "cpu-limits": "55m",
+        "memory-limits": "100Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       },
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "10m",
-        "memory": "40Mi",
-        "cpu-limits": "2m",
-        "memory-limits": "50Mi",
+        "cpu": "60m",
+        "memory": "140Mi",
+        "cpu-limits": "110m",
+        "memory-limits": "200Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       }
@@ -68,19 +68,19 @@
         "min-replicas": 1,
         "max-replicas": 2,
         "cpu": "10m",
-        "memory": "40Mi",
+        "memory": "60Mi",
         "cpu-limits": "25m",
-        "memory-limits": "50Mi",
+        "memory-limits": "70Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       },
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "0.1m",
-        "memory": "40Mi",
-        "cpu-limits": "2m",
-        "memory-limits": "50Mi",
+        "cpu": "60m",
+        "memory": "140Mi",
+        "cpu-limits": "110m",
+        "memory-limits": "200Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       }
@@ -126,19 +126,19 @@
         "min-replicas": 1,
         "max-replicas": 2,
         "cpu": "10m",
-        "memory": "40Mi",
+        "memory": "60Mi",
         "cpu-limits": "25m",
-        "memory-limits": "50Mi",
+        "memory-limits": "70Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       },
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "0.1m",
-        "memory": "40Mi",
-        "cpu-limits": "2m",
-        "memory-limits": "50Mi",
+        "cpu": "60m",
+        "memory": "140Mi",
+        "cpu-limits": "110m",
+        "memory-limits": "200Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       }
@@ -164,10 +164,10 @@
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "0.1m",
-        "memory": "40Mi",
-        "cpu-limits": "2m",
-        "memory-limits": "50Mi",
+        "cpu": "60m",
+        "memory": "140Mi",
+        "cpu-limits": "110m",
+        "memory-limits": "200Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       }
@@ -184,19 +184,19 @@
         "min-replicas": 1,
         "max-replicas": 2,
         "cpu": "10m",
-        "memory": "40Mi",
+        "memory": "70Mi",
         "cpu-limits": "25m",
-        "memory-limits": "50Mi",
+        "memory-limits": "100Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       },
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "0.1m",
-        "memory": "40Mi",
-        "cpu-limits": "2m",
-        "memory-limits": "50Mi",
+        "cpu": "60m",
+        "memory": "140Mi",
+        "cpu-limits": "110m",
+        "memory-limits": "200Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       }
@@ -222,10 +222,10 @@
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "0.1m",
-        "memory": "40Mi",
-        "cpu-limits": "2m",
-        "memory-limits": "50Mi",
+        "cpu": "60m",
+        "memory": "140Mi",
+        "cpu-limits": "110m",
+        "memory-limits": "200Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       }

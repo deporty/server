@@ -4,19 +4,22 @@ import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of, zip } from 'rxjs';
 import { MemberMapper } from './member.mapper';
+import { formatDateFromJson } from '@deporty-org/core';
 
 export class RegisteredTeamMapper extends Mapper<RegisteredTeamEntity> {
   constructor(private memberMapper: MemberMapper) {
     super();
     this.attributesMapper = {
       tournamentId: { name: 'tournament-id' },
-      id: { name: 'id' },
+      id: {
+        name: 'id',
+      },
       requiredDocs: { name: 'required-docs' },
 
       enrollmentDate: {
         name: 'enrollment-date',
         from: (date: Timestamp) => {
-          return date ? of(date.toDate()) : of(undefined);
+          return of(formatDateFromJson(date));
         },
       },
       members: {
@@ -40,7 +43,10 @@ export class RegisteredTeamMapper extends Mapper<RegisteredTeamEntity> {
         },
       },
 
-      teamId: { name: 'team-id' },
+      teamId: {
+        name: 'team-id',
+      
+      },
       status: { name: 'status' },
     };
   }
