@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd scripts && py build.py",
+    "build": "cd scripts && python3 build.py",
     "build:dev": "cd scripts && py build.py --env dev",
     "build:pdn": "cd scripts && py build.py --env pdn",
     "compile": "tsc -p tsconfig.json",
