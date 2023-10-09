@@ -44,105 +44,67 @@ jobs:
       #     cd functions/scripts
       #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
 
-      # - name: deploy to cluster
-      #   uses: steebchen/kubectl@v2.0.0
       - name: CLUSTER CREDENTIALS
         run: |
           gcloud components install gke-gcloud-auth-plugin
           gcloud components install beta
         
-      #   # cd servers/authorization && npm run build 
-      # - name: DEPLOY 1
-      #   run: |
-      #     cd servers/users && npm run build
       - name: DEPLOY
         run: |
           cd scripts
           alias py=python3
           alias python=python3
-          python3 deploy.py
+          python3 deploy.py --env dev
 
+  BUILD_AND_DEPLOY_PDN:
+    runs-on: ubuntu-latest
+    environment: pdn
+    needs: [BUILD_AND_DEPLOY_DEV]
 
-  # BUILD_AND_DEPLOY_PDN:
-  #   runs-on: ubuntu-latest
-  #   environment: pdn
-  #   needs: [BUILD_AND_DEPLOY_DEV]
-  #   steps:
-  #     - name: CHECKOUT 
-  #       uses: actions/checkout@v2
-  #     - name: USE NODE.JS 
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16.x
+    steps:
+      - name: CHECKOUT 
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: USE NODE.JS 
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
 
-  #     - name: Install npm 6
-  #       run: npm install -g npm@6
+      - name: Install npm 6
+        run: npm install -g npm@6
+      - name: Install typescript
+        run: npm install -g typescript@4.5.4
 
-  #     - name: SET UP PYTHON 
-  #       uses: actions/setup-python@v3
-  #       with:
-  #         python-version: 3.10.4
-  #     - name: INSTALL PYTHON DEPENDENCIES
-  #       run: |
-  #         cd functions/scripts
-  #         pip install -r packages
-  #     - name: INSTALL NODE DEPENDENCIES
-  #       run: |
-  #         cd functions
-  #         npm i
-  #         npm i -g firebase-tools@latest
-  #     - name: CONFIG PDN VARIABLES
-  #       run: |
-  #         cd functions
-  #         sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/authorization/infrastructure/authorization.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/locations/infrastructure/locations.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/organizations/infrastructure/organizations.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/teams/infrastructure/teams.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/tournaments/infrastructure/tournaments.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/localhost:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/users/infrastructure/users.constants.ts
-          
-          
-  #         sed -i "s/export const SERVER = 'http:\/\/127.0.0.1:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/authorization/infrastructure/authorization.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/127.0.0.1:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/locations/infrastructure/locations.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/127.0.0.1:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/organizations/infrastructure/organizations.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/127.0.0.1:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/teams/infrastructure/teams.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/127.0.0.1:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/tournaments/infrastructure/tournaments.constants.ts
-  #         sed -i "s/export const SERVER = 'http:\/\/127.0.0.1:5001\/deporty-dev\/us-central1'/export const SERVER = 'https:\/\/us-central1-deporty-app.cloudfunctions.net'/" src/users/infrastructure/users.constants.ts
-          
-          
-  #         echo "________"
-  #         cat src/authorization/infrastructure/authorization.constants.ts
-  #         cat src/locations/infrastructure/locations.constants.ts
-  #         cat src/organizations/infrastructure/organizations.constants.ts
-  #         cat src/teams/infrastructure/teams.constants.ts
-  #         cat src/tournaments/infrastructure/tournaments.constants.ts
-  #         cat src/users/infrastructure/users.constants.ts
-  #     # - name: RUN TEST
-  #     #   run: |
-  #     #     cd functions
-  #     #     npm test
-  #     # - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
-  #     #   run: |
-  #     #     cd functions/scripts
-  #     #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
-  #     - name: BUILD PDN
-  #       run: |
-  #         cd functions
-  #         npm i
-  #         npm run build
-  #     - name: DEPLOY FUNCTIONS PDN
-  #       env:
-  #         GOOGLE_APPLICATION_CREDENTIALS: service-account.json
-  #       run: |
-  #         echo "${{secrets.FIREBASE_ENV_CONFIG}}" > service-account.json
-  #         echo "${{secrets.FIREBASE_ENV_CONFIG}}" > functions/src/environments/env.ts
-  #         firebase use pdn --token "${{secrets.FIREBASE_TOKEN}}"
-  #         firebase deploy --only functions --token "${{secrets.FIREBASE_TOKEN}}" --force 
-  #     - name: DEPLOY INDEXES PDN
-  #       env:
-  #         GOOGLE_APPLICATION_CREDENTIALS: service-account.json
-  #       run: |
-  #         echo "${{secrets.FIREBASE_ENV_CONFIG}}" > service-account.json
-  #         echo "${{secrets.FIREBASE_ENV_CONFIG}}" > functions/src/environments/env.ts
-  #         firebase use pdn --token "${{secrets.FIREBASE_TOKEN}}"
-  #         firebase deploy --token "${{secrets.FIREBASE_TOKEN}}" --force --only firestore:indexes
+      - name: Configurar Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2
+        with:
+          project_id: deporty-app
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
+          export_default_credentials: true
+
+      - name: SET UP PYTHON 
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10.4
+
+      # - name: RUN TEST
+      #   run: |
+      #     cd functions
+      #     npm test
+      # - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
+      #   run: |
+      #     cd functions/scripts
+      #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
+
+      - name: CLUSTER CREDENTIALS
+        run: |
+          gcloud components install gke-gcloud-auth-plugin
+          gcloud components install beta
+        
+      - name: DEPLOY
+        run: |
+          cd scripts
+          alias py=python3
+          alias python=python3
+          python3 deploy.py --env pdn

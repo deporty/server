@@ -1,6 +1,14 @@
 import json
 import os
-import threading
+import argparse
+
+parser = argparse.ArgumentParser(description="")
+
+parser.add_argument('--env', help="Environtment: local, dev, pdn")
+
+args = parser.parse_args()
+
+env = args.env or 'pdn' 
 
 from src.deploy_server import build_servers
 from src.git_helpers import get_last_commit, get_changed_files
@@ -36,7 +44,6 @@ servers_to_deploy = extract_servers_to_deploy(files)
 #     ('locations','1.0.1')
 # ]
 
-env = os.environ.get('ENV') or 'pdn'
 
 CURRENT_KUBERNETES_CONFIGURATION = KUBERNETES_CONFIGURATION[env]
 

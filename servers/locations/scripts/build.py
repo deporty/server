@@ -3,11 +3,9 @@ import subprocess
 import argparse
 
 parser = argparse.ArgumentParser(description="")
-    
-# Agrega argumentos
+
 parser.add_argument('--env', help="Environtment: local, dev, pdn")
 
-# Parsea los argumentos
 args = parser.parse_args()
 
 env = args.env or 'pdn'  

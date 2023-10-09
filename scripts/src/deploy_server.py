@@ -32,12 +32,12 @@ def build_servers(servers_to_deploy, server_configurations, current_kubernetes_c
     
     if(config['enabled']):
       
-      deploy_server(config, version, current_kubernetes_configuration)
+      deploy_server(config, version, current_kubernetes_configuration, env)
     else:
       print("Omiting deployment: " + config['name'])
     
 
-def deploy_server(server_config, version, current_kubernetes_configuration):
+def deploy_server(server_config, version, current_kubernetes_configuration, env):
     project = current_kubernetes_configuration['project']
     cluster = current_kubernetes_configuration['cluster']
     region = current_kubernetes_configuration['region']
@@ -58,7 +58,7 @@ def deploy_server(server_config, version, current_kubernetes_configuration):
     res = subprocess.check_output(command,  shell=True, text=True)
     
    
-    command = 'cd ../servers/' + server_config['name'] + ' && npm run build'
+    command = 'cd ../servers/' + server_config['name'] + f' && npm run build -- --env {env}'
     
     print(command)
     logger.log(command)
