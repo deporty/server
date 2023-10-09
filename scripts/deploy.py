@@ -36,19 +36,19 @@ with open('kubernetes.config.json', 'r') as f:
 
 servers_to_deploy = extract_servers_to_deploy(files)
 servers_to_deploy = [
-    ('authorization','1.0.2'),
-#     ('users','1.0.3'),
-#     ('teams','1.0.2'),
-#     ('tournaments','1.0.2'),
-#     ('organizations','1.0.1'),
-#     ('locations','1.0.1')
+    # ('authorization','1.0.2'),
+    ('users','1.0.4'),
+    ('teams','1.0.3'),
+    ('tournaments','1.0.3'),
+    ('organizations','1.0.2'),
+    ('locations','1.0.2')
 ]
 
 CURRENT_KUBERNETES_CONFIGURATION = KUBERNETES_CONFIGURATION[env]
 project_name = CURRENT_KUBERNETES_CONFIGURATION['project']
 c = 'gcloud auth activate-service-account --key-file=service-account.json'
 print(c)
-res = os.system(c)
+# res = os.system(c)
 command = f'gcloud config set project {project_name}'
 res = os.system(command)
 

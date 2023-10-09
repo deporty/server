@@ -1,40 +1,75 @@
+const { exec } = require('child_process');
 const http = require('http');
 const axios = require('axios');
 const port = 10000;
 
-
 const serversMapper = {
   authorization: {
     port: 10001,
+    name: 'authorization',
   },
   invoices: {
     port: 10002,
+    name: 'invoices',
   },
   locations: {
     port: 10003,
+    name: 'locations',
   },
   news: {
     port: 10004,
+    name: 'news',
   },
   organizations: {
     port: 10005,
+    name: 'organizations',
   },
   teams: {
     port: 10006,
+    name: 'teams',
   },
   tournaments: {
     port: 10007,
+    name: 'tournaments',
   },
   users: {
     port: 10008,
+    name: 'users',
   },
 };
 
+function runServer(serverConfig) {
+  terminal = exec('cd ../servers/' + serverConfig.name + ' && npm run start:dev', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`error: ${error.message}`);
+      return;
+    }
+
+    if (stderr) {
+      console.error(`stderr: ${stderr}`);
+      return;
+    }
+
+    console.log(`stdout:\n${stdout}`);
+  });
+
+  return terminal;
+}
+
+function run() {
+  const terminals = [];
+  for (const key in serversMapper) {
+    const serverConfig = serversMapper[key];
+
+    runServer(serverConfig);
+  }
+  return terminals;
+}
 function extractIdentifier(url) {
   const fragment = url.split('/')[1];
   return fragment.split('?')[0];
 }
-
+const terminals = run();
 const server = http.createServer((request, res) => {
   const identifier = extractIdentifier(request.url);
   res.setHeader('Content-Type', 'application/json');
@@ -63,7 +98,7 @@ const server = http.createServer((request, res) => {
           method: request.method,
           url: path,
           headers: { ...headers },
-          data: (body),
+          data: body,
         })
           .then((responseBOdy) => {
             res.statusCode = 200;
@@ -74,7 +109,7 @@ const server = http.createServer((request, res) => {
             res.end();
           })
           .finally(() => {
-            console.log("Finalizando transación: ", path );
+            console.log('Finalizando transación: ', path);
           });
       });
     } else {
@@ -95,8 +130,7 @@ const server = http.createServer((request, res) => {
           console.error('Error:', error.toString());
           res.end();
         })
-        .finally(() => {
-        });
+        .finally(() => {});
     }
   } else {
     res.end();
