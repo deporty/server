@@ -64,7 +64,7 @@ async function getPids() {
     if (info.length > 0) {
       response.push({
         ...info[0][1],
-        pid: find[8],
+        pid: parseInt(find[8]),
       });
     }
     find = pattern.exec(stdout);
@@ -189,7 +189,7 @@ async function main() {
       const response = await getPids();
       console.log(JSON.stringify(response, null, 2));
       console.log('Runing');
-    }, 20000);
+    }, 30000);
   });
 }
 
