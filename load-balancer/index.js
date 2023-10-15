@@ -189,7 +189,7 @@ async function main() {
       const response = await getPids();
       console.log(JSON.stringify(response, null, 2));
       console.log('Runing');
-    }, 30000);
+    }, 50000);
   });
 }
 
