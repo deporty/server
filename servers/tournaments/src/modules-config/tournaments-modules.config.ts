@@ -70,6 +70,7 @@ import { DeleteNodeMatchUsecase } from '../domain/usecases/main-draw/delete-node
 import { GetTournamentsForCheckInUsecase } from '../domain/usecases/get-tournaments-for-check-in/get-tournaments-for-check-in.usecase';
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { GetTournamentBaseInformationByIdUsecase } from '../domain/usecases/get-tournament-base-information-by-id/get-tournament-base-information-by-id.usecase';
+import { RegisterTeamIntoATournamentUsecase } from '../domain/usecases/registered-team/register-team-into-a-tournament/register-team-into-a-tournament.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -643,6 +644,12 @@ export class TournamentsModulesConfig {
       kind: GetTournamentBaseInformationByIdUsecase,
       strategy: 'singleton',
       dependencies: ['GetTournamentByIdUsecase', 'OrganizationContract'],
+    });
+    container.add({
+      id: 'RegisterTeamIntoATournamentUsecase',
+      kind: RegisterTeamIntoATournamentUsecase,
+      strategy: 'singleton',
+      dependencies: ['RegisteredTeamsContract', 'TeamContract', 'OrganizationContract'],
     });
   }
 }

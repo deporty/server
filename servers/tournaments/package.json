@@ -17,7 +17,7 @@
     "@deporty-org/core": "1.2.0",
     "firebase-admin": "^11.0.0",
     "@scifamek-open-source/iraca": "^2.4.0",
-    "@deporty-org/entities": "^0.17.3",
+    "@deporty-org/entities": "^0.20.0",
     "@scifamek-open-source/logger": "^1.1.0",
     "@scifamek-open-source/tairona": "^1.0.0",
     "body-parser": "^1.20.2",

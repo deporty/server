@@ -52,7 +52,7 @@ export class RegisteredTeamsRepository extends RegisteredTeamsContract {
     return super.innerFilter([
       { collection: TOURNAMENTS_ENTITY, id: accessParams.tournamentId },
       { collection: REGISTERED_TEAMS_ENTITY },
-    ]);
+    ],{filters: filter});
   }
   update(
     accessParams: AccessParams,

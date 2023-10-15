@@ -1,9 +1,16 @@
-const { exec } = require('child_process');
 const http = require('http');
 const axios = require('axios');
 const port = 10000;
+const util = require('node:util');
+const { stdout } = require('process');
+const exec = util.promisify(require('node:child_process').exec);
 
 const serversMapper = {
+  mySelf: {
+    port: 10000,
+    name: 'loadbalancer',
+    disabled: true,
+  },
   authorization: {
     port: 10001,
     name: 'authorization',
@@ -38,8 +45,36 @@ const serversMapper = {
   },
 };
 
+function getServerInfo(port) {
+  return Object.entries(serversMapper).filter((x) => x[1].port == port);
+}
+
+async function getPids() {
+  const C = await exec('netstat -ano');
+
+  const r = /([TCPUD]{3})[ ]+(([0-9\.]+):([0-9]+)[ ]+)(([0-9\.]+):([0-9]+)[ ]+)[\w]+[ ]+([\d]+)/g;
+  const pattern = new RegExp(r);
+
+  const stdout = C.stdout;
+  let find = pattern.exec(stdout);
+
+  const response = [];
+  while (find) {
+    const info = getServerInfo(find[4]);
+    if (info.length > 0) {
+      response.push({
+        ...info[0][1],
+        pid: find[8],
+      });
+    }
+    find = pattern.exec(stdout);
+  }
+
+  return response;
+}
 function runServer(serverConfig) {
-  terminal = exec('cd ../servers/' + serverConfig.name + ' && npm run start:dev', (error, stdout, stderr) => {
+  terminal = exec('cd ../servers/' + serverConfig.name + ' && npm run start:dev');
+  terminal.then((error, stdout, stderr) => {
     if (error) {
       console.error(`error: ${error.message}`);
       return;
@@ -60,8 +95,10 @@ function run() {
   const terminals = [];
   for (const key in serversMapper) {
     const serverConfig = serversMapper[key];
-
-    runServer(serverConfig);
+    if (!serverConfig.disabled) {
+      console.log('Running ', serverConfig.name);
+      runServer(serverConfig);
+    }
   }
   return terminals;
 }
@@ -69,74 +106,91 @@ function extractIdentifier(url) {
   const fragment = url.split('/')[1];
   return fragment.split('?')[0];
 }
-const terminals = run();
-const server = http.createServer((request, res) => {
-  const identifier = extractIdentifier(request.url);
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, user-token, authorization');
-  const headers = request.headers;
-  if (serversMapper[identifier]) {
-    const tail = String(request.url);
-    const configuration = serversMapper[identifier];
-    const path = 'http://127.0.0.1:' + configuration.port + tail;
 
-    if (['POST', 'PUT', 'PATCH'].includes(request.method)) {
-      let body = '';
-      request.on('data', (chunk) => {
-        body += chunk.toString();
-      });
-      request.on('end', () => {
+async function main() {
+  const response = await getPids();
+
+  console.log('Running before ', response);
+  for (const server of response) {
+    const command = `taskkill /F /PID ${server.pid}`;
+    console.log(command);
+    await exec(command);
+  }
+  const terminals = run();
+  const server = http.createServer((request, res) => {
+    const identifier = extractIdentifier(request.url);
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, user-token, authorization');
+    const headers = request.headers;
+    if (serversMapper[identifier]) {
+      const tail = String(request.url);
+      const configuration = serversMapper[identifier];
+      const path = 'http://127.0.0.1:' + configuration.port + tail;
+
+      if (['POST', 'PUT', 'PATCH'].includes(request.method)) {
+        let body = '';
+        request.on('data', (chunk) => {
+          body += chunk.toString();
+        });
+        request.on('end', () => {
+          console.log({
+            method: request.method,
+            url: path,
+            data: JSON.parse(body),
+          });
+
+          axios({
+            method: request.method,
+            url: path,
+            headers: { ...headers },
+            data: body,
+          })
+            .then((responseBOdy) => {
+              res.statusCode = 200;
+              res.end(JSON.stringify(responseBOdy.data));
+            })
+            .catch((error) => {
+              console.error('Error:', error.toString());
+              res.end();
+            })
+            .finally(() => {
+              console.log('Finalizando transación: ', path);
+            });
+        });
+      } else {
         console.log({
           method: request.method,
           url: path,
-          data: JSON.parse(body),
         });
-
         axios({
           method: request.method,
           url: path,
           headers: { ...headers },
-          data: body,
         })
-          .then((responseBOdy) => {
+          .then((response) => {
             res.statusCode = 200;
-            res.end(JSON.stringify(responseBOdy.data));
+            res.end(JSON.stringify(response.data));
           })
           .catch((error) => {
             console.error('Error:', error.toString());
             res.end();
           })
-          .finally(() => {
-            console.log('Finalizando transación: ', path);
-          });
-      });
+          .finally(() => {});
+      }
     } else {
-      console.log({
-        method: request.method,
-        url: path,
-      });
-      axios({
-        method: request.method,
-        url: path,
-        headers: { ...headers },
-      })
-        .then((response) => {
-          res.statusCode = 200;
-          res.end(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          console.error('Error:', error.toString());
-          res.end();
-        })
-        .finally(() => {});
+      res.end();
     }
-  } else {
-    res.end();
-  }
-});
+  });
 
-server.listen(port, () => {
-  console.log('Runing');
-});
+  server.listen(port, () => {
+    setTimeout(async () => {
+      const response = await getPids();
+      console.log(JSON.stringify(response, null, 2));
+      console.log('Runing');
+    }, 20000);
+  });
+}
+
+main();

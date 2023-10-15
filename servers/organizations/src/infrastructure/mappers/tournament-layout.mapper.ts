@@ -101,6 +101,9 @@ export class RequiredDocConfigMapper extends Mapper<RequiredDocConfig> {
       applyTo: {
         name: 'apply-to',
       },
+      alias: {
+        name: 'alias',
+      },
       fileKind: { name: 'file-kind' },
       status: { name: 'status' },
     };

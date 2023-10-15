@@ -29,6 +29,7 @@ import { CreateUserAndAsignNewMemberToTeamUsecase } from '../domain/usecases/cre
 import { Logger } from '@scifamek-open-source/logger';
 import { EditTeamUsecase, UserImageNotAllowedError } from '../domain/usecases/edit-team/edit-team.usecase';
 import { DeleteMemberByIdUsecase } from '../domain/usecases/delete-member-by-id/delete-member-by-id.usecase';
+import { SaveTournamentInscriptionsByTeamUsecase } from '../domain/usecases/save-tournament-inscriptions-by-team/save-tournament-inscriptions-by-team.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -241,6 +242,26 @@ export class TeamController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: request.params.teamId,
+      });
+    });
+    router.post(`/:teamId/tournament-inscription`, (request: Request, response: Response) => {
+      console.log('llego');
+
+      const params = {
+        ...request.body,
+        enrollmentDate: new Date(request.body.enrollmentDate),
+      };
+      console.log(params);
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'TOURNAMENT-INSCRIPTIONS-ADDED:SUCCESS',
+      };
+      this.handler<SaveTournamentInscriptionsByTeamUsecase>({
+        container,
+        usecaseId: 'SaveTournamentInscriptionsByTeamUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
       });
     });
 

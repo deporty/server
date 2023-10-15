@@ -1,15 +1,15 @@
 import { Id } from '@deporty-org/entities';
 import { TeamEntity } from '@deporty-org/entities/teams';
-import { Observable, from, of, throwError, zip } from 'rxjs';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
-import { TeamContract } from '../../contracts/team.contract';
-import { GetTeamByIdUsecase } from '../get-team-by-id/get-team-by-id.usecase';
-import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { forceTransformation, getImageExtension, resizeImageProportionally } from '@scifamek-open-source/tairona';
 import { generateError } from '@scifamek-open-source/iraca/helpers';
-import { GetTeamByNameUsecase, TeamWithNameDoesNotExistError } from '../get-team-by-name/get-team-by-name.usecase';
+import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
+import { forceTransformation, getImageExtension, resizeImageProportionally } from '@scifamek-open-source/tairona';
+import { Observable, from, of, throwError, zip } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { TeamContract } from '../../contracts/team.contract';
 import { TeamNameAlreadyExistsError } from '../create-team/create-team.usecase';
+import { GetTeamByIdUsecase } from '../get-team-by-id/get-team-by-id.usecase';
+import { GetTeamByUniqueAttributesUsecase } from '../get-team-by-unique-attributes/get-team-by-unique-attributes.usecase';
 
 export interface Param {
   team: TeamEntity;
@@ -25,7 +25,7 @@ export class EditTeamUsecase extends Usecase<Param, TeamEntity> {
     private getTeamByIdUsecase: GetTeamByIdUsecase,
     private fileAdapter: FileAdapter,
 
-    private getTeamByNameUsecase: GetTeamByNameUsecase
+    private getTeamByUniqueAttributesUsecase: GetTeamByUniqueAttributesUsecase
   ) {
     super();
   }
@@ -37,21 +37,21 @@ export class EditTeamUsecase extends Usecase<Param, TeamEntity> {
 
     return this.getTeamByIdUsecase.call(param.id).pipe(
       mergeMap((prevTeam: TeamEntity) => {
-        if (prevTeam.name !== team.name) {
-          return this.getTeamByNameUsecase.call(team.name).pipe(
-            catchError((e: Error) => {
-              if (e instanceof TeamWithNameDoesNotExistError) {
-                return of(null);
-              }
-              return throwError(e);
-            }),
-            mergeMap((data) => {
-              if(data === null){
-                return of(prevTeam);
-              }
-              return throwError(new TeamNameAlreadyExistsError());
+        if (prevTeam.name !== team.name || prevTeam.city !== team.city || prevTeam.category !== team.category  ) {
+          return this.getTeamByUniqueAttributesUsecase
+            .call({
+              teamName: team.name,
+              category: team.category,
+              city: team.city ?? '',
             })
-          );
+            .pipe(
+              mergeMap((data) => {
+                if (data === undefined) {
+                  return of(prevTeam);
+                }
+                return throwError(new TeamNameAlreadyExistsError());
+              })
+            );
         }
         return of(prevTeam);
       }),

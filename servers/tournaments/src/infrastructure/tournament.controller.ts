@@ -64,6 +64,14 @@ import { GetRegisteredTeamsByTournamentIdUsecase } from '../domain/usecases/regi
 import { ModifyRegisteredTeamStatusUsecase } from '../domain/usecases/registered-team/modify-registered-team-status/modify-registered-team-status.usecase';
 import { JWT_SECRET, SERVER_NAME } from './tournaments.constants';
 import { GetTournamentBaseInformationByIdUsecase } from '../domain/usecases/get-tournament-base-information-by-id/get-tournament-base-information-by-id.usecase';
+import {
+  DataIncompleteError,
+  RegisterTeamIntoATournamentUsecase,
+  RequiredDocsForMembersIncompleteError,
+  RequiredDocsForTeamIncompleteError,
+  RequiredDocsNoPresentError,
+  TeamAlreadyRegisteredError,
+} from '../domain/usecases/registered-team/register-team-into-a-tournament/register-team-into-a-tournament.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -1288,6 +1296,35 @@ export class TournamentController extends HttpController {
       this.handler<ModifyTournamentRefereesUsecase>({
         container,
         usecaseId: 'ModifyTournamentRefereesUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: data,
+      });
+    });
+    router.post(`/:tournamentId/register-into-tournament`, (request: Request, response: Response) => {
+      const body = request.body;
+      const data = {
+        ...body,
+        tournamentId: request.params.tournamentId,
+      };
+
+      console.log(data);
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        exceptions: {
+          [RequiredDocsForTeamIncompleteError.id]: 'REQUIRED-DOCS-FOR-TEAM-INCOMPLETE:ERROR',
+          [RequiredDocsForMembersIncompleteError.id]: 'REQUIRED-DOCS-FOR-MEMBERS-INCOMPLETE:ERROR',
+          [RequiredDocsNoPresentError.id]: 'REQUIRED-DOCS-NO-PRESENT:ERROR',
+          [TeamAlreadyRegisteredError.id]: 'TEAM-ALREADY-REGISTERED:ERROR',
+          [DataIncompleteError.id]: 'DATA-INCOMPLETE:ERROR',
+        },
+        successCode: 'REGISTRATION-DONE:SUCCESS',
+      };
+
+      this.handler<RegisterTeamIntoATournamentUsecase>({
+        container,
+        usecaseId: 'RegisterTeamIntoATournamentUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: data,

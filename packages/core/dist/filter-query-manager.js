@@ -59,14 +59,15 @@ function generateBaseFilters(filters, logicOperator, mapper) {
     for (const key in filters) {
         const config = filters[key];
         if (Array.isArray(config)) {
-            let r = [];
+            // let r: F[] = [];
             for (const innerConfig of config) {
                 let x = map(key, innerConfig, customOperators, mapper);
                 if (x) {
-                    r.push(x);
+                    // r.push(x);
+                    q.push(x);
                 }
             }
-            q.push(firestore_1.Filter.and(r));
+            // q.push(F.and(r));
         }
         else {
             let y = map(key, config, customOperators, mapper);

@@ -1,4 +1,5 @@
 import { UserEntity } from '@deporty-org/entities/users';
+import { formatDateFromJson } from '@deporty-org/core';
 import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of } from 'rxjs';
@@ -27,8 +28,8 @@ export class UserMapper extends Mapper<UserEntity> {
         name: 'birth-date',
         from: (date: Timestamp) => {
           console.log(date);
-          
-          return date ? of(date.toDate()) : of(date);
+
+          return of(formatDateFromJson(date));
         },
       },
     };

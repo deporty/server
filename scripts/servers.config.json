@@ -125,9 +125,9 @@
       "dev": {
         "min-replicas": 1,
         "max-replicas": 2,
-        "cpu": "10m",
+        "cpu": "20m",
         "memory": "60Mi",
-        "cpu-limits": "25m",
+        "cpu-limits": "30m",
         "memory-limits": "70Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
@@ -183,7 +183,7 @@
       "dev": {
         "min-replicas": 1,
         "max-replicas": 2,
-        "cpu": "10m",
+        "cpu": "15m",
         "memory": "70Mi",
         "cpu-limits": "25m",
         "memory-limits": "100Mi",

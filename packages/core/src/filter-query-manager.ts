@@ -72,16 +72,17 @@ function generateBaseFilters<T>(filters: Filters, logicOperator: any, mapper?: M
   for (const key in filters) {
     const config = filters[key];
     if (Array.isArray(config)) {
-      let r: F[] = [];
+      // let r: F[] = [];
 
       for (const innerConfig of config) {
         let x = map(key, innerConfig, customOperators, mapper);
         if (x) {
-          r.push(x);
+          // r.push(x);
+          q.push(x);
         }
       }
 
-      q.push(F.and(r));
+      // q.push(F.and(r));
     } else {
       let y = map(key, config, customOperators, mapper);
       if (y) {
