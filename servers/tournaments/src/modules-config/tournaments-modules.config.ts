@@ -74,6 +74,7 @@ import { RegisterTeamIntoATournamentUsecase } from '../domain/usecases/registere
 import { GetRunningTournamentsWhereExistsTeamIdUsecase } from '../domain/usecases/get-running-tournaments-where-exists-team-id/get-running-tournaments-where-exists-team-id.usecase';
 import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-report-by-tournament/get-cards-report-by-tournament.usecase';
 import { GetFullIntergroupMatchesUsecase } from '../domain/usecases/get-full-intergroup-matches/get-full-intergroup-matches.usecase-';
+import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain/usecases/get-cards-report-grouped-by-team-and-date-by-tournament/get-cards-report-grouped-by-team-and-date-by-tournament.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -225,6 +226,12 @@ export class TournamentsModulesConfig {
       id: 'GetFixtureStagesByTournamentUsecase',
       kind: GetFixtureStagesByTournamentUsecase,
       dependencies: ['FixtureStageContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetCardsReportGroupedByTeamAndDateByTournamentUsecase',
+      kind: GetCardsReportGroupedByTeamAndDateByTournamentUsecase,
+      dependencies: ['GetCardsReportByTournamentUsecase'],
       strategy: 'singleton',
     });
     container.add({

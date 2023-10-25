@@ -75,6 +75,7 @@ import {
 } from '../domain/usecases/registered-team/register-team-into-a-tournament/register-team-into-a-tournament.usecase';
 import { GetRunningTournamentsWhereExistsTeamIdUsecase } from '../domain/usecases/get-running-tournaments-where-exists-team-id/get-running-tournaments-where-exists-team-id.usecase';
 import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-report-by-tournament/get-cards-report-by-tournament.usecase';
+import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain/usecases/get-cards-report-grouped-by-team-and-date-by-tournament/get-cards-report-grouped-by-team-and-date-by-tournament.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -620,6 +621,23 @@ export class TournamentController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: params,
+      });
+    });
+
+    router.get(`/:tournamentId/grouped-cards-report`, (request: Request, response: Response) => {
+      const tournamentId = request.params.tournamentId;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'GET-GROUPS-IN-FIXTURE-STAGES:SUCCESS',
+      };
+
+      this.handler<GetCardsReportGroupedByTeamAndDateByTournamentUsecase>({
+        container,
+        usecaseId: 'GetCardsReportGroupedByTeamAndDateByTournamentUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: tournamentId,
       });
     });
 
