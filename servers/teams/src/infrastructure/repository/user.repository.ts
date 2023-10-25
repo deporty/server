@@ -4,6 +4,32 @@ import { IBaseResponse, Id, TeamParticipationEntity, UserEntity } from '@deporty
 import { UserContract } from '../../domain/contracts/user.constract';
 import { BEARER_TOKEN, USERS_SERVER } from '../teams.constants';
 export class UserRepository extends UserContract {
+  getUserByUniqueFieldsUsecase(document: string, email: string): Observable<UserEntity[]> {
+
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<UserEntity[]>>(`${USERS_SERVER}/get-user-by-unique-fields/${document}/${email}`, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<UserEntity[]>;
+
+          
+          if (data.meta.code === 'USER:GET-USER-BY-UNIQUE-FIELDS:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
   exceptionsMapper: any = {
     'USER:USER-ALREADY-EXIST:ERROR': 'UserAlreadyExistError',
     'USER:INSUFICIENT-USER-DATA:ERROR': 'InsuficientUserDataError',
@@ -49,13 +75,11 @@ export class UserRepository extends UserContract {
         )
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<UserEntity>;
-          console.log(0, data, 0);
           if (data.meta.code === 'USER:POST:SUCCESS') {
             observer.next(data.data);
           } else {
             const e = new Error(data.meta.message);
             e.name = this.exceptionsMapper[data.meta.code];
-            console.log(1, e, 1);
             observer.error(e);
           }
           observer.complete();
@@ -132,6 +156,28 @@ export class UserRepository extends UserContract {
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<UserEntity[]>;
           if (data.meta.code === 'USER:GET-BY-IDS:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+  getUserByDocument(document: string): Observable<UserEntity> {
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<UserEntity>>(`${USERS_SERVER}/document/${document}`, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<UserEntity>;
+          if (data.meta.code === 'USER:GET-BY-DOCUMENT:SUCCESS') {
             observer.next(data.data);
           } else {
             observer.error();

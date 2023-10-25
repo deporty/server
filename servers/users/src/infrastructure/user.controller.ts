@@ -1,8 +1,10 @@
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { HttpController, MessagesConfiguration } from '@scifamek-open-source/iraca/web-api';
+import { Logger } from '@scifamek-open-source/logger';
 import { Request, Response, Router } from 'express';
 import { AsignRolesToUserUsecase } from '../domain/usecases/asign-roles-to-user/asign-roles-to-user.usecase';
-import { GetTeamsThatIBelongUsecase } from '../domain/usecases/team-participations/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
+import { DeleteUserUsecase, UserIsSelfManagedError } from '../domain/usecases/delete-user/delete-user.usecase';
+import { EditUserByIdUsecase, UserImageNotAllowedError } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
 import { GetUsersByFiltersUsecase } from '../domain/usecases/get-user-by-filters/get-user-by-filters.usecase';
 import { GetUserByIdUsecase, UserDoesNotExistByIdError } from '../domain/usecases/get-user-by-id/get-user-by-id.usecase';
 import {
@@ -15,14 +17,17 @@ import {
 } from '../domain/usecases/get-user-information-by-full-name/get-user-information-by-full-name.usecase';
 import { GetUsersByIdsUsecase } from '../domain/usecases/get-users-by-ids/get-users-by-ids.usecase';
 import { GetUsersByRolUsecase } from '../domain/usecases/get-users-by-rol/get-users-by-rol.usecase';
-import { SERVER_NAME } from './users.constants';
-import { AddTeamParticipationUsecase } from '../domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
 import { InsuficientUserDataError, SaveUserUsecase, UserAlreadyExistError } from '../domain/usecases/save-user/save-user.usecase';
-import { EditUserByIdUsecase, UserImageNotAllowedError } from '../domain/usecases/edit-user-by-id/edit-user-by-id.usecase';
-import { Logger } from '@scifamek-open-source/logger';
-import { DeleteUserUsecase, UserIsSelfManagedError } from '../domain/usecases/delete-user/delete-user.usecase';
+import { AddTeamParticipationUsecase } from '../domain/usecases/team-participations/add-team-participation/add-team-participation.usecase';
 import { DeleteTeamParticipationUsecase } from '../domain/usecases/team-participations/delete-team-participation/delete-team-participation.usecase';
-import { GetUserByUniqueFieldsUsecase, MultipleUserWithUniqueDataError } from '../domain/usecases/get-user-by-unique-fields/get-user-by-unique-fields.usecase';
+import { GetTeamsThatIBelongUsecase } from '../domain/usecases/team-participations/get-teams-that-i-belong/get-teams-that-i-belong.usecase';
+import { SERVER_NAME } from './users.constants';
+
+import {
+  GetUserByDocumentUsecase,
+  UserWithDocumentDoesNotExistError,
+} from '../domain/usecases/get-user-by-document/get-user-by-document.usecase';
+import { GetUserByUniqueFieldsUsecase } from '../domain/usecases/get-user-by-unique-fields/get-user-by-unique-fields.usecase';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -59,6 +64,25 @@ export class UserController extends HttpController {
         usecaseParam: email,
       });
     });
+    router.get(`/document/:document`, (request: Request, response: Response) => {
+      const document = request.params.document;
+
+      const config: MessagesConfiguration = {
+        exceptions: {
+          [UserWithDocumentDoesNotExistError.id]: 'GET-BY-DOCUMENT:ERROR',
+        },
+        identifier: this.identifier,
+        successCode: 'GET-BY-DOCUMENT:SUCCESS',
+      };
+
+      this.handler<GetUserByDocumentUsecase>({
+        container,
+        usecaseId: 'GetUserByDocumentUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: document,
+      });
+    });
 
     router.get(`/:userId/teams-participations`, (request: Request, response: Response) => {
       const userId = request.params.userId;
@@ -81,9 +105,7 @@ export class UserController extends HttpController {
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
-        exceptions: {
-          [MultipleUserWithUniqueDataError.id]: 'MULTIPLE-USER-WITH-UNIQUE-DATA:ERROR'
-        },
+      
         successCode: 'GET-USER-BY-UNIQUE-FIELDS:SUCCESS',
       };
 
@@ -152,7 +174,6 @@ export class UserController extends HttpController {
         exceptions: {
           [UserAlreadyExistError.id]: 'USER-ALREADY-EXIST:ERROR',
           [InsuficientUserDataError.id]: 'INSUFICIENT-USER-DATA:ERROR',
-          [MultipleUserWithUniqueDataError.id]: 'MULTIPLE-USER-WITH-UNIQUE-DATA:ERROR',
         },
         extraData: {
           entitiesName: 'User',

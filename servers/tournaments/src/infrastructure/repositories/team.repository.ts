@@ -1,4 +1,4 @@
-import { IBaseResponse, Id, MemberDescriptionType, TeamEntity, TournamentInscriptionEntity } from '@deporty-org/entities';
+import { IBaseResponse, Id, MemberDescriptionType, MemberEntity, TeamEntity, TournamentInscriptionEntity } from '@deporty-org/entities';
 import axios, { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import { TeamContract } from '../../domain/contracts/team.contract';
@@ -6,6 +6,33 @@ import { BEARER_TOKEN, TEAM_SERVER } from '../tournaments.constants';
 import { Filters } from '@scifamek-open-source/iraca/domain';
 
 export class TeamRepository extends TeamContract {
+  getOnlyMembersByTeam(teamId: string, includeRetired: boolean): Observable<MemberEntity[]> {
+   
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<TournamentInscriptionEntity>>(`${TEAM_SERVER}/${teamId}/only-members`, {
+          params: {
+            includeRetired
+          },
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<MemberEntity[]>;
+          if (data.meta.code === 'TEAM:GET-MEMBERS-BY-TEAM-ID:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+
+  }
   saveTournamentInscriptionsByTeamUsecase(inscription: TournamentInscriptionEntity): Observable<TournamentInscriptionEntity> {
 
     console.log("enviando ", JSON.stringify(inscription, null, 2));

@@ -71,6 +71,9 @@ import { GetTournamentsForCheckInUsecase } from '../domain/usecases/get-tourname
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { GetTournamentBaseInformationByIdUsecase } from '../domain/usecases/get-tournament-base-information-by-id/get-tournament-base-information-by-id.usecase';
 import { RegisterTeamIntoATournamentUsecase } from '../domain/usecases/registered-team/register-team-into-a-tournament/register-team-into-a-tournament.usecase';
+import { GetRunningTournamentsWhereExistsTeamIdUsecase } from '../domain/usecases/get-running-tournaments-where-exists-team-id/get-running-tournaments-where-exists-team-id.usecase';
+import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-report-by-tournament/get-cards-report-by-tournament.usecase';
+import { GetFullIntergroupMatchesUsecase } from '../domain/usecases/get-full-intergroup-matches/get-full-intergroup-matches.usecase-';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -483,16 +486,15 @@ export class TournamentsModulesConfig {
       strategy: 'singleton',
     });
 
-    // container.add({
-    //   id: 'GetFullIntergroupMatchesUsecase',
-    //   kind: GetFullIntergroupMatchesUsecase,
-    //   dependencies: [
-    //     'GetIntergroupMatchesUsecase',
-    //     'GetIntergroupMatchUsecase',
-    //     'GetFixtureOverviewByTournamentUsecase',
-    //   ],
-    //   strategy: 'singleton',
-    // });
+    container.add({
+      id: 'GetFullIntergroupMatchesUsecase',
+      kind: GetFullIntergroupMatchesUsecase,
+      dependencies: [
+        'GetIntergroupMatchesUsecase',
+        'GetFixtureStagesByTournamentUsecase',
+      ],
+      strategy: 'singleton',
+    });
 
     container.add({
       id: 'EditIntergroupMatchUsecase',
@@ -624,6 +626,18 @@ export class TournamentsModulesConfig {
       strategy: 'singleton',
     });
     container.add({
+      id: 'GetRunningTournamentsWhereExistsTeamIdUsecase',
+      kind: GetRunningTournamentsWhereExistsTeamIdUsecase,
+      dependencies: ['TournamentContract', 'RegisteredTeamsContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetCardsReportByTournamentUsecase',
+      kind: GetCardsReportByTournamentUsecase,
+      dependencies: ['GetAllGroupMatchesByTournamentUsecase', 'GetMainDrawNodeMatchesoverviewUsecase', 'GetFullIntergroupMatchesUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
       id: 'GenerateMainDrawFromSchemaUsecase',
       kind: GenerateMainDrawFromSchemaUsecase,
       dependencies: [
@@ -649,7 +663,7 @@ export class TournamentsModulesConfig {
       id: 'RegisterTeamIntoATournamentUsecase',
       kind: RegisterTeamIntoATournamentUsecase,
       strategy: 'singleton',
-      dependencies: ['RegisteredTeamsContract', 'TeamContract', 'OrganizationContract'],
+      dependencies: ['RegisteredTeamsContract', 'TeamContract', 'OrganizationContract', 'FileAdapter', 'UpdateRegisteredTeamByIdUsecase'],
     });
   }
 }

@@ -24,8 +24,6 @@ export class DeleteTeamParticipationUsecase extends Usecase<Param, boolean> {
   }
 
   call(param: Param): Observable<boolean> {
-    console.log('params', param);
-
     return this.teamParticipationContract
       .filter(
         {

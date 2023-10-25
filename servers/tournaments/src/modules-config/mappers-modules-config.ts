@@ -121,7 +121,7 @@ export class MapperModulesConfig {
     container.add({
       id: 'RegisteredTeamMapper',
       kind: RegisteredTeamMapper,
-      dependencies: ['MemberMapper'],
+      dependencies: ['MemberMapper', 'FileAdapter'],
       strategy: 'singleton',
     });
 

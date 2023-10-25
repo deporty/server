@@ -9,50 +9,63 @@ const serversMapper = {
   mySelf: {
     port: 10000,
     name: 'loadbalancer',
-    disabled: true,
+    run: false,
   },
   authorization: {
     port: 10001,
     name: 'authorization',
+    run: true,
   },
   invoices: {
     port: 10002,
     name: 'invoices',
+    run: false,
   },
   locations: {
     port: 10003,
     name: 'locations',
+    run: true,
   },
   news: {
     port: 10004,
     name: 'news',
+    run: false,
   },
   organizations: {
     port: 10005,
     name: 'organizations',
+    run: true,
   },
   teams: {
     port: 10006,
     name: 'teams',
+    run: true,
   },
   tournaments: {
     port: 10007,
     name: 'tournaments',
+    run: false,
   },
   users: {
     port: 10008,
     name: 'users',
+    run: true,
+  },
+  administration: {
+    port: 10009,
+    name: 'administration',
+    run: false,
   },
 };
 
 function getServerInfo(port) {
-  return Object.entries(serversMapper).filter((x) => x[1].port == port);
+  return Object.entries(serversMapper).filter((x) => x[1].port == port && x[1].run);
 }
 
 async function getPids() {
   const C = await exec('netstat -ano');
 
-  const r = /([TCPUD]{3})[ ]+(([0-9\.]+):([0-9]+)[ ]+)(([0-9\.]+):([0-9]+)[ ]+)[\w]+[ ]+([\d]+)/g;
+  const r = /([TCPUD]{3})[ ]+(([0-9\.]+):([0-9]+)[ ]+)(([0-9\.]+):([0-9]+)[ ]+)[\w]+[ ]+([\d]{2,})/g;
   const pattern = new RegExp(r);
 
   const stdout = C.stdout;
@@ -84,8 +97,6 @@ function runServer(serverConfig) {
       console.error(`stderr: ${stderr}`);
       return;
     }
-
-    console.log(`stdout:\n${stdout}`);
   });
 
   return terminal;
@@ -95,7 +106,7 @@ function run() {
   const terminals = [];
   for (const key in serversMapper) {
     const serverConfig = serversMapper[key];
-    if (!serverConfig.disabled) {
+    if (serverConfig.run) {
       console.log('Running ', serverConfig.name);
       runServer(serverConfig);
     }
@@ -106,6 +117,8 @@ function extractIdentifier(url) {
   const fragment = url.split('/')[1];
   return fragment.split('?')[0];
 }
+
+wasPrinted = false;
 
 async function main() {
   const response = await getPids();
@@ -129,22 +142,28 @@ async function main() {
       const configuration = serversMapper[identifier];
       const path = 'http://127.0.0.1:' + configuration.port + tail;
 
-      if (['POST', 'PUT', 'PATCH'].includes(request.method)) {
+      if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method)) {
         let body = '';
         request.on('data', (chunk) => {
           body += chunk.toString();
         });
         request.on('end', () => {
-          console.log({
-            method: request.method,
-            url: path,
-            data: JSON.parse(body),
-          });
+          const contype = request.headers['content-type'];
+          if (contype === 'application/json') {
+            console.log(request.headers);
+            console.log({
+              method: request.method,
 
+              url: path,
+              data: JSON.parse(body),
+            });
+          }else{
+
+          }
           axios({
             method: request.method,
             url: path,
-            headers: { ...headers },
+            headers: request.headers,
             data: body,
           })
             .then((responseBOdy) => {
@@ -185,11 +204,19 @@ async function main() {
   });
 
   server.listen(port, () => {
-    setTimeout(async () => {
+    setInterval(async () => {
       const response = await getPids();
-      console.log(JSON.stringify(response, null, 2));
-      console.log('Runing');
-    }, 50000);
+      if (response.length > 0 && !wasPrinted) {
+        console.log(JSON.stringify(response, null, 2));
+        console.log('---------');
+
+        if (response.length == 7) {
+          wasPrinted = true;
+        }
+      }
+    }, 5000);
+
+    console.log('Runing');
   });
 }
 

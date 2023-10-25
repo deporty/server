@@ -58,13 +58,6 @@ export class EditUserByIdUsecase extends Usecase<Param, UserEntity> {
       }),
       mergeMap(([path, prevUser]: [string, UserEntity]) => {
 
-
-
-
-        console.log("Rutas");
-        console.log(path,prevUser);
-        
-        
         const newUser: UserEntity = {
           ...prevUser,
           birthDate: user.birthDate,

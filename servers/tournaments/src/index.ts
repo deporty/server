@@ -74,7 +74,8 @@ const app = express();
 const router = Router();
 app.use(cors());
 
-app.use(bodyParser.json());
+app.use(bodyParser.json( { limit: '20mb'}));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 TournamentsModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);

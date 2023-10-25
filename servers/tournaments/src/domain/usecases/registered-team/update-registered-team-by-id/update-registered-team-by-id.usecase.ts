@@ -24,6 +24,7 @@ export class UpdateRegisteredTeamByIdUsecase extends Usecase<
   }
 
   call(params: Params): Observable<RegisteredTeamEntity> {
+
     return this.getRegisteredTeamByIdUsecase
       .call({
         tournamentId: params.tournamentId,

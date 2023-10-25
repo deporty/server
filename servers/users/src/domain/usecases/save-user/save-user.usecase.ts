@@ -26,8 +26,8 @@ export class SaveUserUsecase extends Usecase<UserEntity, UserEntity> {
         email: user.email,
       })
       .pipe(
-        mergeMap((prevUser: UserEntity | undefined) => {
-          if (prevUser) {
+        mergeMap((prevUser: UserEntity[]) => {
+          if (prevUser.length > 0) {
             return throwError(new UserAlreadyExistError());
           }
           const newUser: UserEntity = {

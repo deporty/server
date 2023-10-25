@@ -66,12 +66,15 @@ import { JWT_SECRET, SERVER_NAME } from './tournaments.constants';
 import { GetTournamentBaseInformationByIdUsecase } from '../domain/usecases/get-tournament-base-information-by-id/get-tournament-base-information-by-id.usecase';
 import {
   DataIncompleteError,
+  MemberIdsNotFoundError,
   RegisterTeamIntoATournamentUsecase,
   RequiredDocsForMembersIncompleteError,
   RequiredDocsForTeamIncompleteError,
   RequiredDocsNoPresentError,
   TeamAlreadyRegisteredError,
 } from '../domain/usecases/registered-team/register-team-into-a-tournament/register-team-into-a-tournament.usecase';
+import { GetRunningTournamentsWhereExistsTeamIdUsecase } from '../domain/usecases/get-running-tournaments-where-exists-team-id/get-running-tournaments-where-exists-team-id.usecase';
+import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-report-by-tournament/get-cards-report-by-tournament.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -674,6 +677,7 @@ export class TournamentController extends HttpController {
       (request: Request, response: Response) => {
         const params = request.params;
         const teamIds = request.body;
+
         params.teamIds = teamIds;
 
         const config: MessagesConfiguration = {
@@ -1228,6 +1232,40 @@ export class TournamentController extends HttpController {
         usecaseParam: tournament,
       });
     });
+    router.get(`/:tournamentId/cards-report`, (request: Request, response: Response) => {
+      const tournament = request.params.tournamentId;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'CARD-REPORT:SUCCESS',
+      };
+
+      this.handler<GetCardsReportByTournamentUsecase>({
+        container,
+        usecaseId: 'GetCardsReportByTournamentUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: tournament,
+      });
+    });
+    router.get(`/tournaments-that-i-participate/:teamId`, (request: Request, response: Response) => {
+      const teamId = request.params.teamId;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'GET-TOURNAMENTS-WHERE-I-PARTICIPATE:SUCCESS',
+      };
+
+      this.handler<GetRunningTournamentsWhereExistsTeamIdUsecase>({
+        container,
+        usecaseId: 'GetRunningTournamentsWhereExistsTeamIdUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: {
+          teamId,
+        },
+      });
+    });
 
     router.patch(`/:id/modify-status`, validator('ModifyTournamentStatusUsecase'), (request: Request, response: Response) => {
       const body = request.body;
@@ -1308,8 +1346,6 @@ export class TournamentController extends HttpController {
         tournamentId: request.params.tournamentId,
       };
 
-      console.log(data);
-
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         exceptions: {
@@ -1318,6 +1354,7 @@ export class TournamentController extends HttpController {
           [RequiredDocsNoPresentError.id]: 'REQUIRED-DOCS-NO-PRESENT:ERROR',
           [TeamAlreadyRegisteredError.id]: 'TEAM-ALREADY-REGISTERED:ERROR',
           [DataIncompleteError.id]: 'DATA-INCOMPLETE:ERROR',
+          [MemberIdsNotFoundError.id]: 'MEMBER-IDS-NOT-FOUND:ERROR',
         },
         successCode: 'REGISTRATION-DONE:SUCCESS',
       };

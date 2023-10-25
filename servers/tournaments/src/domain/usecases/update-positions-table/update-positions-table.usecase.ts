@@ -33,6 +33,8 @@ export class UpdatePositionTableUsecase extends Usecase<Params, PositionsTable> 
     };
     const table = positionsTable.table;
     const analizedMatches = positionsTable.analizedMatches;
+    console.log("Analized Matches: " , analizedMatches);
+    
     const match = param.match;
     if (!analizedMatches.includes(match.id!)) {
       analizedMatches.push(match.id!);

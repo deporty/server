@@ -1,8 +1,6 @@
 import { UserEntity } from '@deporty-org/entities/users';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
-import { generateError } from '@scifamek-open-source/iraca/helpers';
-import { Observable, of, throwError } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { UserContract } from '../../contracts/user.contract';
 
 interface Params {
@@ -10,19 +8,14 @@ interface Params {
   email: string;
 }
 
-export const MultipleUserWithUniqueDataError = generateError(
-  'MultipleUserWithUniqueDataError',
-  `There are multiple users with the same unique data`
-);
 
-export class GetUserByUniqueFieldsUsecase extends Usecase<Params, UserEntity | undefined> {
+
+export class GetUserByUniqueFieldsUsecase extends Usecase<Params, UserEntity[] > {
   constructor(private userContract: UserContract) {
     super();
   }
 
-  call(params: Params): Observable<UserEntity | undefined> {
-    console.log(params);
-
+  call(params: Params): Observable<UserEntity[] > {
     const $document = this.userContract.filter({
       or: {
         document: {
@@ -36,18 +29,6 @@ export class GetUserByUniqueFieldsUsecase extends Usecase<Params, UserEntity | u
       },
     });
 
-    return $document.pipe(
-      mergeMap((users) => {
-        console.log('Users', users);
-
-        if (users.length == 0) {
-          return of(undefined);
-        } else if (users.length == 1) {
-          return of(users[0]);
-        } else {
-          return throwError(new MultipleUserWithUniqueDataError());
-        }
-      })
-    );
+    return $document;
   }
 }

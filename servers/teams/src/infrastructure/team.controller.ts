@@ -30,6 +30,8 @@ import { Logger } from '@scifamek-open-source/logger';
 import { EditTeamUsecase, UserImageNotAllowedError } from '../domain/usecases/edit-team/edit-team.usecase';
 import { DeleteMemberByIdUsecase } from '../domain/usecases/delete-member-by-id/delete-member-by-id.usecase';
 import { SaveTournamentInscriptionsByTeamUsecase } from '../domain/usecases/save-tournament-inscriptions-by-team/save-tournament-inscriptions-by-team.usecase';
+import { GetOnlyMembersByTeamUsecase } from '../domain/usecases/get-only-members-by-team/get-only-members-by-team.usecase';
+import { CreateTeamAndMembersFromFileUsecase } from '../domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -207,6 +209,44 @@ export class TeamController extends HttpController {
       });
     });
 
+    router.get(`/:teamId/only-members`, (request: Request, response: Response) => {
+      const teamId = request.params.teamId;
+      const query = request.query;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'GET-MEMBERS-BY-TEAM-ID:SUCCESS',
+      };
+
+      this.handler<GetOnlyMembersByTeamUsecase>({
+        container,
+        usecaseId: 'GetOnlyMembersByTeamUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: { teamId, ...query },
+      });
+    });
+    router.put(`/create-team-and-members-from-file`, (request: Request, response: Response) => {
+      const body = request.body;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        exceptions: {
+          [TeamNameAlreadyExistsError.id]: 'TEAM-NAME-ALREADY-EXISTS:ERROR',
+          [UserCreatorIdNotProvidedError.id]: 'USER-CREATOR-ID-NOT-PROVIDED:ERROR',
+          SizePropertyError: 'SIZE-PROPERTY:ERROR',
+        },
+        successCode: 'GET-MEMBERS-BY-TEAM-ID:SUCCESS',
+      };
+
+      this.handler<CreateTeamAndMembersFromFileUsecase>({
+        container,
+        usecaseId: 'CreateTeamAndMembersFromFileUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
+      });
+    });
     router.get(`/:id/members`, (request: Request, response: Response) => {
       const id = request.params.id;
 

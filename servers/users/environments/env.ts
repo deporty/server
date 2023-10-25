@@ -5,7 +5,7 @@ export const env = {
   projectId: 'deporty-dev',
   databaseURL: '0,',
   middlewares: {
-    'is-key-present': true,
+    'is-key-present': false,
     'is-authorized-user': false,
   },
   logging: false,

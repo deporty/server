@@ -21,6 +21,8 @@ export interface Param {
   user?: UserEntity;
   kindMember: KindMember | KindMember[];
   team?: TeamEntity;
+  number?: number,
+  position?: string
 }
 
 export const MemberIsAlreadyInTeamError = generateError(
@@ -60,6 +62,7 @@ export class AsignNewMemberToTeamUsecase extends Usecase<Param, Response> {
                 teamId: team.id!,
                 userId: user.id!,
                 enrollmentDate: new Date(),
+                number: param.number,
               };
               const $teamUpdated = this.memberContract
                 .save(

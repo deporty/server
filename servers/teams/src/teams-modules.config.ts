@@ -37,6 +37,8 @@ import { DeleteMembersFromTeamUsecase } from './domain/usecases/delete-members-f
 import { GetOnlyMemberByIdUsecase } from './domain/usecases/get-only-member-by-id/get-only-member-by-id.usecase';
 import { GetTeamByUniqueAttributesUsecase } from './domain/usecases/get-team-by-unique-attributes/get-team-by-unique-attributes.usecase';
 import { SaveTournamentInscriptionsByTeamUsecase } from './domain/usecases/save-tournament-inscriptions-by-team/save-tournament-inscriptions-by-team.usecase';
+import { GetOnlyMembersByTeamUsecase } from './domain/usecases/get-only-members-by-team/get-only-members-by-team.usecase';
+import { CreateTeamAndMembersFromFileUsecase } from './domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -205,6 +207,18 @@ export class TeamsModulesConfig {
       id: 'GetTeamByUniqueAttributesUsecase',
       kind: GetTeamByUniqueAttributesUsecase,
       dependencies: ['TeamContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetOnlyMembersByTeamUsecase',
+      kind: GetOnlyMembersByTeamUsecase,
+      dependencies: ['MemberContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'CreateTeamAndMembersFromFileUsecase',
+      kind: CreateTeamAndMembersFromFileUsecase,
+      dependencies: ['CreateTeamUsecase', 'CreateUserAndAsignNewMemberToTeamUsecase'],
       strategy: 'singleton',
     });
     container.add({

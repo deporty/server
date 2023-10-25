@@ -27,8 +27,6 @@ export class UserMapper extends Mapper<UserEntity> {
       birthDate: {
         name: 'birth-date',
         from: (date: Timestamp) => {
-          console.log(date);
-
           return of(formatDateFromJson(date));
         },
       },

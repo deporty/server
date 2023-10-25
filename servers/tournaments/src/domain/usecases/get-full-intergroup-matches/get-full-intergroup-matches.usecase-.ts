@@ -1,85 +1,59 @@
-// import {
-//   IFixtureModel,
-//   IIntergroupMatchModel,
-// } from '@deporty-org/entities/tournaments';
-// import { Observable, of, zip } from 'rxjs';
-// import { map, mergeMap } from 'rxjs/operators';
-// import { Usecase } from '@scifamek-open-source/iraca/domain';
-// import { GetFixtureOverviewByTournamentUsecase } from '../get-fixture-overview-by-tournament.usecase';
-// import { GetIntergroupMatchUsecase } from '../get-intergroup-match/get-intergroup-match.usecase';
-// import { GetIntergroupMatchesUsecase } from '../get-intergroup-matches/get-intergroup-match.usecase';
+import { FixtureStageEntity, IntergroupMatchEntity, MatchStatusType } from '@deporty-org/entities/tournaments';
+import { Observable, of, zip } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { Usecase } from '@scifamek-open-source/iraca/domain';
+import { GetFixtureStagesByTournamentUsecase } from '../fixture-stages/get-fixture-stages-by-tournament/get-fixture-stages-by-tournament.usecase';
+import { GetIntergroupMatchesUsecase } from '../intergroup-matches/get-intergroup-matches/get-intergroup-match.usecase';
+import { Id } from '@deporty-org/entities';
 
-// export interface Response {
-//   [index: string]: {
-//     order: number;
-//     matches: IIntergroupMatchModel[];
-//   };
-// }
+export interface Param {
+  tournamentId: Id;
+  status?: MatchStatusType[];
+}
 
-// export class GetFullIntergroupMatchesUsecase extends Usecase<string, Response> {
-//   constructor(
-//     private getIntergroupMatchesUsecase: GetIntergroupMatchesUsecase,
-//     private getIntergroupMatchUsecase: GetIntergroupMatchUsecase,
-//     private getFixtureOverviewByTournamentUsecase: GetFixtureOverviewByTournamentUsecase
-//   ) {
-//     super();
-//   }
-//   call(tournamentId: string): Observable<Response> {
-//     return this.getFixtureOverviewByTournamentUsecase.call(tournamentId).pipe(
-//       map((fixtureModel: IFixtureModel) => {
-//         const response: any[] = [];
-//         for (const stage of fixtureModel.stages) {
-//           response.push(
-//             this.getIntergroupMatchesUsecase
-//               .call({
-//                 stageId: stage.id || '',
-//                 tournamentId: tournamentId,
-//               })
-//               .pipe(
-//                 map((t) => {
-//                   const fullMatches: Observable<IIntergroupMatchModel>[] = [];
-//                   for (const match of t) {
-//                     fullMatches.push(
-//                       this.getIntergroupMatchUsecase.call({
-//                         tournamentId,
-//                         stageId: stage.id || '',
-//                         intergroupMatchId: match.id,
-//                       })
-//                     );
-//                   }
+export interface Response {
+  [index: string]: {
+    order: number;
+    matches: IntergroupMatchEntity[];
+  };
+}
 
-//                   return fullMatches.length > 0
-//                     ? zip(...fullMatches).pipe(
-//                         map((u) => {
-//                           return {
-//                             order: stage.order,
-//                             id: stage.id,
-//                             matches: u,
-//                             //     matches:
-//                           };
-//                         })
-//                       )
-//                     : of([]);
-//                 }),
-//                 mergeMap((t) => t)
-//               )
-//           );
-//         }
-//         return response.length > 0 ? zip(...response) : of([]);
-//       }),
-//       mergeMap((x) => x),
-//       map((x: any) => {
-//         const response: Response = {};
-//         for (const stage of x) {
-//           if (stage.id && !(stage.id in response)) {
-//             response[stage.id || ''] = {
-//               order: stage.order,
-//               matches: stage.matches,
-//             };
-//           }
-//         }
-//         return response;
-//       })
-//     );
-//   }
-// }
+export class GetFullIntergroupMatchesUsecase extends Usecase<Param, Response> {
+  constructor(
+    private getIntergroupMatchesUsecase: GetIntergroupMatchesUsecase,
+    private getFixtureStagesByTournamentUsecase: GetFixtureStagesByTournamentUsecase
+  ) {
+    super();
+  }
+  call(param: Param): Observable<Response> {
+    const status = param.status || ['completed', 'editing', 'in-review', 'published', 'running'];
+    return this.getFixtureStagesByTournamentUsecase.call(param.tournamentId).pipe(
+      mergeMap((fixtureModel: FixtureStageEntity[]) => {
+        const response: any[] = [];
+        for (const stage of fixtureModel) {
+          response.push(
+            this.getIntergroupMatchesUsecase.call({
+              fixtureStageId: stage.id!,
+              states: status,
+
+              tournamentId: param.tournamentId,
+            })
+          );
+        }
+        return response.length > 0 ? zip(...response) : of([]);
+      }),
+      map((x: any) => {
+        const response: Response = {};
+        for (const stage of x) {
+          if (stage.id && !(stage.id in response)) {
+            response[stage.id || ''] = {
+              order: stage.order,
+              matches: stage.matches,
+            };
+          }
+        }
+        return response;
+      })
+    );
+  }
+}

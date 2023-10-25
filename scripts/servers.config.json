@@ -8,7 +8,7 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
+        "max-replicas": 1,
         "cpu": "30m",
         "memory": "70Mi",
         "cpu-limits": "55m",
@@ -66,7 +66,7 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
+        "max-replicas": 1,
         "cpu": "10m",
         "memory": "60Mi",
         "cpu-limits": "25m",
@@ -124,7 +124,7 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
+        "max-replicas": 1,
         "cpu": "20m",
         "memory": "60Mi",
         "cpu-limits": "30m",
@@ -153,7 +153,7 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
+        "max-replicas": 1,
         "cpu": "10m",
         "memory": "60Mi",
         "cpu-limits": "25m",
@@ -182,7 +182,7 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
+        "max-replicas": 1,
         "cpu": "15m",
         "memory": "70Mi",
         "cpu-limits": "25m",
@@ -211,7 +211,7 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
+        "max-replicas": 1,
         "cpu": "20m",
         "memory": "70Mi",
         "cpu-limits": "55m",
@@ -226,6 +226,35 @@
         "memory": "140Mi",
         "cpu-limits": "110m",
         "memory-limits": "200Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
+      }
+    }
+  },
+  "administration": {
+    "name": "administration",
+    "namespace": "default",
+    "ingress-path": "administration",
+    "enabled": true,
+    "port": 10009,
+    "environment": {
+      "dev": {
+        "min-replicas": 1,
+        "max-replicas": 1,
+        "cpu": "10m",
+        "memory": "40Mi",
+        "cpu-limits": "25m",
+        "memory-limits": "60Mi",
+        "cpu-percentage-scaling": 90,
+        "memory-percentage-scaling": 90
+      },
+      "pdn": {
+        "min-replicas": 1,
+        "max-replicas": 3,
+        "cpu": "30m",
+        "memory": "60Mi",
+        "cpu-limits": "60m",
+        "memory-limits": "120Mi",
         "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 80
       }

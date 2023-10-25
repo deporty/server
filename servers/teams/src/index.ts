@@ -15,7 +15,6 @@ import { DataSource, FileAdapter } from '@scifamek-open-source/iraca/infrastruct
 import bodyParser = require('body-parser');
 import { Router } from 'express';
 import { Logger } from '@scifamek-open-source/logger';
-
 const logger = new Logger('development.log');
 
 const firebaseApp = initializeApp({
@@ -69,6 +68,11 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
 });
 const app = express();
 const router = Router();
+// app.use(
+//   fileUpload({
+//     limits: { fileSize: 50 * 1024 * 1024 },
+//   })
+// );
 app.use(cors());
 
 app.use(
@@ -77,6 +81,7 @@ app.use(
   })
 );
 app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
 
 TeamsModulesConfig.config(GENERAL_DEPENDENCIES_CONTAINER);
 

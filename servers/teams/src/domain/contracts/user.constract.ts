@@ -6,4 +6,6 @@ export abstract class UserContract {
   abstract addTeamParticipation(userId: Id, teamParticipationEntity: TeamParticipationEntity): Observable<TeamParticipationEntity>;
   abstract deleteTeamParticipation(userId: Id, teamId: Id): Observable<boolean>;
   abstract createuser(user: UserEntity): Observable<UserEntity>;
+  abstract getUserByDocument(document: string): Observable<UserEntity>;
+  abstract getUserByUniqueFieldsUsecase(document: string, email: string): Observable<UserEntity[]>;
 }
