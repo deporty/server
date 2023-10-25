@@ -35,15 +35,15 @@ with open('kubernetes.config.json', 'r') as f:
     KUBERNETES_CONFIGURATION = json.load(f)
 
 servers_to_deploy = extract_servers_to_deploy(files)
-servers_to_deploy = [
-    # ('authorization','1.0.2'),
-    ('users','1.0.10'),
-    ('teams','1.0.7'),
-    ('tournaments','1.0.4'),
-    # ('organizations','1.0.3'),
-    # ('locations','1.0.3')
-    # ('administration','1.0.1')
-]
+# servers_to_deploy = [
+#     # ('authorization','1.0.2'),
+#     ('users','1.0.10'),
+#     ('teams','1.0.7'),
+#     ('tournaments','1.0.4'),
+#     # ('organizations','1.0.3'),
+#     # ('locations','1.0.3')
+#     # ('administration','1.0.1')
+# ]
 
 CURRENT_KUBERNETES_CONFIGURATION = KUBERNETES_CONFIGURATION[env]
 project_name = CURRENT_KUBERNETES_CONFIGURATION['project']
