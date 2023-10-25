@@ -51,8 +51,8 @@ jobs:
         
       - name: DEPLOY
         run: |
-          echo ${{ secrets.SERVICE_ACCOUNT }} > scripts/service-account.json
           ls
+          echo ${{ secrets.SERVICE_ACCOUNT }} > scripts/service-account.json
           cd scripts
           ls
           alias py=python3
