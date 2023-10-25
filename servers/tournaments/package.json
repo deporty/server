@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd scripts && py build.py",
-    "build:local": "cd scripts && py build.py",
-    "build:dev": "cd scripts && py build.py --env dev",
-    "build:pdn": "cd scripts && py build.py --env pdn",
+    "build:local": "cd scripts && python3 build.py",
+    "build:dev": "cd scripts && python3 build.py --env dev",
+    "build:pdn": "cd scripts && python3 build.py --env pdn",
     "compile": "tsc -p tsconfig.json",
     "start:dev": "nodemon",
     "start": "node index.js"
