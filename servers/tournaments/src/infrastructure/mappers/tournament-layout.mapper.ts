@@ -122,6 +122,7 @@ export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
       name: { name: 'name' },
       organizationId: { name: 'organization-id' },
       registeredTeamsVisibleStatus: { name: 'registered-teams-visible-status' },
+      allowAutoInscriptionFromTeamModifications: { name: 'allow-auto-inscription-from-team-modifications', default: false },
       fixtureStagesConfiguration: {
         name: 'fixture-stages-configuration',
         default: DEFAULT_FIXTURE_STAGES_CONFIGURATION,

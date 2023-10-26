@@ -38,11 +38,14 @@ export class DeleteTeamUsecase extends Usecase<string, TeamEntity | undefined> {
               if (team.miniShield) {
                 $response.push(this.fileAdapter.deleteFile(team.miniShield));
               }
-              return $response.length > 0 ? zip(...$response) : of([]);
+              return $response.length > 0
+                ? zip(...$response).pipe(
+                    mergeMap(() => {
+                      return this.delete(id);
+                    })
+                  )
+                : of(undefined);
             }
-          }),
-          mergeMap(() => {
-            return this.delete(id);
           })
         );
       })

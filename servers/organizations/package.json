@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@deporty-org/core": "1.1.2",
-    "@deporty-org/entities": "^0.21.0",
+    "@deporty-org/entities": "^0.22.0",
     "@scifamek-open-source/tairona": "^1.0.0",
     "@scifamek-open-source/iraca": "^2.4.0",
     "@scifamek-open-source/logger": "^1.1.0",
