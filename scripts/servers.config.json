@@ -165,11 +165,11 @@
         "min-replicas": 1,
         "max-replicas": 5,
         "cpu": "60m",
-        "memory": "140Mi",
+        "memory": "150Mi",
         "cpu-limits": "110m",
-        "memory-limits": "200Mi",
+        "memory-limits": "220Mi",
         "cpu-percentage-scaling": 80,
-        "memory-percentage-scaling": 80
+        "memory-percentage-scaling": 90
       }
     }
   },
