@@ -12,8 +12,6 @@ export class MemberMapper extends Mapper<MemberEntity> {
       initDate: {
         name: 'init-date',
         from: (date: Timestamp) => {
-          console.log('Jabon ',date, date.toDate());
-          
           return of(formatDateFromJson(date));
         },
       },
