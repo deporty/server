@@ -39,6 +39,7 @@ import { GetTeamByUniqueAttributesUsecase } from './domain/usecases/get-team-by-
 import { SaveTournamentInscriptionsByTeamUsecase } from './domain/usecases/save-tournament-inscriptions-by-team/save-tournament-inscriptions-by-team.usecase';
 import { GetOnlyMembersByTeamUsecase } from './domain/usecases/get-only-members-by-team/get-only-members-by-team.usecase';
 import { CreateTeamAndMembersFromFileUsecase } from './domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
+import { EndMemberParticipationUsecase } from './domain/usecases/end-member-participation/end-member-participation.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -155,6 +156,12 @@ export class TeamsModulesConfig {
       id: 'GetTeamsUsecase',
       kind: GetTeamsUsecase,
       dependencies: ['TeamContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'EndMemberParticipationUsecase',
+      kind: EndMemberParticipationUsecase,
+      dependencies: ['GetOnlyMemberByIdUsecase', 'MemberContract', 'FileAdapter', 'UserContract'],
       strategy: 'singleton',
     });
     container.add({

@@ -25,6 +25,11 @@ export class GetMembersByTeamUsecase extends Usecase<string, Array<MemberDescrip
         }
       )
       .pipe(
+        map((members: Array<MemberEntity>) => {
+          return members.filter((c) => {
+            return !c.retirementDate;
+          });
+        }),
         mergeMap((members: Array<MemberEntity>) => {
           const userIds = members.map((member: MemberEntity) => {
             return member.userId;
@@ -45,7 +50,6 @@ export class GetMembersByTeamUsecase extends Usecase<string, Array<MemberDescrip
             })
           );
         })
-
       );
   }
 }

@@ -26,18 +26,25 @@ export class GetTeamsThatIBelongUsecase extends Usecase<string, Response[]> {
             return of([]);
           }
 
-          return zip(
-            ...response.map((teamParticipation) => {
-              return this.teamContract.getTeamById(teamParticipation.teamId).pipe(
-                map((team) => {
-                  return {
-                    team,
-                    teamParticipation,
-                  };
+          const t = response.filter((item) => !item.retirementDate);
+
+          return t.length
+            ? zip(
+                ...t.map((teamParticipation) => {
+                  return this.teamContract.getTeamById(teamParticipation.teamId).pipe(
+                    map((team) => {
+                      return {
+                        team,
+                        teamParticipation,
+                      };
+                    })
+                  );
                 })
-              );
-            })
-          );
+              )
+            : of([]);
+        }),
+        map((items) => {
+          return items.filter((item) => item.team.status != 'deleted');
         })
       );
   }

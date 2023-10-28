@@ -4,8 +4,66 @@ import { IBaseResponse, Id, TeamParticipationEntity, UserEntity } from '@deporty
 import { UserContract } from '../../domain/contracts/user.constract';
 import { BEARER_TOKEN, USERS_SERVER } from '../teams.constants';
 export class UserRepository extends UserContract {
-  getUserByUniqueFieldsUsecase(document: string, email: string): Observable<UserEntity[]> {
+  getTeamParticipationByProperties(userId: string, teamId: string, initDate: Date): Observable<TeamParticipationEntity | undefined> {
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<TeamParticipationEntity | undefined>>(
+          `${USERS_SERVER}/${userId}/teams-participations/by-properties`,
 
+          {
+            params: {
+              userId,
+              teamId,
+              initDate: initDate.toISOString(),
+            },
+            headers: {
+              Authorization: `Bearer ${BEARER_TOKEN}`,
+            },
+          }
+        )
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<TeamParticipationEntity | undefined>;
+          if (data.meta.code === 'USER:GET-PARTICIPATIONS:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+  editTeamParticipation(userId: string, teamParticipationEntity: TeamParticipationEntity): Observable<TeamParticipationEntity> {
+    return new Observable((observer) => {
+      axios
+        .patch<IBaseResponse<TeamParticipationEntity>>(
+          `${USERS_SERVER}/${userId}/team-participation/${teamParticipationEntity.id}`,
+
+          { ...teamParticipationEntity },
+
+          {
+            headers: {
+              Authorization: `Bearer ${BEARER_TOKEN}`,
+            },
+          }
+        )
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<TeamParticipationEntity>;
+          if (data.meta.code === 'USER:TEAM-PARTICIPATION-UPDATED:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+  getUserByUniqueFieldsUsecase(document: string, email: string): Observable<UserEntity[]> {
     return new Observable((observer) => {
       axios
         .get<IBaseResponse<UserEntity[]>>(`${USERS_SERVER}/get-user-by-unique-fields/${document}/${email}`, {
@@ -16,13 +74,12 @@ export class UserRepository extends UserContract {
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<UserEntity[]>;
 
-          
           if (data.meta.code === 'USER:GET-USER-BY-UNIQUE-FIELDS:SUCCESS') {
             observer.next(data.data);
           } else {
             observer.error();
           }
-          
+
           observer.complete();
         })
         .catch((error: any) => {

@@ -23,6 +23,8 @@ import { GetUserByUniqueFieldsUsecase } from './domain/usecases/get-user-by-uniq
 import { DeleteUserUsecase } from './domain/usecases/delete-user/delete-user.usecase';
 import { DeleteTeamParticipationUsecase } from './domain/usecases/team-participations/delete-team-participation/delete-team-participation.usecase';
 import { GetUserByDocumentUsecase } from './domain/usecases/get-user-by-document/get-user-by-document.usecase';
+import { EditTeamParticipationUsecase } from './domain/usecases/team-participations/edit-team-participation/edit-team-participation.usecase';
+import { GetTeamParticipationByPropertiesUsecase } from './domain/usecases/team-participations/get-team-participation-by-properties/get-team-participation-by-properties.usecase';
 
 export class UserModulesConfig {
   static config(container: Container) {
@@ -121,6 +123,12 @@ export class UserModulesConfig {
       strategy: 'singleton',
     });
     container.add({
+      id: 'EditTeamParticipationUsecase',
+      kind: EditTeamParticipationUsecase,
+      dependencies: ['TeamParticipationContract'],
+      strategy: 'singleton',
+    });
+    container.add({
       id: 'EditUserByIdUsecase',
       kind: EditUserByIdUsecase,
       dependencies: ['UserContract', 'GetUserByIdUsecase', 'FileAdapter'],
@@ -130,6 +138,12 @@ export class UserModulesConfig {
       id: 'GetUserByUniqueFieldsUsecase',
       kind: GetUserByUniqueFieldsUsecase,
       dependencies: ['UserContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetTeamParticipationByPropertiesUsecase',
+      kind: GetTeamParticipationByPropertiesUsecase,
+      dependencies: ['TeamParticipationContract'],
       strategy: 'singleton',
     });
     container.add({

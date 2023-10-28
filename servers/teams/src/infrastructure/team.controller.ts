@@ -32,6 +32,7 @@ import { DeleteMemberByIdUsecase } from '../domain/usecases/delete-member-by-id/
 import { SaveTournamentInscriptionsByTeamUsecase } from '../domain/usecases/save-tournament-inscriptions-by-team/save-tournament-inscriptions-by-team.usecase';
 import { GetOnlyMembersByTeamUsecase } from '../domain/usecases/get-only-members-by-team/get-only-members-by-team.usecase';
 import { CreateTeamAndMembersFromFileUsecase } from '../domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
+import { EndMemberParticipationUsecase } from '../domain/usecases/end-member-participation/end-member-participation.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -245,6 +246,21 @@ export class TeamController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: body,
+      });
+    });
+    router.post(`/:teamId/member/:memberId/end-participation`, (request: Request, response: Response) => {
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'END-MEMBER-PARTICIPATION:SUCCESS',
+      };
+
+      this.handler<EndMemberParticipationUsecase>({
+        container,
+        usecaseId: 'EndMemberParticipationUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: request.params,
       });
     });
     router.get(`/:id/members`, (request: Request, response: Response) => {

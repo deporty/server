@@ -28,6 +28,8 @@ import {
   UserWithDocumentDoesNotExistError,
 } from '../domain/usecases/get-user-by-document/get-user-by-document.usecase';
 import { GetUserByUniqueFieldsUsecase } from '../domain/usecases/get-user-by-unique-fields/get-user-by-unique-fields.usecase';
+import { EditTeamParticipationUsecase } from '../domain/usecases/team-participations/edit-team-participation/edit-team-participation.usecase';
+import { GetTeamParticipationByPropertiesUsecase } from '../domain/usecases/team-participations/get-team-participation-by-properties/get-team-participation-by-properties.usecase';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -84,6 +86,28 @@ export class UserController extends HttpController {
       });
     });
 
+    router.get(`/:userId/teams-participations/by-properties`, (request: Request, response: Response) => {
+      // GetTeamParticipationByPropertiesUsecase
+      const body = {
+        ...request.params,
+        ...request.query,
+        initDate: request.query.initDate ? new Date(request.query.initDate as string) : undefined,
+      };
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'GET-PARTICIPATIONS:SUCCESS',
+      };
+
+      this.handler<GetTeamParticipationByPropertiesUsecase>({
+        container,
+        usecaseId: 'GetTeamParticipationByPropertiesUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
+      });
+    });
+
     router.get(`/:userId/teams-participations`, (request: Request, response: Response) => {
       const userId = request.params.userId;
 
@@ -105,7 +129,7 @@ export class UserController extends HttpController {
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
-      
+
         successCode: 'GET-USER-BY-UNIQUE-FIELDS:SUCCESS',
       };
 
@@ -156,6 +180,30 @@ export class UserController extends HttpController {
       this.handler<DeleteTeamParticipationUsecase>({
         container,
         usecaseId: 'DeleteTeamParticipationUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
+      });
+    });
+    router.patch(`/:userId/team-participation/:teamParticipationId`, (request: Request, response: Response) => {
+      const body = {
+        ...request.params,
+        teamParticipation: {
+          ...request.body,
+          id: request.params.teamParticipationId,
+          initDate: request.body.initDate ? new Date(request.body.initDate) : undefined,
+          retirementDate: request.body.retirementDate ? new Date(request.body.retirementDate) : undefined,
+          enrollmentDate: request.body.enrollmentDate ? new Date(request.body.enrollmentDate) : undefined,
+        },
+      };
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'TEAM-PARTICIPATION-UPDATED:SUCCESS',
+      };
+
+      this.handler<EditTeamParticipationUsecase>({
+        container,
+        usecaseId: 'EditTeamParticipationUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: body,

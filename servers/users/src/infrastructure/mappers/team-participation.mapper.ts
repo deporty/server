@@ -1,3 +1,4 @@
+import { formatDateFromJson } from '@deporty-org/core';
 import { TeamParticipationEntity } from '@deporty-org/entities/users';
 import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
@@ -11,20 +12,20 @@ export class TeamParticipationMapper extends Mapper<TeamParticipationEntity> {
       initDate: {
         name: 'init-date',
         from: (date: Timestamp) => {
-          return date ? of(date.toDate()) : of(date);
+          return of(formatDateFromJson(date));
         },
       },
       number: { name: 'number' },
       retirementDate: {
         name: 'retirement-date',
         from: (date: Timestamp) => {
-          return date != null ? of(date.toDate()) : of(date);
+          return of(formatDateFromJson(date));
         },
       },
       enrollmentDate: {
         name: 'enrollment-date',
         from: (date: Timestamp) => {
-          return date != null ? of(date.toDate()) : of(date);
+          return of(formatDateFromJson(date));
         },
       },
       teamId: { name: 'team-id' },

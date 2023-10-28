@@ -1,3 +1,4 @@
+import { formatDateFromJson } from '@deporty-org/core';
 import { MemberEntity } from '@deporty-org/entities/teams';
 import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
@@ -11,20 +12,22 @@ export class MemberMapper extends Mapper<MemberEntity> {
       initDate: {
         name: 'init-date',
         from: (date: Timestamp) => {
-          return date ? of(date.toDate()) : of(date);
+          console.log('Jabon ',date, date.toDate());
+          
+          return of(formatDateFromJson(date));
         },
       },
       number: { name: 'number' },
       retirementDate: {
         name: 'retirement-date',
         from: (date: Timestamp) => {
-          return date != null ? of(date.toDate()) : of(date);
+          return of(formatDateFromJson(date));
         },
       },
       enrollmentDate: {
         name: 'enrollment-date',
         from: (date: Timestamp) => {
-          return date != null ? of(date.toDate()) : of(date);
+          return of(formatDateFromJson(date));
         },
       },
       teamId: { name: 'team-id' },
