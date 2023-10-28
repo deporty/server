@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatDateFromJson = void 0;
 const firestore_1 = require("firebase-admin/firestore");
 function formatDateFromJson(date, defaultValue = undefined) {
+    if (!date) {
+        return defaultValue;
+    }
     if (typeof date === 'string') {
         if (date != '') {
             return new Date(date);
