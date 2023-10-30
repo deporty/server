@@ -32,8 +32,6 @@ export class EndMemberParticipationUsecase extends Usecase<Param, MemberEntity> 
       })
       .pipe(
         mergeMap((prevMember) => {
-          console.log('Editionnn ');
-          console.log(prevMember);
 
           const newMember: MemberEntity = {
             ...prevMember,
@@ -50,14 +48,10 @@ export class EndMemberParticipationUsecase extends Usecase<Param, MemberEntity> 
             )
             .pipe(
               mergeMap(() => {
-                console.log('Lo que se busca en la tabal de usuarios');
-                console.log(newMember.userId, newMember.teamId, newMember.initDate);
 
                 return this.userContract.getTeamParticipationByProperties(newMember.userId, newMember.teamId, newMember.initDate!).pipe(
                   mergeMap((teamParticipation) => {
                     if (teamParticipation) {
-                      console.log('Edicion para el usuario ');
-                      console.log(teamParticipation);
 
                       return this.userContract.editTeamParticipation(newMember.userId, {
                         ...teamParticipation,

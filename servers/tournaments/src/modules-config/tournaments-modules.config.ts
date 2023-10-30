@@ -75,6 +75,7 @@ import { GetRunningTournamentsWhereExistsTeamIdUsecase } from '../domain/usecase
 import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-report-by-tournament/get-cards-report-by-tournament.usecase';
 import { GetFullIntergroupMatchesUsecase } from '../domain/usecases/get-full-intergroup-matches/get-full-intergroup-matches.usecase-';
 import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain/usecases/get-cards-report-grouped-by-team-and-date-by-tournament/get-cards-report-grouped-by-team-and-date-by-tournament.usecase';
+import { CalculatePositionTableOfGroupUsecase } from '../domain/usecases/calculate-position-table-of-group/calculate-position-table-of-group.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -379,17 +380,30 @@ export class TournamentsModulesConfig {
       strategy: 'singleton',
     });
     container.add({
+      id: 'CalculatePositionTableOfGroupUsecase',
+      kind: CalculatePositionTableOfGroupUsecase,
+      dependencies: [
+        'UpdatePositionTableUsecase',
+        'GetGroupByIdUsecase',
+        'OrganizationContract',
+        'GetGroupMatchesUsecase',
+        'UpdateGroupUsecase',
+      ],
+      strategy: 'singleton',
+    });
+    container.add({
       id: 'EditMatchInsideGroupUsecase',
       kind: EditMatchInsideGroupUsecase,
       dependencies: [
         'MatchContract',
         'FileAdapter',
         'GetMatchByIdUsecase',
-        'UpdatePositionTableUsecase',
+        // 'UpdatePositionTableUsecase',
         'GetGroupByIdUsecase',
-        'UpdateGroupUsecase',
+        // 'UpdateGroupUsecase',
         'GetTournamentByIdUsecase',
         'OrganizationContract',
+        'CalculatePositionTableOfGroupUsecase',
       ],
       strategy: 'singleton',
     });
@@ -496,10 +510,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GetFullIntergroupMatchesUsecase',
       kind: GetFullIntergroupMatchesUsecase,
-      dependencies: [
-        'GetIntergroupMatchesUsecase',
-        'GetFixtureStagesByTournamentUsecase',
-      ],
+      dependencies: ['GetIntergroupMatchesUsecase', 'GetFixtureStagesByTournamentUsecase'],
       strategy: 'singleton',
     });
 
