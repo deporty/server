@@ -10,6 +10,7 @@ export class OrganizationMapper extends Mapper<OrganizationEntity> {
       NTP: { name: 'NTP' },
       members: { name: 'members' },
       name: { name: 'name' },
+      status: { name: 'status', default: 'active' },
       businessName: { name: 'business-name' },
       iso: {
         name: 'iso',
