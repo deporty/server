@@ -8,6 +8,11 @@ export class GetOrganizationsUsecase extends Usecase<Pagination, Array<Organizat
     super();
   }
   call(params: Pagination): Observable<Array<OrganizationEntity>> {
-    return this.organizationContract.get(params);
+    return this.organizationContract.filter({
+      status: {
+        operator: '==',
+        value: 'active',
+      },
+    });
   }
 }
