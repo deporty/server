@@ -14,7 +14,7 @@ const serversMapper = {
   authorization: {
     port: 10001,
     name: 'authorization',
-    run: true,
+    run: false,
   },
   invoices: {
     port: 10002,
@@ -44,7 +44,7 @@ const serversMapper = {
   tournaments: {
     port: 10007,
     name: 'tournaments',
-    run: true,
+    run: false,
   },
   users: {
     port: 10008,

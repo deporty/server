@@ -64,7 +64,7 @@ class IsAuthorizedUserMiddleware {
     isAuthorized(resources, identifier) {
         if (!resources)
             return false;
-        return resources.filter((x) => x.name == identifier).length == 1;
+        return resources.filter((x) => x.name == identifier).length > 0;
     }
 }
 exports.IsAuthorizedUserMiddleware = IsAuthorizedUserMiddleware;

@@ -62,6 +62,6 @@ export class IsAuthorizedUserMiddleware {
   }
   private isAuthorized(resources: any[], identifier: string) {
     if (!resources) return false;
-    return resources.filter((x) => x.name == identifier).length == 1;
+    return resources.filter((x) => x.name == identifier).length > 0;
   }
 }
