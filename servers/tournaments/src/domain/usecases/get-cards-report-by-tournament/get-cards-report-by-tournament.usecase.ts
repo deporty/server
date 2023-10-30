@@ -87,7 +87,9 @@ export class GetCardsReportByTournamentUsecase extends Usecase<Id, Response[]> {
 
             return p;
           }, []);
-          return response
+        return response.filter((x) => {
+          x.cards.red || x.cards.yellow;
+        });
       })
     );
   }

@@ -394,17 +394,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'EditMatchInsideGroupUsecase',
       kind: EditMatchInsideGroupUsecase,
-      dependencies: [
-        'MatchContract',
-        'FileAdapter',
-        'GetMatchByIdUsecase',
-        // 'UpdatePositionTableUsecase',
-        'GetGroupByIdUsecase',
-        // 'UpdateGroupUsecase',
-        'GetTournamentByIdUsecase',
-        'OrganizationContract',
-        'CalculatePositionTableOfGroupUsecase',
-      ],
+      dependencies: ['MatchContract', 'FileAdapter', 'GetTournamentByIdUsecase', 'CalculatePositionTableOfGroupUsecase'],
       strategy: 'singleton',
     });
 
