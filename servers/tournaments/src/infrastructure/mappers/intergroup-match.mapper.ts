@@ -10,6 +10,8 @@ export class IntergroupMatchMapper extends Mapper<IntergroupMatchEntity> {
     super();
     this.attributesMapper = {
       fixtureStageId: { name: 'fixture-stage-id' },
+      teamAGroupId: { name: 'team-a-group-id' },
+      teamBGroupId: { name: 'team-b-group-id' },
       match: {
         name: 'match',
         from: (val: any) => {

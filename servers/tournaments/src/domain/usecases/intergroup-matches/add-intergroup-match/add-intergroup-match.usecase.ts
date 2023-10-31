@@ -10,12 +10,11 @@ export interface Param {
   fixtureStageId: string;
   teamAId: Id;
   teamBId: Id;
+  teamAGroupId: string;
+  teamBGroupId: string;
 }
 
-export class AddIntergroupMatchUsecase extends Usecase<
-  Param,
-  IntergroupMatchEntity
-> {
+export class AddIntergroupMatchUsecase extends Usecase<Param, IntergroupMatchEntity> {
   constructor(private intergroupMatchContract: IntergroupMatchContract) {
     super();
   }
@@ -23,6 +22,9 @@ export class AddIntergroupMatchUsecase extends Usecase<
   call(param: Param): Observable<IntergroupMatchEntity> {
     const r: IntergroupMatchEntity = {
       fixtureStageId: param.fixtureStageId,
+      teamAGroupId: param.teamAGroupId,
+      teamBGroupId: param.teamBGroupId,
+
       match: {
         status: 'editing',
         teamAId: param.teamAId,
