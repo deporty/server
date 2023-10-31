@@ -10,8 +10,8 @@ export interface Param {
   fixtureStageId: string;
   teamAId: Id;
   teamBId: Id;
-  teamAGroupId: string;
-  teamBGroupId: string;
+  teamAGroupId: Id;
+  teamBGroupId: Id;
 }
 
 export class AddIntergroupMatchUsecase extends Usecase<Param, IntergroupMatchEntity> {
