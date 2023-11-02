@@ -629,7 +629,7 @@ export class TournamentController extends HttpController {
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
-        successCode: 'GET-GROUPS-IN-FIXTURE-STAGES:SUCCESS',
+        successCode: 'GET-GROUPED-CARDS-REPORT:SUCCESS',
       };
 
       this.handler<GetCardsReportGroupedByTeamAndDateByTournamentUsecase>({

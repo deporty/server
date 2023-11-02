@@ -48,11 +48,15 @@ export class GetCardsReportByTournamentUsecase extends Usecase<Id, Response[]> {
             prev = [...prev, ...curr.matches];
             return prev;
           }, []);
-          return allMatches.filter((matches) => matches.match.status in ['completed', 'in-review']).map((matches) => matches.match);
+
+          return allMatches
+            .filter((intergroupMatch) => ['completed', 'in-review'].includes(intergroupMatch.match.status))
+            .map((intergroupMatch) => intergroupMatch.match);
         })
       );
     return zip($groupMatches, $intergroupMatches, $mainDrawMatches).pipe(
       map(([groupMatches, intergroupMatches, mainDrawMatches]) => {
+
         const response: Response[] = [...groupMatches, ...intergroupMatches, ...mainDrawMatches]
           .map((m) => {
             const mapStadistics = (tStadistics: StadisticSpecification[] | undefined) =>
@@ -87,8 +91,9 @@ export class GetCardsReportByTournamentUsecase extends Usecase<Id, Response[]> {
 
             return p;
           }, []);
+
         return response.filter((x) => {
-          x.cards.red || x.cards.yellow;
+          return x.cards.red || x.cards.yellow;
         });
       })
     );

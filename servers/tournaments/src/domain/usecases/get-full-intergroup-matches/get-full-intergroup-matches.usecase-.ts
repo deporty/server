@@ -37,16 +37,26 @@ export class GetFullIntergroupMatchesUsecase extends Usecase<Param, Response> {
               states: status,
 
               tournamentId: param.tournamentId,
-            })
+            }).pipe(
+              map((matches)=>{
+                return {
+                  ...stage,
+                  matches
+                }
+              })
+            )
           );
         }
         return response.length > 0 ? zip(...response) : of([]);
       }),
-      map((x: any) => {
+      map((x: any[]) => {
         const response: Response = {};
+       
+        
+        
         for (const stage of x) {
           if (stage.id && !(stage.id in response)) {
-            response[stage.id || ''] = {
+            response[stage.id] = {
               order: stage.order,
               matches: stage.matches,
             };
