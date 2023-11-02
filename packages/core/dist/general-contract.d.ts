@@ -2,7 +2,7 @@ import { Id } from '@deporty-org/entities';
 import { Firestore } from 'firebase-admin/firestore';
 import { Observable } from 'rxjs';
 import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
-import { Filters } from '@scifamek-open-source/iraca/domain';
+import { CompositeFilters, Filters } from '@scifamek-open-source/iraca/domain';
 export interface RouteParam {
     collection: string;
     id?: string;
@@ -14,7 +14,7 @@ export declare abstract class GeneralContract<AccessParams, Entity> {
     innerSave(accessParams: Array<RouteParam>, entity: Entity): Observable<string>;
     innerUpdate(accessParams: Array<RouteParam>, entity: Entity): Observable<void>;
     abstract delete(accessParams: AccessParams, id: Id): Observable<void>;
-    abstract filter(accessParams: AccessParams, filter: Filters): Observable<Array<Entity>>;
+    abstract filter(accessParams: AccessParams, filter: Filters | CompositeFilters): Observable<Array<Entity>>;
     abstract get(accessParams: AccessParams, pagination?: {
         pageNumber: number;
         pageSize: number;
@@ -24,7 +24,7 @@ export declare abstract class GeneralContract<AccessParams, Entity> {
     abstract update(accessParams: AccessParams, entity: Entity): Observable<void>;
     protected innerDelete(accessParams: Array<RouteParam>): Observable<void>;
     protected innerFilter(accessParams: Array<RouteParam>, config?: {
-        filters?: Filters;
+        filters?: Filters | CompositeFilters;
         pagination?: {
             pageSize: number;
             pageNumber: number;

@@ -4,7 +4,7 @@ import { from, Observable, of, zip } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { filterWizard } from './filter-query-manager';
 import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
-import { Filters } from '@scifamek-open-source/iraca/domain';
+import { CompositeFilters, Filters } from '@scifamek-open-source/iraca/domain';
 import { unifyData } from '@scifamek-open-source/iraca/helpers';
 
 export interface RouteParam {
@@ -41,7 +41,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
   }
 
   abstract delete(accessParams: AccessParams, id: Id): Observable<void>;
-  abstract filter(accessParams: AccessParams, filter: Filters): Observable<Array<Entity>>;
+  abstract filter(accessParams: AccessParams, filter: Filters | CompositeFilters): Observable<Array<Entity>>;
   abstract get(
     accessParams: AccessParams,
     pagination?: {
@@ -69,7 +69,7 @@ export abstract class GeneralContract<AccessParams, Entity> {
   protected innerFilter(
     accessParams: Array<RouteParam>,
     config?: {
-      filters?: Filters;
+      filters?: Filters | CompositeFilters;
       pagination?: { pageSize: number; pageNumber: number };
     }
   ): Observable<Entity[]> {

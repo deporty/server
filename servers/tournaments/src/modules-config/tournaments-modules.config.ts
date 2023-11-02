@@ -76,6 +76,8 @@ import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-
 import { GetFullIntergroupMatchesUsecase } from '../domain/usecases/get-full-intergroup-matches/get-full-intergroup-matches.usecase-';
 import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain/usecases/get-cards-report-grouped-by-team-and-date-by-tournament/get-cards-report-grouped-by-team-and-date-by-tournament.usecase';
 import { CalculatePositionTableOfGroupUsecase } from '../domain/usecases/calculate-position-table-of-group/calculate-position-table-of-group.usecase';
+import { GetIntergroupMatchesByGroupIdUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-matches-by-group-id/get-intergroup-matches-by-group-id.usecase';
+import { GetIntergroupMatchByIdUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-match-by-id/get-intergroup-match-by-id.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -387,6 +389,7 @@ export class TournamentsModulesConfig {
         'GetGroupByIdUsecase',
         'OrganizationContract',
         'GetGroupMatchesUsecase',
+        'GetIntergroupMatchesByGroupIdUsecase',
         'UpdateGroupUsecase',
       ],
       strategy: 'singleton',
@@ -402,6 +405,12 @@ export class TournamentsModulesConfig {
       id: 'PublishAllMatchesByGroupUsecase',
       kind: PublishAllMatchesByGroupUsecase,
       dependencies: ['GetGroupMatchesUsecase', 'EditMatchInsideGroupUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetIntergroupMatchesByGroupIdUsecase',
+      kind: GetIntergroupMatchesByGroupIdUsecase,
+      dependencies: ['IntergroupMatchContract'],
       strategy: 'singleton',
     });
 
@@ -503,17 +512,34 @@ export class TournamentsModulesConfig {
       dependencies: ['GetIntergroupMatchesUsecase', 'GetFixtureStagesByTournamentUsecase'],
       strategy: 'singleton',
     });
+    container.add({
+      id: 'GetIntergroupMatchByIdUsecase',
+      kind: GetIntergroupMatchByIdUsecase,
+      dependencies: ['IntergroupMatchContract'],
+      strategy: 'singleton',
+    });
 
     container.add({
       id: 'EditIntergroupMatchUsecase',
       kind: EditIntergroupMatchUsecase,
-      dependencies: ['IntergroupMatchContract', 'FileAdapter'],
+      dependencies: [
+        'IntergroupMatchContract',
+        'GetIntergroupMatchByIdUsecase',
+        'FileAdapter',
+        'CalculatePositionTableOfGroupUsecase',
+        'GetTournamentByIdUsecase',
+      ],
       strategy: 'singleton',
     });
     container.add({
       id: 'DeleteIntergroupMatchUsecase',
       kind: DeleteIntergroupMatchUsecase,
-      dependencies: ['IntergroupMatchContract', 'FileAdapter'],
+      dependencies: [
+        'IntergroupMatchContract',
+        'GetIntergroupMatchByIdUsecase',
+        'GetTournamentByIdUsecase',
+        'CalculatePositionTableOfGroupUsecase',
+      ],
       strategy: 'singleton',
     });
     container.add({

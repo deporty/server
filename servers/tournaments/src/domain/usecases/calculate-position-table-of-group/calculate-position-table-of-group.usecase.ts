@@ -8,6 +8,7 @@ import { OrganizationContract } from '../../contracts/organization.contract';
 import { DEFAULT_FIXTURE_STAGES_CONFIGURATION, FixtureStagesConfiguration } from '@deporty-org/entities/organizations';
 import { map, mergeMap } from 'rxjs/operators';
 import { UpdateGroupUsecase } from '../groups/update-group/update-group.usecase';
+import { GetIntergroupMatchesByGroupIdUsecase } from '../intergroup-matches/get-intergroup-matches-by-group-id/get-intergroup-matches-by-group-id.usecase';
 // import { GetIntergroupMatchesUsecase } from '../intergroup-matches/get-intergroup-matches/get-intergroup-match.usecase';
 
 export interface Param {
@@ -24,6 +25,7 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
     private getGroupByIdUsecase: GetGroupByIdUsecase,
     private organizationContract: OrganizationContract,
     private getGroupMatchesUsecase: GetGroupMatchesUsecase,
+    private getIntergroupMatchesByGroupIdUsecase: GetIntergroupMatchesByGroupIdUsecase,
     // private getIntergroupMatchesUsecase: GetIntergroupMatchesUsecase,
     private updateGroupUsecase: UpdateGroupUsecase
   ) {
@@ -42,10 +44,14 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
       this.getGroupMatchesUsecase.call({
         ...param,
         states: ['completed', 'in-review'],
+      }),
+      this.getIntergroupMatchesByGroupIdUsecase.call({
+        ...param,
+        states: ['completed', 'in-review'],
       })
     ).pipe(
-      mergeMap(([tournamentLayout, group, matches]) => {
-
+      mergeMap(([tournamentLayout, group, groupMatches, intergroupMatches]) => {
+        const matches = [...groupMatches, ...intergroupMatches.map((x) => x.match)];
         const config = tournamentLayout.fixtureStagesConfiguration || DEFAULT_FIXTURE_STAGES_CONFIGURATION;
 
         const meta = {
@@ -60,8 +66,9 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
         };
 
         let lastPositionTable = of(intiPositionTable);
+      
         if (matches.length) {
-          lastPositionTable = this.resolve(matches, 0, group, intiPositionTable, config, meta);
+          lastPositionTable = this.resolve(matches, 0, group.teamIds, intiPositionTable, config, meta);
         }
         return zip(lastPositionTable, of(group));
       }),
@@ -89,7 +96,7 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
   resolve(
     matches: MatchEntity[],
     index: number,
-    group: GroupEntity,
+    teamIds: Id[],
     positionsTable: PositionsTable,
     config: FixtureStagesConfiguration,
     meta: any
@@ -97,7 +104,7 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
     const match = matches[index];
     return this.updatePositionTableUsecase
       .call({
-        availableTeams: group.teamIds,
+        availableTeams: teamIds,
         match,
         positionsTable,
         tieBreakingOrder: config.tieBreakingOrder,
@@ -108,7 +115,7 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
       .pipe(
         mergeMap((newPositionTable) => {
           if (index + 1 < matches.length) {
-            return this.resolve(matches, index + 1, group, newPositionTable, config, meta);
+            return this.resolve(matches, index + 1, teamIds, newPositionTable, config, meta);
           }
           return of(newPositionTable);
         })

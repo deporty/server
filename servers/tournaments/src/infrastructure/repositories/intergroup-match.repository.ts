@@ -1,7 +1,7 @@
 import { IntergroupMatchEntity } from '@deporty-org/entities/tournaments';
 import { Firestore } from 'firebase-admin/firestore';
 import { Observable } from 'rxjs';
-import { Filters } from '@scifamek-open-source/iraca/domain';
+import { CompositeFilters, Filters } from '@scifamek-open-source/iraca/domain';
 
 import {
   FIXTURE_STAGES_ENTITY,
@@ -56,7 +56,7 @@ export class IntergroupMatchRepository extends IntergroupMatchContract {
   }
   filter(
     accessParams: AccessParams,
-    filters: Filters
+    filters: Filters | CompositeFilters
   ): Observable<IntergroupMatchEntity[]> {
     return super.innerFilter(
       [
