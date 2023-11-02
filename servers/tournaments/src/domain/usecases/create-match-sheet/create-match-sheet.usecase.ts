@@ -1,14 +1,14 @@
-import { TeamEntity } from '@deporty-org/entities';
+import { MemberDescriptionType, TeamEntity } from '@deporty-org/entities';
 import { OrganizationEntity, TournamentLayoutEntity } from '@deporty-org/entities/organizations';
 import { MatchEntity, StadisticSpecification, TournamentEntity } from '@deporty-org/entities/tournaments';
+import { Usecase } from '@scifamek-open-source/iraca/domain';
+import { downloadImageFromURL } from '@scifamek-open-source/iraca/helpers';
+import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import { Observable, from, of, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { OrganizationContract } from '../../contracts/organization.contract';
 import { TeamContract } from '../../contracts/team.contract';
 import { GetTournamentByIdUsecase } from '../get-tournament-by-id/get-tournament-by-id.usecase';
-import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
-import { downloadImageFromURL } from '@scifamek-open-source/iraca/helpers';
 
 const pdfmake = require('pdfmake');
 const moment = require('moment');
@@ -131,11 +131,26 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
     organization: OrganizationEntity;
     tournamentLayout: TournamentLayoutEntity;
     fullMembers: {
-      teamA: any;
-      teamB: any;
+      teamA: MemberDescriptionType[];
+      teamB: MemberDescriptionType[];
     };
   }) {
     const { match, tournament, organization, teamA, teamB, tournamentLayout, fullMembers } = param;
+
+    const technicalDirectorA = Object.entries(fullMembers.teamA)
+      .filter(([key, value]) => {
+        const t = Array.isArray(value.member.kindMember) ? value.member.kindMember : [value.member.kindMember];
+        return t.includes('technical-director');
+      })
+      .map((item) => item[1])
+      .pop();
+    const technicalDirectorB = Object.entries(fullMembers.teamB)
+      .filter(([key, value]) => {
+        const t = Array.isArray(value.member.kindMember) ? value.member.kindMember : [value.member.kindMember];
+        return t.includes('technical-director');
+      })
+      .map((item) => item[1])
+      .pop();
 
     const { $shieldA, $shieldB, $brandIso, $organizationIso } = this.getPhotosFromMatch({
       match,
@@ -178,7 +193,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
             this.getExtraGoles(match),
             this.getConsolidatedResults(match),
 
-            this.createTechnicalDirector(match),
+            this.createTechnicalDirector(match, technicalDirectorA, technicalDirectorB),
             {
               margin: [0, 10, 0, 10],
               table: {
@@ -525,7 +540,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
     return response;
   }
 
-  createTechnicalDirector(match: MatchEntity) {
+  createTechnicalDirector(match: MatchEntity, technicalDirectorA?: MemberDescriptionType, technicalDirectorB?: MemberDescriptionType) {
     return {
       margin: [0, 10, 0, 10],
       table: {
@@ -546,14 +561,12 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
             },
           ],
           [
-            '',
-            '',
-            // (match.teamA.technicalDirector?.user.name || '') +
-            //   ' ' +
-            //   (match.teamA.technicalDirector?.user.lastName || ''),
-            // (match.teamB.technicalDirector?.user.name || '') +
-            //   ' ' +
-            //   (match.teamB.technicalDirector?.user.lastName || ''),
+            technicalDirectorA
+              ? `${technicalDirectorA.user.firstName} ${technicalDirectorA.user.secondName} ${technicalDirectorA.user.firstLastName} ${technicalDirectorA.user.secondLastName}`
+              : '',
+            technicalDirectorB
+              ? `${technicalDirectorB.user.firstName} ${technicalDirectorB.user.secondName} ${technicalDirectorB.user.firstLastName} ${technicalDirectorB.user.secondLastName}`
+              : '',
           ],
         ],
       },
