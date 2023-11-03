@@ -78,6 +78,7 @@ import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain
 import { CalculatePositionTableOfGroupUsecase } from '../domain/usecases/calculate-position-table-of-group/calculate-position-table-of-group.usecase';
 import { GetIntergroupMatchesByGroupIdUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-matches-by-group-id/get-intergroup-matches-by-group-id.usecase';
 import { GetIntergroupMatchByIdUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-match-by-id/get-intergroup-match-by-id.usecase';
+import { GetAllMatchesInsideTournamentUsecase } from '../domain/usecases/get-all-matches-inside-tournament/get-all-matches-inside-tournament.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -271,13 +272,13 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GetMarkersTableUsecase',
       kind: GetMarkersTableUsecase,
-      dependencies: ['GetAllGroupMatchesByTournamentUsecase'],
+      dependencies: ['GetAllMatchesInsideTournamentUsecase'],
       strategy: 'singleton',
     });
     container.add({
       id: 'GetAllMatchesGroupedByDateUsecase',
       kind: GetAllMatchesGroupedByDateUsecase,
-      dependencies: ['GetAllGroupMatchesByTournamentUsecase'],
+      dependencies: ['GetAllMatchesInsideTournamentUsecase'],
       strategy: 'singleton',
     });
 
@@ -666,9 +667,15 @@ export class TournamentsModulesConfig {
       strategy: 'singleton',
     });
     container.add({
+      id: 'GetAllMatchesInsideTournamentUsecase',
+      kind: GetAllMatchesInsideTournamentUsecase,
+      dependencies: ['GetAllGroupMatchesByTournamentUsecase', 'GetMainDrawNodeMatchesoverviewUsecase', 'GetFullIntergroupMatchesUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
       id: 'GetCardsReportByTournamentUsecase',
       kind: GetCardsReportByTournamentUsecase,
-      dependencies: ['GetAllGroupMatchesByTournamentUsecase', 'GetMainDrawNodeMatchesoverviewUsecase', 'GetFullIntergroupMatchesUsecase'],
+      dependencies: ['GetAllMatchesInsideTournamentUsecase'],
       strategy: 'singleton',
     });
     container.add({

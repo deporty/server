@@ -1,10 +1,8 @@
-import { Id, IntergroupMatchEntity, StadisticSpecification } from '@deporty-org/entities';
+import { Id, StadisticSpecification } from '@deporty-org/entities';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
-import { Observable, zip } from 'rxjs';
-import { GetAllGroupMatchesByTournamentUsecase } from '../get-all-group-matches-by-tournament/get-all-group-matches-by-tournament.usecase';
-import { GetMainDrawNodeMatchesoverviewUsecase } from '../get-main-draw-node-matches-overview/get-main-draw-node-matches-overview.usecase';
-import { GetFullIntergroupMatchesUsecase } from '../get-full-intergroup-matches/get-full-intergroup-matches.usecase-';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GetAllMatchesInsideTournamentUsecase } from '../get-all-matches-inside-tournament/get-all-matches-inside-tournament.usecase';
 
 export interface Response {
   teamId: string;
@@ -17,93 +15,57 @@ export interface Response {
 }
 
 export class GetCardsReportByTournamentUsecase extends Usecase<Id, Response[]> {
-  constructor(
-    private getAllGroupMatchesByTournamentUsecase: GetAllGroupMatchesByTournamentUsecase,
-
-    private getMainDrawNodeMatchesoverviewUsecase: GetMainDrawNodeMatchesoverviewUsecase,
-    private getFullIntergroupMatchesUsecase: GetFullIntergroupMatchesUsecase
-  ) {
+  constructor(private getAllMatchesInsideTournamentUsecase: GetAllMatchesInsideTournamentUsecase) {
     super();
   }
   call(tournamentId: string): Observable<Response[]> {
-    console.log('Tournament Id: ', tournamentId);
 
-    const $groupMatches = this.getAllGroupMatchesByTournamentUsecase.call({
-      tournamentId,
-      status: ['completed', 'in-review'],
-    });
-
-    const $mainDrawMatches = this.getMainDrawNodeMatchesoverviewUsecase.call(tournamentId).pipe(
-      map((matches) => {
-        return matches.filter((matches) => matches.match.status in ['completed', 'in-review']).map((matches) => matches.match);
-      })
-    );
-
-    const $intergroupMatches = this.getFullIntergroupMatchesUsecase
+    return this.getAllMatchesInsideTournamentUsecase
       .call({
         tournamentId,
         status: ['completed', 'in-review'],
       })
       .pipe(
-        map((matches) => {
-          const allMatches = Object.values(matches).reduce((prev: IntergroupMatchEntity[], curr) => {
-            prev = [...prev, ...curr.matches];
-            return prev;
-          }, []);
+        map((data) => {
+          const response: Response[] = data
+            .map((m) => {
+              const mapStadistics = (tStadistics: StadisticSpecification[] | undefined) =>
+                tStadistics?.map((t) => ({
+                  memberId: t.memberId,
+                  cards: {
+                    red: t.totalRedCards,
+                    yellow: t.totalYellowCards,
+                  },
+                }));
 
-          return allMatches
-            .filter((intergroupMatch) => ['completed', 'in-review'].includes(intergroupMatch.match.status))
-            .map((intergroupMatch) => intergroupMatch.match);
+              const teamA =
+                mapStadistics(m.stadistics?.teamA)?.map((x) => {
+                  return {
+                    ...x,
+                    teamId: m.teamAId,
+                    date: m.date,
+                  };
+                }) || [];
+              const teamB =
+                mapStadistics(m.stadistics?.teamB)?.map((x) => {
+                  return {
+                    ...x,
+                    teamId: m.teamBId,
+                    date: m.date,
+                  };
+                }) || [];
+              return [...teamA, ...teamB];
+            })
+            .reduce((p, c) => {
+              p = [...p, ...c];
+
+              return p;
+            }, []);
+
+          return response.filter((x) => {
+            return x.cards.red || x.cards.yellow;
+          });
         })
       );
-    return zip($groupMatches, $intergroupMatches, $mainDrawMatches).pipe(
-      map(([groupMatches, intergroupMatches, mainDrawMatches]) => {
-        console.log(
-          'el que buscamos',
-          groupMatches.filter(
-            (groupMatches) => groupMatches.teamAId == 'xImJIV2r6hHRRhGcY3Td' || groupMatches.teamBId == 'xImJIV2r6hHRRhGcY3Td'
-          )
-        );
-
-        const response: Response[] = [...groupMatches, ...intergroupMatches, ...mainDrawMatches]
-          .map((m) => {
-            const mapStadistics = (tStadistics: StadisticSpecification[] | undefined) =>
-              tStadistics?.map((t) => ({
-                memberId: t.memberId,
-                cards: {
-                  red: t.totalRedCards,
-                  yellow: t.totalYellowCards,
-                },
-              }));
-
-            const teamA =
-              mapStadistics(m.stadistics?.teamA)?.map((x) => {
-                return {
-                  ...x,
-                  teamId: m.teamAId,
-                  date: m.date,
-                };
-              }) || [];
-            const teamB =
-              mapStadistics(m.stadistics?.teamB)?.map((x) => {
-                return {
-                  ...x,
-                  teamId: m.teamBId,
-                  date: m.date,
-                };
-              }) || [];
-            return [...teamA, ...teamB];
-          })
-          .reduce((p, c) => {
-            p = [...p, ...c];
-
-            return p;
-          }, []);
-
-        return response.filter((x) => {
-          return x.cards.red || x.cards.yellow;
-        });
-      })
-    );
   }
 }

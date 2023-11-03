@@ -29,6 +29,9 @@ export class GetAllGroupMatchesByTournamentUsecase extends Usecase<
   }
 
   call(param: Param): Observable<MatchEntity[]> {
+
+    const status = param.status || ['completed', 'editing', 'in-review', 'published', 'running'];
+
     return this.getFixtureStagesByTournamentUsecase
       .call(param.tournamentId)
       .pipe(
@@ -41,7 +44,7 @@ export class GetAllGroupMatchesByTournamentUsecase extends Usecase<
           const $groupMatches: Observable<MatchEntity[]> = this.getGroupMatches(
             groups,
             param.tournamentId,
-            param.status
+            status
           );
           return $groupMatches;
         })

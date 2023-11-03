@@ -3,7 +3,7 @@ import { MatchEntity, StadisticSpecification, Stadistics } from '@deporty-org/en
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
-import { GetAllGroupMatchesByTournamentUsecase } from '../get-all-group-matches-by-tournament/get-all-group-matches-by-tournament.usecase';
+import { GetAllMatchesInsideTournamentUsecase } from '../get-all-matches-inside-tournament/get-all-matches-inside-tournament.usecase';
 
 export interface StadisticResume {
   goals: number;
@@ -12,15 +12,12 @@ export interface StadisticResume {
 }
 
 export class GetMarkersTableUsecase extends Usecase<string, StadisticResume[]> {
-  constructor(private getAllGroupMatchesByTournamentUsecase: GetAllGroupMatchesByTournamentUsecase) {
+  constructor(private getAllMatchesInsideTournamentUsecase: GetAllMatchesInsideTournamentUsecase) {
     super();
   }
 
   call(tournamentId: string): Observable<StadisticResume[]> {
-    return this.getAllGroupMatchesByTournamentUsecase.call({ tournamentId, status: ['completed', 'in-review', 'published'] }).pipe(
-      map((matches: MatchEntity[]) => {
-        return matches.filter((m) => m.status != 'editing');
-      }),
+    return this.getAllMatchesInsideTournamentUsecase.call({ tournamentId, status: ['completed', 'in-review'] }).pipe(
       map((matches: MatchEntity[]) => {
         const scorers: StadisticResume[] = [];
 

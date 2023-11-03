@@ -57,7 +57,10 @@ export class GenerateMainDrawFromSchemaUsecase extends Usecase<Id, NodeMatchEnti
 
   call(tournamentId: Id): Observable<NodeMatchEntity[]> {
     const $tournament = this.getTournamentByIdUsecase.call(tournamentId);
-    const $nodeMatches = this.getMainDrawNodeMatchesoverviewUsecase.call(tournamentId);
+    const $nodeMatches = this.getMainDrawNodeMatchesoverviewUsecase.call({
+      tournamentId,
+      status: ['completed', 'editing', 'in-review', 'published', 'running'],
+    });
     return $nodeMatches.pipe(
       mergeMap((nodeMatches: NodeMatchEntity[]) => {
         if (nodeMatches.length > 0) {

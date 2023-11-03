@@ -1164,6 +1164,7 @@ export class TournamentController extends HttpController {
 
     router.get(`/:id/main-draw`, (request: Request, response: Response) => {
       const tournamentId = request.params.id;
+      
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -1178,7 +1179,7 @@ export class TournamentController extends HttpController {
         usecaseId: 'GetMainDrawNodeMatchesoverviewUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: tournamentId,
+        usecaseParam: {tournamentId},
       });
     });
 

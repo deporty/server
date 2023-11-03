@@ -2,20 +2,20 @@ import { Id, MatchEntity } from '@deporty-org/entities';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
-import { GetAllGroupMatchesByTournamentUsecase } from '../get-all-group-matches-by-tournament/get-all-group-matches-by-tournament.usecase';
+import { GetAllMatchesInsideTournamentUsecase } from '../get-all-matches-inside-tournament/get-all-matches-inside-tournament.usecase';
 
 const moment = require('moment');
 const defaultFormat = 'dddd D MMM YYYY';
 
 export class GetAllMatchesGroupedByDateUsecase extends Usecase<Id, any> {
   constructor(
-    private getAllGroupMatchesByTournamentUsecase: GetAllGroupMatchesByTournamentUsecase
+    private getAllMatchesInsideTournamentUsecase: GetAllMatchesInsideTournamentUsecase,
   ) {
     super();
   }
 
   call(tournamentId: Id): Observable<any> {
-    return this.getAllGroupMatchesByTournamentUsecase
+    return this.getAllMatchesInsideTournamentUsecase
       .call({ tournamentId, status: ['completed', 'in-review', 'published'] })
       .pipe(
         map((matches: MatchEntity[]) => {
