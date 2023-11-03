@@ -26,6 +26,8 @@ export class GetCardsReportByTournamentUsecase extends Usecase<Id, Response[]> {
     super();
   }
   call(tournamentId: string): Observable<Response[]> {
+    console.log('Tournament Id: ', tournamentId);
+
     const $groupMatches = this.getAllGroupMatchesByTournamentUsecase.call({
       tournamentId,
       status: ['completed', 'in-review'],
@@ -56,6 +58,12 @@ export class GetCardsReportByTournamentUsecase extends Usecase<Id, Response[]> {
       );
     return zip($groupMatches, $intergroupMatches, $mainDrawMatches).pipe(
       map(([groupMatches, intergroupMatches, mainDrawMatches]) => {
+        console.log(
+          'el que buscamos',
+          groupMatches.filter(
+            (groupMatches) => groupMatches.teamAId == 'xImJIV2r6hHRRhGcY3Td' || groupMatches.teamBId == 'xImJIV2r6hHRRhGcY3Td'
+          )
+        );
 
         const response: Response[] = [...groupMatches, ...intergroupMatches, ...mainDrawMatches]
           .map((m) => {
