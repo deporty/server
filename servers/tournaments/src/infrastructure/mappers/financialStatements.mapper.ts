@@ -5,7 +5,7 @@ export class FinancialStatementsMapper extends Mapper<FinancialStatementsModel> 
   constructor() {
     super();
     this.attributesMapper = {
-      ammount: { name: 'amount' },
+      amount: { name: 'amount' },
       status: { name: 'status' },
       numOfInvoices: { name: 'num-of-invoices' },
     };

@@ -419,6 +419,7 @@ export class TournamentsModulesConfig {
       id: 'CalculateTournamentCostUsecase',
       kind: CalculateTournamentCostUsecase,
       strategy: 'singleton',
+      dependencies: ['OrganizationContract', 'GetAllMatchesInsideTournamentUsecase']
     });
     container.add({
       id: 'CalculateTournamentCostByIdUsecase',

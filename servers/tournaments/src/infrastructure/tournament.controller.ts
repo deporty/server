@@ -391,8 +391,8 @@ export class TournamentController extends HttpController {
       });
     });
 
-    router.put(`/:id/cost`, validator('CalculateTournamentCostByIdUsecase'), (request: Request, response: Response) => {
-      const id = request.params.id;
+    router.get(`/:tournamentId/cost`,  (request: Request, response: Response) => {
+      const id = request.params.tournamentId;
 
       const config: MessagesConfiguration = {
         exceptions: {},
