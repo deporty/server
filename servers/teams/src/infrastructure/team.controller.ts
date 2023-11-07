@@ -33,6 +33,7 @@ import { SaveTournamentInscriptionsByTeamUsecase } from '../domain/usecases/save
 import { GetOnlyMembersByTeamUsecase } from '../domain/usecases/get-only-members-by-team/get-only-members-by-team.usecase';
 import { CreateTeamAndMembersFromFileUsecase } from '../domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
 import { EndMemberParticipationUsecase } from '../domain/usecases/end-member-participation/end-member-participation.usecase';
+import { GetTeamsByIdsUsecase } from '../domain/usecases/get-teams-by-ids/get-teams-by-ids.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -249,7 +250,6 @@ export class TeamController extends HttpController {
       });
     });
     router.post(`/:teamId/member/:memberId/end-participation`, (request: Request, response: Response) => {
-
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         successCode: 'END-MEMBER-PARTICIPATION:SUCCESS',
@@ -344,6 +344,22 @@ export class TeamController extends HttpController {
       });
     });
 
+    router.get(`/teams-by-ids`, (request: Request, response: Response) => {
+      const id = request.query.teamIds;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'GET-BY-IDS:SUCCESS',
+      };
+
+      this.handler<GetTeamsByIdsUsecase>({
+        container,
+        usecaseId: 'GetTeamsByIdsUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: id,
+      });
+    });
     router.get(`/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
 
@@ -370,6 +386,7 @@ export class TeamController extends HttpController {
         usecaseParam: id,
       });
     });
+    
 
     router.get(`/sport/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
