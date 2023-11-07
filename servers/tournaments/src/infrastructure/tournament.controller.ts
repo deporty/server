@@ -76,6 +76,7 @@ import {
 import { GetRunningTournamentsWhereExistsTeamIdUsecase } from '../domain/usecases/get-running-tournaments-where-exists-team-id/get-running-tournaments-where-exists-team-id.usecase';
 import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-report-by-tournament/get-cards-report-by-tournament.usecase';
 import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain/usecases/get-cards-report-grouped-by-team-and-date-by-tournament/get-cards-report-grouped-by-team-and-date-by-tournament.usecase';
+import { GetLessDefeatedFenceReportUsecase } from '../domain/usecases/get-less-defeated-fence-report/get-less-defeated-fence-report.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -358,6 +359,25 @@ export class TournamentController extends HttpController {
       this.handler<GetMarkersTableUsecase>({
         container,
         usecaseId: 'GetMarkersTableUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: id,
+      });
+    });
+    router.get(`/:tournamentId/less-defeated-fence`, (request: Request, response: Response) => {
+      const id = request.params.tournamentId;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'GET:SUCCESS',
+        extraData: {
+          name: id,
+        },
+      };
+
+      this.handler<GetLessDefeatedFenceReportUsecase>({
+        container,
+        usecaseId: 'GetLessDefeatedFenceReportUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: id,
@@ -1454,28 +1474,7 @@ export class TournamentController extends HttpController {
     //   );
     // });
 
-    // app.put(`/fixture-group`, (request: Request, response: Response) => {
-    //   const params = request.body;
-
-    //   const config: MessagesConfiguration = {
-    //     exceptions: {},
-    //     identifier: this.identifier,
-    //     errorCodes: {},
-    //     successCode: 'FIXTURE-GROUP:SUCCESS',
-    //     extraData: {
-    //       ...params,
-    //     },
-    //   };
-
-    //   this.handler<GetMarkersTableUsecase>({
-    //     container, usecaseId:
-    //     'CreateFixtureByGroupUsecase',
-    //     response,
-    //     config,
-    //     undefined,
-    //     params
-    //   );
-    // });
+ 
 
     // app.get(`/grouped-matches`, (request: Request, response: Response) => {
     //   const params = request.query;

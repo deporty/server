@@ -79,6 +79,7 @@ import { CalculatePositionTableOfGroupUsecase } from '../domain/usecases/calcula
 import { GetIntergroupMatchesByGroupIdUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-matches-by-group-id/get-intergroup-matches-by-group-id.usecase';
 import { GetIntergroupMatchByIdUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-match-by-id/get-intergroup-match-by-id.usecase';
 import { GetAllMatchesInsideTournamentUsecase } from '../domain/usecases/get-all-matches-inside-tournament/get-all-matches-inside-tournament.usecase';
+import { GetLessDefeatedFenceReportUsecase } from '../domain/usecases/get-less-defeated-fence-report/get-less-defeated-fence-report.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -425,6 +426,12 @@ export class TournamentsModulesConfig {
       id: 'CalculateTournamentCostByIdUsecase',
       kind: CalculateTournamentCostByIdUsecase,
       dependencies: ['GetTournamentByIdUsecase', 'TournamentContract', 'CalculateTournamentCostUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetLessDefeatedFenceReportUsecase',
+      kind: GetLessDefeatedFenceReportUsecase,
+      dependencies: ['GetAllMatchesInsideTournamentUsecase'],
       strategy: 'singleton',
     });
     // container.add({
