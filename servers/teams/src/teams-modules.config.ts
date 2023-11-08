@@ -41,6 +41,7 @@ import { GetOnlyMembersByTeamUsecase } from './domain/usecases/get-only-members-
 import { CreateTeamAndMembersFromFileUsecase } from './domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
 import { EndMemberParticipationUsecase } from './domain/usecases/end-member-participation/end-member-participation.usecase';
 import { GetTeamsByIdsUsecase } from './domain/usecases/get-teams-by-ids/get-teams-by-ids.usecase';
+import { PromoteMembersUsecase } from './domain/usecases/promote-members/promote-members.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -259,6 +260,12 @@ export class TeamsModulesConfig {
       id: 'EditMemberByIdUsecase',
       kind: EditMemberByIdUsecase,
       dependencies: ['GetOnlyMemberByIdUsecase', 'MemberContract', 'FileAdapter'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'PromoteMembersUsecase',
+      kind: PromoteMembersUsecase,
+      dependencies: ['GetOnlyMembersByTeamUsecase', 'AsignNewMemberToTeamUsecase', 'EditMemberByIdUsecase'],
       strategy: 'singleton',
     });
     container.add({

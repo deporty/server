@@ -34,6 +34,7 @@ import { GetOnlyMembersByTeamUsecase } from '../domain/usecases/get-only-members
 import { CreateTeamAndMembersFromFileUsecase } from '../domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
 import { EndMemberParticipationUsecase } from '../domain/usecases/end-member-participation/end-member-participation.usecase';
 import { GetTeamsByIdsUsecase } from '../domain/usecases/get-teams-by-ids/get-teams-by-ids.usecase';
+import { PromoteMembersUsecase } from '../domain/usecases/promote-members/promote-members.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -386,7 +387,6 @@ export class TeamController extends HttpController {
         usecaseParam: id,
       });
     });
-    
 
     router.get(`/sport/:id`, (request: Request, response: Response) => {
       const id = request.params.id;
@@ -438,6 +438,27 @@ export class TeamController extends HttpController {
         usecaseParam: team,
       });
     });
+
+    router.patch(`/promote-members`, (request: Request, response: Response) => {
+      const body = {
+        ...request.query,
+        removeFromOrigin: (request.query.removeFromOrigin) === 'true'
+      };
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'PATCH:SUCCESS',
+      };
+
+      this.handler<PromoteMembersUsecase>({
+        container,
+        usecaseId: 'PromoteMembersUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
+      });
+    });
+
     router.patch(`/:teamId`, (request: Request, response: Response) => {
       const body = {
         id: request.params.teamId,
@@ -466,6 +487,7 @@ export class TeamController extends HttpController {
       });
     });
 
+  
     router.put(`/assign-member`, (request: Request, response: Response) => {
       const data = request.body;
       const config: MessagesConfiguration = {
