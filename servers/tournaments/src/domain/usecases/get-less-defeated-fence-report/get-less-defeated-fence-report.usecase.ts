@@ -48,7 +48,7 @@ export class GetLessDefeatedFenceReportUsecase extends Usecase<string, Stadistic
             return { ...x, average: x['goals'] / x['ammountOfMatches'] };
           })
           .sort((prev, next) => {
-            return prev.average - next.average;
+            return prev.goals - next.goals;
           });
       })
     );
