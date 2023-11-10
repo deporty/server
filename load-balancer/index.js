@@ -49,7 +49,7 @@ const serversMapper = {
   users: {
     port: 10008,
     name: 'users',
-    run: true,
+    run: false,
   },
   administration: {
     port: 10009,

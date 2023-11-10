@@ -332,6 +332,7 @@ export class UserController extends HttpController {
 
     router.get(`/ids`, (request: Request, response: Response) => {
       const ids = request.query.ids;
+console.log('FFFFF ', ids);
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -346,7 +347,7 @@ export class UserController extends HttpController {
         usecaseId: 'GetUsersByIdsUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: ids,
+        usecaseParam: Array.isArray(ids) ? ids: [ids] ,
       });
     });
     router.get(`/:id`, (request: Request, response: Response) => {
