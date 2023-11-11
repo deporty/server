@@ -347,7 +347,7 @@ console.log('FFFFF ', ids);
         usecaseId: 'GetUsersByIdsUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: Array.isArray(ids) ? ids: [ids] ,
+        usecaseParam: ids ? Array.isArray(ids) ? ids: [ids]: [] ,
       });
     });
     router.get(`/:id`, (request: Request, response: Response) => {
