@@ -77,6 +77,7 @@ import { GetRunningTournamentsWhereExistsTeamIdUsecase } from '../domain/usecase
 import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-report-by-tournament/get-cards-report-by-tournament.usecase';
 import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain/usecases/get-cards-report-grouped-by-team-and-date-by-tournament/get-cards-report-grouped-by-team-and-date-by-tournament.usecase';
 import { GetLessDefeatedFenceReportUsecase } from '../domain/usecases/get-less-defeated-fence-report/get-less-defeated-fence-report.usecase';
+import { ModifyTournamentFinancialStatusUsecase } from '../domain/usecases/modify-tournament-financial-status/modify-tournament-financial-status.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -505,7 +506,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    router.get(`/`, validator('GetTournamentsUsecase'), (request: Request, response: Response) => {
+    router.get(`/`, (request: Request, response: Response) => {
       const params = request.query;
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -1327,6 +1328,32 @@ export class TournamentController extends HttpController {
       this.handler<ModifyTournamentStatusUsecase>({
         container,
         usecaseId: 'ModifyTournamentStatusUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: data,
+      });
+    });
+    router.patch(`/:id/modify-financial-status`, (request: Request, response: Response) => {
+      const body = request.body;
+      const data = {
+        ...body,
+        tournamentId: request.params.id,
+      };
+
+      const config: MessagesConfiguration = {
+        exceptions: {
+          NotAllowedStatusModificationError: 'MODIFY-STATUS:ERROR',
+        },
+        identifier: this.identifier,
+        successCode: 'MODIFY-FINANCIAL-STATUS:SUCCESS',
+        extraData: {
+          name: body,
+        },
+      };
+
+      this.handler<ModifyTournamentFinancialStatusUsecase>({
+        container,
+        usecaseId: 'ModifyTournamentFinancialStatusUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: data,

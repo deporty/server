@@ -80,6 +80,7 @@ import { GetIntergroupMatchesByGroupIdUsecase } from '../domain/usecases/intergr
 import { GetIntergroupMatchByIdUsecase } from '../domain/usecases/intergroup-matches/get-intergroup-match-by-id/get-intergroup-match-by-id.usecase';
 import { GetAllMatchesInsideTournamentUsecase } from '../domain/usecases/get-all-matches-inside-tournament/get-all-matches-inside-tournament.usecase';
 import { GetLessDefeatedFenceReportUsecase } from '../domain/usecases/get-less-defeated-fence-report/get-less-defeated-fence-report.usecase';
+import { ModifyTournamentFinancialStatusUsecase } from '../domain/usecases/modify-tournament-financial-status/modify-tournament-financial-status.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -629,6 +630,12 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'ModifyTournamentStatusUsecase',
       kind: ModifyTournamentStatusUsecase,
+      dependencies: ['GetTournamentByIdUsecase', 'UpdateTournamentUsecase'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'ModifyTournamentFinancialStatusUsecase',
+      kind: ModifyTournamentFinancialStatusUsecase,
       dependencies: ['GetTournamentByIdUsecase', 'UpdateTournamentUsecase'],
       strategy: 'singleton',
     });

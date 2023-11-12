@@ -4,12 +4,8 @@ import { of } from 'rxjs';
 import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { FinancialStatementsMapper } from './financialStatements.mapper';
 
-
 export class TournamentMapper extends Mapper<TournamentEntity> {
-  constructor(
-    private financialStatementsMapper: FinancialStatementsMapper,
-    private fileAdapter: FileAdapter
-  ) {
+  constructor(private financialStatementsMapper: FinancialStatementsMapper, private fileAdapter: FileAdapter) {
     super();
     this.attributesMapper = {
       id: { name: 'id' },
@@ -40,6 +36,10 @@ export class TournamentMapper extends Mapper<TournamentEntity> {
       },
       organizationId: { name: 'organization-id' },
       tournamentLayoutId: { name: 'tournament-layout-id' },
+      financialStatus: {
+        name: 'financial-status',
+        default: 'paid',
+      },
       financialStatements: {
         name: 'financial-statements',
         from: (value) => {

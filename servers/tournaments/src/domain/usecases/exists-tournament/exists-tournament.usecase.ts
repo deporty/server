@@ -19,7 +19,7 @@ export class GetTournamentsByUniqueAttributesUsecase extends Usecase<
       },
       edition: {
         operator: '==',
-        value: tournament.edition,
+        value: tournament.edition || '',
       },
       organizationId: {
         operator: '==',
