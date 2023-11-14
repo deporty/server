@@ -42,7 +42,7 @@ export class SaveUserUsecase extends Usecase<UserEntity, UserEntity> {
             image: user.image,
             phone: user.phone,
             secondLastName: user.secondLastName,
-            secondName: user.secondLastName,
+            secondName: user.secondName,
           };
 
           return this.userContract.save(newUser).pipe(map((id) => ({ ...newUser, id })));
