@@ -1,15 +1,11 @@
-import {
-  IScoreModel,
-  MatchEntity,
-  PlayerForm,
-  Stadistics,
-} from '@deporty-org/entities/tournaments';
+import { IScoreModel, MatchEntity, PlayerForm, Stadistics } from '@deporty-org/entities/tournaments';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of, zip } from 'rxjs';
 import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { ScoreMapper } from './score.mapper';
 import { PlayerFormMapper } from './player-form.mapper';
 import { StadisticsMapper } from './stadistics.mapper';
+import { formatDateFromJson } from '@deporty-org/core';
 
 export class RefereeInMatchMapper extends Mapper<MatchEntity> {
   constructor() {
@@ -64,7 +60,12 @@ export class MatchMapper extends Mapper<MatchEntity> {
       teamAId: { name: 'team-a-id' },
       phase: { name: 'phase' },
       teamBId: { name: 'team-b-id' },
-      date: { name: 'date', from: (date: Timestamp) => of(date.toDate()) },
+      date: {
+        name: 'date',
+        from: (date: Timestamp) => {
+          return of(formatDateFromJson(date));
+        },
+      },
       observations: { name: 'observations' },
       captainASignature: {
         name: 'captain-a-signature',
@@ -90,9 +91,7 @@ export class MatchMapper extends Mapper<MatchEntity> {
         name: 'referee-ids',
 
         from: (value: Array<any>) => {
-          return value.length > 0
-            ? zip(...value.map((x) => this.refereeInMatchMapper.fromJson(x)))
-            : of([]);
+          return value.length > 0 ? zip(...value.map((x) => this.refereeInMatchMapper.fromJson(x))) : of([]);
         },
         to: (values: Array<any>) => {
           return values.map((x) => this.refereeInMatchMapper.toJson(x));
