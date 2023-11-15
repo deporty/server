@@ -78,6 +78,7 @@ import { GetCardsReportByTournamentUsecase } from '../domain/usecases/get-cards-
 import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain/usecases/get-cards-report-grouped-by-team-and-date-by-tournament/get-cards-report-grouped-by-team-and-date-by-tournament.usecase';
 import { GetLessDefeatedFenceReportUsecase } from '../domain/usecases/get-less-defeated-fence-report/get-less-defeated-fence-report.usecase';
 import { ModifyTournamentFinancialStatusUsecase } from '../domain/usecases/modify-tournament-financial-status/modify-tournament-financial-status.usecase';
+import { GetAvailableTournamentsByFiltersUsecase } from '../domain/usecases/get-available-tournaments-by-filters/get-available-tournaments-by-filters.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -137,6 +138,29 @@ export class TournamentController extends HttpController {
           response,
           messageConfiguration: config,
           usecaseParam: id,
+        });
+      }
+    );
+    router.get(
+      `/filters`,
+      // validator('GetTournamentByIdUsecase'),
+      (request: Request, response: Response) => {
+        const filters: any = {...request.query};
+        if(filters['year']){
+          filters['year'] = parseInt(filters['year'])
+        }
+
+        const config: MessagesConfiguration = {
+          identifier: this.identifier,
+          successCode: 'GET-FILTERED:SUCCESS',
+        };
+
+        this.handler<GetAvailableTournamentsByFiltersUsecase>({
+          container,
+          usecaseId: 'GetAvailableTournamentsByFiltersUsecase',
+          response,
+          messageConfiguration: config,
+          usecaseParam: filters,
         });
       }
     );
@@ -412,7 +436,7 @@ export class TournamentController extends HttpController {
       });
     });
 
-    router.get(`/:tournamentId/cost`,  (request: Request, response: Response) => {
+    router.get(`/:tournamentId/cost`, (request: Request, response: Response) => {
       const id = request.params.tournamentId;
 
       const config: MessagesConfiguration = {
@@ -1185,7 +1209,6 @@ export class TournamentController extends HttpController {
 
     router.get(`/:id/main-draw`, (request: Request, response: Response) => {
       const tournamentId = request.params.id;
-      
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -1200,7 +1223,7 @@ export class TournamentController extends HttpController {
         usecaseId: 'GetMainDrawNodeMatchesoverviewUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: {tournamentId},
+        usecaseParam: { tournamentId },
       });
     });
 
@@ -1500,8 +1523,6 @@ export class TournamentController extends HttpController {
     //     id
     //   );
     // });
-
- 
 
     // app.get(`/grouped-matches`, (request: Request, response: Response) => {
     //   const params = request.query;

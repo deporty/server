@@ -81,6 +81,7 @@ import { GetIntergroupMatchByIdUsecase } from '../domain/usecases/intergroup-mat
 import { GetAllMatchesInsideTournamentUsecase } from '../domain/usecases/get-all-matches-inside-tournament/get-all-matches-inside-tournament.usecase';
 import { GetLessDefeatedFenceReportUsecase } from '../domain/usecases/get-less-defeated-fence-report/get-less-defeated-fence-report.usecase';
 import { ModifyTournamentFinancialStatusUsecase } from '../domain/usecases/modify-tournament-financial-status/modify-tournament-financial-status.usecase';
+import { GetAvailableTournamentsByFiltersUsecase } from '../domain/usecases/get-available-tournaments-by-filters/get-available-tournaments-by-filters.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -225,6 +226,12 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'GetTournamentsForCheckInUsecase',
       kind: GetTournamentsForCheckInUsecase,
+      dependencies: ['TournamentContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetAvailableTournamentsByFiltersUsecase',
+      kind: GetAvailableTournamentsByFiltersUsecase,
       dependencies: ['TournamentContract'],
       strategy: 'singleton',
     });
