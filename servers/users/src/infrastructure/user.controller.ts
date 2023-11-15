@@ -332,7 +332,6 @@ export class UserController extends HttpController {
 
     router.get(`/ids`, (request: Request, response: Response) => {
       const ids = request.query.ids;
-console.log('FFFFF ', ids);
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,

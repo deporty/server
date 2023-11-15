@@ -346,7 +346,7 @@ export class TeamController extends HttpController {
     });
 
     router.get(`/teams-by-ids`, (request: Request, response: Response) => {
-      const id = request.query.teamIds;
+      const ids = request.query.teamIds;
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
@@ -358,7 +358,7 @@ export class TeamController extends HttpController {
         usecaseId: 'GetTeamsByIdsUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: id,
+        usecaseParam: ids ? (Array.isArray(ids) ? ids : [ids]) : [],
       });
     });
     router.get(`/:id`, (request: Request, response: Response) => {
@@ -442,7 +442,7 @@ export class TeamController extends HttpController {
     router.patch(`/promote-members`, (request: Request, response: Response) => {
       const body = {
         ...request.query,
-        removeFromOrigin: (request.query.removeFromOrigin) === 'true'
+        removeFromOrigin: request.query.removeFromOrigin === 'true',
       };
 
       const config: MessagesConfiguration = {
@@ -487,7 +487,6 @@ export class TeamController extends HttpController {
       });
     });
 
-  
     router.put(`/assign-member`, (request: Request, response: Response) => {
       const data = request.body;
       const config: MessagesConfiguration = {
