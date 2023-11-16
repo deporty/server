@@ -23,11 +23,9 @@ export class GetLessDefeatedFenceReportUsecase extends Usecase<string, Stadistic
         const scorers: StadisticResume[] = [];
 
         for (const match of matches) {
-          console.log(' -- ', match.id, match.teamAId, match.teamBId);
 
-          if (match.stadistics) {
-            console.log('Stadistics ', match.stadistics);
-            console.log();
+          if (match.stadistics && match.teamAId && match.teamBId) {
+          
 
             this.newFunction({
               stadisticsByTeam: match.stadistics.teamB,
