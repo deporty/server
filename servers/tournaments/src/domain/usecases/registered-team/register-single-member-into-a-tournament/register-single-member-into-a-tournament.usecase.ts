@@ -1,10 +1,9 @@
 import {
   Id,
-  MemberDescriptionType,
   MemberEntity,
   RegisteredTeamEntity,
   RequiredDocsInRegisteredTeam,
-  TournamentInscriptionEntity,
+  TournamentInscriptionEntity
 } from '@deporty-org/entities';
 import { RequiredDocConfig, TournamentLayoutEntity } from '@deporty-org/entities/organizations';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
@@ -264,9 +263,7 @@ export class RegisterTeamIntoATournamentLinealUsecase extends Usecase<Param, Tou
 
     return inscription;
   }
-  private isAValidMember(memberId: Id, members: MemberEntity[]) {
-    return members.filter((member: MemberEntity) => member.id === memberId).length > 0;
-  }
+
 
   private areRequiredDocsForMembersComplete(requiredDocs: any, requiredDocsForMembers: RequiredDocConfig[]) {
     if (requiredDocsForMembers.length > 0) {
