@@ -60,10 +60,7 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
     );
   }
 
-  getImage(url: string | undefined, direct: boolean = false) {
-    if (direct) {
-      return !!url && url !== '' ? downloadImageFromURL(url) : of('');
-    }
+  getImage(url: string | undefined) {
     return !!url && url !== ''
       ? this.fileAdapter.getAbsoluteHTTPUrl(url).pipe(
           mergeMap((x) => {
@@ -322,11 +319,11 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
     organization: OrganizationEntity;
   }) {
     const { teamA, teamB, organization } = param;
-    const $shieldA = this.getImage(teamA.shield || '', true);
-    const $shieldB = this.getImage(teamB.shield || '', true);
+    const $shieldA = this.getImage(teamA.shield || '');
+    const $shieldB = this.getImage(teamB.shield || '');
 
     const $brandIso = this.getImage('deporty/brand/iso.jpg');
-    const $organizationIso = this.getImage(organization.iso, true);
+    const $organizationIso = this.getImage(organization.iso);
 
     return { $shieldA, $shieldB, $brandIso, $organizationIso };
   }

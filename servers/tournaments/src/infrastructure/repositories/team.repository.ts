@@ -6,125 +6,6 @@ import { BEARER_TOKEN, TEAM_SERVER } from '../tournaments.constants';
 import { Filters } from '@scifamek-open-source/iraca/domain';
 
 export class TeamRepository extends TeamContract {
-  getOnlyMembersByTeam(teamId: string, includeRetired: boolean): Observable<MemberEntity[]> {
-   
-    return new Observable((observer) => {
-      axios
-        .get<IBaseResponse<TournamentInscriptionEntity>>(`${TEAM_SERVER}/${teamId}/only-members`, {
-          params: {
-            includeRetired
-          },
-          headers: {
-            Authorization: `Bearer ${BEARER_TOKEN}`,
-          },
-        })
-        .then((response: AxiosResponse) => {
-          const data = response.data as IBaseResponse<MemberEntity[]>;
-          if (data.meta.code === 'TEAM:GET-MEMBERS-BY-TEAM-ID:SUCCESS') {
-            observer.next(data.data);
-          } else {
-            observer.error();
-          }
-          observer.complete();
-        })
-        .catch((error: any) => {
-          observer.error(error);
-        });
-    });
-
-  }
-  saveTournamentInscriptionsByTeamUsecase(inscription: TournamentInscriptionEntity): Observable<TournamentInscriptionEntity> {
-
-    console.log("enviando ", JSON.stringify(inscription, null, 2));
-    
-    return new Observable((observer) => {
-      axios
-        .post<IBaseResponse<TournamentInscriptionEntity>>(`${TEAM_SERVER}/${inscription.teamId}/tournament-inscription`, inscription, {
-          headers: {
-            Authorization: `Bearer ${BEARER_TOKEN}`,
-          },
-        })
-        .then((response: AxiosResponse) => {
-          const data = response.data as IBaseResponse<TournamentInscriptionEntity>;
-          if (data.meta.code === 'TEAM:TOURNAMENT-INSCRIPTIONS-ADDED:SUCCESS') {
-            observer.next(data.data);
-          } else {
-            observer.error();
-          }
-          observer.complete();
-        })
-        .catch((error: any) => {
-          observer.error(error);
-        });
-    });
-  }
-  getTeamByFullFilters(filter: Filters): Observable<TeamEntity[]> {
-    return new Observable((observer) => {
-      axios
-        .post<IBaseResponse<TeamEntity[]>>(`${TEAM_SERVER}/advanced-filter`, filter, {
-          headers: {
-            Authorization: `Bearer ${BEARER_TOKEN}`,
-          },
-        })
-        .then((response: AxiosResponse) => {
-          const data = response.data as IBaseResponse<TeamEntity[]>;
-          if (data.meta.code === 'TEAM:GET:SUCCESS') {
-            observer.next(data.data);
-          } else {
-            observer.error();
-          }
-          observer.complete();
-        })
-        .catch((error: any) => {
-          observer.error(error);
-        });
-    });
-  }
-  getTeamByFilters(filter: any): Observable<TeamEntity[]> {
-    return new Observable((observer) => {
-      axios
-        .get<IBaseResponse<TeamEntity[]>>(`${TEAM_SERVER}/filter`, {
-          headers: {
-            Authorization: `Bearer ${BEARER_TOKEN}`,
-          },
-          params: filter,
-        })
-        .then((response: AxiosResponse) => {
-          const data = response.data as IBaseResponse<TeamEntity[]>;
-          if (data.meta.code === 'TEAM:GET:SUCCESS') {
-            observer.next(data.data);
-          } else {
-            observer.error();
-          }
-          observer.complete();
-        })
-        .catch((error: any) => {
-          observer.error(error);
-        });
-    });
-  }
-  getTeamById(teamId: string): Observable<TeamEntity> {
-    return new Observable((observer) => {
-      axios
-        .get<IBaseResponse<TeamEntity>>(`${TEAM_SERVER}/${teamId}`, {
-          headers: {
-            Authorization: `Bearer ${BEARER_TOKEN}`,
-          },
-        })
-        .then((response: AxiosResponse) => {
-          const data = response.data as IBaseResponse<TeamEntity>;
-          if (data.meta.code === 'TEAM:GET-BY-ID:SUCCESS') {
-            observer.next(data.data);
-          } else {
-            observer.error();
-          }
-          observer.complete();
-        })
-        .catch((error: any) => {
-          observer.error(error);
-        });
-    });
-  }
   getMemberById(teamId: Id, memberId: Id): Observable<MemberDescriptionType> {
     return new Observable((observer) => {
       axios
@@ -147,6 +28,7 @@ export class TeamRepository extends TeamContract {
         });
     });
   }
+
   getMembersByTeam(teamId: string): Observable<MemberDescriptionType[]> {
     return new Observable((observer) => {
       axios
@@ -172,6 +54,175 @@ export class TeamRepository extends TeamContract {
             );
           } else {
             observer.next([]);
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  getOnlyMemberById(teamId: string, memberId: string): Observable<MemberEntity> {
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<TournamentInscriptionEntity>>(`${TEAM_SERVER}/${teamId}/member/${memberId}/only-member`, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<MemberEntity>;
+          if (data.meta.code === 'TEAM:GET-MEMBER-BY-ID:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  getOnlyMembersByTeam(teamId: string, includeRetired: boolean): Observable<MemberEntity[]> {
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<TournamentInscriptionEntity>>(`${TEAM_SERVER}/${teamId}/only-members`, {
+          params: {
+            includeRetired
+          },
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<MemberEntity[]>;
+          if (data.meta.code === 'TEAM:GET-MEMBERS-BY-TEAM-ID:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  getTeamByFilters(filter: any): Observable<TeamEntity[]> {
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<TeamEntity[]>>(`${TEAM_SERVER}/filter`, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+          params: filter,
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<TeamEntity[]>;
+          if (data.meta.code === 'TEAM:GET:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  getTeamByFullFilters(filter: Filters): Observable<TeamEntity[]> {
+    return new Observable((observer) => {
+      axios
+        .post<IBaseResponse<TeamEntity[]>>(`${TEAM_SERVER}/advanced-filter`, filter, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<TeamEntity[]>;
+          if (data.meta.code === 'TEAM:GET:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  getTeamById(teamId: string): Observable<TeamEntity> {
+    return new Observable((observer) => {
+      axios
+        .get<IBaseResponse<TeamEntity>>(`${TEAM_SERVER}/${teamId}`, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<TeamEntity>;
+          if (data.meta.code === 'TEAM:GET-BY-ID:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  saveTournamentInscriptionsByTeamUsecase(inscription: TournamentInscriptionEntity): Observable<TournamentInscriptionEntity> {
+    console.log("enviando ", JSON.stringify(inscription, null, 2));
+    
+    return new Observable((observer) => {
+      axios
+        .post<IBaseResponse<TournamentInscriptionEntity>>(`${TEAM_SERVER}/${inscription.teamId}/tournament-inscription`, inscription, {
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<TournamentInscriptionEntity>;
+          if (data.meta.code === 'TEAM:TOURNAMENT-INSCRIPTIONS-ADDED:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
+          }
+          observer.complete();
+        })
+        .catch((error: any) => {
+          observer.error(error);
+        });
+    });
+  }
+
+  updateTournamentInscriptionsByTeamUsecase(inscription: TournamentInscriptionEntity): Observable<TournamentInscriptionEntity> {
+   
+    return new Observable((observer) => {
+      axios
+        .patch<IBaseResponse<TournamentInscriptionEntity>>(`${TEAM_SERVER}/${inscription.teamId}/tournament-inscription`, inscription, {
+          
+          headers: {
+            Authorization: `Bearer ${BEARER_TOKEN}`,
+          },
+        })
+        .then((response: AxiosResponse) => {
+          const data = response.data as IBaseResponse<TournamentInscriptionEntity>;
+          if (data.meta.code === 'TEAM:TOURNAMENT-INSCRIPTIONS-UPDATED:SUCCESS') {
+            observer.next(data.data);
+          } else {
+            observer.error();
           }
           observer.complete();
         })

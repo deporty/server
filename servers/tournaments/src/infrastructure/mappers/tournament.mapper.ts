@@ -1,11 +1,11 @@
 import { TournamentEntity } from '@deporty-org/entities/tournaments';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of } from 'rxjs';
-import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
+import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { FinancialStatementsMapper } from './financialStatements.mapper';
 
 export class TournamentMapper extends Mapper<TournamentEntity> {
-  constructor(private financialStatementsMapper: FinancialStatementsMapper, private fileAdapter: FileAdapter) {
+  constructor(private financialStatementsMapper: FinancialStatementsMapper) {
     super();
     this.attributesMapper = {
       id: { name: 'id' },
@@ -18,12 +18,6 @@ export class TournamentMapper extends Mapper<TournamentEntity> {
       refereeIds: { name: 'referee-ids' },
       flayer: {
         name: 'flayer',
-        from: (value: string) => {
-          return this.fileAdapter.getAbsoluteHTTPUrl(value);
-        },
-        to: (value: string) => {
-          return this.fileAdapter.getRelativeUrl(value);
-        },
       },
       locations: { name: 'locations', default: [] },
       category: { name: 'category' },
@@ -36,6 +30,7 @@ export class TournamentMapper extends Mapper<TournamentEntity> {
       },
       organizationId: { name: 'organization-id' },
       tournamentLayoutId: { name: 'tournament-layout-id' },
+      requestRequiredDocs: { name: 'request-required-docs', default: false },
       financialStatus: {
         name: 'financial-status',
         default: 'paid',

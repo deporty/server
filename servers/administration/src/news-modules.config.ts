@@ -3,6 +3,7 @@ import { GetCurrentMobileVersionUsecase } from './domain/usecases/get-current-mo
 import { MobileVersionContract } from './domain/administration.contract';
 import { MobileVersionRepository } from './infrastructure/mobile-versions.repository';
 import { MobileVersionMapper } from './infrastructure/mobile-versions.mapper';
+import { GetCurrentMobileVersionsUsecase } from './domain/usecases/get-current-mobile-versions/get-current-mobile-versions.usecase';
 
 export class InvoicesModulesConfig {
   static config(container: Container) {
@@ -21,6 +22,12 @@ export class InvoicesModulesConfig {
     container.add({
       id: 'GetCurrentMobileVersionUsecase',
       kind: GetCurrentMobileVersionUsecase,
+      dependencies: ['MobileVersionContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetCurrentMobileVersionsUsecase',
+      kind: GetCurrentMobileVersionsUsecase,
       dependencies: ['MobileVersionContract'],
       strategy: 'singleton',
     });

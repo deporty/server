@@ -31,6 +31,7 @@ export class EditTournamentLayoutUsecase extends Usecase<TournamentLayoutEntity,
             fixtureStagesConfiguration: tournamentLayout.fixtureStagesConfiguration,
             name: tournamentLayout.name,
             description: tournamentLayout.description,
+            defaultRegisteredTeamStatus: tournamentLayout.defaultRegisteredTeamStatus || prevTournamentLayout.defaultRegisteredTeamStatus,
             categories: tournamentLayout.categories,
             allowAutoInscriptionFromTeamModifications: tournamentLayout.allowAutoInscriptionFromTeamModifications,
             editions: tournamentLayout.editions,
@@ -41,7 +42,7 @@ export class EditTournamentLayoutUsecase extends Usecase<TournamentLayoutEntity,
           if (toSave.editions == null) {
             toSave.editions = ['Única'];
           }
-        
+
           return this.tournamentLayoutContract
             .update(
               {

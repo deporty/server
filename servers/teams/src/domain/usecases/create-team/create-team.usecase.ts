@@ -82,31 +82,19 @@ export class CreateTeamUsecase extends Usecase<Param, Response> {
 
                     return this.editTeamUsecase.call({ team: teamToEdit, id: teamToEdit.id! }).pipe(map(() => teamToEdit));
                   }),
-                  mergeMap((team: TeamEntity) => {
-                    const $shield = team.shield ? this.fileAdapter.getAbsoluteHTTPUrl(team.shield) : of(undefined);
-                    const $miniShield = team.miniShield ? this.fileAdapter.getAbsoluteHTTPUrl(team.miniShield) : of(undefined);
-                    return zip(of(team), $shield, $miniShield);
-                  }),
-                  mergeMap(([team, shield, miniShield]) => {
+
+                  mergeMap((team) => {
                     return this.asignNewMemberToTeamUsecase
                       .call({
                         kindMember: ['owner', 'technical-director'],
                         teamId: team.id!,
                         userId: param.userCreatorId,
-                        team: {
-                          ...team,
-                          shield,
-                          miniShield,
-                        },
+                        team,
                       })
                       .pipe(
                         map((member) => {
                           return {
-                            team: {
-                              ...team,
-                              shield,
-                              miniShield,
-                            },
+                            team,
                             member: member.member,
                             teamParticipation: member.teamParticipation,
                           };

@@ -31,7 +31,6 @@ export class OrganizationModulesConfig {
     container.add({
       id: 'OrganizationMapper',
       kind: OrganizationMapper,
-      dependencies: ['FileAdapter'],
       strategy: 'singleton',
     });
     container.add({
@@ -77,7 +76,7 @@ export class OrganizationModulesConfig {
     container.add({
       id: 'TournamentLayoutMapper',
       kind: TournamentLayoutMapper,
-      dependencies: ['FileAdapter', 'FixtureStagesConfigurationMapper', 'RequiredDocConfigMapper'],
+      dependencies: [ 'FixtureStagesConfigurationMapper', 'RequiredDocConfigMapper'],
       strategy: 'singleton',
     });
 

@@ -37,7 +37,7 @@ export class EditTeamUsecase extends Usecase<Param, TeamEntity> {
 
     return this.getTeamByIdUsecase.call(param.id).pipe(
       mergeMap((prevTeam: TeamEntity) => {
-        if (prevTeam.name !== team.name || prevTeam.city !== team.city || prevTeam.category !== team.category  ) {
+        if (prevTeam.name !== team.name || prevTeam.city !== team.city || prevTeam.category !== team.category) {
           return this.getTeamByUniqueAttributesUsecase
             .call({
               teamName: team.name,
@@ -89,26 +89,11 @@ export class EditTeamUsecase extends Usecase<Param, TeamEntity> {
           city: team.city,
           name: team.name,
 
-          shield: path ? this.fileAdapter.getRelativeUrl(path) : prevTeam.shield,
-          miniShield: pathMini ? this.fileAdapter.getRelativeUrl(pathMini) : prevTeam.miniShield,
+          shield: path || prevTeam.shield,
+          miniShield: pathMini || prevTeam.miniShield,
         };
 
-        return this.teamContract.update(prevTeam.id!, newUser).pipe(
-          mergeMap((user) => {
-            return zip(
-              of(user),
-              user.shield ? this.fileAdapter.getAbsoluteHTTPUrl(user.shield!) : of(''),
-              user.miniShield ? this.fileAdapter.getAbsoluteHTTPUrl(user.miniShield!) : of('')
-            );
-          }),
-          map(([user, path, miniPath]) => {
-            return {
-              ...user,
-              shield: path,
-              miniShield: miniPath,
-            };
-          })
-        );
+        return this.teamContract.update(prevTeam.id!, newUser);
       })
     );
   }

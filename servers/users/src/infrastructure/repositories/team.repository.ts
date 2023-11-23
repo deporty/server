@@ -15,6 +15,7 @@ export class TeamRepository extends TeamContract {
         })
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<TeamEntity>;
+          console.log(data)
           if (data.meta.code === 'TEAM:GET-BY-ID:SUCCESS') {
             observer.next(data.data);
           } else {

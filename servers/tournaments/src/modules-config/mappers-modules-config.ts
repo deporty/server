@@ -64,7 +64,7 @@ export class MapperModulesConfig {
     container.add({
       id: 'MatchMapper',
       kind: MatchMapper,
-      dependencies: ['ScoreMapper', 'PlayerFormMapper', 'StadisticsMapper', 'RefereeInMatchMapper', 'FileAdapter'],
+      dependencies: ['ScoreMapper', 'PlayerFormMapper', 'StadisticsMapper', 'RefereeInMatchMapper'],
       strategy: 'singleton',
     });
     container.add({
@@ -121,7 +121,7 @@ export class MapperModulesConfig {
     container.add({
       id: 'RegisteredTeamMapper',
       kind: RegisteredTeamMapper,
-      dependencies: ['MemberMapper', 'FileAdapter'],
+      dependencies: ['MemberMapper'],
       strategy: 'singleton',
     });
 
@@ -134,7 +134,7 @@ export class MapperModulesConfig {
     container.add({
       id: 'TournamentMapper',
       kind: TournamentMapper,
-      dependencies: ['FinancialStatementsMapper', 'FileAdapter'],
+      dependencies: ['FinancialStatementsMapper'],
       strategy: 'singleton',
     });
   }

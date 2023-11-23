@@ -1,8 +1,7 @@
 import { Id } from '@deporty-org/entities';
 import { MemberEntity } from '@deporty-org/entities/teams';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
-import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
-import { Observable, of, zip } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { MemberContract } from '../../contracts/member.contract';
 import { GetOnlyMemberByIdUsecase } from '../get-only-member-by-id/get-only-member-by-id.usecase';
@@ -17,7 +16,6 @@ export class EndMemberParticipationUsecase extends Usecase<Param, MemberEntity> 
   constructor(
     private getOnlyMemberByIdUsecase: GetOnlyMemberByIdUsecase,
     private memberContract: MemberContract,
-    private fileAdapter: FileAdapter,
     private userContract: UserContract
   ) {
     super();
@@ -32,10 +30,9 @@ export class EndMemberParticipationUsecase extends Usecase<Param, MemberEntity> 
       })
       .pipe(
         mergeMap((prevMember) => {
-
           const newMember: MemberEntity = {
             ...prevMember,
-            image: prevMember.image ? this.fileAdapter.getRelativeUrl(prevMember.image) : prevMember.image,
+            image: prevMember.image || prevMember.image,
             retirementDate: new Date(),
           };
 
@@ -48,11 +45,9 @@ export class EndMemberParticipationUsecase extends Usecase<Param, MemberEntity> 
             )
             .pipe(
               mergeMap(() => {
-
                 return this.userContract.getTeamParticipationByProperties(newMember.userId, newMember.teamId, newMember.initDate!).pipe(
                   mergeMap((teamParticipation) => {
                     if (teamParticipation) {
-
                       return this.userContract.editTeamParticipation(newMember.userId, {
                         ...teamParticipation,
                         retirementDate: newMember.retirementDate,
@@ -63,16 +58,9 @@ export class EndMemberParticipationUsecase extends Usecase<Param, MemberEntity> 
                 );
               }),
 
-              mergeMap(() => {
-                return zip(of(newMember), newMember.image ? this.fileAdapter.getAbsoluteHTTPUrl(newMember.image) : of(''));
-              }),
-              map(([user, p]) => {
-                console.log('Lo que se envia al celular');
-                console.log({ ...user, image: p });
-
+              map(() => {
                 return {
-                  ...user,
-                  image: p,
+                  ...newMember,
                 };
               })
             );

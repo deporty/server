@@ -1,47 +1,48 @@
 import { Container } from '@scifamek-open-source/iraca/dependency-injection';
 import { AuthorizationContract } from './domain/contracts/authorization.contract';
 import { MemberContract } from './domain/contracts/member.contract';
+import { OrganizationContract } from './domain/contracts/organization.contract';
 import { SportContract } from './domain/contracts/sport.contract';
 import { TeamContract } from './domain/contracts/team.contract';
-import { UserContract } from './domain/contracts/user.constract';
-import { CreateTeamUsecase } from './domain/usecases/create-team/create-team.usecase';
-import { DeleteTeamUsecase } from './domain/usecases/delete-team/delete-team.usecase';
-import { EditTeamUsecase } from './domain/usecases/edit-team/edit-team.usecase';
-import { GetMemberByIdUsecase } from './domain/usecases/get-member-by-id/get-member-by-id.usecase';
-import { GetMembersByTeamUsecase } from './domain/usecases/get-members-by-team/get-members-by-team.usecase';
-import { GetSportByIdUsecase } from './domain/usecases/get-sport-by-id/get-sport-by-id.usecase';
-import { GetTeamByIdUsecase } from './domain/usecases/get-team-by-id/get-team-by-id.usecase';
-import { GetTeamByNameUsecase } from './domain/usecases/get-team-by-name/get-team-by-name.usecase';
-import { GetTeamByAdvancedFiltersUsecase } from './domain/usecases/get-teams-by-advanced-filters/get-teams-by-advanced-filters.usecase';
-import { GetTeamByFiltersUsecase } from './domain/usecases/get-teams-by-filters/get-teams-by-filters.usecase';
-import { GetTeamsUsecase } from './domain/usecases/get-teams/get-teams.usecase';
-import { MemberMapper } from './infrastructure/member.mapper';
-import { AuthorizationRepository } from './infrastructure/repository/authorization.repository';
-import { MemberRepository } from './infrastructure/repository/member.repository';
-import { SportRepository } from './infrastructure/repository/sport.repository';
-import { TeamRepository } from './infrastructure/repository/team.repository';
-import { UserRepository } from './infrastructure/repository/user.repository';
-import { SportMapper } from './infrastructure/sport.mapper';
-import { TeamMapper } from './infrastructure/team.mapper';
-import { TournamentInscriptionMapper } from './infrastructure/mappers/tournament-inscription.mapper';
 import { TournamentInscriptionContract } from './domain/contracts/tournament-inscription.contract';
-import { TournamentInscriptionRepository } from './infrastructure/repository/tournament-inscription.repository';
-import { GetTournamentInscriptionsByTeamIdUsecase } from './domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
-import { OrganizationContract } from './domain/contracts/organization.contract';
-import { OrganizationRepository } from './infrastructure/repository/organization.repository';
+import { UserContract } from './domain/contracts/user.constract';
 import { AsignNewMemberToTeamUsecase } from './domain/usecases/asign-new-member-to-team/asign-new-member-to-team.usecase';
-import { EditMemberByIdUsecase } from './domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
+import { CreateTeamAndMembersFromFileUsecase } from './domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
+import { CreateTeamUsecase } from './domain/usecases/create-team/create-team.usecase';
 import { CreateUserAndAsignNewMemberToTeamUsecase } from './domain/usecases/create-user-and-asign-new-member-to-team/create-user-and-asign-new-member-to-team.usecase';
 import { DeleteMemberByIdUsecase } from './domain/usecases/delete-member-by-id/delete-member-by-id.usecase';
 import { DeleteMembersFromTeamUsecase } from './domain/usecases/delete-members-from-team/delete-members-from-team.usecase';
-import { GetOnlyMemberByIdUsecase } from './domain/usecases/get-only-member-by-id/get-only-member-by-id.usecase';
-import { GetTeamByUniqueAttributesUsecase } from './domain/usecases/get-team-by-unique-attributes/get-team-by-unique-attributes.usecase';
-import { SaveTournamentInscriptionsByTeamUsecase } from './domain/usecases/save-tournament-inscriptions-by-team/save-tournament-inscriptions-by-team.usecase';
-import { GetOnlyMembersByTeamUsecase } from './domain/usecases/get-only-members-by-team/get-only-members-by-team.usecase';
-import { CreateTeamAndMembersFromFileUsecase } from './domain/usecases/create-team-and-members-from-file/create-team-and-members-from-file.usecase';
+import { DeleteTeamUsecase } from './domain/usecases/delete-team/delete-team.usecase';
+import { EditMemberByIdUsecase } from './domain/usecases/edit-member-by-id/edit-member-by-id.usecase';
+import { EditTeamUsecase } from './domain/usecases/edit-team/edit-team.usecase';
 import { EndMemberParticipationUsecase } from './domain/usecases/end-member-participation/end-member-participation.usecase';
+import { GetMemberByIdUsecase } from './domain/usecases/get-member-by-id/get-member-by-id.usecase';
+import { GetMembersByTeamUsecase } from './domain/usecases/get-members-by-team/get-members-by-team.usecase';
+import { GetOnlyMemberByIdUsecase } from './domain/usecases/get-only-member-by-id/get-only-member-by-id.usecase';
+import { GetOnlyMembersByTeamUsecase } from './domain/usecases/get-only-members-by-team/get-only-members-by-team.usecase';
+import { GetSportByIdUsecase } from './domain/usecases/get-sport-by-id/get-sport-by-id.usecase';
+import { GetTeamByIdUsecase } from './domain/usecases/get-team-by-id/get-team-by-id.usecase';
+import { GetTeamByNameUsecase } from './domain/usecases/get-team-by-name/get-team-by-name.usecase';
+import { GetTeamByUniqueAttributesUsecase } from './domain/usecases/get-team-by-unique-attributes/get-team-by-unique-attributes.usecase';
+import { GetTeamByAdvancedFiltersUsecase } from './domain/usecases/get-teams-by-advanced-filters/get-teams-by-advanced-filters.usecase';
+import { GetTeamByFiltersUsecase } from './domain/usecases/get-teams-by-filters/get-teams-by-filters.usecase';
 import { GetTeamsByIdsUsecase } from './domain/usecases/get-teams-by-ids/get-teams-by-ids.usecase';
+import { GetTeamsUsecase } from './domain/usecases/get-teams/get-teams.usecase';
+import { GetTournamentInscriptionsByTeamIdUsecase } from './domain/usecases/get-tournament-inscriptions-by-team-id/get-tournament-inscriptions-by-team-id.usecase';
 import { PromoteMembersUsecase } from './domain/usecases/promote-members/promote-members.usecase';
+import { SaveTournamentInscriptionsByTeamUsecase } from './domain/usecases/save-tournament-inscriptions-by-team/save-tournament-inscriptions-by-team.usecase';
+import { UpdateTournamentInscriptionsByTeamUsecase } from './domain/usecases/update-tournament-inscriptions-by-team/update-tournament-inscriptions-by-team.usecase';
+import { TournamentInscriptionMapper } from './infrastructure/mappers/tournament-inscription.mapper';
+import { MemberMapper } from './infrastructure/member.mapper';
+import { AuthorizationRepository } from './infrastructure/repository/authorization.repository';
+import { MemberRepository } from './infrastructure/repository/member.repository';
+import { OrganizationRepository } from './infrastructure/repository/organization.repository';
+import { SportRepository } from './infrastructure/repository/sport.repository';
+import { TeamRepository } from './infrastructure/repository/team.repository';
+import { TournamentInscriptionRepository } from './infrastructure/repository/tournament-inscription.repository';
+import { UserRepository } from './infrastructure/repository/user.repository';
+import { SportMapper } from './infrastructure/sport.mapper';
+import { TeamMapper } from './infrastructure/team.mapper';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -55,7 +56,6 @@ export class TeamsModulesConfig {
     container.add({
       id: 'MemberMapper',
       kind: MemberMapper,
-      dependencies: ['FileAdapter'],
       strategy: 'singleton',
     });
 
@@ -105,7 +105,6 @@ export class TeamsModulesConfig {
       id: 'TeamMapper',
       kind: TeamMapper,
       strategy: 'singleton',
-      dependencies: ['FileAdapter'],
     });
 
     container.add({
@@ -239,6 +238,12 @@ export class TeamsModulesConfig {
     container.add({
       id: 'SaveTournamentInscriptionsByTeamUsecase',
       kind: SaveTournamentInscriptionsByTeamUsecase,
+      dependencies: ['TournamentInscriptionContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'UpdateTournamentInscriptionsByTeamUsecase',
+      kind: UpdateTournamentInscriptionsByTeamUsecase,
       dependencies: ['TournamentInscriptionContract'],
       strategy: 'singleton',
     });

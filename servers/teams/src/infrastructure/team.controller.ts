@@ -35,6 +35,8 @@ import { CreateTeamAndMembersFromFileUsecase } from '../domain/usecases/create-t
 import { EndMemberParticipationUsecase } from '../domain/usecases/end-member-participation/end-member-participation.usecase';
 import { GetTeamsByIdsUsecase } from '../domain/usecases/get-teams-by-ids/get-teams-by-ids.usecase';
 import { PromoteMembersUsecase } from '../domain/usecases/promote-members/promote-members.usecase';
+import { GetOnlyMemberByIdUsecase } from '../domain/usecases/get-only-member-by-id/get-only-member-by-id.usecase';
+import { UpdateTournamentInscriptionsByTeamUsecase } from '../domain/usecases/update-tournament-inscriptions-by-team/update-tournament-inscriptions-by-team.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -321,6 +323,23 @@ export class TeamController extends HttpController {
         usecaseParam: params,
       });
     });
+    router.patch(`/:teamId/tournament-inscription`, (request: Request, response: Response) => {
+      const params = {
+        ...request.body,
+        enrollmentDate: new Date(request.body.enrollmentDate),
+      };
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'TOURNAMENT-INSCRIPTIONS-UPDATED:SUCCESS',
+      };
+      this.handler<UpdateTournamentInscriptionsByTeamUsecase>({
+        container,
+        usecaseId: 'UpdateTournamentInscriptionsByTeamUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
+    });
 
     router.get(`/:teamId/member/:memberId`, (request: Request, response: Response) => {
       const params = request.params;
@@ -339,6 +358,28 @@ export class TeamController extends HttpController {
       this.handler<GetMemberByIdUsecase>({
         container,
         usecaseId: 'GetMemberByIdUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
+    });
+    router.get(`/:teamId/member/:memberId/only-member`, (request: Request, response: Response) => {
+      const params = request.params;
+
+      const config: MessagesConfiguration = {
+        exceptions: {
+          [MemberDoesNotExistError.id]: 'GET-MEMBER-BY-ID:ERROR',
+        },
+        identifier: this.identifier,
+        successCode: 'GET-MEMBER-BY-ID:SUCCESS',
+        extraData: {
+          id: params,
+        },
+      };
+
+      this.handler<GetOnlyMemberByIdUsecase>({
+        container,
+        usecaseId: 'GetOnlyMemberByIdUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: params,

@@ -54,8 +54,6 @@ export class EditMemberByIdUsecase extends Usecase<Param, MemberEntity> {
           }
 
           if (img !== null) {
-            console.log(1, img);
-
             const extension = getImageExtension(img);
             console.log(extension);
 
@@ -74,7 +72,7 @@ export class EditMemberByIdUsecase extends Usecase<Param, MemberEntity> {
             ...prevMember,
             initDate: member.initDate,
             number: member.number,
-            image: path ? this.fileAdapter.getRelativeUrl(path) : prevMember.image,
+            image: path || prevMember.image,
             position: member.position,
             retirementDate: member.retirementDate,
             kindMember: member.kindMember,
@@ -88,14 +86,8 @@ export class EditMemberByIdUsecase extends Usecase<Param, MemberEntity> {
               newMember
             )
             .pipe(
-              mergeMap(() => {
-                return zip(of(newMember), newMember.image ? this.fileAdapter.getAbsoluteHTTPUrl(newMember.image) : of(''));
-              }),
-              map(([user, p]) => {
-                return {
-                  ...user,
-                  image: p,
-                };
+              map(() => {
+                return newMember;
               })
             );
         })

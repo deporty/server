@@ -282,8 +282,8 @@ export function createTree(teamsIdentifiers: string[][]): NodeMatch[] {
     return acc + team.length;
   }, 0);
 
-  const ammountOfMatches = fullPassedTeams / 2;
-  const maxLevelTree = Math.ceil(Math.log(ammountOfMatches) / Math.log(2));
+  const amountOfMatches = fullPassedTeams / 2;
+  const maxLevelTree = Math.ceil(Math.log(amountOfMatches) / Math.log(2));
 
   const initialNucleones = createNucleones(teamsIdentifiers);
 
@@ -293,7 +293,7 @@ export function createTree(teamsIdentifiers: string[][]): NodeMatch[] {
   sum += Math.pow(2, i);
 
   i--;
-  while (i > 0 && sum < ammountOfMatches) {
+  while (i > 0 && sum < amountOfMatches) {
     sum += Math.pow(2, i);
 
     i--;
@@ -303,7 +303,7 @@ export function createTree(teamsIdentifiers: string[][]): NodeMatch[] {
     groupLength: teamsIdentifiers.length,
     matchesInMaxLevel: sum,
     nucleones: initialNucleones,
-    totalMatches: ammountOfMatches,
+    totalMatches: amountOfMatches,
     initialLevel: maxLevelTree,
   });
 

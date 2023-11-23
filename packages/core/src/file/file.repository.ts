@@ -24,10 +24,10 @@ export class FileRepository extends FileAdapter {
   }
 
   deleteFile(filePath: string): Observable<any> {
-    const restaured = filePath
-      .split('/o/')[1]
-      .split('?')[0]
-      .replace(/%2F/g, '/');
+    let restaured = filePath;
+    if (filePath.startsWith('http')) {
+      restaured = filePath.split('/o/')[1].split('?')[0].replace(/%2F/g, '/');
+    }
 
     return from(this.storage.bucket().file(restaured).delete()).pipe(
       catchError((error) => {

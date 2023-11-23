@@ -22,10 +22,10 @@ class FileRepository extends infrastructure_1.FileAdapter {
         return filepath;
     }
     deleteFile(filePath) {
-        const restaured = filePath
-            .split('/o/')[1]
-            .split('?')[0]
-            .replace(/%2F/g, '/');
+        let restaured = filePath;
+        if (filePath.startsWith('http')) {
+            restaured = filePath.split('/o/')[1].split('?')[0].replace(/%2F/g, '/');
+        }
         return (0, rxjs_1.from)(this.storage.bucket().file(restaured).delete()).pipe((0, operators_1.catchError)((error) => {
             return (0, rxjs_1.of)(false);
         }));

@@ -1,13 +1,13 @@
+import { Id } from '@deporty-org/entities';
 import { UserEntity } from '@deporty-org/entities/users';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { generateError } from '@scifamek-open-source/iraca/helpers';
 import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import { forceTransformation, getImageExtension } from '@scifamek-open-source/tairona';
 import { Observable, from, of, throwError, zip } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { UserContract } from '../../contracts/user.contract';
 import { GetUserByIdUsecase } from '../get-user-by-id/get-user-by-id.usecase';
-import { Id } from '@deporty-org/entities';
 
 export interface Param {
   user: UserEntity;
@@ -57,30 +57,18 @@ export class EditUserByIdUsecase extends Usecase<Param, UserEntity> {
         return zip(of(prevUser.image), of(prevUser));
       }),
       mergeMap(([path, prevUser]: [string, UserEntity]) => {
-
         const newUser: UserEntity = {
           ...prevUser,
           birthDate: user.birthDate,
           document: user.document,
           firstLastName: user.firstLastName,
           firstName: user.firstName,
-          image: path ? this.fileAdapter.getRelativeUrl(path) : prevUser.image,
+          image: path || prevUser.image,
           phone: user.phone,
           secondLastName: user.secondLastName,
           secondName: user.secondName,
         };
-        return this.userContract.update(prevUser.id!, newUser).pipe(
-          mergeMap((user) => {
-            return zip(of(user), user.image ? this.fileAdapter.getAbsoluteHTTPUrl(user.image) : of(''));
-          }),
-          map(([user, path]) => {
-            return {
-              ...user,
-
-              image: path,
-            };
-          })
-        );
+        return this.userContract.update(prevUser.id!, newUser);
       })
     );
   }

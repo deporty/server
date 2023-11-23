@@ -26,7 +26,7 @@ export class GroupsAndSchemaDontMatchError extends Error {
 export class TeamsAmmountInClasificationError extends Error {
   constructor() {
     super();
-    this.message = `The ammount of temas inside the position table does not match withe the passed teams configuration.`;
+    this.message = `The amount of temas inside the position table does not match withe the passed teams configuration.`;
     this.name = 'TeamsAmmountInClasificationError';
   }
 }

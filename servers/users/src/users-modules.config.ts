@@ -31,7 +31,6 @@ export class UserModulesConfig {
     container.add({
       id: 'UserMapper',
       kind: UserMapper,
-      dependencies: ['FileAdapter'],
       strategy: 'singleton',
     });
     container.add({

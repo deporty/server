@@ -29,7 +29,6 @@ export class CreateUserAndAsignNewMemberToTeamUsecase extends Usecase<Param, Res
 
     return this.userContract.getUserByUniqueFieldsUsecase(userToCreate.document, userToCreate.email).pipe(
       map((users) => {
-
         if (users.length == 1) {
           return users[0];
         } else if (users.length > 1) {
@@ -56,6 +55,8 @@ export class CreateUserAndAsignNewMemberToTeamUsecase extends Usecase<Param, Res
 
         return $asignNewMemberToTeamUsecase.pipe(
           map((data) => {
+            console.log('logrado ', data);
+            
             return {
               user,
               member: data.member,

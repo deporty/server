@@ -1,11 +1,11 @@
+import { formatDateFromJson } from '@deporty-org/core';
 import { IScoreModel, MatchEntity, PlayerForm, Stadistics } from '@deporty-org/entities/tournaments';
+import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of, zip } from 'rxjs';
-import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
-import { ScoreMapper } from './score.mapper';
 import { PlayerFormMapper } from './player-form.mapper';
+import { ScoreMapper } from './score.mapper';
 import { StadisticsMapper } from './stadistics.mapper';
-import { formatDateFromJson } from '@deporty-org/core';
 
 export class RefereeInMatchMapper extends Mapper<MatchEntity> {
   constructor() {
@@ -23,7 +23,6 @@ export class MatchMapper extends Mapper<MatchEntity> {
     private playFormMapper: PlayerFormMapper,
     private stadisticsMapper: StadisticsMapper,
     private refereeInMatchMapper: RefereeInMatchMapper,
-    private fileAdapter: FileAdapter
   ) {
     super();
     this.attributesMapper = {
@@ -69,21 +68,15 @@ export class MatchMapper extends Mapper<MatchEntity> {
       observations: { name: 'observations' },
       captainASignature: {
         name: 'captain-a-signature',
-        from: (value: string) => {
-          return this.fileAdapter.getAbsoluteHTTPUrl(value);
-        },
+     
       },
       captainBSignature: {
         name: 'captain-b-signature',
-        from: (value: string) => {
-          return this.fileAdapter.getAbsoluteHTTPUrl(value);
-        },
+       
       },
       judgeSignature: {
         name: 'judge-signature',
-        from: (value: string) => {
-          return this.fileAdapter.getAbsoluteHTTPUrl(value);
-        },
+      
       },
       status: { name: 'status' },
       locationId: { name: 'location-id' },

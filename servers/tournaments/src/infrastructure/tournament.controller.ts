@@ -67,7 +67,6 @@ import { GetTournamentBaseInformationByIdUsecase } from '../domain/usecases/get-
 import {
   DataIncompleteError,
   MemberIdsNotFoundError,
-  RegisterTeamIntoATournamentUsecase,
   RequiredDocsForMembersIncompleteError,
   RequiredDocsForTeamIncompleteError,
   RequiredDocsNoPresentError,
@@ -79,6 +78,8 @@ import { GetCardsReportGroupedByTeamAndDateByTournamentUsecase } from '../domain
 import { GetLessDefeatedFenceReportUsecase } from '../domain/usecases/get-less-defeated-fence-report/get-less-defeated-fence-report.usecase';
 import { ModifyTournamentFinancialStatusUsecase } from '../domain/usecases/modify-tournament-financial-status/modify-tournament-financial-status.usecase';
 import { GetAvailableTournamentsByFiltersUsecase } from '../domain/usecases/get-available-tournaments-by-filters/get-available-tournaments-by-filters.usecase';
+import { RegisterTeamIntoATournamentLinealUsecase } from '../domain/usecases/registered-team/register-team-into-a-tournament-lineal/register-team-into-a-tournament-lineal.usecase';
+import { ModifyRequestForRequiredDocumentsUsecase } from '../domain/usecases/modify-request-for-required-documents/modify-request-for-required-documents.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -145,9 +146,9 @@ export class TournamentController extends HttpController {
       `/filters`,
       // validator('GetTournamentByIdUsecase'),
       (request: Request, response: Response) => {
-        const filters: any = {...request.query};
-        if(filters['year']){
-          filters['year'] = parseInt(filters['year'])
+        const filters: any = { ...request.query };
+        if (filters['year']) {
+          filters['year'] = parseInt(filters['year']);
         }
 
         const config: MessagesConfiguration = {
@@ -245,6 +246,22 @@ export class TournamentController extends HttpController {
       });
     });
 
+    router.post(`/:tournamentId/modify-request-for-required-docs`, (request: Request, response: Response) => {
+      const params = { ...request.body, ...request.params };
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'MODIFIED-REQUEST-FOR-REQUIRED-DOCS:SUCCESS',
+      };
+
+      this.handler<ModifyRequestForRequiredDocumentsUsecase>({
+        container,
+        usecaseId: 'ModifyRequestForRequiredDocumentsUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
+    });
     router.post(
       `/:tournamentId/fixture-stage/:fixtureStageId/intergroup-match`,
       validator('AddIntergroupMatchUsecase'),
@@ -1448,9 +1465,9 @@ export class TournamentController extends HttpController {
         successCode: 'REGISTRATION-DONE:SUCCESS',
       };
 
-      this.handler<RegisterTeamIntoATournamentUsecase>({
+      this.handler<RegisterTeamIntoATournamentLinealUsecase>({
         container,
-        usecaseId: 'RegisterTeamIntoATournamentUsecase',
+        usecaseId: 'RegisterTeamIntoATournamentLinealUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: data,

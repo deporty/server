@@ -1,9 +1,8 @@
 import { OrganizationEntity } from '@deporty-org/entities/organizations';
-import { of } from 'rxjs';
-import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
+import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 
 export class OrganizationMapper extends Mapper<OrganizationEntity> {
-  constructor(private fileAdapter: FileAdapter) {
+  constructor() {
     super();
     this.attributesMapper = {
       FMTA: { name: 'FMTA' },
@@ -14,11 +13,6 @@ export class OrganizationMapper extends Mapper<OrganizationEntity> {
       businessName: { name: 'business-name' },
       iso: {
         name: 'iso',
-        from: (value: string) => {
-          return value
-            ? this.fileAdapter.getAbsoluteHTTPUrl(value)
-            : of(undefined);
-        },
       },
       id: { name: 'id' },
     };

@@ -1,5 +1,5 @@
 import { of, zip } from 'rxjs';
-import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
+import {  Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import {
   DEFAULT_FIXTURE_STAGES_CONFIGURATION,
   DEFAULT_NEGATIVE_POINTS_PER_CARD_CONFIGURATION,
@@ -112,7 +112,7 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
   }
 }
 export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
-  constructor(private fileAdapter: FileAdapter, private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper) {
+  constructor(private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper) {
     super();
     this.attributesMapper = {
       categories: { name: 'categories' },
@@ -122,6 +122,8 @@ export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
       name: { name: 'name' },
       organizationId: { name: 'organization-id' },
       registeredTeamsVisibleStatus: { name: 'registered-teams-visible-status' },
+      defaultRegisteredTeamStatus: { name: 'default-registered-team-status', default: 'pre-registered' },
+
       allowAutoInscriptionFromTeamModifications: { name: 'allow-auto-inscription-from-team-modifications', default: false },
       fixtureStagesConfiguration: {
         name: 'fixture-stages-configuration',
@@ -135,12 +137,6 @@ export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
       },
       flayer: {
         name: 'flayer',
-        from: (value: string) => {
-          return value ? this.fileAdapter.getAbsoluteHTTPUrl(value) : of(undefined);
-        },
-        to: (value: string) => {
-          return value ? this.fileAdapter.getRelativeUrl(value) : of(undefined);
-        },
       },
       id: { name: 'id' },
     };

@@ -1,11 +1,11 @@
 import { formatDateFromJson } from '@deporty-org/core';
 import { MemberEntity } from '@deporty-org/entities/teams';
-import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
+import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of } from 'rxjs';
 
 export class MemberMapper extends Mapper<MemberEntity> {
-  constructor(private fileAdapter: FileAdapter) {
+  constructor() {
     super();
     this.attributesMapper = {
       position: { name: 'position', default: '' },
@@ -31,9 +31,6 @@ export class MemberMapper extends Mapper<MemberEntity> {
       teamId: { name: 'team-id' },
       image: {
         name: 'image',
-        from: (value: string) => {
-          return this.fileAdapter.getAbsoluteHTTPUrl(value);
-        },
       },
       userId: { name: 'user-id' },
       kindMember: { name: 'kind-member', default: 'player' },

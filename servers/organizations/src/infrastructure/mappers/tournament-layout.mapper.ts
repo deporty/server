@@ -1,5 +1,3 @@
-import { of, zip } from 'rxjs';
-import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import {
   DEFAULT_FIXTURE_STAGES_CONFIGURATION,
   DEFAULT_NEGATIVE_POINTS_PER_CARD_CONFIGURATION,
@@ -11,9 +9,11 @@ import {
   FixtureStagesConfiguration,
   NegativePointsPerCard,
   PointsConfiguration,
-  TournamentLayoutEntity,
   RequiredDocConfig,
+  TournamentLayoutEntity,
 } from '@deporty-org/entities/organizations';
+import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
+import { of, zip } from 'rxjs';
 
 export class SchemaMapper extends Mapper<any> {
   constructor(private fixtureStageConfigurationMapper: FixtureStageConfigurationMapper) {
@@ -161,7 +161,6 @@ export class FixtureStagesConfigurationMapper extends Mapper<FixtureStagesConfig
 }
 export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
   constructor(
-    private fileAdapter: FileAdapter,
     private fixtureStagesConfigurationMapper: FixtureStagesConfigurationMapper,
     private requiredDocConfigMapper: RequiredDocConfigMapper
   ) {
@@ -174,6 +173,7 @@ export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
       name: { name: 'name' },
       organizationId: { name: 'organization-id' },
       registeredTeamsVisibleStatus: { name: 'registered-teams-visible-status' },
+      defaultRegisteredTeamStatus: { name: 'default-registered-team-status', default: 'pre-registered' },
       allowAutoInscriptionFromTeamModifications: { name: 'allow-auto-inscription-from-team-modifications', default: false },
       fixtureStagesConfiguration: {
         name: 'fixture-stages-configuration',
@@ -196,12 +196,6 @@ export class TournamentLayoutMapper extends Mapper<TournamentLayoutEntity> {
       },
       flayer: {
         name: 'flayer',
-        from: (value: string) => {
-          return value ? this.fileAdapter.getAbsoluteHTTPUrl(value) : of(undefined);
-        },
-        to: (value: string) => {
-          return value ? this.fileAdapter.getRelativeUrl(value) : of(undefined);
-        },
       },
       id: { name: 'id' },
     };

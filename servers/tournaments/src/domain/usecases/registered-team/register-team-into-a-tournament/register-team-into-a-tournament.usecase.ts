@@ -1,5 +1,5 @@
 import { Id, MemberEntity, RegisteredTeamEntity, RequiredDocsInRegisteredTeam, TournamentInscriptionEntity } from '@deporty-org/entities';
-import { RequiredDocConfig } from '@deporty-org/entities/organizations';
+import { RequiredDocConfig, TournamentLayoutEntity } from '@deporty-org/entities/organizations';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { generateError } from '@scifamek-open-source/iraca/helpers';
 import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
@@ -10,18 +10,20 @@ import { OrganizationContract } from '../../../contracts/organization.contract';
 import { RegisteredTeamsContract } from '../../../contracts/registered-teams.contract';
 import { TeamContract } from '../../../contracts/team.contract';
 import { UpdateRegisteredTeamByIdUsecase } from '../update-registered-team-by-id/update-registered-team-by-id.usecase';
+import { GetTournamentByIdUsecase } from '../../get-tournament-by-id/get-tournament-by-id.usecase';
 
 export interface Param {
   teamId: string;
   tournamentId: string;
   tournamentLayoutId: string;
+  tournamentLayout?: TournamentLayoutEntity;
   organizationId: string;
   requiredDocs?: RequiredDocsInRegisteredTeam;
 }
 
 export const RequiredDocsForTeamIncompleteError = generateError(
   'RequiredDocsForTeamIncompleteError',
-  'You must provide the same ammount of files for team.'
+  'You must provide the same amount of files for team.'
 );
 export const RequiredDocsForMembersIncompleteError = generateError(
   'RequiredDocsForMembersIncompleteError',
@@ -44,7 +46,8 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
     private teamContract: TeamContract,
     private organizationContract: OrganizationContract,
     private fileAdapter: FileAdapter,
-    private updateRegisteredTeamByIdUsecase: UpdateRegisteredTeamByIdUsecase
+    private updateRegisteredTeamByIdUsecase: UpdateRegisteredTeamByIdUsecase,
+    private getTournamentByIdUsecase: GetTournamentByIdUsecase
   ) {
     super();
   }
@@ -53,21 +56,26 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
       return throwError(new DataIncompleteError());
     }
     const $members = this.teamContract.getOnlyMembersByTeam(param.teamId, false);
+    const $tournament = this.getTournamentByIdUsecase.call(param.tournamentId);
 
-    const $tournamentLayout = this.organizationContract.getTournamentLayoutByIdUsecase(param.organizationId, param.tournamentLayoutId);
+    const $tournamentLayout = param.tournamentLayout
+      ? of(param.tournamentLayout)
+      : this.organizationContract.getTournamentLayoutByIdUsecase(param.organizationId, param.tournamentLayoutId);
 
-    return $tournamentLayout.pipe(
-      mergeMap((tournamentLayout) => {
+    return zip($tournamentLayout, $tournament).pipe(
+      mergeMap(([tournamentLayout, tournament]) => {
         const requiredDocs = tournamentLayout.requiredDocsConfig;
-        if (requiredDocs && requiredDocs.length > 0) {
-          const requiredDocsForMembers = requiredDocs.filter((doc) => doc.applyTo === 'player');
-          const requiredDocsForTeam = requiredDocs.filter((doc) => doc.applyTo === 'team');
+        if (tournament.requestRequiredDocs) {
+          if (requiredDocs && requiredDocs.length > 0) {
+            const requiredDocsForMembers = requiredDocs.filter((doc) => doc.applyTo === 'player');
+            const requiredDocsForTeam = requiredDocs.filter((doc) => doc.applyTo === 'team');
 
-          if (!this.areRequiredDocsForTeamComplete(param, requiredDocsForTeam)) {
-            return throwError(new RequiredDocsForTeamIncompleteError());
-          }
-          if (!this.areRequiredDocsForMembersComplete(param, requiredDocsForMembers)) {
-            return throwError(new RequiredDocsForMembersIncompleteError());
+            if (!this.areRequiredDocsForTeamComplete(param, requiredDocsForTeam)) {
+              return throwError(new RequiredDocsForTeamIncompleteError());
+            }
+            if (!this.areRequiredDocsForMembersComplete(param, requiredDocsForMembers)) {
+              return throwError(new RequiredDocsForMembersIncompleteError());
+            }
           }
         }
 
@@ -82,14 +90,14 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
             },
           }
         );
-        return zip($previousRegisteredTeam, of(requiredDocs!));
+        return zip($previousRegisteredTeam, of(requiredDocs!), of(tournamentLayout));
       }),
 
-      mergeMap(([previousRegisteredTeam, requiredDocs]) => {
+      mergeMap(([previousRegisteredTeam, requiredDocs, tournamentLayout]) => {
         if (previousRegisteredTeam.length) {
           return throwError(new TeamAlreadyRegisteredError({ l: previousRegisteredTeam.length }));
         }
-        return zip($members, of(requiredDocs));
+        return zip($members, of(requiredDocs), of(tournamentLayout));
       }),
 
       map(
@@ -98,8 +106,8 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
          * @param members
          * @returns
          */
-        ([members, requiredDocs]) => {
-          return { members: members.filter((member) => param.requiredDocs?.players[member.id!]), requiredDocs };
+        ([members, requiredDocs, tournamentLayout]) => {
+          return { members: members.filter((member) => param.requiredDocs?.members[member.id!]), requiredDocs, tournamentLayout };
         }
       ),
 
@@ -109,9 +117,9 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
          * @param members
          * @returns
          */
-        ({ members, requiredDocs }) => {
+        ({ members, requiredDocs, tournamentLayout }) => {
           const notFoundIds = [];
-          for (const memberId in param.requiredDocs!.players) {
+          for (const memberId in param.requiredDocs!.members) {
             if (!this.isAValidMember(memberId, members)) {
               notFoundIds.push(memberId);
             }
@@ -124,7 +132,7 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
               })
             );
           }
-          return of(members);
+          return zip(of(members), of(tournamentLayout));
         }
       ),
 
@@ -134,14 +142,14 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
          * @param members
          * @returns
          */
-        (members) => {
+        ([members, tournamentLayout]) => {
           const registeredTeam: RegisteredTeamEntity = {
             enrollmentDate: new Date(),
             members,
             teamId: param.teamId,
             tournamentId: param.tournamentId,
             requiredDocs: param.requiredDocs,
-            status: 'pre-registered',
+            status: tournamentLayout.defaultRegisteredTeamStatus!,
           };
           return registeredTeam;
         }
@@ -173,9 +181,9 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
               docIdentifier: string;
             }>
           > = [];
-          for (const memberId in requiredDocs.players) {
-            if (Object.prototype.hasOwnProperty.call(requiredDocs.players, memberId)) {
-              const docs = requiredDocs.players[memberId];
+          for (const memberId in requiredDocs.members) {
+            if (Object.prototype.hasOwnProperty.call(requiredDocs.members, memberId)) {
+              const docs = requiredDocs.members[memberId];
 
               for (const docIdentifier in docs) {
                 if (Object.prototype.hasOwnProperty.call(docs, docIdentifier)) {
@@ -224,79 +232,7 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
       mergeMap((inscription): Observable<TournamentInscriptionEntity> => {
         return this.teamContract.saveTournamentInscriptionsByTeamUsecase(inscription).pipe(map(() => inscription));
       }),
-      mergeMap(
-        /**
-         * Request for the absolute path of files
-         * @param inscription
-         * @returns
-         */
-        (inscription: TournamentInscriptionEntity) => {
-          const requiredDocs = inscription.requiredDocs;
-          if (requiredDocs) {
-            const $members: Array<
-              Observable<{
-                path: string;
-                memberId: string;
-                docIdentifier: string;
-              }>
-            > = [];
-            const $team: Array<
-              Observable<{
-                path: string;
-                docIdentifier: string;
-              }>
-            > = [];
-            for (const memberId in requiredDocs.players) {
-              if (Object.prototype.hasOwnProperty.call(requiredDocs.players, memberId)) {
-                const docs = requiredDocs.players[memberId];
-
-                for (const docIdentifier in docs) {
-                  if (Object.prototype.hasOwnProperty.call(docs, docIdentifier)) {
-                    const bas64 = docs[docIdentifier];
-                    const $resizedImageUpload = this.fileAdapter.getAbsoluteHTTPUrl(bas64).pipe(
-                      map((path) => {
-                        return { path, memberId, docIdentifier };
-                      })
-                    );
-                    $members.push($resizedImageUpload);
-                  }
-                }
-              }
-            }
-            for (const docIdentifier in requiredDocs.team) {
-              if (Object.prototype.hasOwnProperty.call(requiredDocs.team, docIdentifier)) {
-                const bas64 = requiredDocs.team[docIdentifier];
-                const $resizedImageUpload = this.fileAdapter.getAbsoluteHTTPUrl(bas64).pipe(
-                  map((path) => {
-                    return { path, docIdentifier };
-                  })
-                );
-                $team.push($resizedImageUpload);
-              }
-            }
-
-            return zip($members.length > 0 ? zip(...$members) : of(null), $team.length > 0 ? zip(...$team) : of(null), of(inscription));
-          }
-          return zip(of(null), of(null), of(inscription));
-        }
-      ),
-      map(
-        ([members, team, inscription]: [
-          Array<{
-            path: string;
-            memberId: string;
-            docIdentifier: string;
-          }> | null,
-          Array<{
-            path: string;
-            docIdentifier: string;
-          }> | null,
-          RegisteredTeamEntity
-        ]): RegisteredTeamEntity => {
-          // return inscription as TournamentInscriptionEntity;
-          return this.fusion([members, team, inscription]);
-        }
-      )
+   
     ) as Observable<TournamentInscriptionEntity>;
   }
 
@@ -314,19 +250,19 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
   ]): RegisteredTeamEntity {
     if (members || team) {
       const newRequiredDocs: RequiredDocsInRegisteredTeam = {
-        players: {},
+        members: {},
         team: {},
       };
 
       if (members) {
-        const rMembers: RequiredDocsInRegisteredTeam['players'] = {};
+        const rMembers: RequiredDocsInRegisteredTeam['members'] = {};
         for (const m of members) {
           if (!rMembers.hasOwnProperty(m.memberId)) {
             rMembers[m.memberId] = {};
           }
           rMembers[m.memberId][m.docIdentifier] = m.path;
         }
-        newRequiredDocs.players = rMembers;
+        newRequiredDocs.members = rMembers;
       }
       if (team) {
         const rTeam: RequiredDocsInRegisteredTeam['team'] = {};
@@ -356,19 +292,19 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
       if (!param.requiredDocs) {
         return false;
       }
-      if (!param.requiredDocs?.players) {
+      if (!param.requiredDocs?.members) {
         return false;
       }
 
-      if (Object.keys(param.requiredDocs?.players).length == 0) {
+      if (Object.keys(param.requiredDocs?.members).length == 0) {
         return false;
       }
       let flag = true;
       let i = 0;
-      const keys = Object.keys(param.requiredDocs?.players);
+      const keys = Object.keys(param.requiredDocs?.members);
       while (flag && i < keys.length) {
         const key = keys[i];
-        const requiredDocsSentByMember = param.requiredDocs.players[key];
+        const requiredDocsSentByMember = param.requiredDocs.members[key];
 
         // flag = Object.keys(requiredDocsSentByMember).sort().length == requiredDocsForMembers.length;
         const sonIguales = (arr1: string[], arr2: string[]) => JSON.stringify(arr1) === JSON.stringify(arr2);

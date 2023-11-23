@@ -1,11 +1,11 @@
 import { UserEntity } from '@deporty-org/entities/users';
 import { formatDateFromJson } from '@deporty-org/core';
-import { FileAdapter, Mapper } from '@scifamek-open-source/iraca/infrastructure';
+import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of } from 'rxjs';
 
 export class UserMapper extends Mapper<UserEntity> {
-  constructor(private fileAdapter: FileAdapter) {
+  constructor() {
     super();
     this.attributesMapper = {
       secondLastName: { name: 'second-last-name' },
@@ -17,9 +17,6 @@ export class UserMapper extends Mapper<UserEntity> {
       document: { name: 'document' },
       image: {
         name: 'image',
-        from: (value: string) => {
-          return this.fileAdapter.getAbsoluteHTTPUrl(value);
-        },
       },
       phone: { name: 'phone' },
       email: { name: 'email' },

@@ -54,7 +54,7 @@ describe('GenerateMainDrawFromSchemaUsecase', () => {
             id: tournamentId,
             category: 'Open',
             financialStatements: {
-              ammount: 1,
+              amount: 1,
               numOfInvoices: 1,
               status: 'pending',
             },
