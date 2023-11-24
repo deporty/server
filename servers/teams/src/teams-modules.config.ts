@@ -162,7 +162,7 @@ export class TeamsModulesConfig {
     container.add({
       id: 'EndMemberParticipationUsecase',
       kind: EndMemberParticipationUsecase,
-      dependencies: ['GetOnlyMemberByIdUsecase', 'MemberContract', 'FileAdapter', 'UserContract'],
+      dependencies: ['GetOnlyMemberByIdUsecase', 'MemberContract', 'UserContract'],
       strategy: 'singleton',
     });
     container.add({
