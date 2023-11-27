@@ -64,6 +64,8 @@ export class CreateMatchSheetUsecase extends Usecase<MatchEntity, any> {
     return !!url && url !== ''
       ? this.fileAdapter.getAbsoluteHTTPUrl(url).pipe(
           mergeMap((x) => {
+            console.log('X ', x);
+            
             return downloadImageFromURL(x || url);
           })
         )

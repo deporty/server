@@ -24,6 +24,7 @@ export class UpdatePositionTableUsecase extends Usecase<Params, PositionsTable> 
   }
 
   call(param: Params): Observable<PositionsTable> {
+
     const teamIds = param.availableTeams || [];
     const tieBreakingOrder: TieBreakingOrder[] = param.tieBreakingOrder;
 
@@ -33,7 +34,7 @@ export class UpdatePositionTableUsecase extends Usecase<Params, PositionsTable> 
     };
     const table = positionsTable.table;
     const analizedMatches = positionsTable.analizedMatches;
-    
+
     const match = param.match;
     if (!analizedMatches.includes(match.id!)) {
       analizedMatches.push(match.id!);
@@ -93,6 +94,7 @@ export class UpdatePositionTableUsecase extends Usecase<Params, PositionsTable> 
 
       const response = this.resolveTies(groupedTable, tieBreakingOrder, param).pipe(
         map((table: Table) => {
+         
           return {
             analizedMatches,
             table: table,

@@ -4,7 +4,6 @@ import { Observable, of, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { IntergroupMatchContract } from '../../../contracts/intergroup-match.contract';
-import { convertToImage } from '@scifamek-open-source/iraca/helpers';
 import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import { CalculatePositionTableOfGroupUsecase } from '../../calculate-position-table-of-group/calculate-position-table-of-group.usecase';
 import { GetTournamentByIdUsecase } from '../../get-tournament-by-id/get-tournament-by-id.usecase';
@@ -31,7 +30,12 @@ export class EditIntergroupMatchUsecase extends Usecase<Param, Response> {
   ) {
     super();
   }
-
+  convertToImage(signature: string | undefined, path: string, fileAdapter: FileAdapter) {
+    if (!!signature && signature.startsWith('data:image')) {
+      return fileAdapter.uploadFile(path, signature).pipe(map(() => path));
+    }
+    return of(signature);
+  }
   call(param: Param): Observable<Response> {
     const prefixSignaturePath = `tournaments/${param.tournamentId}/stages/${param.fixtureStageId}/intergroups/matches/${param.intergroupMatch.id}`;
     const captainASignaturePath = `${prefixSignaturePath}/captainASignature.jpg`;
@@ -39,9 +43,9 @@ export class EditIntergroupMatchUsecase extends Usecase<Param, Response> {
     const judgeSignaturePath = `${prefixSignaturePath}/judgeSignature.jpg`;
 
     const signatures: Observable<string | undefined>[] = [
-      convertToImage(param.intergroupMatch.match['captainASignature'], captainASignaturePath, this.fileAdapter),
-      convertToImage(param.intergroupMatch.match['captainBSignature'], captainBSignaturePath, this.fileAdapter),
-      convertToImage(param.intergroupMatch.match['judgeSignature'], judgeSignaturePath, this.fileAdapter),
+      this.convertToImage(param.intergroupMatch.match['captainASignature'], captainASignaturePath, this.fileAdapter),
+      this.convertToImage(param.intergroupMatch.match['captainBSignature'], captainBSignaturePath, this.fileAdapter),
+      this.convertToImage(param.intergroupMatch.match['judgeSignature'], judgeSignaturePath, this.fileAdapter),
     ];
 
     const $prevMatch = this.getIntergroupMatchByIdUsecase.call({

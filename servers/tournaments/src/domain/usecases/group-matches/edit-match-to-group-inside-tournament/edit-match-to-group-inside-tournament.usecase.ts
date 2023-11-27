@@ -5,7 +5,6 @@ import { map, mergeMap } from 'rxjs/operators';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { MatchContract } from '../../../contracts/match.contract';
 import { GetTournamentByIdUsecase } from '../../get-tournament-by-id/get-tournament-by-id.usecase';
-import { convertToImage } from '@scifamek-open-source/iraca/helpers';
 import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 import { CalculatePositionTableOfGroupUsecase } from '../../calculate-position-table-of-group/calculate-position-table-of-group.usecase';
 
@@ -57,6 +56,12 @@ export class EditMatchInsideGroupUsecase extends Usecase<Param, { match: MatchEn
     );
   }
 
+  convertToImage(signature: string | undefined, path: string, fileAdapter: FileAdapter) {
+    if (!!signature && signature.startsWith('data:image')) {
+      return fileAdapter.uploadFile(path, signature).pipe(map(() => path));
+    }
+    return of(signature);
+  }
   private edit(param: Param) {
     const prefixSignaturePath = `tournaments/${param.tournamentId}/stages/${param.fixtureStageId}/groups/${param.groupId}/matches/${param.match.id}`;
     const captainASignaturePath = `${prefixSignaturePath}/captainASignature.jpg`;
@@ -64,9 +69,9 @@ export class EditMatchInsideGroupUsecase extends Usecase<Param, { match: MatchEn
     const judgeSignaturePath = `${prefixSignaturePath}/judgeSignature.jpg`;
 
     const signatures: Observable<string | undefined>[] = [
-      convertToImage(param.match['captainASignature'], captainASignaturePath, this.fileAdapter),
-      convertToImage(param.match['captainBSignature'], captainBSignaturePath, this.fileAdapter),
-      convertToImage(param.match['judgeSignature'], judgeSignaturePath, this.fileAdapter),
+      this.convertToImage(param.match['captainASignature'], captainASignaturePath, this.fileAdapter),
+      this.convertToImage(param.match['captainBSignature'], captainBSignaturePath, this.fileAdapter),
+      this.convertToImage(param.match['judgeSignature'], judgeSignaturePath, this.fileAdapter),
     ];
     return zip(...signatures).pipe(
       mergeMap((data) => {

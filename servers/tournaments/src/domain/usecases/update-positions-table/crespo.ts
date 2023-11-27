@@ -32,6 +32,7 @@ export function orderRecursively(
   getAnyMatchByTeamIdsUsecase: GetAnyMatchByTeamIdsUsecase,
   setLength: number
 ): Observable<number> {
+
   if (index == order.length) {
     const randomNumber = Math.random();
 
@@ -48,8 +49,7 @@ export function orderRecursively(
 
     const property = config.property;
     const operator = config.operator;
-    const result = operator((a.stadistics as any)[property], (b.stadistics as any)[property]);
-    result.pipe(
+    const result = operator((a.stadistics as any)[property], (b.stadistics as any)[property]).pipe(
       mergeMap((resultNumber) => {
         if (resultNumber === 0) {
           return orderRecursively(a, b, order, index + 1, param, getAnyMatchByTeamIdsUsecase, setLength);
@@ -75,8 +75,9 @@ export function orderRecursively(
       result = operator();
     }
 
-    result.pipe(
+    result = result.pipe(
       mergeMap((resultNumber) => {
+
         if (resultNumber == 0) {
           return orderRecursively(a, b, order, index + 1, param, getAnyMatchByTeamIdsUsecase, setLength);
         } else {
@@ -104,6 +105,7 @@ export function quicksort(
   // Separamos los elementos en los arreglos left y right
   const consolidated = [];
   for (let i = 1; i < collection.length; i++) {
+
     const result = orderRecursively(collection[i], pivot, tieBreakingOrder, 0, param, getAnyMatchByTeamIdsUsecase, setLength);
     const res = zip(result, of(collection[i]));
     consolidated.push(res);

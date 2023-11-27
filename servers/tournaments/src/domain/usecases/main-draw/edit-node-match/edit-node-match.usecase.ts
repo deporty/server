@@ -1,10 +1,9 @@
 import { NodeMatchEntity } from '@deporty-org/entities/tournaments';
-import { Observable, zip } from 'rxjs';
+import { Observable, of, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { Id } from '@deporty-org/entities';
 import { NodeMatchContract } from '../../../contracts/node-match.contract';
-import { convertToImage } from '@scifamek-open-source/iraca/helpers';
 import { FileAdapter } from '@scifamek-open-source/iraca/infrastructure';
 
 export interface Param {
@@ -15,6 +14,12 @@ export class EditNodeMatchUsecase extends Usecase<Param, NodeMatchEntity> {
   constructor(private nodeMatchContract: NodeMatchContract, private fileAdapter: FileAdapter) {
     super();
   }
+  convertToImage(signature: string | undefined, path: string, fileAdapter: FileAdapter) {
+    if (!!signature && signature.startsWith('data:image')) {
+      return fileAdapter.uploadFile(path, signature).pipe(map(() => path));
+    }
+    return of(signature);
+  }
 
   call(param: Param): Observable<NodeMatchEntity> {
     const prefixSignaturePath = `tournaments/${param.tournamentId}/main-draw/${param.nodeMatch.id}`;
@@ -23,9 +28,9 @@ export class EditNodeMatchUsecase extends Usecase<Param, NodeMatchEntity> {
     const judgeSignaturePath = `${prefixSignaturePath}/judgeSignature.jpg`;
 
     const signatures: Observable<string | undefined>[] = [
-      convertToImage(param.nodeMatch.match?.captainASignature, captainASignaturePath, this.fileAdapter),
-      convertToImage(param.nodeMatch.match?.captainBSignature, captainBSignaturePath, this.fileAdapter),
-      convertToImage(param.nodeMatch.match?.judgeSignature, judgeSignaturePath, this.fileAdapter),
+      this.convertToImage(param.nodeMatch.match?.captainASignature, captainASignaturePath, this.fileAdapter),
+      this.convertToImage(param.nodeMatch.match?.captainBSignature, captainBSignaturePath, this.fileAdapter),
+      this.convertToImage(param.nodeMatch.match?.judgeSignature, judgeSignaturePath, this.fileAdapter),
     ];
 
     return zip(...signatures).pipe(
