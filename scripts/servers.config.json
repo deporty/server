@@ -125,7 +125,7 @@
       "dev": {
         "min-replicas": 1,
         "max-replicas": 2,
-        "cpu": "40m",
+        "cpu": "30m",
         "memory": "140Mi",
         "cpu-limits": "110m",
         "memory-limits": "180Mi",
@@ -154,7 +154,7 @@
       "dev": {
         "min-replicas": 1,
         "max-replicas": 2,
-        "cpu": "40m",
+        "cpu": "30m",
         "memory": "140Mi",
         "cpu-limits": "110m",
         "memory-limits": "180Mi",
