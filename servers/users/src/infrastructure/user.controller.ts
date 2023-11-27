@@ -30,6 +30,7 @@ import {
 import { GetUserByUniqueFieldsUsecase } from '../domain/usecases/get-user-by-unique-fields/get-user-by-unique-fields.usecase';
 import { EditTeamParticipationUsecase } from '../domain/usecases/team-participations/edit-team-participation/edit-team-participation.usecase';
 import { GetTeamParticipationByPropertiesUsecase } from '../domain/usecases/team-participations/get-team-participation-by-properties/get-team-participation-by-properties.usecase';
+import { GetUserByDocumentAndRolesUsecase } from '../domain/usecases/get-user-by-document-and-roles/get-user-by-document-and-roles.usecase';
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
@@ -83,6 +84,34 @@ export class UserController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: document,
+      });
+    });
+    router.get(`/document-and-roles`, (request: Request, response: Response) => {
+      let roles: string[] = request.query.roles as string[];
+      if (roles) {
+        if (!Array.isArray(request.query.roles)) {
+          roles = [request.query.roles as string];
+        }
+      }
+      const param = {
+        document: request.query.document,
+        roles: roles,
+      };
+
+      const config: MessagesConfiguration = {
+        exceptions: {
+          [UserWithDocumentDoesNotExistError.id]: 'GET-BY-DOCUMENT:ERROR',
+        },
+        identifier: this.identifier,
+        successCode: 'GET-BY-DOCUMENT:SUCCESS',
+      };
+
+      this.handler<GetUserByDocumentAndRolesUsecase>({
+        container,
+        usecaseId: 'GetUserByDocumentAndRolesUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: param,
       });
     });
 
@@ -346,7 +375,7 @@ export class UserController extends HttpController {
         usecaseId: 'GetUsersByIdsUsecase',
         response,
         messageConfiguration: config,
-        usecaseParam: ids ? Array.isArray(ids) ? ids: [ids]: [] ,
+        usecaseParam: ids ? (Array.isArray(ids) ? ids : [ids]) : [],
       });
     });
     router.get(`/:id`, (request: Request, response: Response) => {

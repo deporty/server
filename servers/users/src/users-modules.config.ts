@@ -25,6 +25,7 @@ import { DeleteTeamParticipationUsecase } from './domain/usecases/team-participa
 import { GetUserByDocumentUsecase } from './domain/usecases/get-user-by-document/get-user-by-document.usecase';
 import { EditTeamParticipationUsecase } from './domain/usecases/team-participations/edit-team-participation/edit-team-participation.usecase';
 import { GetTeamParticipationByPropertiesUsecase } from './domain/usecases/team-participations/get-team-participation-by-properties/get-team-participation-by-properties.usecase';
+import { GetUserByDocumentAndRolesUsecase } from './domain/usecases/get-user-by-document-and-roles/get-user-by-document-and-roles.usecase';
 
 export class UserModulesConfig {
   static config(container: Container) {
@@ -76,6 +77,12 @@ export class UserModulesConfig {
     container.add({
       id: 'GetUserByDocumentUsecase',
       kind: GetUserByDocumentUsecase,
+      dependencies: ['UserContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetUserByDocumentAndRolesUsecase',
+      kind: GetUserByDocumentAndRolesUsecase,
       dependencies: ['UserContract'],
       strategy: 'singleton',
     });

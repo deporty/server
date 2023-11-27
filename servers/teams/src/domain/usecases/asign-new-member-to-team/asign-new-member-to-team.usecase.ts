@@ -14,6 +14,7 @@ import { GetTeamByIdUsecase } from '../get-team-by-id/get-team-by-id.usecase';
 export interface Response {
   member: MemberEntity;
   teamParticipation: TeamParticipationEntity;
+  user: UserEntity;
 }
 export interface Param {
   teamId: string;
@@ -41,11 +42,14 @@ export class AsignNewMemberToTeamUsecase extends Usecase<Param, Response> {
     super();
   }
   call(param: Param): Observable<Response> {
-    const $getPlayerByIdUsecase = param.user ? of(param.user!) : this.userContract.getUserInformationById(param.userId);
+
+    console.log(param);
+    
+    const $user = param.user ? of(param.user!) : this.userContract.getUserInformationById(param.userId);
 
     const $getTeamByIdUsecase = param.team ? of(param.team) : this.getTeamByIdUsecase.call(param.teamId);
 
-    return zip($getPlayerByIdUsecase, $getTeamByIdUsecase).pipe(
+    return zip($user, $getTeamByIdUsecase).pipe(
       mergeMap(([user, team]: [UserEntity, TeamEntity]) => {
         const $members = this.getMembersByTeamUsecase.call(team.id!);
         return $members.pipe(
@@ -91,6 +95,7 @@ export class AsignNewMemberToTeamUsecase extends Usecase<Param, Response> {
                 return {
                   teamParticipation,
                   member,
+                  user
                 };
               })
             );
