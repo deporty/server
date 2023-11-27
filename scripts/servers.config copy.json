@@ -124,13 +124,13 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
-        "cpu": "40m",
-        "memory": "140Mi",
-        "cpu-limits": "110m",
-        "memory-limits": "180Mi",
-        "cpu-percentage-scaling": 90,
-        "memory-percentage-scaling": 90
+        "max-replicas": 1,
+        "cpu": "20m",
+        "memory": "60Mi",
+        "cpu-limits": "30m",
+        "memory-limits": "70Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
       },
       "pdn": {
         "min-replicas": 1,
@@ -153,13 +153,13 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
-        "cpu": "40m",
-        "memory": "140Mi",
-        "cpu-limits": "110m",
-        "memory-limits": "180Mi",
-        "cpu-percentage-scaling": 90,
-        "memory-percentage-scaling": 90
+        "max-replicas": 1,
+        "cpu": "10m",
+        "memory": "60Mi",
+        "cpu-limits": "25m",
+        "memory-limits": "70Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
       },
       "pdn": {
         "min-replicas": 1,
@@ -182,13 +182,13 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
-        "cpu": "40m",
-        "memory": "140Mi",
-        "cpu-limits": "110m",
-        "memory-limits": "180Mi",
-        "cpu-percentage-scaling": 90,
-        "memory-percentage-scaling": 90
+        "max-replicas": 1,
+        "cpu": "15m",
+        "memory": "70Mi",
+        "cpu-limits": "25m",
+        "memory-limits": "100Mi",
+        "cpu-percentage-scaling": 80,
+        "memory-percentage-scaling": 80
       },
       "pdn": {
         "min-replicas": 1,
@@ -211,12 +211,12 @@
     "environment": {
       "dev": {
         "min-replicas": 1,
-        "max-replicas": 2,
-        "cpu": "40m",
-        "memory": "140Mi",
-        "cpu-limits": "110m",
-        "memory-limits": "180Mi",
-        "cpu-percentage-scaling": 90,
+        "max-replicas": 1,
+        "cpu": "20m",
+        "memory": "70Mi",
+        "cpu-limits": "55m",
+        "memory-limits": "90Mi",
+        "cpu-percentage-scaling": 80,
         "memory-percentage-scaling": 90
       },
       "pdn": {
