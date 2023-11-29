@@ -3,9 +3,10 @@ import { IScoreModel, MatchEntity, PlayerForm, Stadistics } from '@deporty-org/e
 import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { Timestamp } from 'firebase-admin/firestore';
 import { of, zip } from 'rxjs';
-import { PlayerFormMapper } from './player-form.mapper';
+import { PlayerFormMapper, PlayersInMatchDataMapper } from './player-form.mapper';
 import { ScoreMapper } from './score.mapper';
 import { StadisticsMapper } from './stadistics.mapper';
+import { PlayersInMatchData } from '@deporty-org/entities/tournaments/player-form.entity';
 
 export class RefereeInMatchMapper extends Mapper<MatchEntity> {
   constructor() {
@@ -21,8 +22,9 @@ export class MatchMapper extends Mapper<MatchEntity> {
   constructor(
     private scoreMapper: ScoreMapper,
     private playFormMapper: PlayerFormMapper,
+    private playersInMatchDataMapper: PlayersInMatchDataMapper,
     private stadisticsMapper: StadisticsMapper,
-    private refereeInMatchMapper: RefereeInMatchMapper,
+    private refereeInMatchMapper: RefereeInMatchMapper
   ) {
     super();
     this.attributesMapper = {
@@ -56,6 +58,15 @@ export class MatchMapper extends Mapper<MatchEntity> {
           return value ? this.playFormMapper.fromJson(value) : of(undefined);
         },
       },
+      playersInMatchData: {
+        name: 'players-in-match-data',
+        to: (value: PlayersInMatchData) => {
+          return value ? this.playersInMatchDataMapper.toJson(value) : undefined;
+        },
+        from: (value: any) => {
+          return value ? this.playersInMatchDataMapper.fromJson(value) : of(undefined);
+        },
+      },
       teamAId: { name: 'team-a-id' },
       phase: { name: 'phase' },
       teamBId: { name: 'team-b-id' },
@@ -68,15 +79,12 @@ export class MatchMapper extends Mapper<MatchEntity> {
       observations: { name: 'observations' },
       captainASignature: {
         name: 'captain-a-signature',
-     
       },
       captainBSignature: {
         name: 'captain-b-signature',
-       
       },
       judgeSignature: {
         name: 'judge-signature',
-      
       },
       status: { name: 'status' },
       locationId: { name: 'location-id' },

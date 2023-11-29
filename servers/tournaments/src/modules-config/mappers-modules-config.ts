@@ -12,7 +12,7 @@ import { MatchMapper, RefereeInMatchMapper } from '../infrastructure/mappers/mat
 import { MatchesByRefereeIdMapper } from '../infrastructure/mappers/matches-by-referee-id.mapper';
 import { MemberMapper } from '../infrastructure/mappers/member.mapper';
 import { NodeMatchMapper } from '../infrastructure/mappers/node-match.mapper';
-import { PlayerFormMapper } from '../infrastructure/mappers/player-form.mapper';
+import { PlayerFormMapper, PlayersInMatchDataMapper } from '../infrastructure/mappers/player-form.mapper';
 import { PlaygroundMapper } from '../infrastructure/mappers/playground.mapper';
 import { RegisteredTeamMapper } from '../infrastructure/mappers/registered-teams.mapper';
 import { ScoreMapper } from '../infrastructure/mappers/score.mapper';
@@ -62,9 +62,15 @@ export class MapperModulesConfig {
     });
 
     container.add({
+      id: 'PlayersInMatchDataMapper',
+      kind: PlayersInMatchDataMapper,
+      strategy: 'singleton',
+    });
+
+    container.add({
       id: 'MatchMapper',
       kind: MatchMapper,
-      dependencies: ['ScoreMapper', 'PlayerFormMapper', 'StadisticsMapper', 'RefereeInMatchMapper'],
+      dependencies: ['ScoreMapper', 'PlayerFormMapper', 'PlayersInMatchDataMapper', 'StadisticsMapper', 'RefereeInMatchMapper'],
       strategy: 'singleton',
     });
     container.add({
