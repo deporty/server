@@ -121,6 +121,7 @@ export class UserController extends HttpController {
         ...request.params,
         ...request.query,
         initDate: request.query.initDate ? new Date(request.query.initDate as string) : undefined,
+        enrollmentDate: request.query.enrollmentDate ? new Date(request.query.enrollmentDate as string) : undefined,
       };
 
       const config: MessagesConfiguration = {

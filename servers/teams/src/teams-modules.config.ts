@@ -43,6 +43,7 @@ import { TournamentInscriptionRepository } from './infrastructure/repository/tou
 import { UserRepository } from './infrastructure/repository/user.repository';
 import { SportMapper } from './infrastructure/sport.mapper';
 import { TeamMapper } from './infrastructure/team.mapper';
+import { ChangeMemberToAnotherTeamUsecase } from './domain/usecases/change-member-to-another-team/change-member-to-another-team.usecase';
 
 export class TeamsModulesConfig {
   static config(container: Container) {
@@ -144,6 +145,12 @@ export class TeamsModulesConfig {
       id: 'GetTournamentInscriptionsByTeamIdUsecase',
       kind: GetTournamentInscriptionsByTeamIdUsecase,
       dependencies: ['TournamentInscriptionContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'ChangeMemberToAnotherTeamUsecase',
+      kind: ChangeMemberToAnotherTeamUsecase,
+      dependencies: ['GetOnlyMemberByIdUsecase', 'AsignNewMemberToTeamUsecase', 'EndMemberParticipationUsecase'],
       strategy: 'singleton',
     });
     container.add({

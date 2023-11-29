@@ -37,6 +37,7 @@ import { GetTeamsByIdsUsecase } from '../domain/usecases/get-teams-by-ids/get-te
 import { PromoteMembersUsecase } from '../domain/usecases/promote-members/promote-members.usecase';
 import { GetOnlyMemberByIdUsecase } from '../domain/usecases/get-only-member-by-id/get-only-member-by-id.usecase';
 import { UpdateTournamentInscriptionsByTeamUsecase } from '../domain/usecases/update-tournament-inscriptions-by-team/update-tournament-inscriptions-by-team.usecase';
+import { ChangeMemberToAnotherTeamUsecase } from '../domain/usecases/change-member-to-another-team/change-member-to-another-team.usecase';
 
 export class TeamController extends HttpController {
   constructor() {
@@ -152,6 +153,24 @@ export class TeamController extends HttpController {
       this.handler<GetTeamByAdvancedFiltersUsecase>({
         container,
         usecaseId: 'GetTeamByAdvancedFiltersUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: params,
+      });
+    });
+
+    router.post(`/change-member-to-another-team`, (request: Request, response: Response) => {
+      const params = request.body;
+      
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'CHANGED-MEMBER-TO-ANOTHER-TEAM:SUCCESS',
+      };
+
+      this.handler<ChangeMemberToAnotherTeamUsecase>({
+        container,
+        usecaseId: 'ChangeMemberToAnotherTeamUsecase',
         response,
         messageConfiguration: config,
         usecaseParam: params,
@@ -304,13 +323,11 @@ export class TeamController extends HttpController {
       });
     });
     router.post(`/:teamId/tournament-inscription`, (request: Request, response: Response) => {
-      console.log('llego');
 
       const params = {
         ...request.body,
         enrollmentDate: new Date(request.body.enrollmentDate),
       };
-      console.log(params);
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         successCode: 'TOURNAMENT-INSCRIPTIONS-ADDED:SUCCESS',
@@ -552,7 +569,6 @@ export class TeamController extends HttpController {
         teamId: request.params.teamId,
         memberId: request.params.memberId,
       };
-      console.log(data);
       const config: MessagesConfiguration = {
         exceptions: {
           [MemberDoesNotExistError.id]: 'MEMBER-DOES-NOT-EXIST:ERROR',

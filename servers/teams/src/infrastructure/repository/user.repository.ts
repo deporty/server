@@ -4,7 +4,12 @@ import { IBaseResponse, Id, TeamParticipationEntity, UserEntity } from '@deporty
 import { UserContract } from '../../domain/contracts/user.constract';
 import { BEARER_TOKEN, USERS_SERVER } from '../teams.constants';
 export class UserRepository extends UserContract {
-  getTeamParticipationByProperties(userId: string, teamId: string, initDate: Date): Observable<TeamParticipationEntity | undefined> {
+  getTeamParticipationByProperties(
+    userId: string,
+    teamId: string,
+    enrollmentDate?: Date,
+    initDate?: Date
+  ): Observable<TeamParticipationEntity | undefined> {
     return new Observable((observer) => {
       axios
         .get<IBaseResponse<TeamParticipationEntity | undefined>>(
@@ -14,7 +19,8 @@ export class UserRepository extends UserContract {
             params: {
               userId,
               teamId,
-              initDate: initDate.toISOString(),
+              enrollmentDate: enrollmentDate?.toISOString(),
+              initDate: initDate?.toISOString(),
             },
             headers: {
               Authorization: `Bearer ${BEARER_TOKEN}`,
@@ -102,7 +108,6 @@ export class UserRepository extends UserContract {
         })
         .then((response: AxiosResponse) => {
           const data = response.data as IBaseResponse<boolean>;
-          console.log(0, data, 0);
           if (data.meta.code === 'USER:TEAM-PARTICIPATION-DELETED:SUCCESS') {
             observer.next(data.data);
           } else {

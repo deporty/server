@@ -5,7 +5,7 @@ export abstract class UserContract {
   abstract getUsersByIds(userIds: Id[]): Observable<UserEntity[]>;
   abstract addTeamParticipation(userId: Id, teamParticipationEntity: TeamParticipationEntity): Observable<TeamParticipationEntity>;
   abstract editTeamParticipation(userId: Id, teamParticipationEntity: TeamParticipationEntity): Observable<TeamParticipationEntity>;
-  abstract getTeamParticipationByProperties(userId: Id, teamId: Id, initDate: Date): Observable<TeamParticipationEntity | undefined>;
+  abstract getTeamParticipationByProperties(userId: Id, teamId: Id, enrollmentDate?: Date, initDate?: Date): Observable<TeamParticipationEntity | undefined>;
   abstract deleteTeamParticipation(userId: Id, teamId: Id): Observable<boolean>;
   abstract createuser(user: UserEntity): Observable<UserEntity>;
   abstract getUserByDocument(document: string): Observable<UserEntity>;

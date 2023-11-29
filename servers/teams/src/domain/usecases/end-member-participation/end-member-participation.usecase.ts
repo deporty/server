@@ -45,7 +45,7 @@ export class EndMemberParticipationUsecase extends Usecase<Param, MemberEntity> 
             )
             .pipe(
               mergeMap(() => {
-                return this.userContract.getTeamParticipationByProperties(newMember.userId, newMember.teamId, newMember.initDate!).pipe(
+                return this.userContract.getTeamParticipationByProperties(newMember.userId, newMember.teamId, newMember.initDate , newMember.enrollmentDate).pipe(
                   mergeMap((teamParticipation) => {
                     if (teamParticipation) {
                       return this.userContract.editTeamParticipation(newMember.userId, {
