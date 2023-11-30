@@ -164,7 +164,7 @@
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "60m",
+        "cpu": "80m",
         "memory": "170Mi",
         "cpu-limits": "110m",
         "memory-limits": "240Mi",
@@ -222,12 +222,12 @@
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "60m",
-        "memory": "160Mi",
-        "cpu-limits": "110m",
+        "cpu": "80m",
+        "memory": "170Mi",
+        "cpu-limits": "120m",
         "memory-limits": "220Mi",
         "cpu-percentage-scaling": 80,
-        "memory-percentage-scaling": 90
+        "memory-percentage-scaling": 80
       }
     }
   },
