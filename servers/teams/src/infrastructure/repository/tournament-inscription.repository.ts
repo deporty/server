@@ -20,7 +20,7 @@ export class TournamentInscriptionRepository extends TournamentInscriptionContra
     ]);
   }
   filter(accessParams: AccessParams, filter: Filters): Observable<TournamentInscriptionEntity[]> {
-    throw new Error('Method not implemented.');
+    return super.innerFilter([{ collection: TEAMS_ENTITY, id: accessParams.teamId }, { collection: TOURNAMENT_INSCRIPTIONS_ENTITY }]);
   }
   get(
     accessParams: AccessParams,

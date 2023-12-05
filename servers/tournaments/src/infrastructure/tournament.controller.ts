@@ -65,7 +65,6 @@ import { ModifyRegisteredTeamStatusUsecase } from '../domain/usecases/registered
 import { JWT_SECRET, SERVER_NAME } from './tournaments.constants';
 import { GetTournamentBaseInformationByIdUsecase } from '../domain/usecases/get-tournament-base-information-by-id/get-tournament-base-information-by-id.usecase';
 import {
-  DataIncompleteError,
   MemberIdsNotFoundError,
   RequiredDocsForMembersIncompleteError,
   RequiredDocsForTeamIncompleteError,
@@ -80,6 +79,12 @@ import { ModifyTournamentFinancialStatusUsecase } from '../domain/usecases/modif
 import { GetAvailableTournamentsByFiltersUsecase } from '../domain/usecases/get-available-tournaments-by-filters/get-available-tournaments-by-filters.usecase';
 import { RegisterTeamIntoATournamentLinealUsecase } from '../domain/usecases/registered-team/register-team-into-a-tournament-lineal/register-team-into-a-tournament-lineal.usecase';
 import { ModifyRequestForRequiredDocumentsUsecase } from '../domain/usecases/modify-request-for-required-documents/modify-request-for-required-documents.usecase';
+import {
+  DataIncompleteError,
+  RequiredDocsForMemberIncompleteError,
+  TeamIsNotRegisteredError,
+} from '../domain/usecases/registered-team/register-single-member-into-a-tournament/register-single-member-into-a-tournament.usecase';
+import { RegisterMembersIntoATournamentUsecase } from '../domain/usecases/registered-team/register-members-into-a-tournament/register-members-into-a-tournament.usecase';
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -1471,6 +1476,27 @@ export class TournamentController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: data,
+      });
+    });
+    router.post(`/register-members-into-tournament`, (request: Request, response: Response) => {
+      const body = request.body;
+
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        exceptions: {
+          [TeamIsNotRegisteredError.id]: 'TEAM-IS-NOT-REGISTERED:ERROR',
+          [RequiredDocsForMemberIncompleteError.id]: 'REQUIRED-DOCS-FOR-MEMBER-INCOMPLETE:ERROR',
+          [DataIncompleteError.id]: 'DATA-INCOMPLETE:ERROR',
+        },
+        successCode: 'MEMBER-REGISTRATION-DONE:SUCCESS',
+      };
+
+      this.handler<RegisterMembersIntoATournamentUsecase>({
+        container,
+        usecaseId: 'RegisterMembersIntoATournamentUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: body,
       });
     });
 

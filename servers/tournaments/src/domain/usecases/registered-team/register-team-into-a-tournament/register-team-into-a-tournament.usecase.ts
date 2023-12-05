@@ -11,6 +11,7 @@ import { RegisteredTeamsContract } from '../../../contracts/registered-teams.con
 import { TeamContract } from '../../../contracts/team.contract';
 import { UpdateRegisteredTeamByIdUsecase } from '../update-registered-team-by-id/update-registered-team-by-id.usecase';
 import { GetTournamentByIdUsecase } from '../../get-tournament-by-id/get-tournament-by-id.usecase';
+import { DataIncompleteError } from '../register-single-member-into-a-tournament/register-single-member-into-a-tournament.usecase';
 
 export interface Param {
   teamId: string;
@@ -37,7 +38,6 @@ export const TeamAlreadyRegisteredError = generateError(
   'TeamAlreadyRegisteredError',
   'The team is already registered into the tournament. {l}'
 );
-export const DataIncompleteError = generateError('DataIncompleteError', 'You have to pass all data for the transaction.');
 export const MemberIdsNotFoundError = generateError('MemberIdsNotFoundError', 'These member ids were not found: {ids}.');
 
 export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, TournamentInscriptionEntity> {
@@ -190,7 +190,7 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
                   const bas64 = docs[docIdentifier];
                   const extension = getImageExtension(bas64);
 
-                  const path = `tournaments/${param.tournamentId}/registered-teams/${registeredTeam.id}/docs/members/${memberId}/${docIdentifier}${extension}`;
+                  const path = `tournaments/${param.tournamentId}/registered-teams/${registeredTeam.id}/required-docs/members/${memberId}/${docIdentifier}${extension}`;
                   const $resizedImageUpload = this.fileAdapter.uploadFile(path, bas64).pipe(
                     map((item) => {
                       return { path, memberId, docIdentifier };

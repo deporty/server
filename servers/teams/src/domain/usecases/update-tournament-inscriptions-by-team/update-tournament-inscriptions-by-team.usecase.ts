@@ -27,12 +27,14 @@ export class UpdateTournamentInscriptionsByTeamUsecase extends Usecase<Tournamen
       )
       .pipe(
         mergeMap((inscriptionPrev) => {
+
           if (inscriptionPrev.length > 0) {
             const toUpdate: TournamentInscriptionEntity = {
-              ...inscriptionPrev[0],
+              ...inscription,
+              id: inscriptionPrev[0].id,
             };
             return this.tournamentInscriptionContract
-              .update({ teamId: inscription.teamId }, inscription)
+              .update({ teamId: inscription.teamId }, toUpdate)
               .pipe(map((id) => ({ ...toUpdate })));
           }
 

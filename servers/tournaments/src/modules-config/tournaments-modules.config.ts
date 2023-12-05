@@ -84,6 +84,8 @@ import { ModifyTournamentFinancialStatusUsecase } from '../domain/usecases/modif
 import { GetAvailableTournamentsByFiltersUsecase } from '../domain/usecases/get-available-tournaments-by-filters/get-available-tournaments-by-filters.usecase';
 import { RegisterTeamIntoATournamentLinealUsecase } from '../domain/usecases/registered-team/register-team-into-a-tournament-lineal/register-team-into-a-tournament-lineal.usecase';
 import { ModifyRequestForRequiredDocumentsUsecase } from '../domain/usecases/modify-request-for-required-documents/modify-request-for-required-documents.usecase';
+import { RegisterSingleMemberIntoATournamentUsecase } from '../domain/usecases/registered-team/register-single-member-into-a-tournament/register-single-member-into-a-tournament.usecase';
+import { RegisterMembersIntoATournamentUsecase } from '../domain/usecases/registered-team/register-members-into-a-tournament/register-members-into-a-tournament.usecase';
 
 export class TournamentsModulesConfig {
   static config(container: Container) {
@@ -742,6 +744,25 @@ export class TournamentsModulesConfig {
       kind: RegisterTeamIntoATournamentLinealUsecase,
       strategy: 'singleton',
       dependencies: ['TeamContract', 'OrganizationContract', 'RegisterTeamIntoATournamentUsecase'],
+    });
+    container.add({
+      id: 'RegisterSingleMemberIntoATournamentUsecase',
+      kind: RegisterSingleMemberIntoATournamentUsecase,
+      strategy: 'singleton',
+      dependencies: [
+        'RegisteredTeamsContract',
+        'TeamContract',
+        'OrganizationContract',
+        'FileAdapter',
+        'UpdateRegisteredTeamByIdUsecase',
+        'GetTournamentByIdUsecase',
+      ],
+    });
+    container.add({
+      id: 'RegisterMembersIntoATournamentUsecase',
+      kind: RegisterMembersIntoATournamentUsecase,
+      strategy: 'singleton',
+      dependencies: ['RegisterSingleMemberIntoATournamentUsecase'],
     });
     container.add({
       id: 'ModifyRequestForRequiredDocumentsUsecase',
