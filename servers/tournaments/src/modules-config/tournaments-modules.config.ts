@@ -641,7 +641,7 @@ export class TournamentsModulesConfig {
     container.add({
       id: 'ModifyTournamentStatusUsecase',
       kind: ModifyTournamentStatusUsecase,
-      dependencies: ['GetTournamentByIdUsecase', 'UpdateTournamentUsecase'],
+      dependencies: ['GetTournamentByIdUsecase', 'UpdateTournamentUsecase', 'OrganizationContract', 'CalculateTournamentCostUsecase'],
       strategy: 'singleton',
     });
     container.add({

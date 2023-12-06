@@ -3,9 +3,11 @@ import { Timestamp } from 'firebase-admin/firestore';
 import { of } from 'rxjs';
 import { Mapper } from '@scifamek-open-source/iraca/infrastructure';
 import { FinancialStatementsMapper } from './financialStatements.mapper';
+import { TournamentLayoutMapper } from './tournament-layout.mapper';
+import { TournamentLayoutEntity } from '@deporty-org/entities/organizations';
 
 export class TournamentMapper extends Mapper<TournamentEntity> {
-  constructor(private financialStatementsMapper: FinancialStatementsMapper) {
+  constructor(private financialStatementsMapper: FinancialStatementsMapper, private tournamentLayoutMapper: TournamentLayoutMapper) {
     super();
     this.attributesMapper = {
       id: { name: 'id' },
@@ -30,6 +32,16 @@ export class TournamentMapper extends Mapper<TournamentEntity> {
       },
       organizationId: { name: 'organization-id' },
       tournamentLayoutId: { name: 'tournament-layout-id' },
+      tournamentLayout: {
+        name: 'tournament-layout',
+        from: (value) => {
+          return value ? this.tournamentLayoutMapper.fromJson(value) : of(undefined);
+        },
+        to: (value: TournamentLayoutEntity | undefined) => {
+          
+          return value ? this.tournamentLayoutMapper.toJson(value) : undefined;
+        },
+      },
       requestRequiredDocs: { name: 'request-required-docs', default: false },
       financialStatus: {
         name: 'financial-status',

@@ -74,7 +74,7 @@ const app = express();
 const router = Router();
 app.use(cors());
 
-app.use(bodyParser.json( { limit: '20mb'}));
+app.use(bodyParser.json( { limit: '100mb'}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -116,6 +116,12 @@ GENERAL_DEPENDENCIES_CONTAINER.add({
 const middleware = GENERAL_DEPENDENCIES_CONTAINER.getInstance<IsKeyPresentMiddleware>('IsKeyPresentMiddleware').instance?.getValidator();
 if (middleware) {
   app.use(middleware);
+}
+
+if (Object.keys(GENERAL_DEPENDENCIES_CONTAINER.pending).length > 0) {
+  console.log(GENERAL_DEPENDENCIES_CONTAINER.pending);
+  
+  process.exit(1);
 }
 
 TournamentController.registerEntryPoints(router, GENERAL_DEPENDENCIES_CONTAINER);

@@ -18,6 +18,7 @@ import { RegisteredTeamMapper } from '../infrastructure/mappers/registered-teams
 import { ScoreMapper } from '../infrastructure/mappers/score.mapper';
 import { StadisticSpecificationMapper, StadisticsMapper } from '../infrastructure/mappers/stadistics.mapper';
 import { TournamentMapper } from '../infrastructure/mappers/tournament.mapper';
+import { FixtureStageConfigurationMapper, FixtureStagesConfigurationMapper, NegativePointsPerCardMapper, PointsConfigurationMapper, RequiredDocConfigMapper, SchemaMapper, TournamentLayoutMapper } from '../infrastructure/mappers/tournament-layout.mapper';
 
 export class MapperModulesConfig {
   static config(container: Container) {
@@ -138,9 +139,47 @@ export class MapperModulesConfig {
     });
 
     container.add({
+      id: 'FixtureStageConfigurationMapper',
+      kind: FixtureStageConfigurationMapper,
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'NegativePointsPerCardMapper',
+      kind: NegativePointsPerCardMapper,
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'PointsConfigurationMapper',
+      kind: PointsConfigurationMapper,
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'SchemaMapper',
+      kind: SchemaMapper,
+      dependencies: ['FixtureStageConfigurationMapper'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'FixtureStagesConfigurationMapper',
+      kind: FixtureStagesConfigurationMapper,
+      dependencies: ['NegativePointsPerCardMapper', 'PointsConfigurationMapper', 'SchemaMapper'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'RequiredDocConfigMapper',
+      kind: RequiredDocConfigMapper,
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'TournamentLayoutMapper',
+      kind: TournamentLayoutMapper,
+      dependencies: ['FixtureStagesConfigurationMapper', 'RequiredDocConfigMapper'],
+      strategy: 'singleton',
+    });
+    container.add({
       id: 'TournamentMapper',
       kind: TournamentMapper,
-      dependencies: ['FinancialStatementsMapper'],
+      dependencies: ['FinancialStatementsMapper', 'TournamentLayoutMapper'],
       strategy: 'singleton',
     });
   }
