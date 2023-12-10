@@ -193,11 +193,11 @@
       "pdn": {
         "min-replicas": 1,
         "max-replicas": 5,
-        "cpu": "60m",
-        "memory": "160Mi",
-        "cpu-limits": "110m",
-        "memory-limits": "220Mi",
-        "cpu-percentage-scaling": 80,
+        "cpu": "80m",
+        "memory": "180Mi",
+        "cpu-limits": "150m",
+        "memory-limits": "300Mi",
+        "cpu-percentage-scaling": 90,
         "memory-percentage-scaling": 90
       }
     }
