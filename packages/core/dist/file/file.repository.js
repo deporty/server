@@ -66,7 +66,8 @@ class FileRepository extends infrastructure_1.FileAdapter {
     uploadFile(filePath, fileData) {
         let data = fileData.split(';base64,').pop();
         const fragments = filePath.split('/');
-        const name = fragments.pop();
+        const random = Math.floor(Math.random() * 100);
+        const name = `${random}-${fragments.pop()}`;
         const tmp = this.createLocalFile(data, name);
         const fileMime = mime.lookup(filePath);
         return (0, rxjs_1.from)(this.storage.bucket().upload(tmp, {

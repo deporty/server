@@ -82,7 +82,8 @@ export class FileRepository extends FileAdapter {
   uploadFile(filePath: string, fileData: string): Observable<any> {
     let data = fileData.split(';base64,').pop();
     const fragments = filePath.split('/');
-    const name = fragments.pop();
+    const random = Math.floor(Math.random() * 100);
+    const name = `${random}-${fragments.pop()}`;
     const tmp = this.createLocalFile(data as string, name as string);
     const fileMime = mime.lookup(filePath);
     return from(

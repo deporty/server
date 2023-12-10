@@ -6,7 +6,6 @@ import { mergeMap } from 'rxjs/operators';
 import { OrganizationContract } from '../../../contracts/organization.contract';
 import { TeamContract } from '../../../contracts/team.contract';
 import { RegisterTeamIntoATournamentUsecase } from '../register-team-into-a-tournament/register-team-into-a-tournament.usecase';
-
 export interface Param {
   organizationId: string;
   requiredDocs?: {
@@ -58,28 +57,27 @@ export class RegisterTeamIntoATournamentLinealUsecase extends Usecase<Param, Tou
 
               const [document, alias] = requiredDocName.split(/\-|_/);
 
-              console.log(document, alias);
               const searchedUser = members.find((fullMember) => fullMember.user.document == document);
               const searchedDocument = requiredDocsForMembers.find((doc) => doc.alias.toUpperCase() === alias.toUpperCase());
-              console.log(searchedUser, searchedDocument);
 
               if (searchedUser && searchedDocument) {
                 if (!response.members[searchedUser.member.id!]) {
-                  response.members[searchedUser.member.id!] = {}
+                  response.members[searchedUser.member.id!] = {};
                 }
                 response.members[searchedUser.member.id!][searchedDocument.identifier] = base64;
+
               }
             }
           }
           for (const requiredDocName in param.requiredDocs?.team) {
             if (Object.prototype.hasOwnProperty.call(param.requiredDocs?.team, requiredDocName)) {
               const base64 = param.requiredDocs?.team[requiredDocName];
-              
+
               const searchedDocument = requiredDocsForTeam.find((doc) => doc.alias.toUpperCase() === requiredDocName.toUpperCase());
-              
+
               if (searchedDocument) {
                 if (!response.team[requiredDocName]) {
-                  response.members[requiredDocName] = {}
+                  response.team[requiredDocName] = {};
                 }
                 response.team[requiredDocName] = base64;
               }

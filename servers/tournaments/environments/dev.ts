@@ -9,6 +9,7 @@ export const env = {
     'is-authorized-user': false,
   },
   logging: false,
+  directivesKindMember: ['owner', 'technical-director'],
   playerRoleId: 'hkO0lp8lbzq50s82Wu60',
   credentials: {
     type: 'service_account',

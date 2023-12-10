@@ -12,6 +12,7 @@ import { TeamContract } from '../../../contracts/team.contract';
 import { UpdateRegisteredTeamByIdUsecase } from '../update-registered-team-by-id/update-registered-team-by-id.usecase';
 import { GetTournamentByIdUsecase } from '../../get-tournament-by-id/get-tournament-by-id.usecase';
 import { DataIncompleteError } from '../register-single-member-into-a-tournament/register-single-member-into-a-tournament.usecase';
+import { env } from '../../../../../environments/env';
 
 export interface Param {
   teamId: string;
@@ -64,11 +65,11 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
 
     return zip($tournamentLayout, $tournament).pipe(
       mergeMap(([tournamentLayout, tournament]) => {
-        const requiredDocs = tournamentLayout.requiredDocsConfig;
+        const requiredDocsConfig = tournamentLayout.requiredDocsConfig;
         if (tournament.requestRequiredDocs) {
-          if (requiredDocs && requiredDocs.length > 0) {
-            const requiredDocsForMembers = requiredDocs.filter((doc) => doc.applyTo === 'player');
-            const requiredDocsForTeam = requiredDocs.filter((doc) => doc.applyTo === 'team');
+          if (requiredDocsConfig && requiredDocsConfig.length > 0) {
+            const requiredDocsForMembers = requiredDocsConfig.filter((doc) => doc.applyTo === 'player');
+            const requiredDocsForTeam = requiredDocsConfig.filter((doc) => doc.applyTo === 'team');
 
             if (!this.areRequiredDocsForTeamComplete(param, requiredDocsForTeam)) {
               return throwError(new RequiredDocsForTeamIncompleteError());
@@ -90,14 +91,14 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
             },
           }
         );
-        return zip($previousRegisteredTeam, of(requiredDocs!), of(tournamentLayout));
+        return zip($previousRegisteredTeam, of(requiredDocsConfig!), of(tournamentLayout));
       }),
 
-      mergeMap(([previousRegisteredTeam, requiredDocs, tournamentLayout]) => {
+      mergeMap(([previousRegisteredTeam, requiredDocsConfig, tournamentLayout]) => {
         if (previousRegisteredTeam.length) {
           return throwError(new TeamAlreadyRegisteredError({ l: previousRegisteredTeam.length }));
         }
-        return zip($members, of(requiredDocs), of(tournamentLayout));
+        return zip($members, of(requiredDocsConfig), of(tournamentLayout));
       }),
 
       map(
@@ -106,8 +107,26 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
          * @param members
          * @returns
          */
-        ([members, requiredDocs, tournamentLayout]) => {
-          return { members: members.filter((member) => param.requiredDocs?.members[member.id!]), requiredDocs, tournamentLayout };
+        ([members, requiredDocsConfig, tournamentLayout]) => {
+          function existRoles(kindMembersToSearch: string | string[], set: string | string[]) {
+            let response = false;
+            const temp = Array.isArray(kindMembersToSearch) ? kindMembersToSearch : [kindMembersToSearch];
+            const tempSet = Array.isArray(set) ? set : [set];
+            for (const s of tempSet) {
+              if (temp.includes(s)) {
+                return true;
+              }
+            }
+            return response;
+          }
+
+          const filteredNonPlayerMembers = members.filter((member) => existRoles(member.kindMember, env.directivesKindMember));
+          const filteredMembers = members.filter((member) => param.requiredDocs?.members[member.id!]);
+          return {
+            members: requiredDocsConfig?.length ? [...filteredMembers, ...filteredNonPlayerMembers] : members,
+            requiredDocsConfig,
+            tournamentLayout,
+          };
         }
       ),
 
@@ -117,20 +136,22 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
          * @param members
          * @returns
          */
-        ({ members, requiredDocs, tournamentLayout }) => {
-          const notFoundIds = [];
-          for (const memberId in param.requiredDocs!.members) {
-            if (!this.isAValidMember(memberId, members)) {
-              notFoundIds.push(memberId);
+        ({ members, requiredDocsConfig, tournamentLayout }) => {
+          if (requiredDocsConfig?.length) {
+            const notFoundIds = [];
+            for (const memberId in param.requiredDocs!.members) {
+              if (!this.isAValidMember(memberId, members)) {
+                notFoundIds.push(memberId);
+              }
             }
-          }
 
-          if (notFoundIds.length > 0) {
-            return throwError(
-              new MemberIdsNotFoundError({
-                ids: notFoundIds.join(','),
-              })
-            );
+            if (notFoundIds.length > 0) {
+              return throwError(
+                new MemberIdsNotFoundError({
+                  ids: notFoundIds.join(','),
+                })
+              );
+            }
           }
           return zip(of(members), of(tournamentLayout));
         }
@@ -168,7 +189,7 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
 
       mergeMap(({ registeredTeam, requiredDocs }) => {
         if (requiredDocs) {
-          const $members: Array<
+          const $membersDocPaths: Array<
             Observable<{
               path: string;
               memberId: string;
@@ -191,12 +212,14 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
                   const extension = getImageExtension(bas64);
 
                   const path = `tournaments/${param.tournamentId}/registered-teams/${registeredTeam.id}/required-docs/members/${memberId}/${docIdentifier}${extension}`;
+
+
                   const $resizedImageUpload = this.fileAdapter.uploadFile(path, bas64).pipe(
                     map((item) => {
                       return { path, memberId, docIdentifier };
                     })
                   );
-                  $members.push($resizedImageUpload);
+                  $membersDocPaths.push($resizedImageUpload);
                 }
               }
             }
@@ -216,7 +239,11 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
             }
           }
 
-          return zip($members.length > 0 ? zip(...$members) : of(null), $team.length > 0 ? zip(...$team) : of(null), of(registeredTeam));
+          return zip(
+            $membersDocPaths.length > 0 ? zip(...$membersDocPaths) : of(null),
+            $team.length > 0 ? zip(...$team) : of(null),
+            of(registeredTeam)
+          );
         }
         return zip(of(null), of(null), of(registeredTeam));
       }),
@@ -231,8 +258,7 @@ export class RegisterTeamIntoATournamentUsecase extends Usecase<Param, Tournamen
 
       mergeMap((inscription): Observable<TournamentInscriptionEntity> => {
         return this.teamContract.saveTournamentInscriptionsByTeamUsecase(inscription).pipe(map(() => inscription));
-      }),
-   
+      })
     ) as Observable<TournamentInscriptionEntity>;
   }
 

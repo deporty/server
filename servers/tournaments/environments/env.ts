@@ -10,6 +10,8 @@ export const env = {
   },
   logging: false,
   playerRoleId: 'hkO0lp8lbzq50s82Wu60',
+  directivesKindMember: ['owner', 'technical-director'],
+
   credentials: {
     type: 'service_account',
     project_id: 'deporty-dev',
