@@ -31,12 +31,16 @@ import { GetUserByUniqueFieldsUsecase } from '../domain/usecases/get-user-by-uni
 import { EditTeamParticipationUsecase } from '../domain/usecases/team-participations/edit-team-participation/edit-team-participation.usecase';
 import { GetTeamParticipationByPropertiesUsecase } from '../domain/usecases/team-participations/get-team-participation-by-properties/get-team-participation-by-properties.usecase';
 import { GetUserByDocumentAndRolesUsecase } from '../domain/usecases/get-user-by-document-and-roles/get-user-by-document-and-roles.usecase';
+const moment = require('moment-timezone');
 
 export class UserController extends HttpController {
   static identifier = SERVER_NAME;
 
   constructor() {
     super();
+
+    moment.tz.setDefault('America/Bogota');
+
   }
 
   static registerEntryPoints(router: Router, container: Container) {
@@ -243,8 +247,11 @@ export class UserController extends HttpController {
     router.post(`/`, (request: Request, response: Response) => {
       const body = {
         ...request.body,
-        birthDate: request.body.birthDate ? new Date(request.body.birthDate) : null,
+        birthDate: request.body.birthDate ? moment(request.body.birthDate).toDate() : null,
       };
+
+      console.log(body);
+      // response.status(500);
 
       const config: MessagesConfiguration = {
         identifier: this.identifier,
