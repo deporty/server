@@ -11,8 +11,6 @@ export class GetTeamByAdvancedFiltersUsecase extends Usecase<any, Array<TeamEnti
   call(filters: any): Observable<Array<TeamEntity>> {
     return this.teamContract.filter(filters).pipe(
       catchError((data) => {
-        console.log(data, "Los datacios");
-        
         return of([]);
       })
     );

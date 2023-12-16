@@ -39,12 +39,12 @@ const serversMapper = {
   teams: {
     port: 10006,
     name: 'teams',
-    run: true,
+    run: false,
   },
   tournaments: {
     port: 10007,
     name: 'tournaments',
-    run: true,
+    run: false,
   },
   users: {
     port: 10008,
