@@ -4,7 +4,8 @@ import { map } from 'rxjs/operators';
 import { Usecase } from '@scifamek-open-source/iraca/domain';
 import { GetAllMatchesInsideTournamentUsecase } from '../get-all-matches-inside-tournament/get-all-matches-inside-tournament.usecase';
 
-const moment = require('moment');
+const moment = require('moment-timezone');
+
 const defaultFormat = 'dddd D MMM YYYY';
 
 export class GetAllMatchesGroupedByDateUsecase extends Usecase<Id, any> {

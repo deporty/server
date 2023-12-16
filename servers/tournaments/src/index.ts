@@ -17,8 +17,11 @@ import bodyParser = require('body-parser');
 import { Router } from 'express';
 import { Logger } from '@scifamek-open-source/logger';
 
+const moment = require('moment-timezone');
 
 const logger = new Logger('development.log');
+
+moment.tz.setDefault('America/Bogota');
 
 
 const firebaseApp = initializeApp({
