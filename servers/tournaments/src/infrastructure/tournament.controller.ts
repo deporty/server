@@ -85,6 +85,7 @@ import {
   TeamIsNotRegisteredError,
 } from '../domain/usecases/registered-team/register-single-member-into-a-tournament/register-single-member-into-a-tournament.usecase';
 import { RegisterMembersIntoATournamentUsecase } from '../domain/usecases/registered-team/register-members-into-a-tournament/register-members-into-a-tournament.usecase';
+const moment = require('moment-timezone');
 
 export class TournamentController extends HttpController {
   static identifier = SERVER_NAME;
@@ -581,8 +582,7 @@ export class TournamentController extends HttpController {
       });
     });
     router.get(`/get-matches-by-date/:date`, (request: Request, response: Response) => {
-      const date = new Date(request.params.date);
-
+      const date = moment(request.params.date).toDate();
       const config: MessagesConfiguration = {
         identifier: this.identifier,
         successCode: 'GET:SUCCESS',
