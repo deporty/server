@@ -25,7 +25,6 @@ export class GetAvailableTournamentsByFiltersUsecase extends Usecase<Params, Tou
       value: ['draft', 'deleted'],
     };
 
-    console.log(filters);
     
     return this.tournamentContract.filter(filters);
   }

@@ -40,7 +40,7 @@ export class GetPosibleTeamsToAddUsecase extends Usecase<Params, TeamEntity[]> {
           if (teams.length > 0) {
             filters['id'] = {
               operator: 'not-in',
-              value: teams,
+              value: teams.slice(0,10),
             };
           } 
           if(params.category){
