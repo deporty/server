@@ -5,59 +5,59 @@ name: SERVER
       - main
       - feature/**
 jobs:
-  BUILD_AND_DEPLOY_DEV:
-    runs-on: ubuntu-latest
-    environment: dev
-    steps:
-      - name: CHECKOUT 
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: USE NODE.JS 
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
+  # BUILD_AND_DEPLOY_DEV:
+  #   runs-on: ubuntu-latest
+  #   environment: dev
+  #   steps:
+  #     - name: CHECKOUT 
+  #       uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #     - name: USE NODE.JS 
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16.x
 
-      - name: Install npm 6
-        run: npm install -g npm@6
-      - name: Install typescript
-        run: npm install -g typescript@4.5.4
+  #     - name: Install npm 6
+  #       run: npm install -g npm@6
+  #     - name: Install typescript
+  #       run: npm install -g typescript@4.5.4
 
-      - name: Configurar Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.2
-        with:
-          project_id: deporty-dev
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
-          export_default_credentials: true
+  #     - name: Configurar Google Cloud SDK
+  #       uses: google-github-actions/setup-gcloud@v0.2
+  #       with:
+  #         project_id: deporty-dev
+  #         service_account_key: ${{ secrets.SERVICE_ACCOUNT }}
+  #         export_default_credentials: true
 
-      - name: SET UP PYTHON 
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.10.4
+  #     - name: SET UP PYTHON 
+  #       uses: actions/setup-python@v3
+  #       with:
+  #         python-version: 3.10.4
 
-      # - name: RUN TEST
-      #   run: |
-      #     cd functions
-      #     npm test
-      # - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
-      #   run: |
-      #     cd functions/scripts
-      #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
+  #     # - name: RUN TEST
+  #     #   run: |
+  #     #     cd functions
+  #     #     npm test
+  #     # - name: VALIDATE CONDITIONS OF GOOD SOFTWARE
+  #     #   run: |
+  #     #     cd functions/scripts
+  #     #     python3 validate-coverage.py --path ../coverage/lcov-report/index.html
 
-      - name: CLUSTER CREDENTIALS
-        run: |
-          gcloud components install gke-gcloud-auth-plugin
-          gcloud components install beta
+  #     - name: CLUSTER CREDENTIALS
+  #       run: |
+  #         gcloud components install gke-gcloud-auth-plugin
+  #         gcloud components install beta
         
-      - name: DEPLOY
-        run: |
-          ls
-          echo "${{ secrets.SERVICE_ACCOUNT }}" > scripts/service-account.json
-          cd scripts
-          ls
-          alias py=python3
-          alias python=python3
-          python3 deploy.py --env dev
+  #     - name: DEPLOY
+  #       run: |
+  #         ls
+  #         echo "${{ secrets.SERVICE_ACCOUNT }}" > scripts/service-account.json
+  #         cd scripts
+  #         ls
+  #         alias py=python3
+  #         alias python=python3
+  #         python3 deploy.py --env dev
 
   BUILD_AND_DEPLOY_PDN:
     runs-on: ubuntu-latest
