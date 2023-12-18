@@ -5,6 +5,7 @@ import { HttpController, MessagesConfiguration } from '@scifamek-open-source/ira
 import { SERVER_NAME } from '../../infrastructure/authorization.constants';
 import { GetAllowedResourcesByRoleIdsUsecase } from '../domain/usecases/get-allowed-resources-by-role-ids/get-allowed-resources-by-role-ids.usecase';
 import { ResourceDoesNotExistError } from '../domain/usecases/get-resource-by-id.usecase';
+import { GetResourcesUsecase } from '../domain/usecases/get-resources.usecase';
 
 export class ResourceController extends HttpController {
   static identifier = SERVER_NAME;
@@ -36,6 +37,20 @@ export class ResourceController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: roles,
+      });
+    });
+    router.get(`/resources`, (request: Request, response: Response) => {
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'GOTTEN-RESOURCES:SUCCESS',
+      };
+
+      this.handler<GetResourcesUsecase>({
+        container,
+        usecaseId: 'GetResourcesUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: void 0,
       });
     });
   }

@@ -3,6 +3,7 @@ import { ResourceContract } from './domain/resource.contract';
 import { GetResourceByIdUsecase } from './domain/usecases/get-resource-by-id.usecase';
 import { ResourceMapper } from './infrastructure/resource.mapper';
 import { ResourceRepository } from './infrastructure/resource.repository';
+import { GetResourcesUsecase } from './domain/usecases/get-resources.usecase';
 
 
 
@@ -25,6 +26,12 @@ export class ResourceModulesConfig {
     container.add({
       id: 'GetResourceByIdUsecase',
       kind: GetResourceByIdUsecase,
+      dependencies: ['ResourceContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetResourcesUsecase',
+      kind: GetResourcesUsecase,
       dependencies: ['ResourceContract'],
       strategy: 'singleton',
     });
