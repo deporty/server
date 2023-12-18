@@ -1,7 +1,7 @@
 import { Id, RegisteredTeamEntity } from '@deporty-org/entities';
 import { TeamEntity } from '@deporty-org/entities/teams';
-import { Observable } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { Observable, zip } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { Filters, Usecase } from '@scifamek-open-source/iraca/domain';
 import { RegisteredTeamsContract } from '../../contracts/registered-teams.contract';
 import { TeamContract } from '../../contracts/team.contract';
@@ -14,10 +14,7 @@ export interface Params {
 }
 
 export class GetPosibleTeamsToAddUsecase extends Usecase<Params, TeamEntity[]> {
-  constructor(
-    private teamContract: TeamContract,
-    private registeredTeamsContract: RegisteredTeamsContract
-  ) {
+  constructor(private teamContract: TeamContract, private registeredTeamsContract: RegisteredTeamsContract) {
     super();
   }
   call(params: Params): Observable<TeamEntity[]> {
@@ -40,24 +37,52 @@ export class GetPosibleTeamsToAddUsecase extends Usecase<Params, TeamEntity[]> {
           if (teams.length > 0) {
             filters['id'] = {
               operator: 'not-in',
-              value: teams.slice(0,10),
-            };
-          } 
-          if(params.category){
-            filters['category'] = {
-              operator: '==',
-              value: params.category,
+              value: teams.slice(0, 10),
             };
           }
-          if(params.name){
-            filters['name'] = {
-              operator: 'contains',
-              value: params.name,
+          const category = params.category || 'Open';
+          const subCategories = this.getLowerCategories(category);
+
+          const queries = subCategories.map((x) => {
+            const innerFilter: Filters = {
+              ...filters,
+              category: {
+                operator: '==',
+                value: x,
+              },
             };
-          }
-          return this.teamContract.getTeamByFullFilters(filters);
+            return this.teamContract.getTeamByFullFilters(innerFilter);
+          });
+
+          return queries.length
+            ? zip(...queries).pipe(
+                map((queryResults) => {
+                  const results = queryResults.reduce((acc, p) => {
+                    acc.push(...p);
+                    return acc;
+                  });
+                  return results;
+                })
+              )
+            : this.teamContract.getTeamByFullFilters(filters);
         })
       );
     return $tournament;
+  }
+
+  private getLowerCategories(category: string) {
+    if (category == 'Open') {
+      return [];
+    }
+    const response = [];
+    const regex = /([0-9]+)/g;
+    const result = regex.exec(category);
+    if (result) {
+      const cat = parseInt(result[1]);
+      for (let index = 1; index <= cat; index++) {
+        response.push('Sub ' + index);
+      }
+    }
+    return response;
   }
 }
