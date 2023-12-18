@@ -52,7 +52,10 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
     ).pipe(
       mergeMap(([tournamentLayout, group, groupMatches, intergroupMatches]) => {
         
-        const matches = [...groupMatches, ...intergroupMatches.map((x) => x.match)];
+        const matches = [...groupMatches, ...intergroupMatches.map((x) => ({...x.match, id: x.id}))];
+        
+        
+
         const config = tournamentLayout.fixtureStagesConfiguration || DEFAULT_FIXTURE_STAGES_CONFIGURATION;
 
         const meta = {
@@ -67,7 +70,7 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
         };
 
         let lastPositionTable = of(intiPositionTable);
-      
+
         if (matches.length) {
           lastPositionTable = this.resolve(matches, 0, group.teamIds, intiPositionTable, config, meta);
         }
@@ -102,7 +105,6 @@ export class CalculatePositionTableOfGroupUsecase extends Usecase<Param, Positio
     config: FixtureStagesConfiguration,
     meta: any
   ): Observable<PositionsTable> {
-    
     const match = matches[index];
     return this.updatePositionTableUsecase
       .call({
