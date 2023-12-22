@@ -1,6 +1,6 @@
 import { DataSource } from '@scifamek-open-source/iraca/infrastructure';
 import { Filters } from '@scifamek-open-source/iraca/domain';
-import { DocumentData, DocumentReference, DocumentSnapshot, Firestore, Query, QuerySnapshot } from 'firebase-admin/firestore';
+import { DocumentData, DocumentReference, DocumentSnapshot, Firestore, Query, QuerySnapshot, WriteResult } from 'firebase-admin/firestore';
 import { from, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { filterWizard } from './filter-query-manager';
@@ -114,6 +114,15 @@ export class FirebaseDataSource<T> extends DataSource<T> {
   }
 
   save(entity: any): Observable<string> {
+
+    if(entity.id){
+   
+      return from(this.db.collection(this.entity).doc(entity.id).set(entity)).pipe(
+        map((snapshot: WriteResult) => {
+          return entity.id;
+        })
+      );
+    }
     return from(this.db.collection(this.entity).add(entity)).pipe(
       map((snapshot: DocumentReference<DocumentData>) => {
         return snapshot.id;

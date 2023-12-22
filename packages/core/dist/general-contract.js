@@ -12,6 +12,11 @@ class GeneralContract {
     }
     innerSave(accessParams, entity) {
         const route = this.getRouteToColl(this.datasource, accessParams);
+        if (entity.id) {
+            return (0, rxjs_1.from)(route.doc(entity.id).set(this.mapper.toJson(entity))).pipe((0, operators_1.map)((snapshot) => {
+                return entity.id;
+            }));
+        }
         return (0, rxjs_1.from)(route.add(this.mapper.toJson(entity))).pipe((0, operators_1.map)((snapshot) => {
             return snapshot.id;
         }));

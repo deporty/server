@@ -1,6 +1,6 @@
 {
   "name": "@deporty-org/users",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Users    ",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@deporty-org/core": "1.2.3",
+    "@deporty-org/core": "1.2.10",
     "@deporty-org/entities": "^0.24.0",
     "@scifamek-open-source/iraca": "^2.4.0",
     "@scifamek-open-source/logger": "^1.1.0",

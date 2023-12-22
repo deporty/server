@@ -1,6 +1,6 @@
 {
   "name": "@deporty-org/tournaments",
-  "version": "2.9.6",
+  "version": "2.9.7",
   "description": "       ",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@deporty-org/entities": "^0.28.0",
-    "@deporty-org/core": "1.2.8",
+    "@deporty-org/core": "1.2.10",
     "firebase-admin": "^11.0.0",
     "@scifamek-open-source/iraca": "^2.4.0",
     "@scifamek-open-source/logger": "^1.1.0",

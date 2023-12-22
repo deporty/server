@@ -3,6 +3,7 @@ import { RoleContract } from './domain/role.contract';
 import { GetRoleByIdUsecase } from './domain/usecases/get-role-by-id.usecase';
 import { RoleMapper } from './infrastructure/role.mapper';
 import { RoleRepository } from './infrastructure/role.repository';
+import { GetRolesUsecase } from './domain/usecases/get-roles/get-roles.usecase';
 
 export class RoleModulesConfig {
   static config(container: Container) {
@@ -23,6 +24,12 @@ export class RoleModulesConfig {
     container.add({
       id: 'GetRoleByIdUsecase',
       kind: GetRoleByIdUsecase,
+      dependencies: ['RoleContract'],
+      strategy: 'singleton',
+    });
+    container.add({
+      id: 'GetRolesUsecase',
+      kind: GetRolesUsecase,
       dependencies: ['RoleContract'],
       strategy: 'singleton',
     });

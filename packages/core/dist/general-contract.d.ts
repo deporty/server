@@ -11,7 +11,7 @@ export declare abstract class GeneralContract<AccessParams, Entity> {
     protected datasource: Firestore;
     protected mapper: Mapper<Entity>;
     constructor(datasource: Firestore, mapper: Mapper<Entity>);
-    innerSave(accessParams: Array<RouteParam>, entity: Entity): Observable<string>;
+    innerSave(accessParams: Array<RouteParam>, entity: Entity): Observable<any>;
     innerUpdate(accessParams: Array<RouteParam>, entity: Entity): Observable<void>;
     abstract delete(accessParams: AccessParams, id: Id): Observable<void>;
     abstract filter(accessParams: AccessParams, filter: Filters | CompositeFilters): Observable<Array<Entity>>;

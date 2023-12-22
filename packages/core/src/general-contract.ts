@@ -1,5 +1,13 @@
 import { Id } from '@deporty-org/entities';
-import { CollectionReference, DocumentData, DocumentReference, Firestore, Query, QuerySnapshot } from 'firebase-admin/firestore';
+import {
+  CollectionReference,
+  DocumentData,
+  DocumentReference,
+  Firestore,
+  Query,
+  QuerySnapshot,
+  WriteResult,
+} from 'firebase-admin/firestore';
 import { from, Observable, of, zip } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { filterWizard } from './filter-query-manager';
@@ -16,7 +24,13 @@ export abstract class GeneralContract<AccessParams, Entity> {
 
   innerSave(accessParams: Array<RouteParam>, entity: Entity) {
     const route = this.getRouteToColl(this.datasource, accessParams);
-
+    if ((entity as any).id) {
+      return from(route.doc((entity as any).id).set(this.mapper.toJson(entity))).pipe(
+        map((snapshot: WriteResult) => {
+          return (entity as any).id;
+        })
+      );
+    }
     return from(route.add(this.mapper.toJson(entity))).pipe(
       map((snapshot: DocumentReference<DocumentData>) => {
         return snapshot.id;

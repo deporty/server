@@ -65,6 +65,11 @@ class FirebaseDataSource extends infrastructure_1.DataSource {
         }));
     }
     save(entity) {
+        if (entity.id) {
+            return (0, rxjs_1.from)(this.db.collection(this.entity).doc(entity.id).set(entity)).pipe((0, operators_1.map)((snapshot) => {
+                return entity.id;
+            }));
+        }
         return (0, rxjs_1.from)(this.db.collection(this.entity).add(entity)).pipe((0, operators_1.map)((snapshot) => {
             return snapshot.id;
         }));

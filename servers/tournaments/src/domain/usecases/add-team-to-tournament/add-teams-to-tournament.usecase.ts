@@ -1,4 +1,4 @@
-import { RegisteredTeamEntity } from '@deporty-org/entities';
+import { RegisteredTeamEntity, TournamentInscriptionEntity } from '@deporty-org/entities';
 import { Observable, throwError, zip } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { RegisteredTeamsContract } from '../../contracts/registered-teams.contract';
@@ -42,6 +42,9 @@ export class AddTeamsToTournamentUsecase extends Usecase<Param, RegisteredTeamEn
               return { ...registeredTeam, id };
             })
           );
+        }),
+        mergeMap((inscription): Observable<TournamentInscriptionEntity> => {
+          return this.teamContract.saveTournamentInscriptionsByTeamUsecase(inscription).pipe(map(() => inscription));
         })
       );
       teams.push(members);

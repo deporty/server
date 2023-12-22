@@ -1,6 +1,6 @@
 {
   "name": "@deporty-org/teams",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "description": "       ",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@deporty-org/core": "1.2.8",
+    "@deporty-org/core": "1.2.10",
     "@deporty-org/entities": "^0.24.0",
     "@scifamek-open-source/iraca": "^2.4.0",
     "@scifamek-open-source/logger": "^1.1.0",

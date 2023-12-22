@@ -8,6 +8,7 @@ import { RoleController } from './roles/infrastructure/role.controller';
 
 import { Request, Response } from 'express';
 import { GetTokenUsecase } from './domain/usecases/get-token/get-token.usecase';
+import { PermissionController } from './permissions/infrastructure/permission.controller';
 
 export class AuthorizationController extends HttpController {
   static identifier = SERVER_NAME;
@@ -39,6 +40,7 @@ export class AuthorizationController extends HttpController {
 
     AccessKeyController.registerEntryPoints(router, container);
     ResourceController.registerEntryPoints(router, container);
+    PermissionController.registerEntryPoints(router, container);
     RoleController.registerEntryPoints(router, container);
   }
 }

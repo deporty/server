@@ -3,6 +3,7 @@ import { HttpController, MessagesConfiguration } from '@scifamek-open-source/ira
 import { Request, Response, Router } from 'express';
 import { SERVER_NAME } from '../../infrastructure/authorization.constants';
 import { GetRoleByIdUsecase, RoleDoesNotExistError } from '../domain/usecases/get-role-by-id.usecase';
+import { GetRolesUsecase } from '../domain/usecases/get-roles/get-roles.usecase';
 
 export class RoleController extends HttpController {
   static identifier = SERVER_NAME;
@@ -30,6 +31,19 @@ export class RoleController extends HttpController {
         response,
         messageConfiguration: config,
         usecaseParam: id,
+      });
+    });
+    router.get(`/roles`, (request: Request, response: Response) => {
+      const config: MessagesConfiguration = {
+        identifier: this.identifier,
+        successCode: 'GET-ROLES:SUCCESS',
+      };
+      this.handler<GetRolesUsecase>({
+        container,
+        usecaseId: 'GetRolesUsecase',
+        response,
+        messageConfiguration: config,
+        usecaseParam: void 0,
       });
     });
   }

@@ -44,7 +44,7 @@ const serversMapper = {
   tournaments: {
     port: 10007,
     name: 'tournaments',
-    run: false,
+    run: true,
   },
   users: {
     port: 10008,
